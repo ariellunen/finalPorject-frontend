@@ -17,8 +17,6 @@ const Coloring = (props) => {
     let rightCoordinates = [];
     const history = useHistory();
 
-
-
     const handleLeftCoordinate = (x, y) => {
         leftCoordinates.push({ x, y });
         console.log("left", leftCoordinates);
@@ -44,8 +42,6 @@ const Coloring = (props) => {
 
     var counter = 0;
     var timeIndex;
-    const x1 = [9, 41, 6, 78, -62, 65, 9, 41, 6, 78];
-    const y1 = [8, -15, 48, 95, -18, 12, 8, -15, 48, 95];
     var mm = [];
     var point1x1 = 0;
     var point2x1 = 1;
@@ -53,6 +49,7 @@ const Coloring = (props) => {
     var point2y1 = 1;
     var pointM = 0;
     var change = 0;
+    var m;
 
     window.onload = function () {
         timeIndex = setInterval(frequency, 1000);
@@ -60,16 +57,19 @@ const Coloring = (props) => {
 
     function frequency() {
         counter++;
-        if (counter >= 5) {
+        if (counter >= 10) {
             clearInterval(timeIndex);
         }
         //חיבור כל הערכים במערך X
         //let res1 = x1.reduce((total, item) => {return total + item}, 0);
         //document.getElementById("a").innerHTML += res1 + " ";
-
+        
         //שיפוע
-        let m = ((x1[point1x1] - x1[point2x1]) / (y1[point1y1] - y1[point2y1]));
-        //document.getElementById("a").innerHTML += m + "    ";      
+        if (leftCoordinates?.length !== 0){
+            m = ((leftCoordinates[point1x1].x - leftCoordinates[point2x1].x) / (leftCoordinates[point1y1].y - leftCoordinates[point2y1].y));
+        }
+        //document.getElementById("a").innerHTML += m + "    ";   
+
         //הכנסה למערך הישפועים 0 או 1 
         if (m >= 0) { mm.push(1); }
         if (m < 0) { mm.push(0); }
@@ -82,12 +82,12 @@ const Coloring = (props) => {
 
         //שינוי כיוון
         if (mm.length >= 2) {
-            if (mm[pointM] != mm[pointM + 1]) {
+            if (mm[pointM] !== mm[pointM + 1]) {
                 change++;
             }
             pointM++;
         }
-        document.getElementById("b").innerHTML += mm[pointM] + "    ";
+        //document.getElementById("b").innerHTML += mm[pointM] + "    ";
         //document.getElementById("c").innerHTML += change;   
 
         document.getElementById("b").innerHTML += "The amount of changes in direction is: " + change;
@@ -126,9 +126,7 @@ const Coloring = (props) => {
                 </Modal>
             </div>
             <div>
-                <h2 id="a"></h2>
-                <h2 id="b"></h2>
-                <h4 id="c"></h4>
+                <p id="b"></p>
             </div>
         </div>
     )
