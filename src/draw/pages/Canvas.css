@@ -1,0 +1,11 @@
+#canvass{
+    background: red;
+    user-select: none;
+    touch-action: none;
+}
+  
+#canvas{
+    background: blue;
+    user-select: none;
+    touch-action: none;
+}
