@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
@@ -12,6 +12,10 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const Coloring = (props) => {
+    useEffect(()=>{
+        console.log("sdfb v");
+    })
+
     const location = useLocation();
     let leftCoordinates = [];
     let rightCoordinates = [];
@@ -19,12 +23,12 @@ const Coloring = (props) => {
 
     const handleLeftCoordinate = (x, y) => {
         leftCoordinates.push({ x, y });
-        console.log("left", leftCoordinates);
+        //console.log("left", leftCoordinates);
     }
 
     const handleRightCoordinate = (x, y) => {
         rightCoordinates.push({ x, y });
-        console.log("right", rightCoordinates);
+        //console.log("right", rightCoordinates);
     }
 
     // const handleFinish = () => {
@@ -51,52 +55,78 @@ const Coloring = (props) => {
     var change = 0;
     var m;
 
-    window.onload = function () {
-        timeIndex = setInterval(frequency, 1000);
-    }
-
-    function frequency() {
-        counter++;
-        if (counter >= 10) {
-            clearInterval(timeIndex);
-        }
-        //חיבור כל הערכים במערך X
-        //let res1 = x1.reduce((total, item) => {return total + item}, 0);
-        //document.getElementById("a").innerHTML += res1 + " ";
-        
-        //שיפוע
-        if (leftCoordinates?.length !== 0){
-            m = ((leftCoordinates[point1x1].x - leftCoordinates[point2x1].x) / (leftCoordinates[point1y1].y - leftCoordinates[point2y1].y));
-        }
-        //document.getElementById("a").innerHTML += m + "    ";   
-
-        //הכנסה למערך הישפועים 0 או 1 
-        if (m >= 0) { mm.push(1); }
-        if (m < 0) { mm.push(0); }
-
-        // קידום האינדקסים של הנקודות 
-        point1x1 += 2;
-        point2x1 += 2;
-        point1y1 += 2;
-        point2y1 += 2;
-
-        //שינוי כיוון
-        if (mm.length >= 2) {
-            if (mm[pointM] !== mm[pointM + 1]) {
-                change++;
+    const frequency = () => {
+        if (leftCoordinates[point1x1]?.x) {
+            console.log("asdfgh");
+            console.log(leftCoordinates[point1x1]?.x);
+            counter++;
+            if (counter >= 10) {
+                clearInterval(timeIndex);
             }
-            pointM++;
-        }
-        //document.getElementById("b").innerHTML += mm[pointM] + "    ";
-        //document.getElementById("c").innerHTML += change;   
+            //חיבור כל הערכים במערך X
+            //let res1 = x1.reduce((total, item) => {return total + item}, 0);
+            //document.getElementById("a").innerHTML += res1 + " ";
 
-        document.getElementById("b").innerHTML += "The amount of changes in direction is: " + change;
+            //שיפוע
+            if (leftCoordinates?.length !== 0) {
+                m = ((leftCoordinates[point1x1].x - leftCoordinates[point2x1].x) / (leftCoordinates[point1y1].y - leftCoordinates[point2y1].y));
+            }
+            //document.getElementById("a").innerHTML += m + "    ";   
+
+            //הכנסה למערך הישפועים 0 או 1 
+            if (m >= 0) { mm.push(1); }
+            if (m < 0) { mm.push(0); }
+
+            // קידום האינדקסים של הנקודות 
+            point1x1 += 2;
+            point2x1 += 2;
+            point1y1 += 2;
+            point2y1 += 2;
+
+            //שינוי כיוון
+            if (mm.length >= 2) {
+                if (mm[pointM] !== mm[pointM + 1]) {
+                    change++;
+                }
+                pointM++;
+            }
+            //document.getElementById("b").innerHTML += mm[pointM] + "    ";
+            //document.getElementById("c").innerHTML += change;   
+
+            document.getElementById("b").innerHTML += "The amount of changes in direction is: " + change;
+        }
     }
 
     /////////////////////////////////////////////////////////////////
 
+    const startTimer = (duration, display) => {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+        //setTimeout({handleOpen}, 3000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 60 * 20,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+        timeIndex = setInterval(frequency, 1000);
+    };
+
     return (
         <div className='container'>
+            <div>הזמן שנותר הוא: <span id="time">20:00</span> דקות</div>
             <canvas id="canvas" width="300" height="700">
                 <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
             </canvas>
