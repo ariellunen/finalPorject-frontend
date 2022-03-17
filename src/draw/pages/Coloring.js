@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
@@ -12,9 +12,6 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const Coloring = (props) => {
-    useEffect(()=>{
-        console.log("sdfb v");
-    })
 
     const location = useLocation();
     let leftCoordinates = [];
@@ -23,12 +20,12 @@ const Coloring = (props) => {
 
     const handleLeftCoordinate = (x, y) => {
         leftCoordinates.push({ x, y });
-        //console.log("left", leftCoordinates);
+        console.log("left", leftCoordinates);
     }
 
     const handleRightCoordinate = (x, y) => {
         rightCoordinates.push({ x, y });
-        //console.log("right", rightCoordinates);
+        console.log("right", rightCoordinates);
     }
 
     // const handleFinish = () => {
@@ -42,86 +39,114 @@ const Coloring = (props) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    /////////////////////////////////////////////////////////////////
+    //var frequency algorithem 
+    let counter1 = 0, counter2 = 0;
+    let timeIndex;
+    let mm1 = [], mm2 = [];
+    let point1x1 = 0, point1x2 = 0;
+    let point2x1 = 1, point2x2 = 1;
+    let point1y1 = 0, point1y2 = 0;
+    let point2y1 = 1, point2y2 = 1;
+    let pointM1 = 0, pointM2 = 0;
+    let change1 = 0, change2 = 0;
+    let m1, m2;
 
-    var counter = 0;
-    var timeIndex;
-    var mm = [];
-    var point1x1 = 0;
-    var point2x1 = 1;
-    var point1y1 = 0;
-    var point2y1 = 1;
-    var pointM = 0;
-    var change = 0;
-    var m;
-
-    const frequency = () => {
-        if (leftCoordinates[point1x1]?.x) {
-            console.log("asdfgh");
-            console.log(leftCoordinates[point1x1]?.x);
-            counter++;
-            if (counter >= 10) {
-                clearInterval(timeIndex);
+    // Left side frequency algorithem
+    const frequencyL = () => {
+        if (leftCoordinates[point1x1 + 1]?.x) {
+            console.log(leftCoordinates[point1x1].x);
+            counter1++;
+            if (counter1 % 10 === 0) {
+                frequencyL();
             }
-            //חיבור כל הערכים במערך X
-            //let res1 = x1.reduce((total, item) => {return total + item}, 0);
-            //document.getElementById("a").innerHTML += res1 + " ";
-
-            //שיפוע
-            if (leftCoordinates?.length !== 0) {
-                m = ((leftCoordinates[point1x1].x - leftCoordinates[point2x1].x) / (leftCoordinates[point1y1].y - leftCoordinates[point2y1].y));
+            //calculate incline m
+            if (leftCoordinates[point1x1]?.y === leftCoordinates[point1x1 + 1]?.y) {
+                m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y + 1)));
             }
-            //document.getElementById("a").innerHTML += m + "    ";   
+            else {
+                m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y)));
+            }
 
-            //הכנסה למערך הישפועים 0 או 1 
-            if (m >= 0) { mm.push(1); }
-            if (m < 0) { mm.push(0); }
+            // positive incline = 1, negative incline = 0
+            if (m1 >= 0) { mm1.push(1); }
+            if (m1 < 0) { mm1.push(0); }
 
-            // קידום האינדקסים של הנקודות 
-            point1x1 += 2;
-            point2x1 += 2;
-            point1y1 += 2;
-            point2y1 += 2;
-
-            //שינוי כיוון
-            if (mm.length >= 2) {
-                if (mm[pointM] !== mm[pointM + 1]) {
-                    change++;
+            // number of change direction
+            if (mm1.length >= 2) {
+                if (mm1[pointM1] !== mm1[pointM1 + 1]) {
+                    change1++;
                 }
-                pointM++;
+                pointM1++;
             }
-            //document.getElementById("b").innerHTML += mm[pointM] + "    ";
-            //document.getElementById("c").innerHTML += change;   
 
-            document.getElementById("b").innerHTML += "The amount of changes in direction is: " + change;
+            point1x1 += 1;
+            point2x1 += 1;
+            point1y1 += 1;
+            point2y1 += 1;
         }
     }
 
-    /////////////////////////////////////////////////////////////////
+    // Left side frequency algorithem
+    const frequencyR = () => {
+        if (rightCoordinates[point1x2 + 1]?.x) {
+            console.log(rightCoordinates[point1x2].x);
+            counter2++;
+            if (counter2 % 10 === 0) {
+                frequencyR();
+            }
+            //calculate incline m
+            if (rightCoordinates[point1x2]?.y === rightCoordinates[point1x2 + 1]?.y) {
+                m2 = (((rightCoordinates[point1x2].x) - (rightCoordinates[point2x2].x)) / ((rightCoordinates[point1y2].y) - (rightCoordinates[point2y2].y + 1)));
+            }
+            else {
+                m2 = (((rightCoordinates[point1x2].x) - (rightCoordinates[point2x2].x)) / ((rightCoordinates[point1y2].y) - (rightCoordinates[point2y2].y)));
+            }
+
+            // positive incline = 1, negative incline = 0
+            if (m2 >= 0) { mm2.push(1); }
+            if (m2 < 0) { mm2.push(0); }
+
+            // number of change direction
+            if (mm2.length >= 2) {
+                if (mm2[pointM2] !== mm2[pointM2 + 1]) {
+                    change2++;
+                }
+                pointM2++;
+            }
+
+            // sync between 2 users, under 2 changes in the direcation
+            if ((Math.abs(change2 - change1) <= 2) && (Math.abs(change2 - change1) > 0)) {
+                document.getElementById("b").innerHTML += "Feedback ";
+            }
+
+            point1x2 += 1;
+            point2x2 += 1;
+            point1y2 += 1;
+            point2y2 += 1;
+        }
+    }
 
     const startTimer = (duration, display) => {
-        var timer = duration, minutes, seconds;
+        let timer = duration, minutes, seconds;
         setInterval(function () {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
-
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
-
             display.textContent = minutes + ":" + seconds;
-
             if (--timer < 0) {
                 timer = duration;
             }
         }, 1000);
-        //setTimeout({handleOpen}, 3000);
+        setTimeout(handleOpen, 1200000);
     }
 
     window.onload = function () {
-        var fiveMinutes = 60 * 20,
+        timeIndex = setInterval(frequencyL, 100);
+        timeIndex = setInterval(frequencyR, 100);
+        let fiveMinutes = 60 * 20,
             display = document.querySelector('#time');
         startTimer(fiveMinutes, display);
-        timeIndex = setInterval(frequency, 1000);
     };
 
     return (
@@ -150,7 +175,7 @@ const Coloring = (props) => {
                             Text in a modal
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            Duis mollis, est non comm1odo luctus, nisi erat porttitor ligula.
                         </Typography>
                     </Box>
                 </Modal>
