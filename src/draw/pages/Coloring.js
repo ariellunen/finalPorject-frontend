@@ -116,7 +116,7 @@ const Coloring = (props) => {
 
             // sync between 2 users, under 2 changes in the direcation
             if ((Math.abs(change2 - change1) <= 2) && (Math.abs(change2 - change1) > 0)) {
-                document.getElementById("b").innerHTML += "Feedback ";
+                document.getElementById("b").innerHTML += "Feedback " + (Math.abs(change2 - change1));
             }
 
             point1x2 += 1;
