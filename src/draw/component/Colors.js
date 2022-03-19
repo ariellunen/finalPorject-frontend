@@ -10,17 +10,22 @@ const ColorPicker = (props) => {
     return (
         <div>
             <h1>{props.name.name}</h1>
-            <button className='btn first' onClick={()=> {
-                color='yellow';
-                onClick()}}>
-            </button>
-            <button className='btn second' onClick={()=> {
-                color='red';
-                onClick()}}>    
-            </button>
-            <button className='btn third' onClick={()=> {
-                color='blue';
-                onClick()}}></button>
+            <div id='colors'>
+                <button className='btn first' onClick={() => {
+                    color = 'yellow';
+                    onClick()
+                }}>
+                </button>
+                <button className='btn second' onClick={() => {
+                    color = 'red';
+                    onClick()
+                }}>
+                </button>
+                <button className='btn third' onClick={() => {
+                    color = 'blue';
+                    onClick()
+                }}></button>
+            </div>
         </div>
     )
 };

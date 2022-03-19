@@ -5,7 +5,7 @@ import './Canvas.css';
 const LeftCanvas = (props) => {
     let pixelSize = 5;
     useEffect(() => {
-        interact('#canvas')
+        interact('#canvasL')
             .draggable({
                 max: Infinity,
                 origin: 'self',
@@ -35,7 +35,7 @@ const LeftCanvas = (props) => {
             })
 
         function resizeCanvases() {
-            [].forEach.call(document.querySelectorAll('#canvas'), function (
+            [].forEach.call(document.querySelectorAll('#canvasL'), function (
                 canvas
             ) {
                 delete canvas.width

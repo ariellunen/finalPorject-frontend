@@ -1,11 +1,18 @@
-#canvass{
-    background: red;
-    user-select: none;
-    touch-action: none;
-}
+#canvasGrid{
+    display: flex;
+    justify-content: center;
+  }
   
-#canvas{
-    background: blue;
+  #canvasR{
     user-select: none;
     touch-action: none;
-}
+    border-style: solid;
+    border-left: dotted;
+  }
+  
+  #canvasL{
+    user-select: none;
+    touch-action: none;
+    border-style: solid;
+    border-right: none;
+  }

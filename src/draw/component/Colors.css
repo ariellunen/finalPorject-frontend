@@ -17,3 +17,9 @@
 .third{
     background-color: blue;
 }
+
+#colors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
