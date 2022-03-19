@@ -6,7 +6,6 @@ import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link, useHistory } from 'react-router-dom';
 import Users from '../../user/pages/Users';
-import Analysis from '../../analysis/pages/Analysis';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
