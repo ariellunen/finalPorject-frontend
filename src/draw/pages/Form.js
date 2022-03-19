@@ -16,8 +16,40 @@ const Form = (props) => {
         setSecondKide(e.target.value);
     }
 
-    const onSubmit = (e) => {
-        // send data to the server
+    const onSubmit = async event => {
+       try{
+            const response = await fetch('http://localhost:5000/api/users/signup/', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: firstKide
+                })
+            });
+
+            const responseData = await response.json();
+            console.log(responseData);
+        } catch(err) {
+            console.log(err);
+        }
+
+        try{
+            const response = await fetch('http://localhost:5000/api/users/signup/', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: secondtKide
+                })
+            });
+
+            const responseData = await response.json();
+            console.log(responseData);
+        } catch(err) {
+            console.log(err);
+        }
     }
     return (
         <Box component="form"
@@ -29,7 +61,7 @@ const Form = (props) => {
             <TextField id="outlined-basic" label="שם" variant="outlined" onChange={onChangeFisrt} value={firstKide} />
             <h2>ילד 2</h2>
             <TextField id="outlined-basic" label="שם" variant="outlined" onChange={onChangeSecond} value={secondtKide} />
-            <Button variant="contained" type='submit' component={Link} to="/drawing/color" >סיום</Button>
+            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color" >סיום</Button>
         </Box>
     )
 };
