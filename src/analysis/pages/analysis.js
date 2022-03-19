@@ -5,7 +5,7 @@ const Analysis = (props) => {
     let drawing;
     useState(async () => {
         try{
-            const response = await fetch('http://localhost:5000/api/drawing/', {
+            const response = await fetch('http://localhost:3000/api/drawing/', {
             });
             const responseData = await response.json();
             drawing = responseData.drawing;
