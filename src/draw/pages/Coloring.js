@@ -20,12 +20,12 @@ const Coloring = (props) => {
 
     const handleLeftCoordinate = (x, y) => {
         leftCoordinates.push({ x, y });
-        console.log("left", leftCoordinates);
+        //console.log("left", leftCoordinates);
     }
 
     const handleRightCoordinate = (x, y) => {
         rightCoordinates.push({ x, y });
-        console.log("right", rightCoordinates);
+        //console.log("right", rightCoordinates);
     }
 
     // const handleFinish = () => {
@@ -41,8 +41,8 @@ const Coloring = (props) => {
 
     //var frequency algorithem 
     let counter1 = 0, counter2 = 0;
-    let timeIndex;
-    let mm1 = [], mm2 = [];
+    let timeIndex1, timeIndex2;
+    let mm1 = [], mm2 = [], temp1 = [], arr = [];
     let point1x1 = 0, point1x2 = 0;
     let point2x1 = 1, point2x2 = 1;
     let point1y1 = 0, point1y2 = 0;
@@ -52,18 +52,65 @@ const Coloring = (props) => {
     let m1, m2;
 
     // Left side frequency algorithem
+    // const frequencyL = () => {
+    //     if (leftCoordinates[point1x1 + 1]?.x) {
+    //         counter1++;
+    //         if (counter1 % 10 === 0) {
+    //             frequencyL();
+    //         }
+    //         //calculate incline m
+    //         if (leftCoordinates[point1x1]?.y === leftCoordinates[point1x1 + 1]?.y) {
+    //             m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y + 1)));
+    //         }
+    //         else {
+    //             m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y)));
+    //         }
+
+    //         // positive incline = 1, negative incline = 0
+    //         if (m1 >= 0) { mm1.push(1); }
+    //         if (m1 < 0) { mm1.push(0); }
+
+    //         // number of change direction
+    //         if (mm1.length >= 2) {
+    //             if (mm1[pointM1] !== mm1[pointM1 + 1]) {
+    //                 change1++;
+    //                 seeChange1(change1);
+    //             }
+    //             pointM1++;
+    //         }
+
+    //         point1x1 += 1;
+    //         point2x1 += 1;
+    //         point1y1 += 1;
+    //         point2y1 += 1;
+    //     }
+    // }
+
+    var t = 0;
+
     const frequencyL = () => {
         if (leftCoordinates[point1x1 + 1]?.x) {
             counter1++;
-            if (counter1 % 10 === 0) {
-                frequencyL();
+            if (counter1 == 10) {
+                //frequencyL();
+                clearInterval(timeIndex1);
             }
-            //calculate incline m
-            if (leftCoordinates[point1x1]?.y === leftCoordinates[point1x1 + 1]?.y) {
-                m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y + 1)));
+            for (var i = 0; i < 10; i++) {
+                temp1.push(leftCoordinates[t])
+                t++;
+            }
+            frequency1(temp1);
+            console.log("temp1=", temp1);
+        }
+    }
+
+    const frequency1 = (arr) => {
+        for (var i = 0; i < 100; i++) {
+            if (arr[i]?.y === arr[i + 1]?.y) {
+                m1 = (((arr[i].x) - (leftCoordinates[i + 1].x)) / ((arr[point1y1].y) - (arr[i + 1].y + 1)));
             }
             else {
-                m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y)));
+                m1 = (((arr[i].x) - (arr[i + 1].x)) / ((arr[i].y) - (arr[i + 1].y)));
             }
 
             // positive incline = 1, negative incline = 0
@@ -74,15 +121,10 @@ const Coloring = (props) => {
             if (mm1.length >= 2) {
                 if (mm1[pointM1] !== mm1[pointM1 + 1]) {
                     change1++;
-                    seeChange1(change1);
                 }
                 pointM1++;
+                seeChange1(change1);
             }
-
-            point1x1 += 1;
-            point2x1 += 1;
-            point1y1 += 1;
-            point2y1 += 1;
         }
     }
 
@@ -153,8 +195,8 @@ const Coloring = (props) => {
     }
 
     window.onload = function () {
-        timeIndex = setInterval(frequencyL, 100);
-        timeIndex = setInterval(frequencyR, 100);
+        timeIndex1 = setInterval(frequencyL, 1000);
+        timeIndex2 = setInterval(frequencyR, 100);
         let fiveMinutes = 60 * 20,
             display = document.querySelector('#timer');
         startTimer(fiveMinutes, display);
