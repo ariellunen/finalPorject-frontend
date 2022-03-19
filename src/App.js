@@ -10,7 +10,7 @@ import Users from './user/pages/Users';
 import ColorPicker from './draw/pages/ColorPicker';
 import Coloring from './draw/pages/Coloring';
 import Analysis from './analysis/pages/analysis';
-
+import Form from './draw/pages/Form';
 const App = () => {
   return (
     <Router>
@@ -26,6 +26,9 @@ const App = () => {
         </Route>
         <Route path="/analysis" exact>
           <Analysis />
+        </Route>
+        <Route path="/form" exact>
+          <Form />
         </Route>
         <Redirect to="/" />
       </Switch>

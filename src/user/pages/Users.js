@@ -11,7 +11,7 @@ const Users = (props) => {
   return (
     <React.Fragment>
       <div id='choice'>
-        <Button component={Link} to="/drawing/color" variant="contained" color="primary" class='buttom'>
+        <Button component={Link} to="/form" variant="contained" color="primary" class='buttom'>
           {/* Drawing */}
           מדריכים
         </Button>
