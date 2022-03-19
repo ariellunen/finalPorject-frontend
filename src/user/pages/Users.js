@@ -5,9 +5,6 @@ import { useLocation } from 'react-router-dom';
 import './User.css';
 
 const Users = (props) => {
-  const location = useLocation();
-  console.log(location)
-
   return (
     <React.Fragment>
       <div id='choice'>

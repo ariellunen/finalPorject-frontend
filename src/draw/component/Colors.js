@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Colors.css';
 
 const ColorPicker = (props) => {
@@ -6,6 +6,8 @@ const ColorPicker = (props) => {
     const onClick = (s) => {
         props.handleColor(color);
     }
+
+    console.log(props.name.name)
 
     return (
         <div>

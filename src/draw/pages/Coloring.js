@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
@@ -12,7 +12,10 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const Coloring = (props) => {
-
+    let startedTime;
+    useEffect(() => {
+        startedTime = new Date();
+    }, []);
     const location = useLocation();
     let leftCoordinates = [];
     let rightCoordinates = [];
@@ -204,6 +207,53 @@ const Coloring = (props) => {
 
     ///////////////////////////////////////////////////
 
+    let user1;
+    let user2;
+    const fetchGetAPI = async() => {
+        try{
+            const response = await fetch('http://localhost:5000/api/users/', {
+            });
+            const responseData = await response.json();
+            const len = responseData.users.length;
+            user2 = responseData.users[len - 2];
+            user1 = responseData.users[len-1];
+            console.log(user2, user1)
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    const onSubmit = () => {
+        fetchGetAPI();
+        setTimeout(async() => {   
+            try {
+                const response = await fetch('http://localhost:5000/api/drawing/', {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        firstKide: user1,
+                        secondKide: user2,
+                        timeStarted: startedTime,
+                        timeDone: new Date(),
+                        sync: '10',
+                        firstCoordinate: leftCoordinates,
+                        secondCoordinate: rightCoordinates
+                    })
+                });
+    
+                const responseData = await response.json();
+                console.log(responseData);
+            } catch(err) {
+                console.log(err);
+            }
+        }, 2000);
+       
+        
+    }
+
     return (
         <div className='container'>
             <h1>זמן צביעה</h1>
@@ -223,24 +273,8 @@ const Coloring = (props) => {
                 DONE
             </Button>
             {done && history.replace('/analysis', right)} */}
-            <div>
-                <Button onClick={handleOpen}>DONE</Button>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box className='modal'>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non comm1odo luctus, nisi erat porttitor ligula.
-                        </Typography>
-                    </Box>
-                </Modal>
-            </div>
+            
+            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
             <div>
                 <p id="b"></p>
             </div>

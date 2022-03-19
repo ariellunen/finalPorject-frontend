@@ -3,10 +3,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState('');
     const [secondtKide, setSecondKide] = useState('');
+    const history = useHistory();
 
     const onChangeFisrt = (e) => {
         setFirstKide(e.target.value);
@@ -51,6 +53,7 @@ const Form = (props) => {
             console.log(err);
         }
     }
+
     return (
         <Box component="form"
             sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
@@ -61,7 +64,7 @@ const Form = (props) => {
             <TextField id="outlined-basic" label="שם" variant="outlined" onChange={onChangeFisrt} value={firstKide} />
             <h2>ילד 2</h2>
             <TextField id="outlined-basic" label="שם" variant="outlined" onChange={onChangeSecond} value={secondtKide} />
-            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color" >סיום</Button>
+            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">סיום</Button>
         </Box>
     )
 };
