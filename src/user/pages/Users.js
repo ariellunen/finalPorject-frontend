@@ -9,11 +9,9 @@ const Users = (props) => {
     <React.Fragment>
       <div id='choice'>
         <Button component={Link} to="/form" variant="contained" color="primary" class='buttom'>
-          {/* Drawing */}
           מדריכים
         </Button>
-        <Button component={Link} to="#" variant="contained" color="primary" class='buttom'>
-          {/* Analysis */}
+        <Button component={Link} to="/analysis" variant="contained" color="primary" class='buttom'>
           אנשי מקצוע
         </Button>
       </div>
