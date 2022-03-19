@@ -15,7 +15,7 @@ const Users = (props) => {
           {/* Drawing */}
           מדריכים
         </Button>
-        <Button component={Link} to="/drawing/color" variant="contained" color="primary" class='buttom'>
+        <Button component={Link} to="#" variant="contained" color="primary" class='buttom'>
           {/* Analysis */}
           אנשי מקצוע
         </Button>

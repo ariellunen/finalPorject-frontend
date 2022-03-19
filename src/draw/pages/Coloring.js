@@ -54,7 +54,6 @@ const Coloring = (props) => {
     // Left side frequency algorithem
     const frequencyL = () => {
         if (leftCoordinates[point1x1 + 1]?.x) {
-            console.log(leftCoordinates[point1x1].x);
             counter1++;
             if (counter1 % 10 === 0) {
                 frequencyL();
@@ -75,6 +74,7 @@ const Coloring = (props) => {
             if (mm1.length >= 2) {
                 if (mm1[pointM1] !== mm1[pointM1 + 1]) {
                     change1++;
+                    seeChange1(change1);
                 }
                 pointM1++;
             }
@@ -86,10 +86,9 @@ const Coloring = (props) => {
         }
     }
 
-    // Left side frequency algorithem
+    //Right side frequency algorithem
     const frequencyR = () => {
         if (rightCoordinates[point1x2 + 1]?.x) {
-            console.log(rightCoordinates[point1x2].x);
             counter2++;
             if (counter2 % 10 === 0) {
                 frequencyR();
@@ -110,6 +109,7 @@ const Coloring = (props) => {
             if (mm2.length >= 2) {
                 if (mm2[pointM2] !== mm2[pointM2 + 1]) {
                     change2++;
+                    seeChange2(change2);
                 }
                 pointM2++;
             }
@@ -142,6 +142,16 @@ const Coloring = (props) => {
         setTimeout(handleOpen, 1200000);
     }
 
+    //View changes on the left screen
+    const seeChange1 = (change1) => {
+        document.getElementById("SeveralChanges1").innerHTML = change1;
+    }
+
+    //View changes to the right screen
+    const seeChange2 = (change2) => {
+        document.getElementById("SeveralChanges2").innerHTML = change2;
+    }
+
     window.onload = function () {
         timeIndex = setInterval(frequencyL, 100);
         timeIndex = setInterval(frequencyR, 100);
@@ -157,13 +167,16 @@ const Coloring = (props) => {
             <h1>זמן צביעה</h1>
             <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
             <div id="canvasGrid">
+                <p id="SeveralChanges1"></p>
                 <canvas id="canvasL" width="650" height="600">
                     <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
                 </canvas>
                 <canvas id="canvasR" width="650" height="600">
                     <RightCanvas handleCoordinate={handleRightCoordinate} color={location.state[1]} />
                 </canvas>
+                <p id="SeveralChanges2"></p>
             </div>
+
             {/* <Button variant="contained" color="primary" onClick={handleFinish}>
                 DONE
             </Button>
