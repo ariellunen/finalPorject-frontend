@@ -149,6 +149,64 @@ const Coloring = (props) => {
         startTimer(fiveMinutes, display);
     };
 
+    ///////////////////////////////////////////////////
+
+    // let hour = 0;
+    // let minute = 0;
+    // let second = 0;
+    // let millisecond = 0;
+
+    // let cron;
+
+    // document.form_main.start.onclick = () => start();
+    // document.form_main.pause.onclick = () => pause();
+    // document.form_main.reset.onclick = () => reset();
+
+    // function start() {
+    //     pause();
+    //     cron = setInterval(() => { timer(); }, 10);
+    // }
+
+    // function pause() {
+    //     clearInterval(cron);
+    // }
+
+    // function reset() {
+    //     hour = 0;
+    //     minute = 0;
+    //     second = 0;
+    //     millisecond = 0;
+    //     document.getElementById('hour').innerText = '00';
+    //     document.getElementById('minute').innerText = '00';
+    //     document.getElementById('second').innerText = '00';
+    //     document.getElementById('millisecond').innerText = '000';
+    // }
+
+    // function timer() {
+    //     if ((millisecond += 10) == 1000) {
+    //         millisecond = 0;
+    //         second++;
+    //     }
+    //     if (second == 60) {
+    //         second = 0;
+    //         minute++;
+    //     }
+    //     if (minute == 60) {
+    //         minute = 0;
+    //         hour++;
+    //     }
+    //     document.getElementById('hour').innerText = returnData(hour);
+    //     document.getElementById('minute').innerText = returnData(minute);
+    //     document.getElementById('second').innerText = returnData(second);
+    //     document.getElementById('millisecond').innerText = returnData(millisecond);
+    // }
+
+    // function returnData(input) {
+    //     return input > 10 ? input : `0${input}`
+    // }
+
+    ///////////////////////////////////////////////////
+
     return (
         <div className='container'>
             <div>הזמן שנותר הוא: <span id="time">20:00</span> דקות</div>
@@ -158,6 +216,15 @@ const Coloring = (props) => {
             <canvas id="canvass" width="300" height="700">
                 <RightCanvas handleCoordinate={handleRightCoordinate} color={location.state[1]} />
             </canvas>
+            {/* <form name="form_main">
+                <div>
+                    <span id="hour">00</span>:<span id="minute">00</span>:<span id="second">00</span>:<span id="millisecond">000</span>
+                </div>
+                <br />
+                <button type="button" name="start">start</button>
+                <button type="button" name="pause">pause</button>
+                <button type="button" name="reset">reset</button>
+            </form> */}
             {/* <Button variant="contained" color="primary" onClick={handleFinish}>
                 DONE
             </Button>
