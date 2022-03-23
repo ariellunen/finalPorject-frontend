@@ -258,7 +258,6 @@ const Coloring = (props) => {
 
         let chunks = []
         mediaRecorder.addEventListener('dataavailable', function(e) {
-            console.log(e);
             chunks.push(e.data)
         })
 
@@ -266,21 +265,18 @@ const Coloring = (props) => {
             let blob = new Blob(chunks, {
                 type: chunks[0].type
             })
-            console.log(blob);
             url = URL.createObjectURL(blob);
-            console.log("URLLLLLSSS",url);
+            // console.log("URLLLLLSSS",url);
 
-
-      
             let video = document.querySelector("video")
             console.log("videoOO",video);
             video.src = url
       
 
-            // let a = document.createElement('a')
-            // a.href = url
-            // a.download = 'video.webm'
-            // a.click()
+            let a = document.createElement('a')
+            a.href = url
+            a.download = 'video.webm'
+            a.click()
         })
 
         //we have to start the recorder manually
@@ -393,7 +389,7 @@ const Coloring = (props) => {
     return (
         <div className='container'>
             <h1>זמן צביעה</h1>
-            <Button className="record-btn" onClick={onRecord}>record</Button>
+            {/* <Button className="record-btn" onClick={onRecord}>record</Button> */}
             <video className="video" width="600px" controls></video>
             <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
             <div>

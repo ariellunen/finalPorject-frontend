@@ -43,3 +43,7 @@ h1{
   text-align: center;
   width: 200px;
 }
+
+.video{
+  display: none;
+}
