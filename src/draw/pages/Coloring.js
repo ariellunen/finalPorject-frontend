@@ -44,129 +44,115 @@ const Coloring = (props) => {
     //var frequency algorithem 
     let counter1 = 0, counter2 = 0;
     let timeIndex1, timeIndex2;
-    let mm1 = [], mm2 = [], temp1 = [], arr = [];
-    let point1x1 = 0, point1x2 = 0;
-    let point2x1 = 1, point2x2 = 1;
-    let point1y1 = 0, point1y2 = 0;
-    let point2y1 = 1, point2y2 = 1;
-    let pointM1 = 0, pointM2 = 0;
+    let mm1 = [], mm2 = [], temp1 = [], temp2 = [];
     let change1 = 0, change2 = 0;
     let m1, m2;
-
-    // Left side frequency algorithem
-    // const frequencyL = () => {
-    //     if (leftCoordinates[point1x1 + 1]?.x) {
-    //         counter1++;
-    //         if (counter1 % 10 === 0) {
-    //             frequencyL();
-    //         }
-    //         //calculate incline m
-    //         if (leftCoordinates[point1x1]?.y === leftCoordinates[point1x1 + 1]?.y) {
-    //             m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y + 1)));
-    //         }
-    //         else {
-    //             m1 = (((leftCoordinates[point1x1].x) - (leftCoordinates[point2x1].x)) / ((leftCoordinates[point1y1].y) - (leftCoordinates[point2y1].y)));
-    //         }
-
-    //         // positive incline = 1, negative incline = 0
-    //         if (m1 >= 0) { mm1.push(1); }
-    //         if (m1 < 0) { mm1.push(0); }
-
-    //         // number of change direction
-    //         if (mm1.length >= 2) {
-    //             if (mm1[pointM1] !== mm1[pointM1 + 1]) {
-    //                 change1++;
-    //                 seeChange1(change1);
-    //             }
-    //             pointM1++;
-    //         }
-
-    //         point1x1 += 1;
-    //         point2x1 += 1;
-    //         point1y1 += 1;
-    //         point2y1 += 1;
-    //     }
-    // }
-
-    var t = 0;
+    let pointM1 = 0;
+    let pointM2 = 0;
+    var pointL = 0;
+    var indexL = 0;
+    var pointR = 0;
+    var indexR = 0;
 
     const frequencyL = () => {
-        if (leftCoordinates[point1x1 + 1]?.x) {
+        if (leftCoordinates[pointL + 1]?.x) {
             counter1++;
-            if (counter1 == 10) {
-                //frequencyL();
-                clearInterval(timeIndex1);
+            if (counter1 % 5 === 0) {
+                frequencyL();
+                //clearInterval(timeIndex1);
             }
             for (var i = 0; i < 10; i++) {
-                temp1.push(leftCoordinates[t])
-                t++;
-            }
-            frequency1(temp1);
-            console.log("temp1=", temp1);
-        }
-    }
-
-    const frequency1 = (arr) => {
-        for (var i = 0; i < 100; i++) {
-            if (arr[i]?.y === arr[i + 1]?.y) {
-                m1 = (((arr[i].x) - (leftCoordinates[i + 1].x)) / ((arr[point1y1].y) - (arr[i + 1].y + 1)));
-            }
-            else {
-                m1 = (((arr[i].x) - (arr[i + 1].x)) / ((arr[i].y) - (arr[i + 1].y)));
-            }
-
-            // positive incline = 1, negative incline = 0
-            if (m1 >= 0) { mm1.push(1); }
-            if (m1 < 0) { mm1.push(0); }
-
-            // number of change direction
-            if (mm1.length >= 2) {
-                if (mm1[pointM1] !== mm1[pointM1 + 1]) {
-                    change1++;
+                if (leftCoordinates[pointL] !== undefined) {
+                    temp1.push(leftCoordinates[pointL])
+                    pointL++;
                 }
-                pointM1++;
-                seeChange1(change1);
+            }
+            console.log("temp = ", temp1);
+            for (var i = 0; i < 8; i++, indexL++) {
+                if (temp1[indexL]?.x === temp1[indexL + 1]?.x) {
+                    m1 = 0;
+                }
+                else{
+                    m1 = (((temp1[indexL].y) - (temp1[indexL + 1].y)) / ((temp1[indexL].x) - (temp1[indexL + 1].x)));
+                }
+
+                console.log("m1", m1);
+                // positive incline = 1, negative incline = 2
+                if (m1 > 0) { mm1.push(1); }
+                else if (m1 < 0) { mm1.push(2); }
+                else { console.log("loTOV"); }
+
+                console.log("mm1", mm1);
+                // number of change direction
+                if (mm1.length >= 2) {
+                    for (pointM1; pointM1 < mm1.length - 1; pointM1++) {
+                        console.log("pointM1=", pointM1)
+                        console.log(mm1[pointM1])
+                        console.log("mm1[pointM1]=", mm1[pointM1]);
+                        console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
+
+                        if (mm1[pointM1] !== mm1[pointM1 + 1]) {
+                            change1++;
+                            seeChange1(change1);
+                        }
+                    }
+                }
+            }
+            if ((Math.abs(change1 - change2) <= 2) && (Math.abs(change2 - change1) > 0)) {
+                document.getElementById("b").innerHTML += "F ";
             }
         }
     }
 
     //Right side frequency algorithem
     const frequencyR = () => {
-        if (rightCoordinates[point1x2 + 1]?.x) {
+        if (rightCoordinates[pointR + 1]?.x) {
             counter2++;
-            if (counter2 % 10 === 0) {
+            if (counter2 % 5 === 0) {
                 frequencyR();
             }
-            //calculate incline m
-            if (rightCoordinates[point1x2]?.y === rightCoordinates[point1x2 + 1]?.y) {
-                m2 = (((rightCoordinates[point1x2].x) - (rightCoordinates[point2x2].x)) / ((rightCoordinates[point1y2].y) - (rightCoordinates[point2y2].y + 1)));
-            }
-            else {
-                m2 = (((rightCoordinates[point1x2].x) - (rightCoordinates[point2x2].x)) / ((rightCoordinates[point1y2].y) - (rightCoordinates[point2y2].y)));
-            }
-
-            // positive incline = 1, negative incline = 0
-            if (m2 >= 0) { mm2.push(1); }
-            if (m2 < 0) { mm2.push(0); }
-
-            // number of change direction
-            if (mm2.length >= 2) {
-                if (mm2[pointM2] !== mm2[pointM2 + 1]) {
-                    change2++;
-                    seeChange2(change2);
+            for (var i = 0; i < 10; i++) {
+                if (rightCoordinates[pointR] !== undefined) {
+                    temp2.push(rightCoordinates[pointR])
+                    pointR++;
                 }
-                pointM2++;
+            }
+            console.log("temp = ", temp2);
+            for (var i = 0; i < 8; i++, indexR++) {
+                if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
+                    m2 = 0;
+                }
+                else {
+                    m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
+                }
+
+                console.log("m2", m2);
+                // positive incline = 1, negative incline = 2
+                if (m2 > 0) { mm2.push(1); }
+                else if (m2 < 0) { mm2.push(2); }
+                else { console.log("loTOV"); }
+
+                console.log("mm2", mm2);
+                // number of change direction
+                if (mm2.length >= 2) {
+                    for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
+                        console.log("pointM2=", pointM2)
+                        console.log(mm2[pointM2])
+                        console.log("mm2[pointM2]=", mm2[pointM2]);
+                        console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
+
+                        if (mm2[pointM2] !== mm2[pointM2 + 1]) {
+                            change2++;
+                            seeChange2(change2);
+                        }
+                    }
+                }
             }
 
             // sync between 2 users, under 2 changes in the direcation
             if ((Math.abs(change2 - change1) <= 2) && (Math.abs(change2 - change1) > 0)) {
-                document.getElementById("b").innerHTML += "Feedback " + (Math.abs(change2 - change1));
+                document.getElementById("b").innerHTML += "F ";
             }
-
-            point1x2 += 1;
-            point2x2 += 1;
-            point1y2 += 1;
-            point2y2 += 1;
         }
     }
 
@@ -197,7 +183,7 @@ const Coloring = (props) => {
     }
 
     window.onload = function () {
-        timeIndex1 = setInterval(frequencyL, 1000);
+        timeIndex1 = setInterval(frequencyL, 100);
         timeIndex2 = setInterval(frequencyR, 100);
         let fiveMinutes = 60 * 20,
             display = document.querySelector('#timer');
@@ -257,6 +243,9 @@ const Coloring = (props) => {
         <div className='container'>
             <h1>זמן צביעה</h1>
             <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
+            <div>
+                <p id="b"></p>
+            </div>
             <div id="canvasGrid">
                 <p id="SeveralChanges1"></p>
                 <canvas id="canvasL" width="650" height="600">
@@ -274,9 +263,7 @@ const Coloring = (props) => {
             {done && history.replace('/analysis', right)} */}
             
             <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
-            <div>
-                <p id="b"></p>
-            </div>
+
         </div>
     )
 };
