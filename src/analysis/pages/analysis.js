@@ -16,7 +16,7 @@ const Analysis = (props) => {
         } catch (err) {
             console.log(err);
         }
-        if (drawing){
+        if (drawing) {
             video = document.querySelector("video")
             video.src = drawing[6].video
             console.log(video.src);

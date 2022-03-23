@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
@@ -12,6 +12,8 @@ import Modal from '@mui/material/Modal';
 
 
 let url;
+let isColoring = false
+
 const Coloring = (props) => {
     let startedTime;
     useEffect(() => {
@@ -289,6 +291,105 @@ const Coloring = (props) => {
         onRecord();
     }, [])
 
+    
+    // We need ref in this, because we are dealing
+    // with JS setInterval to keep track of it and
+    // stop it when needed
+    const Ref = useRef(null);
+
+    // The state for our timer
+    const [timer, setTimer] = useState('00:00:00');
+
+
+    const getTimeRemaining = (e) => {
+        const total = Date.parse(e) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / 1000 * 60 * 60) % 24);
+        return {
+            total, hours, minutes, seconds
+        };
+    }
+
+
+    const startTime = (e) => {
+        let { total, hours, minutes, seconds } = getTimeRemaining(e);
+        if (total >= 0) {
+            console.log("start counting");
+            // update the timer
+            // check if less than 10 then we need to 
+            // add '0' at the begining of the variable
+            setTimer(
+                (hours > 9 ? hours : '0' + hours) + ':' +
+                (minutes > 9 ? minutes : '0' + minutes) + ':'
+                + (seconds > 9 ? seconds : '0' + seconds)
+            )
+            if(total === 0 && !isColoring){
+                change1 = 0;
+                console.log('ddddddd');
+            }
+        }
+    }
+
+    const clearTimer = (e) => {
+        // If you adjust it you should also need to
+        // adjust the Endtime formula we are about
+        // to code next    
+        setTimer('00:00:10');
+        // If you try to remove this line the 
+        // updating of timer Variable will be
+        // after 1000ms or 1sec
+        if (Ref.current) clearInterval(Ref.current);
+        const id = setInterval(() => {
+            startTime(e);
+        }, 1000)
+        Ref.current = id;
+    }
+
+    const getDeadTime = () => {
+        let deadline = new Date();
+
+        // This is where you need to adjust if 
+        // you entend to add more time
+        deadline.setSeconds(deadline.getSeconds() + 10);
+        return deadline;
+    }
+
+    // We can use useEffect so that when the component
+    // mount the timer will start as soon as possible
+
+    // We put empty array to act as componentDid
+    // mount only
+    // useEffect(() => {
+    //     clearTimer(getDeadTime());
+    // }, []);
+
+    // Another way to call the clearTimer() to start
+    // the countdown is via action event from the
+    // button first we create function to be called
+    // by the button
+    const onClickReset = () => {
+        // setStartPaintL(false)
+        isColoring = false
+        setTimeout(() => {
+        }, 2000);
+        console.log("$$$$$$$$$$$$$$$$$$$$$$4",isColoring);
+
+        console.log('restart')
+
+        clearTimer(getDeadTime());
+    }
+
+    const handlePointerDownL = () => {
+        console.log('start');
+        isColoring = true
+        // setStartPaintL(true)
+        console.log(isColoring);
+    }
+
+    console.log(isColoring);
+
+
     return (
         <div className='container'>
             <h1>זמן צביעה</h1>
@@ -300,7 +401,9 @@ const Coloring = (props) => {
             </div>
             <div id="canvasGrid">
                 <p id="SeveralChanges1"></p>
-                <canvas id="canvasL" width="650" height="600">
+                <canvas id="canvasL" width="650" height="600" 
+                    onPointerUp={onClickReset}
+                    onPointerDown={handlePointerDownL}>
                     <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
                 </canvas>
                 <canvas id="canvasR" width="650" height="600">

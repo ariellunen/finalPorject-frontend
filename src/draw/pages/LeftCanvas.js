@@ -23,7 +23,7 @@ const LeftCanvas = (props) => {
                         let posy = event.clientY;
                         context.fillStyle = props.color.color;
                         context.beginPath();
-                        context.arc(posx, posy, 8, 0, 2 * Math.PI);
+                        context.arc(posx, posy, 20, 0, 2 * Math.PI);
                         context.fill();
                         props.handleCoordinate(posx, posy);
                     }
