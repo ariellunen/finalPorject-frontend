@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
@@ -11,7 +11,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 
+let url;
 let isColoring = false
+
 const Coloring = (props) => {
     let startedTime;
     useEffect(() => {
@@ -51,10 +53,10 @@ const Coloring = (props) => {
     let m1, m2;
     let pointM1 = 0;
     let pointM2 = 0;
-    let pointL = 0;
-    let indexL = 0;
-    let pointR = 0;
-    let indexR = 0;
+    var pointL = 0;
+    var indexL = 0;
+    var pointR = 0;
+    var indexR = 0;
 
     const frequencyL = () => {
         if (leftCoordinates[pointL + 1]?.x) {
@@ -63,28 +65,28 @@ const Coloring = (props) => {
                 frequencyL();
                 //clearInterval(timeIndex1);
             }
-            for (let i = 0; i < 10; i++) {
+            for (var i = 0; i < 10; i++) {
                 if (leftCoordinates[pointL] !== undefined) {
                     temp1.push(leftCoordinates[pointL])
                     pointL++;
                 }
             }
-            // console.log("temp = ", temp1);
-            for (let i = 0; i < 8; i++, indexL++) {
+            console.log("temp = ", temp1);
+            for (var i = 0; i < 8; i++, indexL++) {
                 if (temp1[indexL]?.x === temp1[indexL + 1]?.x) {
                     m1 = 0;
                 }
-                else {
+                else{
                     m1 = (((temp1[indexL].y) - (temp1[indexL + 1].y)) / ((temp1[indexL].x) - (temp1[indexL + 1].x)));
                 }
 
-                // console.log("m1", m1);
+                console.log("m1", m1);
                 // positive incline = 1, negative incline = 2
                 if (m1 > 0) { mm1.push(1); }
                 else if (m1 < 0) { mm1.push(2); }
-                // else { console.log("loTOV"); }
+                else { console.log("loTOV"); }
 
-                // console.log("mm1", mm1);
+                console.log("mm1", mm1);
                 // number of change direction
                 if (mm1.length >= 2) {
                     for (pointM1; pointM1 < mm1.length - 1; pointM1++) {
@@ -95,12 +97,12 @@ const Coloring = (props) => {
 
                         if (mm1[pointM1] !== mm1[pointM1 + 1]) {
                             change1++;
-                            seeChange1(change1 / 10);
+                            seeChange1(change1/10);
                         }
                     }
                 }
             }
-            if ((Math.abs(change1 / 10 - change2 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
+            if ((Math.abs(change1/10 - change2/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
@@ -113,14 +115,14 @@ const Coloring = (props) => {
             if (counter2 % 5 === 0) {
                 frequencyR();
             }
-            for (let i = 0; i < 10; i++) {
+            for (var i = 0; i < 10; i++) {
                 if (rightCoordinates[pointR] !== undefined) {
                     temp2.push(rightCoordinates[pointR])
                     pointR++;
                 }
             }
-            // console.log("temp = ", temp2);
-            for (let i = 0; i < 8; i++, indexR++) {
+            console.log("temp = ", temp2);
+            for (var i = 0; i < 8; i++, indexR++) {
                 if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
                     m2 = 0;
                 }
@@ -128,13 +130,13 @@ const Coloring = (props) => {
                     m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
                 }
 
-                // console.log("m2", m2);
+                console.log("m2", m2);
                 // positive incline = 1, negative incline = 2
                 if (m2 > 0) { mm2.push(1); }
                 else if (m2 < 0) { mm2.push(2); }
                 else { console.log("loTOV"); }
 
-                // console.log("mm2", mm2);
+                console.log("mm2", mm2);
                 // number of change direction
                 if (mm2.length >= 2) {
                     for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
@@ -145,24 +147,20 @@ const Coloring = (props) => {
 
                         if (mm2[pointM2] !== mm2[pointM2 + 1]) {
                             change2++;
-                            seeChange2(change2 / 10);
+                            seeChange2(change2/10);
                         }
                     }
                 }
             }
 
             // sync between 2 users, under 2 changes in the direcation
-            if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
+            if ((Math.abs(change2/10 - change1/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
     }
 
     //Time to finish voting
-    // useEffect(() => {
-    //     startTime(duration,display)
-    // },)
-
     const startTimer = (duration, display) => {
         let timer = duration, minutes, seconds;
         setInterval(function () {
@@ -175,7 +173,7 @@ const Coloring = (props) => {
                 timer = duration;
             }
         }, 1000);
-        setTimeout(history.replace('/'), 1200000);
+        setTimeout(handleOpen, 1200000);
     }
 
     //View changes on the left screen
@@ -192,7 +190,7 @@ const Coloring = (props) => {
         timeIndex1 = setInterval(frequencyL, 100);
         timeIndex2 = setInterval(frequencyR, 100);
         let fiveMinutes = 60 * 20,
-        display = document.querySelector('#timer');
+            display = document.querySelector('#timer');
         startTimer(fiveMinutes, display);
     };
 
@@ -200,28 +198,28 @@ const Coloring = (props) => {
 
     let user1;
     let user2;
-    const fetchGetAPI = async () => {
-        try {
+    const fetchGetAPI = async() => {
+        try{
             const response = await fetch('http://localhost:3000/api/users/', {
             });
             const responseData = await response.json();
             const len = responseData.users.length;
             user2 = responseData.users[len - 2];
-            user1 = responseData.users[len - 1];
+            user1 = responseData.users[len-1];
             console.log(user2, user1)
 
-        } catch (err) {
+        } catch(err) {
             console.log(err);
         }
     }
 
     const onSubmit = () => {
         fetchGetAPI();
-        setTimeout(async () => {
+        setTimeout(async() => {   
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
-                    headers: {
+                    headers:{
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -231,20 +229,70 @@ const Coloring = (props) => {
                         timeDone: new Date(),
                         sync: '10',
                         firstCoordinate: leftCoordinates,
-                        secondCoordinate: rightCoordinates
+                        secondCoordinate: rightCoordinates,
+                        video: url,
                     })
                 });
-
+    
                 const responseData = await response.json();
                 console.log(responseData);
-            } catch (err) {
+            } catch(err) {
                 console.log(err);
             }
         }, 2000);
+       
+        
     }
 
-    const [startPaintL, setStartPaintL] = useState(false)
+    const onRecord = async () => {
+        let stream = await navigator.mediaDevices.getDisplayMedia({
+            video: true
+        });
 
+        const mime = MediaRecorder.isTypeSupported("video/webm; codecs=vp9")
+            ? "video/webm; codecs=vp9"
+            : "video/webm"
+        let mediaRecorder = new MediaRecorder(stream, {
+            mimeType: mime
+        })
+
+        let chunks = []
+        mediaRecorder.addEventListener('dataavailable', function(e) {
+            console.log(e);
+            chunks.push(e.data)
+        })
+
+        mediaRecorder.addEventListener('stop', function(){
+            let blob = new Blob(chunks, {
+                type: chunks[0].type
+            })
+            console.log(blob);
+            url = URL.createObjectURL(blob);
+            
+            console.log("URLLLLLSSS",url);
+
+
+      
+            let video = document.querySelector("video")
+            console.log("videoOO",video);
+            video.src = url
+      
+
+            // let a = document.createElement('a')
+            // a.href = url
+            // a.download = 'video.webm'
+            // a.click()
+        })
+
+        //we have to start the recorder manually
+        mediaRecorder.start()
+    }
+
+    useEffect(() => {
+        onRecord();
+    }, [])
+
+    
     // We need ref in this, because we are dealing
     // with JS setInterval to keep track of it and
     // stop it when needed
@@ -322,7 +370,7 @@ const Coloring = (props) => {
     // button first we create function to be called
     // by the button
     const onClickReset = () => {
-        setStartPaintL(false)
+        // setStartPaintL(false)
         isColoring = false
         setTimeout(() => {
         }, 2000);
@@ -336,7 +384,7 @@ const Coloring = (props) => {
     const handlePointerDownL = () => {
         console.log('start');
         isColoring = true
-        setStartPaintL(true)
+        // setStartPaintL(true)
         console.log(isColoring);
     }
 
@@ -346,6 +394,8 @@ const Coloring = (props) => {
     return (
         <div className='container'>
             <h1>זמן צביעה</h1>
+            <Button className="record-btn" onClick={onRecord}>record</Button>
+            <video className="video" width="600px" controls></video>
             <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
             <div>
                 <p id="b"></p>
@@ -367,7 +417,7 @@ const Coloring = (props) => {
                 DONE
             </Button>
             {done && history.replace('/analysis', right)} */}
-
+            
             <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
 
         </div>
