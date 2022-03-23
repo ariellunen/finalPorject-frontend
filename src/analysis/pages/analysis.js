@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const Analysis = (props) => {
     let drawing;
+    console.log(props)
     useState(async () => {
         try{
             const response = await fetch('http://localhost:3000/api/drawing/', {

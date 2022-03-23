@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+
+let isColoring = false
 const Coloring = (props) => {
     let startedTime;
     useEffect(() => {
@@ -49,10 +51,10 @@ const Coloring = (props) => {
     let m1, m2;
     let pointM1 = 0;
     let pointM2 = 0;
-    var pointL = 0;
-    var indexL = 0;
-    var pointR = 0;
-    var indexR = 0;
+    let pointL = 0;
+    let indexL = 0;
+    let pointR = 0;
+    let indexR = 0;
 
     const frequencyL = () => {
         if (leftCoordinates[pointL + 1]?.x) {
@@ -61,28 +63,28 @@ const Coloring = (props) => {
                 frequencyL();
                 //clearInterval(timeIndex1);
             }
-            for (var i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++) {
                 if (leftCoordinates[pointL] !== undefined) {
                     temp1.push(leftCoordinates[pointL])
                     pointL++;
                 }
             }
-            console.log("temp = ", temp1);
-            for (var i = 0; i < 8; i++, indexL++) {
+            // console.log("temp = ", temp1);
+            for (let i = 0; i < 8; i++, indexL++) {
                 if (temp1[indexL]?.x === temp1[indexL + 1]?.x) {
                     m1 = 0;
                 }
-                else{
+                else {
                     m1 = (((temp1[indexL].y) - (temp1[indexL + 1].y)) / ((temp1[indexL].x) - (temp1[indexL + 1].x)));
                 }
 
-                console.log("m1", m1);
+                // console.log("m1", m1);
                 // positive incline = 1, negative incline = 2
                 if (m1 > 0) { mm1.push(1); }
                 else if (m1 < 0) { mm1.push(2); }
-                else { console.log("loTOV"); }
+                // else { console.log("loTOV"); }
 
-                console.log("mm1", mm1);
+                // console.log("mm1", mm1);
                 // number of change direction
                 if (mm1.length >= 2) {
                     for (pointM1; pointM1 < mm1.length - 1; pointM1++) {
@@ -93,12 +95,12 @@ const Coloring = (props) => {
 
                         if (mm1[pointM1] !== mm1[pointM1 + 1]) {
                             change1++;
-                            seeChange1(change1/10);
+                            seeChange1(change1 / 10);
                         }
                     }
                 }
             }
-            if ((Math.abs(change1/10 - change2/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
+            if ((Math.abs(change1 / 10 - change2 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
@@ -111,14 +113,14 @@ const Coloring = (props) => {
             if (counter2 % 5 === 0) {
                 frequencyR();
             }
-            for (var i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++) {
                 if (rightCoordinates[pointR] !== undefined) {
                     temp2.push(rightCoordinates[pointR])
                     pointR++;
                 }
             }
-            console.log("temp = ", temp2);
-            for (var i = 0; i < 8; i++, indexR++) {
+            // console.log("temp = ", temp2);
+            for (let i = 0; i < 8; i++, indexR++) {
                 if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
                     m2 = 0;
                 }
@@ -126,13 +128,13 @@ const Coloring = (props) => {
                     m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
                 }
 
-                console.log("m2", m2);
+                // console.log("m2", m2);
                 // positive incline = 1, negative incline = 2
                 if (m2 > 0) { mm2.push(1); }
                 else if (m2 < 0) { mm2.push(2); }
                 else { console.log("loTOV"); }
 
-                console.log("mm2", mm2);
+                // console.log("mm2", mm2);
                 // number of change direction
                 if (mm2.length >= 2) {
                     for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
@@ -143,20 +145,24 @@ const Coloring = (props) => {
 
                         if (mm2[pointM2] !== mm2[pointM2 + 1]) {
                             change2++;
-                            seeChange2(change2/10);
+                            seeChange2(change2 / 10);
                         }
                     }
                 }
             }
 
             // sync between 2 users, under 2 changes in the direcation
-            if ((Math.abs(change2/10 - change1/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
+            if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
     }
 
     //Time to finish voting
+    // useEffect(() => {
+    //     startTime(duration,display)
+    // },)
+
     const startTimer = (duration, display) => {
         let timer = duration, minutes, seconds;
         setInterval(function () {
@@ -169,7 +175,7 @@ const Coloring = (props) => {
                 timer = duration;
             }
         }, 1000);
-        setTimeout(handleOpen, 1200000);
+        setTimeout(history.replace('/'), 1200000);
     }
 
     //View changes on the left screen
@@ -186,7 +192,7 @@ const Coloring = (props) => {
         timeIndex1 = setInterval(frequencyL, 100);
         timeIndex2 = setInterval(frequencyR, 100);
         let fiveMinutes = 60 * 20,
-            display = document.querySelector('#timer');
+        display = document.querySelector('#timer');
         startTimer(fiveMinutes, display);
     };
 
@@ -194,28 +200,28 @@ const Coloring = (props) => {
 
     let user1;
     let user2;
-    const fetchGetAPI = async() => {
-        try{
+    const fetchGetAPI = async () => {
+        try {
             const response = await fetch('http://localhost:3000/api/users/', {
             });
             const responseData = await response.json();
             const len = responseData.users.length;
             user2 = responseData.users[len - 2];
-            user1 = responseData.users[len-1];
+            user1 = responseData.users[len - 1];
             console.log(user2, user1)
 
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
     }
 
     const onSubmit = () => {
         fetchGetAPI();
-        setTimeout(async() => {   
+        setTimeout(async () => {
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
-                    headers:{
+                    headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -228,16 +234,114 @@ const Coloring = (props) => {
                         secondCoordinate: rightCoordinates
                     })
                 });
-    
+
                 const responseData = await response.json();
                 console.log(responseData);
-            } catch(err) {
+            } catch (err) {
                 console.log(err);
             }
         }, 2000);
-       
-        
     }
+
+    const [startPaintL, setStartPaintL] = useState(false)
+
+    // We need ref in this, because we are dealing
+    // with JS setInterval to keep track of it and
+    // stop it when needed
+    const Ref = useRef(null);
+
+    // The state for our timer
+    const [timer, setTimer] = useState('00:00:00');
+
+
+    const getTimeRemaining = (e) => {
+        const total = Date.parse(e) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / 1000 * 60 * 60) % 24);
+        return {
+            total, hours, minutes, seconds
+        };
+    }
+
+
+    const startTime = (e) => {
+        let { total, hours, minutes, seconds } = getTimeRemaining(e);
+        if (total >= 0) {
+            console.log("start counting");
+            // update the timer
+            // check if less than 10 then we need to 
+            // add '0' at the begining of the variable
+            setTimer(
+                (hours > 9 ? hours : '0' + hours) + ':' +
+                (minutes > 9 ? minutes : '0' + minutes) + ':'
+                + (seconds > 9 ? seconds : '0' + seconds)
+            )
+            if(total === 0 && !isColoring){
+                change1 = 0;
+                console.log('ddddddd');
+            }
+        }
+    }
+
+    const clearTimer = (e) => {
+        // If you adjust it you should also need to
+        // adjust the Endtime formula we are about
+        // to code next    
+        setTimer('00:00:10');
+        // If you try to remove this line the 
+        // updating of timer Variable will be
+        // after 1000ms or 1sec
+        if (Ref.current) clearInterval(Ref.current);
+        const id = setInterval(() => {
+            startTime(e);
+        }, 1000)
+        Ref.current = id;
+    }
+
+    const getDeadTime = () => {
+        let deadline = new Date();
+
+        // This is where you need to adjust if 
+        // you entend to add more time
+        deadline.setSeconds(deadline.getSeconds() + 10);
+        return deadline;
+    }
+
+    // We can use useEffect so that when the component
+    // mount the timer will start as soon as possible
+
+    // We put empty array to act as componentDid
+    // mount only
+    // useEffect(() => {
+    //     clearTimer(getDeadTime());
+    // }, []);
+
+    // Another way to call the clearTimer() to start
+    // the countdown is via action event from the
+    // button first we create function to be called
+    // by the button
+    const onClickReset = () => {
+        setStartPaintL(false)
+        isColoring = false
+        setTimeout(() => {
+        }, 2000);
+        console.log("$$$$$$$$$$$$$$$$$$$$$$4",isColoring);
+
+        console.log('restart')
+
+        clearTimer(getDeadTime());
+    }
+
+    const handlePointerDownL = () => {
+        console.log('start');
+        isColoring = true
+        setStartPaintL(true)
+        console.log(isColoring);
+    }
+
+    console.log(isColoring);
+
 
     return (
         <div className='container'>
@@ -248,7 +352,9 @@ const Coloring = (props) => {
             </div>
             <div id="canvasGrid">
                 <p id="SeveralChanges1"></p>
-                <canvas id="canvasL" width="650" height="600">
+                <canvas id="canvasL" width="650" height="600" 
+                    onPointerUp={onClickReset}
+                    onPointerDown={handlePointerDownL}>
                     <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
                 </canvas>
                 <canvas id="canvasR" width="650" height="600">
@@ -261,7 +367,7 @@ const Coloring = (props) => {
                 DONE
             </Button>
             {done && history.replace('/analysis', right)} */}
-            
+
             <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
 
         </div>
