@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+
+let url;
 const Coloring = (props) => {
     let startedTime;
     useEffect(() => {
@@ -225,7 +227,8 @@ const Coloring = (props) => {
                         timeDone: new Date(),
                         sync: '10',
                         firstCoordinate: leftCoordinates,
-                        secondCoordinate: rightCoordinates
+                        secondCoordinate: rightCoordinates,
+                        video: url,
                     })
                 });
     
@@ -239,9 +242,59 @@ const Coloring = (props) => {
         
     }
 
+    const onRecord = async () => {
+        let stream = await navigator.mediaDevices.getDisplayMedia({
+            video: true
+        });
+
+        const mime = MediaRecorder.isTypeSupported("video/webm; codecs=vp9")
+            ? "video/webm; codecs=vp9"
+            : "video/webm"
+        let mediaRecorder = new MediaRecorder(stream, {
+            mimeType: mime
+        })
+
+        let chunks = []
+        mediaRecorder.addEventListener('dataavailable', function(e) {
+            console.log(e);
+            chunks.push(e.data)
+        })
+
+        mediaRecorder.addEventListener('stop', function(){
+            let blob = new Blob(chunks, {
+                type: chunks[0].type
+            })
+            console.log(blob);
+            url = URL.createObjectURL(blob);
+            
+            console.log("URLLLLLSSS",url);
+
+
+      
+            let video = document.querySelector("video")
+            console.log("videoOO",video);
+            video.src = url
+      
+
+            // let a = document.createElement('a')
+            // a.href = url
+            // a.download = 'video.webm'
+            // a.click()
+        })
+
+        //we have to start the recorder manually
+        mediaRecorder.start()
+    }
+
+    useEffect(() => {
+        onRecord();
+    }, [])
+
     return (
         <div className='container'>
             <h1>זמן צביעה</h1>
+            <Button className="record-btn" onClick={onRecord}>record</Button>
+            <video className="video" width="600px" controls></video>
             <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
             <div>
                 <p id="b"></p>
