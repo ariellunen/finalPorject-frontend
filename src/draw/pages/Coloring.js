@@ -266,7 +266,6 @@ const Coloring = (props) => {
             })
             console.log(blob);
             url = URL.createObjectURL(blob);
-            
             console.log("URLLLLLSSS",url);
 
 
