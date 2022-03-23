@@ -86,19 +86,19 @@ const Coloring = (props) => {
                 // number of change direction
                 if (mm1.length >= 2) {
                     for (pointM1; pointM1 < mm1.length - 1; pointM1++) {
-                        console.log("pointM1=", pointM1)
-                        console.log(mm1[pointM1])
-                        console.log("mm1[pointM1]=", mm1[pointM1]);
-                        console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
+                        // console.log("pointM1=", pointM1)
+                        // console.log(mm1[pointM1])
+                        // console.log("mm1[pointM1]=", mm1[pointM1]);
+                        // console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
 
                         if (mm1[pointM1] !== mm1[pointM1 + 1]) {
                             change1++;
-                            seeChange1(change1);
+                            seeChange1(change1/10);
                         }
                     }
                 }
             }
-            if ((Math.abs(change1 - change2) <= 2) && (Math.abs(change2 - change1) > 0)) {
+            if ((Math.abs(change1/10 - change2/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
@@ -136,21 +136,21 @@ const Coloring = (props) => {
                 // number of change direction
                 if (mm2.length >= 2) {
                     for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
-                        console.log("pointM2=", pointM2)
-                        console.log(mm2[pointM2])
-                        console.log("mm2[pointM2]=", mm2[pointM2]);
-                        console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
+                        // console.log("pointM2=", pointM2)
+                        // console.log(mm2[pointM2])
+                        // console.log("mm2[pointM2]=", mm2[pointM2]);
+                        // console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
 
                         if (mm2[pointM2] !== mm2[pointM2 + 1]) {
                             change2++;
-                            seeChange2(change2);
+                            seeChange2(change2/10);
                         }
                     }
                 }
             }
 
             // sync between 2 users, under 2 changes in the direcation
-            if ((Math.abs(change2 - change1) <= 2) && (Math.abs(change2 - change1) > 0)) {
+            if ((Math.abs(change2/10 - change1/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
