@@ -13,12 +13,17 @@ import Modal from '@mui/material/Modal';
 
 let url;
 let isColoring = false
+let startedTime;
 
 const Coloring = (props) => {
-    let startedTime;
+    const [afterUseEffect, setAfterUseEffect] = useState(false)
+
     useEffect(() => {
         startedTime = new Date();
-    }, []);
+        onRecord();
+        onLoadTime();
+    }, [startedTime]);
+
     const location = useLocation();
     let leftCoordinates = [];
     let rightCoordinates = [];
@@ -76,7 +81,7 @@ const Coloring = (props) => {
                 if (temp1[indexL]?.x === temp1[indexL + 1]?.x) {
                     m1 = 0;
                 }
-                else{
+                else {
                     m1 = (((temp1[indexL].y) - (temp1[indexL + 1].y)) / ((temp1[indexL].x) - (temp1[indexL + 1].x)));
                 }
 
@@ -97,12 +102,12 @@ const Coloring = (props) => {
 
                         if (mm1[pointM1] !== mm1[pointM1 + 1]) {
                             change1++;
-                            seeChange1(change1/10);
+                            seeChange1(change1 / 10);
                         }
                     }
                 }
             }
-            if ((Math.abs(change1/10 - change2/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
+            if ((Math.abs(change1 / 10 - change2 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
@@ -147,14 +152,14 @@ const Coloring = (props) => {
 
                         if (mm2[pointM2] !== mm2[pointM2 + 1]) {
                             change2++;
-                            seeChange2(change2/10);
+                            seeChange2(change2 / 10);
                         }
                     }
                 }
             }
 
             // sync between 2 users, under 2 changes in the direcation
-            if ((Math.abs(change2/10 - change1/10) <= 1) && (Math.abs(change2/10 - change1/10) > 0)) {
+            if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
                 document.getElementById("b").innerHTML += "F ";
             }
         }
@@ -186,40 +191,49 @@ const Coloring = (props) => {
         document.getElementById("SeveralChanges2").innerHTML = change2;
     }
 
-    window.onload = function () {
+    // window.onload = function () {
+    //     timeIndex1 = setInterval(frequencyL, 100);
+    //     timeIndex2 = setInterval(frequencyR, 100);
+    //     let fiveMinutes = 60 * 20,
+    //         display = document.querySelector('#timer');
+    //     startTimer(fiveMinutes, display);
+    // };
+
+    const onLoadTime = () => {
         timeIndex1 = setInterval(frequencyL, 100);
         timeIndex2 = setInterval(frequencyR, 100);
         let fiveMinutes = 60 * 20,
             display = document.querySelector('#timer');
         startTimer(fiveMinutes, display);
-    };
+        setAfterUseEffect(true)
+    }
 
     ///////////////////////////////////////////////////
 
     let user1;
     let user2;
-    const fetchGetAPI = async() => {
-        try{
+    const fetchGetAPI = async () => {
+        try {
             const response = await fetch('http://localhost:3000/api/users/', {
             });
             const responseData = await response.json();
             const len = responseData.users.length;
             user2 = responseData.users[len - 2];
-            user1 = responseData.users[len-1];
+            user1 = responseData.users[len - 1];
             console.log(user2, user1)
 
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
     }
 
     const onSubmit = () => {
         fetchGetAPI();
-        setTimeout(async() => {   
+        setTimeout(async () => {
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
-                    headers:{
+                    headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -233,15 +247,15 @@ const Coloring = (props) => {
                         video: url,
                     })
                 });
-    
+
                 const responseData = await response.json();
                 console.log(responseData);
-            } catch(err) {
+            } catch (err) {
                 console.log(err);
             }
         }, 2000);
-       
-        
+
+
     }
 
     const onRecord = async () => {
@@ -257,11 +271,11 @@ const Coloring = (props) => {
         })
 
         let chunks = []
-        mediaRecorder.addEventListener('dataavailable', function(e) {
+        mediaRecorder.addEventListener('dataavailable', function (e) {
             chunks.push(e.data)
         })
 
-        mediaRecorder.addEventListener('stop', function(){
+        mediaRecorder.addEventListener('stop', function () {
             let blob = new Blob(chunks, {
                 type: chunks[0].type
             })
@@ -269,9 +283,9 @@ const Coloring = (props) => {
             // console.log("URLLLLLSSS",url);
 
             let video = document.querySelector("video")
-            console.log("videoOO",video);
+            console.log("videoOO", video);
             video.src = url
-      
+
 
             let a = document.createElement('a')
             a.href = url
@@ -283,11 +297,8 @@ const Coloring = (props) => {
         mediaRecorder.start()
     }
 
-    useEffect(() => {
-        onRecord();
-    }, [])
 
-    
+
     // We need ref in this, because we are dealing
     // with JS setInterval to keep track of it and
     // stop it when needed
@@ -320,7 +331,7 @@ const Coloring = (props) => {
                 (minutes > 9 ? minutes : '0' + minutes) + ':'
                 + (seconds > 9 ? seconds : '0' + seconds)
             )
-            if(total === 0 && !isColoring){
+            if (total === 0 && !isColoring) {
                 change1 = 0;
                 console.log('ddddddd');
             }
@@ -369,7 +380,7 @@ const Coloring = (props) => {
         isColoring = false
         setTimeout(() => {
         }, 2000);
-        console.log("$$$$$$$$$$$$$$$$$$$$$$4",isColoring);
+        console.log("$$$$$$$$$$$$$$$$$$$$$$4", isColoring);
 
         console.log('restart')
 
@@ -384,36 +395,31 @@ const Coloring = (props) => {
     }
 
     return (
-        <div className='container'>
-            <h1>זמן צביעה</h1>
-            {/* <Button className="record-btn" onClick={onRecord}>record</Button> */}
-            <video className="video" width="600px" controls></video>
-            <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
-            <div>
-                <p id="b"></p>
-            </div>
-            <div id="canvasGrid">
-                <p id="SeveralChanges1"></p>
-                <canvas id="canvasL" width="650" height="600" 
+        <React.Fragment>
+            {afterUseEffect && <div className='container'>
+                <h1>זמן צביעה</h1>
+                {/* <Button className="record-btn" onClick={onRecord}>record</Button> */}
+                <video className="video" width="600px" controls></video>
+                <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
+                <div>
+                    <p id="b"></p>
+                </div>
+                <div id="canvasGrid">
+                    <p id="SeveralChanges1"></p>
+                    <canvas id="canvasL" width="650" height="600"
                     // onPointerUp={onClickReset}
                     // onPointerDown={handlePointerDownL}
-                >
-                    <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
-                </canvas>
-                <canvas id="canvasR" width="650" height="600">
-                    <RightCanvas handleCoordinate={handleRightCoordinate} color={location.state[1]} />
-                </canvas>
-                <p id="SeveralChanges2"></p>
-            </div>
-
-            {/* <Button variant="contained" color="primary" onClick={handleFinish}>
-                DONE
-            </Button>
-            {done && history.replace('/analysis', right)} */}
-            
-            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
-
-        </div>
+                    >
+                        <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
+                    </canvas>
+                    <canvas id="canvasR" width="650" height="600">
+                        <RightCanvas handleCoordinate={handleRightCoordinate} color={location.state[1]} />
+                    </canvas>
+                    <p id="SeveralChanges2"></p>
+                </div>
+                <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
+            </div>}
+        </React.Fragment>
     )
 };
 
