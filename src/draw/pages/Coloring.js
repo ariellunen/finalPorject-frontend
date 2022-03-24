@@ -9,25 +9,39 @@ import Users from '../../user/pages/Users';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 let url;
 let isColoring = false
-let startedTime;
+// let startedTime;
+//var frequency algorithem 
+let counter1 = 0, counter2 = 0;
+let timeIndex1, timeIndex2;
+let mm1 = [], mm2 = [], temp1 = [], temp2 = [];
+let change1 = 0, change2 = 0;
+let m1, m2;
+let pointM1 = 0;
+let pointM2 = 0;
+let pointL = 0;
+let indexL = 0;
+let pointR = 0;
+let indexR = 0;
 
 const Coloring = (props) => {
-    const [afterUseEffect, setAfterUseEffect] = useState(false)
+    const [startedTime, setStartedTime] = useState(0);
 
     useEffect(() => {
-        startedTime = new Date();
+        setStartedTime(new Date());
         onRecord();
-        onLoadTime();
-    }, [startedTime]);
+        // clearTimer(getDeadTime());
+        // timeIndex1 = setInterval(frequencyL, 100);
+        // timeIndex2 = setInterval(frequencyR, 100);
+    }, []);
 
     const location = useLocation();
     let leftCoordinates = [];
     let rightCoordinates = [];
-    const history = useHistory();
 
     const handleLeftCoordinate = (x, y) => {
         leftCoordinates.push({ x, y });
@@ -38,30 +52,6 @@ const Coloring = (props) => {
         rightCoordinates.push({ x, y });
         //console.log("right", rightCoordinates);
     }
-
-    // const handleFinish = () => {
-    //     setLeft(leftCoordinates);
-    //     setRight(rightCoordinates);
-    //     history.push({state: {left: left, right:right}});
-    //     setDone(true);
-    // }
-
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    //var frequency algorithem 
-    let counter1 = 0, counter2 = 0;
-    let timeIndex1, timeIndex2;
-    let mm1 = [], mm2 = [], temp1 = [], temp2 = [];
-    let change1 = 0, change2 = 0;
-    let m1, m2;
-    let pointM1 = 0;
-    let pointM2 = 0;
-    var pointL = 0;
-    var indexL = 0;
-    var pointR = 0;
-    var indexR = 0;
 
     const frequencyL = () => {
         if (leftCoordinates[pointL + 1]?.x) {
@@ -166,20 +156,21 @@ const Coloring = (props) => {
     }
 
     //Time to finish voting
-    const startTimer = (duration, display) => {
-        let timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            display.textContent = minutes + ":" + seconds;
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-        setTimeout(handleOpen, 1200000);
-    }
+    // const startTimer = (duration, display) => {
+    //     let timer = duration, minutes, seconds;
+    //     setInterval(function () {
+    //         minutes = parseInt(timer / 60, 10);
+    //         seconds = parseInt(timer % 60, 10);
+    //         minutes = minutes < 10 ? "0" + minutes : minutes;
+    //         seconds = seconds < 10 ? "0" + seconds : seconds;
+    //         console.log(display);
+    //         display.textContent = minutes + ":" + seconds;
+    //         if (--timer < 0) {
+    //             timer = duration;
+    //         }
+    //     }, 1000);
+    //     setTimeout(handleOpen, 1200000);
+    // }
 
     //View changes on the left screen
     const seeChange1 = (change1) => {
@@ -188,24 +179,76 @@ const Coloring = (props) => {
 
     //View changes to the right screen
     const seeChange2 = (change2) => {
+        console.log(change2)
         document.getElementById("SeveralChanges2").innerHTML = change2;
     }
 
-    // window.onload = function () {
+    // const onLoadTime = () => {
     //     timeIndex1 = setInterval(frequencyL, 100);
     //     timeIndex2 = setInterval(frequencyR, 100);
-    //     let fiveMinutes = 60 * 20,
-    //         display = document.querySelector('#timer');
-    //     startTimer(fiveMinutes, display);
-    // };
+    //     let fiveMinutes = 60 * 20;
+    //     let display = document.querySelector('#timer');
 
-    const onLoadTime = () => {
-        timeIndex1 = setInterval(frequencyL, 100);
-        timeIndex2 = setInterval(frequencyR, 100);
-        let fiveMinutes = 60 * 20,
-            display = document.querySelector('#timer');
-        startTimer(fiveMinutes, display);
-        setAfterUseEffect(true)
+    //     console.log(display);
+    //     startTimer(fiveMinutes, display);
+    //     setAfterUseEffect(true)
+    // }
+
+    /////////////////////-20 MINUTES TIMER-//////////////////////////////
+
+    const Ref = useRef(null);
+
+    // The state for our timer
+    const [timer, setTimer] = useState('00:00:00');
+
+    const getTimeRemaining = (e) => {
+        const total = Date.parse(e) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / 1000 * 60 * 60) % 24);
+        return {
+            total, hours, minutes, seconds
+        };
+    }
+
+    const startTimer = (e) => {
+        let { total, hours, minutes, seconds } = getTimeRemaining(e);
+        if (total >= 0) {
+
+            // update the timer
+            setTimer(
+                (hours > 9 ? hours : '0' + hours) + ':' +
+                (minutes > 9 ? minutes : '0' + minutes) + ':'
+                + (seconds > 9 ? seconds : '0' + seconds)
+            )
+        }
+    }
+
+    const clearTimer = (e) => {
+        setTimer('00:20:00');
+        if (Ref.current) clearInterval(Ref.current);
+        const id = setInterval(() => {
+            startTimer(e);
+        }, 1000)
+        Ref.current = id;
+    }
+
+    const getDeadTime = () => {
+        let deadline = new Date();
+
+        deadline.setSeconds(deadline.getSeconds() + 1200);
+        return deadline;
+    }
+
+    // useEffect(() => {
+    //     clearTimer(getDeadTime());
+    //     timeIndex1 = setInterval(frequencyL, 100);
+    //     timeIndex2 = setInterval(frequencyR, 100);
+    // }, []);
+
+
+    const onClickReset = () => {
+        clearTimer(getDeadTime());
     }
 
     ///////////////////////////////////////////////////
@@ -254,8 +297,6 @@ const Coloring = (props) => {
                 console.log(err);
             }
         }, 2000);
-
-
     }
 
     const onRecord = async () => {
@@ -295,112 +336,121 @@ const Coloring = (props) => {
 
         //we have to start the recorder manually
         mediaRecorder.start()
+        clearTimer(getDeadTime());
+        timeIndex1 = setInterval(frequencyL, 100);
+        timeIndex2 = setInterval(frequencyR, 100);
     }
-
-
 
     // We need ref in this, because we are dealing
     // with JS setInterval to keep track of it and
     // stop it when needed
-    const Ref = useRef(null);
+    // const Ref = useRef(null);
 
-    // The state for our timer
-    const [timer, setTimer] = useState('00:00:00');
-
-
-    const getTimeRemaining = (e) => {
-        const total = Date.parse(e) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        const hours = Math.floor((total / 1000 * 60 * 60) % 24);
-        return {
-            total, hours, minutes, seconds
-        };
-    }
+    // // The state for our timer
+    // const [timer, setTimer] = useState('00:00:00');
 
 
-    const startTime = (e) => {
-        let { total, hours, minutes, seconds } = getTimeRemaining(e);
-        if (total >= 0) {
-            console.log("start counting");
-            // update the timer
-            // check if less than 10 then we need to 
-            // add '0' at the begining of the variable
-            setTimer(
-                (hours > 9 ? hours : '0' + hours) + ':' +
-                (minutes > 9 ? minutes : '0' + minutes) + ':'
-                + (seconds > 9 ? seconds : '0' + seconds)
-            )
-            if (total === 0 && !isColoring) {
-                change1 = 0;
-                console.log('ddddddd');
-            }
-        }
-    }
+    // const getTimeRemaining = (e) => {
+    //     const total = Date.parse(e) - Date.parse(new Date());
+    //     const seconds = Math.floor((total / 1000) % 60);
+    //     const minutes = Math.floor((total / 1000 / 60) % 60);
+    //     const hours = Math.floor((total / 1000 * 60 * 60) % 24);
+    //     return {
+    //         total, hours, minutes, seconds
+    //     };
+    // }
 
-    const clearTimer = (e) => {
-        // If you adjust it you should also need to
-        // adjust the Endtime formula we are about
-        // to code next    
-        setTimer('00:00:10');
-        // If you try to remove this line the 
-        // updating of timer Variable will be
-        // after 1000ms or 1sec
-        if (Ref.current) clearInterval(Ref.current);
-        const id = setInterval(() => {
-            startTime(e);
-        }, 1000)
-        Ref.current = id;
-    }
 
-    const getDeadTime = () => {
-        let deadline = new Date();
+    // const startTime = (e) => {
+    //     let { total, hours, minutes, seconds } = getTimeRemaining(e);
+    //     if (total >= 0) {
+    //         console.log("start counting");
+    //         // update the timer
+    //         // check if less than 10 then we need to 
+    //         // add '0' at the begining of the variable
+    //         setTimer(
+    //             (hours > 9 ? hours : '0' + hours) + ':' +
+    //             (minutes > 9 ? minutes : '0' + minutes) + ':'
+    //             + (seconds > 9 ? seconds : '0' + seconds)
+    //         )
+    //         if (total === 0 && !isColoring) {
+    //             change1 = 0;
+    //             console.log('ddddddd');
+    //         }
+    //     }
+    // }
 
-        // This is where you need to adjust if 
-        // you entend to add more time
-        deadline.setSeconds(deadline.getSeconds() + 10);
-        return deadline;
-    }
+    // const clearTimer = (e) => {
+    //     // If you adjust it you should also need to
+    //     // adjust the Endtime formula we are about
+    //     // to code next    
+    //     setTimer('00:00:10');
+    //     // If you try to remove this line the 
+    //     // updating of timer Variable will be
+    //     // after 1000ms or 1sec
+    //     if (Ref.current) clearInterval(Ref.current);
+    //     const id = setInterval(() => {
+    //         startTime(e);
+    //     }, 1000)
+    //     Ref.current = id;
+    // }
 
-    // We can use useEffect so that when the component
-    // mount the timer will start as soon as possible
+    // const getDeadTime = () => {
+    //     let deadline = new Date();
 
-    // We put empty array to act as componentDid
-    // mount only
-    // useEffect(() => {
+    //     // This is where you need to adjust if 
+    //     // you entend to add more time
+    //     deadline.setSeconds(deadline.getSeconds() + 10);
+    //     return deadline;
+    // }
+
+    // // We can use useEffect so that when the component
+    // // mount the timer will start as soon as possible
+
+    // // We put empty array to act as componentDid
+    // // mount only
+    // // useEffect(() => {
+    // //     clearTimer(getDeadTime());
+    // // }, []);
+
+    // // Another way to call the clearTimer() to start
+    // // the countdown is via action event from the
+    // // button first we create function to be called
+    // // by the button
+    // const onClickReset = () => {
+    //     // setStartPaintL(false)
+    //     isColoring = false
+    //     setTimeout(() => {
+    //     }, 2000);
+    //     console.log("$$$$$$$$$$$$$$$$$$$$$$4", isColoring);
+
+    //     console.log('restart')
+
     //     clearTimer(getDeadTime());
-    // }, []);
+    // }
 
-    // Another way to call the clearTimer() to start
-    // the countdown is via action event from the
-    // button first we create function to be called
-    // by the button
-    const onClickReset = () => {
-        // setStartPaintL(false)
-        isColoring = false
-        setTimeout(() => {
-        }, 2000);
-        console.log("$$$$$$$$$$$$$$$$$$$$$$4", isColoring);
-
-        console.log('restart')
-
-        clearTimer(getDeadTime());
-    }
-
-    const handlePointerDownL = () => {
-        console.log('start');
-        isColoring = true
-        // setStartPaintL(true)
-        console.log(isColoring);
-    }
+    // const handlePointerDownL = () => {
+    //     console.log('start');
+    //     isColoring = true
+    //     // setStartPaintL(true)
+    //     console.log(isColoring);
+    // }
 
     return (
         <React.Fragment>
-            {afterUseEffect && <div className='container'>
+            {/* {!afterUseEffect &&
+                <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
+            } */}
+            <div className='container'>
                 <h1>זמן צביעה</h1>
                 {/* <Button className="record-btn" onClick={onRecord}>record</Button> */}
                 <video className="video" width="600px" controls></video>
-                <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div>
+                <div id='time'>
+                    <h2>{timer}</h2>
+                </div>
+                {/* <div id="time">הזמן שנותר הוא: <span id="timer">20:00</span> דקות</div> */}
                 <div>
                     <p id="b"></p>
                 </div>
@@ -418,7 +468,7 @@ const Coloring = (props) => {
                     <p id="SeveralChanges2"></p>
                 </div>
                 <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
-            </div>}
+            </div>
         </React.Fragment>
     )
 };
