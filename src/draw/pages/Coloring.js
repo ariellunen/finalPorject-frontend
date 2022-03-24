@@ -383,9 +383,6 @@ const Coloring = (props) => {
         console.log(isColoring);
     }
 
-    console.log(isColoring);
-
-
     return (
         <div className='container'>
             <h1>זמן צביעה</h1>
@@ -398,8 +395,9 @@ const Coloring = (props) => {
             <div id="canvasGrid">
                 <p id="SeveralChanges1"></p>
                 <canvas id="canvasL" width="650" height="600" 
-                    onPointerUp={onClickReset}
-                    onPointerDown={handlePointerDownL}>
+                    // onPointerUp={onClickReset}
+                    // onPointerDown={handlePointerDownL}
+                >
                     <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} />
                 </canvas>
                 <canvas id="canvasR" width="650" height="600">

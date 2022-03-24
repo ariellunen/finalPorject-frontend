@@ -3,6 +3,9 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './User.css';
+require('firebase/database');
+require('firebase/auth');
+require('firebase/storage');
 
 const Users = (props) => {
   return (

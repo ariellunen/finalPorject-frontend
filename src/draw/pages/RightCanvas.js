@@ -29,12 +29,12 @@ const RightCanvas = (props) => {
                     }
                 }
             })
-            .on('doubletap', function (event) {
-                let context = event.target.getContext('2d')
+            // .on('doubletap', function (event) {
+            //     let context = event.target.getContext('2d')
 
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height)
-                resizeCanvases()
-            })
+            //     context.clearRect(0, 0, context.canvas.width, context.canvas.height)
+            //     resizeCanvases()
+            // })
 
         function resizeCanvases() {
             [].forEach.call(document.querySelectorAll('#canvasR'), function (
