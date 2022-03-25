@@ -25,16 +25,11 @@ const RightCanvas = (props) => {
                         context.beginPath();
                         context.arc(posx, posy, 20, 0, 2 * Math.PI);
                         context.fill();
-                        props.handleCoordinate(posx, posy);
+                        props.setRight({x:posx, y:posy});
+
                     }
                 }
             })
-            // .on('doubletap', function (event) {
-            //     let context = event.target.getContext('2d')
-
-            //     context.clearRect(0, 0, context.canvas.width, context.canvas.height)
-            //     resizeCanvases()
-            // })
 
         function resizeCanvases() {
             [].forEach.call(document.querySelectorAll('#canvasR'), function (

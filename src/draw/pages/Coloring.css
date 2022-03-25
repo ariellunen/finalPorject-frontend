@@ -3,18 +3,6 @@
     margin: 0;
 }
 
-.modal{
-    position: 'absolute';
-    top: '50%';
-    left: '50%';
-    transform: 'translate(-50%; -50%)';
-    width: 400;
-    background-color: 'white';
-    border: '2px solid #000';
-    box-shadow: 24;
-  /* p: 4; */
-}
-
 #time{
   text-align: right;
   margin-right: 20px;
@@ -44,6 +32,3 @@ h1{
   width: 200px;
 }
 
-.video{
-  display: none;
-}
