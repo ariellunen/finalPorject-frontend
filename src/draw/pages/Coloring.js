@@ -6,6 +6,7 @@ import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
+
 let counter1 = 0, counter2 = 0;
 let timeIndex1, timeIndex2;
 let mm1 = [], mm2 = [], temp1 = [], temp2 = [];
@@ -18,9 +19,10 @@ let indexL = 0;
 let pointR = 0;
 let indexR = 0;
 let counter = 0;
-let leftCoordinates = [];
-let rightCoordinates = [];
 let arr = [];
+let leftCoordinates =[];
+let rightCoordinates =[];
+
 
 
 const Coloring = (props) => {
@@ -43,21 +45,22 @@ const Coloring = (props) => {
         counter++;
     }, [left, right])
 
+///////////////////////////////////////////////////
 
     const frequencyL = () => {
-        if (leftCoordinates[pointL + 1]?.x) {
+        if (arr[pointL + 1]?.l.x) {
             counter1++;
             if (counter1 % 5 === 0) {
                 frequencyL();
                 //clearInterval(timeIndex1);
             }
             for (var i = 0; i < 10; i++) {
-                if (leftCoordinates[pointL] !== undefined) {
-                    temp1.push(leftCoordinates[pointL])
+                if (arr[pointL].l.x !== -1) {
+                    temp1.push(leftCoordinates[pointL].l)
                     pointL++;
                 }
             }
-            // console.log("temp = ", temp1);
+            console.log("temp = ", temp1);
             for (var i = 0; i < 8; i++, indexL++) {
                 if (temp1[indexL]?.x === temp1[indexL + 1]?.x) {
                     m1 = 0;
@@ -96,7 +99,7 @@ const Coloring = (props) => {
 
     //Right side frequency algorithem
     const frequencyR = () => {
-        if (rightCoordinates[pointR + 1]?.x) {
+        if (arr[pointR + 1]?.r.x) {
             counter2++;
             if (counter2 % 5 === 0) {
                 frequencyR();
@@ -199,8 +202,6 @@ const Coloring = (props) => {
         deadline.setSeconds(deadline.getSeconds() + 1200);
         return deadline;
     }
-
-    ///////////////////////////////////////////////////
 
     let user1;
     let user2;
