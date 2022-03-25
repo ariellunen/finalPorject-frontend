@@ -221,6 +221,8 @@ const Coloring = (props) => {
 
     const onSubmit = () => {
         fetchGetAPI();
+        arr.shift();
+        arr.pop();
         setTimeout(async () => {
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
