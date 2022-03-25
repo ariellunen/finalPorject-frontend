@@ -9,9 +9,8 @@ import { Link } from 'react-router-dom';
 
 let counter1 = 0, counter2 = 0;
 let timeIndex1, timeIndex2;
-let mm1 = [], mm2 = [], temp1 = [], temp2 = [];
+let m1 = [], m2 = [], temp1 = [], temp2 = [];
 let change1 = 0, change2 = 0;
-let m1, m2;
 let pointM1 = 0;
 let pointM2 = 0;
 let pointL = 0;
@@ -20,8 +19,8 @@ let pointR = 0;
 let indexR = 0;
 let counter = 0;
 let arr = [];
-let leftCoordinates =[];
-let rightCoordinates =[];
+let leftCoordinates = [];
+let rightCoordinates = [];
 
 
 
@@ -45,46 +44,47 @@ const Coloring = (props) => {
         counter++;
     }, [left, right])
 
-///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
 
     const frequencyL = () => {
         if (arr[pointL + 1]?.l.x) {
             counter1++;
             if (counter1 % 5 === 0) {
-                frequencyL();
-                //clearInterval(timeIndex1);
+                // frequencyL();
+                clearInterval(timeIndex1);
             }
             for (var i = 0; i < 10; i++) {
-                if (arr[pointL].l.x !== -1) {
-                    temp1.push(leftCoordinates[pointL].l)
-                    pointL++;
-                }
+                leftCoordinates.push(arr[pointL].l)
+                pointL++;
             }
-            console.log("temp = ", temp1);
+            // console.log("leftCoordinates = ", leftCoordinates);
             for (var i = 0; i < 8; i++, indexL++) {
-                if (temp1[indexL]?.x === temp1[indexL + 1]?.x) {
-                    m1 = 0;
+                if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) === 5) {
+                    if (leftCoordinates[indexL]?.y >>> leftCoordinates[indexL + 1]?.y) { //negative
+                        m1.push(0);
+                    }
+                    else { //positive
+                        m1.push(1);
+                    }
                 }
-                else {
-                    m1 = (((temp1[indexL].y) - (temp1[indexL + 1].y)) / ((temp1[indexL].x) - (temp1[indexL + 1].x)));
+                else if (leftCoordinates[indexL]?.x >>> leftCoordinates[indexL + 1]?.x) { //positive
+                    m1.push(1);
+                }
+                else { //negative
+                    m1.push(0);
                 }
 
-                // console.log("m1", m1);
-                // positive incline = 1, negative incline = 2
-                if (m1 > 0) { mm1.push(1); }
-                else if (m1 < 0) { mm1.push(2); }
-                else { console.log("loTOV"); }
+                console.log("m1", m1);
 
-                // console.log("mm1", mm1);
                 // number of change direction
-                if (mm1.length >= 2) {
-                    for (pointM1; pointM1 < mm1.length - 1; pointM1++) {
+                if (m1.length >= 2) {
+                    for (pointM1; pointM1 < m1.length - 1; pointM1++) {
                         // console.log("pointM1=", pointM1)
                         // console.log(mm1[pointM1])
                         // console.log("mm1[pointM1]=", mm1[pointM1]);
                         // console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
 
-                        if (mm1[pointM1] !== mm1[pointM1 + 1]) {
+                        if (m1[pointM1] !== m1[pointM1 + 1]) {
                             change1++;
                             seeChange1(change1 / 10);
                         }
@@ -99,54 +99,54 @@ const Coloring = (props) => {
 
     //Right side frequency algorithem
     const frequencyR = () => {
-        if (arr[pointR + 1]?.r.x) {
-            counter2++;
-            if (counter2 % 5 === 0) {
-                frequencyR();
-            }
-            for (var i = 0; i < 10; i++) {
-                if (rightCoordinates[pointR] !== undefined) {
-                    temp2.push(rightCoordinates[pointR])
-                    pointR++;
-                }
-            }
-            // console.log("temp = ", temp2);
-            for (var i = 0; i < 8; i++, indexR++) {
-                if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
-                    m2 = 0;
-                }
-                else {
-                    m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
-                }
+    //     if (arr[pointR + 1]?.r.x) {
+    //         counter2++;
+    //         if (counter2 % 5 === 0) {
+    //             frequencyR();
+    //         }
+    //         for (var i = 0; i < 10; i++) {
+    //             if (rightCoordinates[pointR] !== undefined) {
+    //                 temp2.push(rightCoordinates[pointR])
+    //                 pointR++;
+    //             }
+    //         }
+    //         // console.log("temp = ", temp2);
+    //         for (var i = 0; i < 8; i++, indexR++) {
+    //             if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
+    //                 m2 = 0;
+    //             }
+    //             else {
+    //                 m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
+    //             }
 
-                // console.log("m2", m2);
-                // positive incline = 1, negative incline = 2
-                if (m2 > 0) { mm2.push(1); }
-                else if (m2 < 0) { mm2.push(2); }
-                else { console.log("loTOV"); }
+    //             // console.log("m2", m2);
+    //             // positive incline = 1, negative incline = 2
+    //             if (m2 > 0) { mm2.push(1); }
+    //             else if (m2 < 0) { mm2.push(2); }
+    //             else { console.log("loTOV"); }
 
-                // console.log("mm2", mm2);
-                // number of change direction
-                if (mm2.length >= 2) {
-                    for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
-                        // console.log("pointM2=", pointM2)
-                        // console.log(mm2[pointM2])
-                        // console.log("mm2[pointM2]=", mm2[pointM2]);
-                        // console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
+    //             // console.log("mm2", mm2);
+    //             // number of change direction
+    //             if (mm2.length >= 2) {
+    //                 for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
+    //                     // console.log("pointM2=", pointM2)
+    //                     // console.log(mm2[pointM2])
+    //                     // console.log("mm2[pointM2]=", mm2[pointM2]);
+    //                     // console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
 
-                        if (mm2[pointM2] !== mm2[pointM2 + 1]) {
-                            change2++;
-                            seeChange2(change2 / 10);
-                        }
-                    }
-                }
-            }
+    //                     if (mm2[pointM2] !== mm2[pointM2 + 1]) {
+    //                         change2++;
+    //                         seeChange2(change2 / 10);
+    //                     }
+    //                 }
+    //             }
+    //         }
 
-            // sync between 2 users, under 2 changes in the direcation
-            if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
-                document.getElementById("b").innerHTML += "F ";
-            }
-        }
+    //         // sync between 2 users, under 2 changes in the direcation
+    //         if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
+    //             document.getElementById("b").innerHTML += "F ";
+    //         }
+    //     }
     }
 
     //View changes on the left screen
