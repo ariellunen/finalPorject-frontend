@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const Analysis = (props) => {
     let drawing;
-    const canvasRightRef = useRef(null);
     const ctxRightRef = useRef(null);
-    const canvasLeftRef = useRef(null);
     const ctxLeftRef = useRef(null);
     useEffect(() => {
         const getDraw = async () => {
@@ -19,19 +17,19 @@ const Analysis = (props) => {
             }
         }
         getDraw();
-        const canvas = canvasRightRef.current;
+        const canvas = document.getElementById('rightCanvas');
         const ctx = canvas.getContext("2d");
         ctx.lineWidth = 12;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctxRightRef.current = ctx;
 
-        const canvasLeft = canvasLeftRef.current;
+        const canvasLeft = document.getElementById('leftCanvas');
         const ctxx = canvasLeft.getContext("2d");
         ctxx.lineWidth = 12;
         ctxx.lineCap = "round";
         ctxx.lineJoin = "round";
-        ctxLeftRef.current = ctx;
+        ctxLeftRef.current = ctxx;
     }, [])
 
     const startDraw = () => {
@@ -66,7 +64,6 @@ const Analysis = (props) => {
                 }
                 else {
                     if (drawing.coordinate[i + 1].l.x === -1) {
-                        console.log('igigig', i)
                         ctxLeftRef.current.closePath();
                     }
                     else {
@@ -90,12 +87,12 @@ const Analysis = (props) => {
             }}>play</button>
             <div style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>
                 <canvas
-                    ref={canvasLeftRef}
+                    id='leftCanvas'
                     width={`650px`}
                     height={`600px`}
                 />
                 <canvas
-                    ref={canvasRightRef}
+                id='rightCanvas'
                     width={`650px`}
                     height={`600px`}
                 />
