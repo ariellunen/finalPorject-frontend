@@ -24,9 +24,10 @@ let arr = [];
 
 
 const Coloring = (props) => {
-    const [startedTime, setStartedTime] = useState(0);
+    const [startedTime, setStartedTime] = useState(new Date());
     useEffect(() => {
-        setStartedTime(new Date());
+        // setStartedTime(new Date());
+        console.log(typeof(startedTime))
         clearTimer(getDeadTime());
         timeIndex1 = setInterval(frequencyL, 100);
         timeIndex2 = setInterval(frequencyR, 100);
@@ -221,9 +222,10 @@ const Coloring = (props) => {
 
     const onSubmit = () => {
         fetchGetAPI();
+        const date = new Date();
+        console.log(typeof(date))
         if(arr.length !== 1){
             arr.shift();
-            arr.pop();
         }
         setTimeout(async () => {
             try {
@@ -236,7 +238,7 @@ const Coloring = (props) => {
                         firstKide: user1,
                         secondKide: user2,
                         timeStarted: startedTime,
-                        timeDone: new Date(),
+                        timeDone: date,
                         sync: '10',
                         coordinate: arr,
                     })
