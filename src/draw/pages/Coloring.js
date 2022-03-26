@@ -22,6 +22,8 @@ let arr = [];
 let leftCoordinates = [];
 let rightCoordinates = [];
 
+let i = 0;
+
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(new Date());
     useEffect(() => {
@@ -46,65 +48,55 @@ const Coloring = (props) => {
     ////////////////////ALGORITEM SYNC/////////////////////
 
     const frequencyL = () => {
-        if (arr[pointL + 1]?.r.x) {
+        if (arr[pointL + 1]?.l) {
             counter1++;
             if (counter1 % 5 === 0) {
                 frequencyL();
                 // clearInterval(timeIndex1);
             }
             for (var i = 0; i < 10; i++, pointL++) {
-                if (arr[pointL].l !== undefined) {
+                if (arr[pointL].l != 'undefined') {
                     leftCoordinates.push(arr[pointL].l)
                 }
             }
             console.log("leftCoordinates = ", leftCoordinates);
-            for (var i = 0; i < 8; i++, indexL++) {
-                if (leftCoordinates[indexL]?.x === (-1)) {
-                    console.log("reeeeeeeek");
-                    m1 =[];
-                    document.getElementById("SeveralChanges1").innerHTML = 0;
-                    // change1++;
-                }
-                else {
-                    if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 5) {
-                        console.log("1(y)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
-                        if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
-                            console.log("2(1)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
-                            m1.push(1);
-                        } //negative
-                        else if (leftCoordinates[indexL]?.y === leftCoordinates[indexL + 1]?.y) {
-                            console.log("9(?)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
-                            let temp = m1[m1.length - 1];
-                            m1.push(temp);
-                        } //negative or positive
-                        else {
-                            console.log("3(0)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
-                            m1.push(0);
-                        } //positive
-                    }
-                    else if (leftCoordinates[indexL]?.x > leftCoordinates[indexL + 1]?.x) {
-                        console.log("4(1)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
-                        m1.push(1);
-                    } //negative
-                    else {
-                        console.log("5(0)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+            for (var i = 0; i < 9; i++, indexL++) {
+                if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 5) {
+                    console.log("1(y)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+                    if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
+                        console.log("2(1)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
                         m1.push(0);
                     } //positive
+                    else if (leftCoordinates[indexL]?.y === leftCoordinates[indexL + 1]?.y) {
+                        console.log("9(?)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
+                        let temp = m1[m1.length - 1];
+                        m1.push(temp);
+                    } //negative or positive
+                    else {
+                        console.log("3(0)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
+                        m1.push(1);
+                    } //negative
                 }
+                else if (leftCoordinates[indexL]?.x > leftCoordinates[indexL + 1]?.x) {
+                    console.log("4(1)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+                    m1.push(1);
+                } //negative
+                else {
+                    console.log("5(0)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+                    m1.push(0);
+                } //positive
+            }
 
-                console.log("m1", m1);
+            console.log("m1", m1);
 
-                // number of change direction
-                if (m1.length >= 2) {
-                    for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                        // console.log("pointM1=", pointM1)
-                        // console.log(m1[pointM1])
-                        
-                        //View changes on the left screen
-                        if (m1[pointM1] !== m1[pointM1 + 1]) {
-                            change1++;
-                            document.getElementById("SeveralChanges1").innerHTML = change1/10;
-                        }
+            // number of change direction
+            if (m1.length >= 2) {
+                for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+
+                    //View changes on the left screen
+                    if (m1[pointM1] !== m1[pointM1 + 1]) {
+                        change1++;
+                        document.getElementById("SeveralChanges1").innerHTML = change1 / 10;
                     }
                 }
             }
@@ -113,72 +105,61 @@ const Coloring = (props) => {
 
     //Right side frequency algorithem
     const frequencyR = () => {
-        if (arr[pointR + 1]?.r.x) {
-            counter2++;
-            if (counter2 % 5 === 0) {
-                frequencyR();
-                // clearInterval(timeIndex2);
-            }
-            for (var i = 0; i < 10; i++, pointR++) {
-                if (arr[pointR].r !== null) {
-                    rightCoordinates.push(arr[pointR].r)
-                }
-            }
-            console.log("rightCoordinates = ", rightCoordinates);
-            for (var i = 0; i < 8; i++, indexR++) {
-                if (rightCoordinates[indexR]?.x === (-1)) {
-                    console.log("reeeeeeeek");
-                    m2 =[];
-                    change2 = 0;
-                    document.getElementById("SeveralChanges2").innerHTML = 0;
-                    // change2++;
-                }
-                else {
-                    if (rightCoordinates[indexR]?.x === rightCoordinates[indexR + 1]?.x || (Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 5) {
-                        console.log("1(y)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
-                        if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-                            console.log("2(1)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
-                            m2.push(1);
-                        } //negative
-                        else if (rightCoordinates[indexR]?.y === rightCoordinates[indexR + 1]?.y) {
-                            console.log("9(?)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
-                            let temp = m2[m2.length - 1];
-                            m2.push(temp);
-                        } //negative or positive
-                        else {
-                            console.log("3(0)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
-                            m2.push(0);
-                        } //positive
-                    }
-                    else if (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x) {
-                        console.log("4(1)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
-                        m2.push(1);
-                    } //negative
-                    else {
-                        console.log("5(0)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
-                        m2.push(0);
-                    } //positive
-                }
+    //     if (arr[pointR + 1]?.r) {
+    //         counter2++;
+    //         if (counter2 % 5 === 0) {
+    //             frequencyR();
+    //             // clearInterval(timeIndex2);
+    //         }
+    //         for (var i = 0; i < 10; i++, pointR++) {
+    //             if (arr[pointR].r !== null) {
+    //                 rightCoordinates.push(arr[pointR].r)
+    //             }
+    //         }
+    //         console.log("rightCoordinates = ", rightCoordinates);
+    //         for (var i = 0; i < 8; i++, indexR++) {
+    //             if (rightCoordinates[indexR]?.x === rightCoordinates[indexR + 1]?.x || (Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 5) {
+    //                 console.log("1(y)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
+    //                 if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
+    //                     console.log("2(1)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
+    //                     m2.push(1);
+    //                 } //negative
+    //                 else if (rightCoordinates[indexR]?.y === rightCoordinates[indexR + 1]?.y) {
+    //                     console.log("9(?)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
+    //                     let temp = m2[m2.length - 1];
+    //                     m2.push(temp);
+    //                 } //negative or positive
+    //                 else {
+    //                     console.log("3(0)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
+    //                     m2.push(0);
+    //                 } //positive
+    //             }
+    //             else if (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x) {
+    //                 console.log("4(1)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
+    //                 m2.push(1);
+    //             } //negative
+    //             else {
+    //                 console.log("5(0)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
+    //                 m2.push(0);
+    //             } //positive
+    //         }
 
-                console.log("m2", m2);
+    //         console.log("m2", m2);
 
-                // number of change direction
-                if (m2.length >= 2) {
-                    for (pointM2; pointM2 < m2.length - 1; pointM2++) {
-                        // console.log("pointM2=", pointM2)
-                        // console.log(m2[pointM2])
-                        
-                        //View changes on the left screen
-                        if (m2[pointM2] !== m2[pointM1 + 1]) {
-                            change2++;
-                            document.getElementById("SeveralChanges2").innerHTML = change2/10;
-                        }
-                    }
-                }
-            }
-        }
+    //         // number of change direction
+    //         if (m2.length >= 2) {
+    //             for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+
+    //                 //View changes on the left screen
+    //                 if (m2[pointM2] !== m2[pointM2 + 1]) {
+    //                     change2++;
+    //                     document.getElementById("SeveralChanges2").innerHTML = change2 / 10;
+    //                 }
+    //             }
+    //         }
+    //     }
     }
-    
+
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
     const Ref = useRef(null);
@@ -289,6 +270,9 @@ const Coloring = (props) => {
                     <canvas id="canvasL" width="650" height="600"
                         onPointerUp={() => {
                             setLeft({ x: -1, y: -1 })
+                            // m1 = [];
+                            // change1 = 0;
+                            // document.getElementById("SeveralChanges1").innerHTML = 0;
                         }}
                     >
                         <LeftCanvas color={location.state[0]} setLeft={setLeft} />
@@ -296,6 +280,9 @@ const Coloring = (props) => {
                     <canvas id="canvasR" width="650" height="600"
                         onPointerUp={() => {
                             setRight({ x: -1, y: -1 })
+                            m2 = [];
+                            change2 = 0;
+                            document.getElementById("SeveralChanges2").innerHTML = 0;
                         }}
                     >
                         <RightCanvas color={location.state[1]} setRight={setRight} />
