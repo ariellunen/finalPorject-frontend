@@ -11,6 +11,7 @@ import ColorPicker from './draw/pages/ColorPicker';
 import Coloring from './draw/pages/Coloring';
 import Analysis from './analysis/pages/Analysis'
 import Form from './draw/pages/Form';
+
 const App = () => {
   return (
     <Router>
