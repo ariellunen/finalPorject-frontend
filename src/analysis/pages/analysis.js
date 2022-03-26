@@ -10,7 +10,7 @@ const Analysis = (props) => {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                 });
                 const responseData = await response.json();
-                drawing = responseData.drawing[15];
+                drawing = responseData.drawing[18];
                 console.log(drawing)
             } catch (err) {
                 console.log(err);
@@ -32,58 +32,82 @@ const Analysis = (props) => {
         ctxLeftRef.current = ctxx;
     }, [])
 
-    const startDraw = () => {
-        drawing.coordinate.map((cor, i) => {
-            setTimeout(() => {
-                // RIGHT
-                if (cor.r.x === -1) {
-                    return;
-                }
-                else {
-                    if (drawing.coordinate[i + 1].r.x === -1) {
-                        ctxRightRef.current.closePath();
-                    }
-                    else {
-                        ctxRightRef.current.beginPath();
-                        ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
-                        ctxRightRef.current.lineTo(drawing.coordinate[i + 1].r.x, drawing.coordinate[i + 1].r.y);
-                        ctxRightRef.current.stroke();
-                    }
+    let i = 0;
+    const handleClick = () => {
+        setTimeout(function () {
+            if (i < drawing.coordinate.length) {
+                draw(drawing.coordinate[i], i);
+                i++;
+                handleClick();
+            }
+        }, 100)
 
-                }
-            }, 2000)
-        })
     }
 
-    const drawLeft = () => {
-        drawing.coordinate.map((cor, i) => {
-            setTimeout(() => {
-                // LEFT
-                if (cor.l.x === -1) {
-                    return;
-                }
-                else {
-                    if (drawing.coordinate[i + 1].l.x === -1) {
-                        ctxLeftRef.current.closePath();
-                    }
-                    else {
-                        ctxLeftRef.current.beginPath();
-                        ctxLeftRef.current.moveTo(cor.l.x, cor.l.y);
-                        ctxLeftRef.current.lineTo(drawing.coordinate[i + 1].l.x, drawing.coordinate[i + 1].l.y);
-                        ctxLeftRef.current.stroke();
-                    }
-
-                }
-                console.log(cor, i)
-            }, 2000)
-        })
+    const draw = (cor, i) => {
+        // both -1
+        if (cor.r.x === -1 && cor.l.x === -1) {
+            return;
+        }
+        else if (cor.r.x === -1 && cor.l.x !== -1) {
+            if (drawing.coordinate[i + 1].l.x === -1) {
+                ctxLeftRef.current.closePath();
+            }
+            else {
+                ctxLeftRef.current.beginPath();
+                ctxLeftRef.current.moveTo(cor.l.x, cor.l.y);
+                ctxLeftRef.current.lineTo(drawing.coordinate[i + 1].l.x, drawing.coordinate[i + 1].l.y);
+                ctxLeftRef.current.stroke();
+            }
+        }
+        else if (cor.r.x !== -1 && cor.l.x === -1) {
+            if (drawing.coordinate[i + 1].r.x === -1) {
+                ctxRightRef.current.closePath();
+            }
+            else {
+                ctxRightRef.current.beginPath();
+                ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
+                ctxRightRef.current.lineTo(drawing.coordinate[i + 1].r.x, drawing.coordinate[i + 1].r.y);
+                ctxRightRef.current.stroke();
+            }
+        }
+        // cor.r.x !== -1 && cor.l.x !== -1
+        else {
+            if (drawing.coordinate[i + 1].r.x === -1 && drawing.coordinate[i + 1].l.x === -1) {
+                ctxRightRef.current.closePath();
+                ctxLeftRef.current.closePath();
+            }
+            else if (drawing.coordinate[i + 1].r.x !== -1 && drawing.coordinate[i + 1].l.x === -1) {
+                ctxLeftRef.current.closePath();
+                ctxRightRef.current.beginPath();
+                ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
+                ctxRightRef.current.lineTo(drawing.coordinate[i + 1].r.x, drawing.coordinate[i + 1].r.y);
+                ctxRightRef.current.stroke();
+            }
+            else if (drawing.coordinate[i + 1].r.x === -1 && drawing.coordinate[i + 1].l.x !== -1) {
+                ctxRightRef.current.closePath();
+                ctxLeftRef.current.beginPath();
+                ctxLeftRef.current.moveTo(cor.l.x, cor.l.y);
+                ctxLeftRef.current.lineTo(drawing.coordinate[i + 1].l.x, drawing.coordinate[i + 1].l.y);
+                ctxLeftRef.current.stroke();
+            }
+            else {
+                ctxLeftRef.current.beginPath();
+                ctxLeftRef.current.moveTo(cor.l.x, cor.l.y);
+                ctxLeftRef.current.lineTo(drawing.coordinate[i + 1].l.x, drawing.coordinate[i + 1].l.y);
+                ctxLeftRef.current.stroke();
+                ctxRightRef.current.beginPath();
+                ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
+                ctxRightRef.current.lineTo(drawing.coordinate[i + 1].r.x, drawing.coordinate[i + 1].r.y);
+                ctxRightRef.current.stroke();
+            }
+        }
     }
 
     return (
         <React.Fragment>
             <button onClick={() => {
-                startDraw();
-                drawLeft();
+                handleClick();
             }}>play</button>
             <div style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>
                 <canvas
