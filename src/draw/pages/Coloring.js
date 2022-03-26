@@ -6,31 +6,31 @@ import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-
-let counter1 = 0, counter2 = 0;
-let timeIndex1, timeIndex2;
-let m1 = [], m2 = [];
-let change1 = 0, change2 = 0;
-// let pointM1 = 0;
-let pointM2 = 0;
-let pointL = 0;
-let indexL = 1;
-let pointR = 0;
-let indexR = 1;
 let counter = 0;
 let arr = [];
+
+let m1 = [], m2 = [];
 let leftCoordinates = [];
 let rightCoordinates = [];
-let temp;
-let i = 0;
+let pointM1 = 0;
+let pointM2 = 0;
+let pointL = 0;
+let pointR = 0;
+let counterL = 0;
+let counterR = 0;
+let tempL = 0;
+let tempR = 0;
+let change1 = 0;
+let change2 = 0;
+
 
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(new Date());
     useEffect(() => {
         // setStartedTime(new Date());
         clearTimer(getDeadTime());
-        timeIndex1 = setInterval(frequencyL, 100);
-        timeIndex2 = setInterval(frequencyR, 100);
+        frequencyL();
+        // frequencyR();
     }, []);
 
     const location = useLocation();
@@ -47,124 +47,205 @@ const Coloring = (props) => {
     ////////////////////ALGORITEM SYNC/////////////////////
 
     const frequencyL = () => {
-        if (arr[pointL + 1]?.l.x) {
-            counter1++;
-            if (counter1 % 5 === 0) {
-                frequencyL();
-                // clearInterval(timeIndex1);
-            }
-            for (var i = 0; i < 10; i++, pointL++) {
-                if (arr[pointL].l !== undefined) {
-                    leftCoordinates.push(arr[pointL].l)
-                }
-            }
-            for (var i = 0; i < 8; i++, indexL++) {
-                if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 5) {
-                    console.log("1(y)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
-                    if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
-                        console.log("2(0)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
-                        m1.push(0);
-                    } //positive
-                    else if (leftCoordinates[indexL]?.y === leftCoordinates[indexL + 1]?.y) {
-                        console.log("9(?)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
-                        let temp = m1[m1.length - 1];
-                        m1.push(temp);
-                    } //negative or positive
-                    else {
-                        console.log("3(1)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
-                        m1.push(1);
-                    } //negative
-                }
-                else if (leftCoordinates[indexL]?.x > leftCoordinates[indexL + 1]?.x) {
-                    console.log("4(1)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
-                    m1.push(1);
-                } //negative
-                else {
-                    console.log("5(0)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
-                    m1.push(0);
-                } //positive
-            }
-
-            console.log("m1", m1);
-
-            // number of change direction
-            if (m1.length >= 2) {
-                m1.map((pointM1,i) => {
-                    if (pointM1 !== m1[i+1]){
-                        change1++;
-                        console.log(change1 / 10);
+        setTimeout(function () {
+            if (arr[pointL + 1]?.l.x) {
+                for (let i = 0; i < 10; i++, pointL++) {
+                    if (arr[pointL]?.l.x) {
+                        counterL++;
+                        console.log("X");
+                        if (i === 9) {
+                            console.log("pointL", pointL);
+                            leftCoordinates = arr.slice(pointL - 9, pointL + 1)
+                            console.log("leftCoordinates = ", leftCoordinates);
+                            // console.log("arr = ", arr);
+                        }
                     }
-                })
+                }
+                if (counterL % 10 === 0) {
+                    for (let indexL = 0; indexL < 9; indexL++) {
+                        if (leftCoordinates[indexL]?.l.x !== (-1) && leftCoordinates[indexL + 1]?.l.x !== (-1)) {
+                            if ((Math.abs(leftCoordinates[indexL]?.l.x - leftCoordinates[indexL + 1]?.l.x)) < 6) {
+                                if (leftCoordinates[indexL]?.l.y > leftCoordinates[indexL + 1]?.l.y) {
+                                    console.log("A1 - 0");
+                                    m1.push(0);
+                                }
+                                else if (leftCoordinates[indexL]?.l.y < leftCoordinates[indexL + 1]?.l.y) {
+                                    console.log("A2 - 1");
+                                    m1.push(1);
+                                }
+                                else if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 && (Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) > 0) {
+                                    console.log("A3 - ?");
+                                    console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+                                    tempL = m1[m1.length - 1];
+                                    m1.push(tempL);
+                                }
+                                else { //(leftCoordinates[indexL]?.l.y === leftCoordinates[indexL + 1]?.l.y)
+                                    console.log("=A= - 1");
+                                    m1.push(1);
+                                }
+                            }
+                            else if (leftCoordinates[indexL]?.l.x < leftCoordinates[indexL + 1]?.l.x) {
+                                if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 && (Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) > 0) {
+                                    console.log("B1 - ?");
+                                    console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+                                    tempL = m1[m1.length - 1];
+                                    m1.push(tempL);
+                                }
+                                else if (leftCoordinates[indexL]?.l.y === leftCoordinates[indexL + 1]?.l.y) {
+                                    console.log("=B= - 0");
+                                    m1.push(0);
+                                }
+                                else if (leftCoordinates[indexL]?.l.y > leftCoordinates[indexL + 1]?.l.y) {
+                                    console.log("B2 - 0");
+                                    m1.push(0);
+                                }
+                                else { //(leftCoordinates[indexL]?.l.y < leftCoordinates[indexL + 1]?.l.y)
+                                    console.log("B3 - 1");
+                                    m1.push(1);
+                                }
+                            }
+                            else { // (leftCoordinates[indexL]?.l.x > leftCoordinates[indexL + 1]?.l.x)
+                                if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 && (Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) > 0) {
+                                    console.log("C1 - ?");
+                                    console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+                                    tempL = m1[m1.length - 1];
+                                    m1.push(tempL);
+                                }
+                                else if (leftCoordinates[indexL]?.l.y === leftCoordinates[indexL + 1]?.l.y) {
+                                    console.log("=C= - 1");
+                                    m1.push(1);
+                                }
+                                else if (leftCoordinates[indexL]?.l.y > leftCoordinates[indexL + 1]?.l.y) {
+                                    console.log("C2 - 0");
+                                    m1.push(0);
+                                }
+                                else { //(leftCoordinates[indexL]?.l.y < leftCoordinates[indexL + 1]?.l.y)
+                                    console.log("C3 - 1");
+                                    m1.push(1);
+                                }
+                            }
 
+                            console.log("m1 = ", m1);
 
-
-                // for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                //     //View changes on the left screen
-                //     if (m1[pointM1] !== m1[pointM1 + 1]) {
-                //         change1++;
-                //         document.getElementById("SeveralChanges1").innerHTML = change1 / 10;
-                //     }
-                // }
+                            for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                                if (m1[pointM1]) { //View changes on the left screen
+                                    if (m1[pointM1] !== m1[pointM1 + 1]) {
+                                        change1++;
+                                        document.getElementById("SeveralChanges1").innerHTML = change1 / 10;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }
+            frequencyL();
+        }, 1000)
     }
 
     //Right side frequency algorithem
-    const frequencyR = () => {
-    //     if (arr[pointR + 1]?.r) {
-    //         counter2++;
-    //         if (counter2 % 5 === 0) {
-    //             frequencyR();
-    //             // clearInterval(timeIndex2);
-    //         }
-    //         for (var i = 0; i < 10; i++, pointR++) {
-    //             if (arr[pointR].r !== null) {
-    //                 rightCoordinates.push(arr[pointR].r)
+    // const frequencyR = () => {
+    //     setTimeout(function () {
+    //         if (arr[pointR + 1]?.r.x) {
+    //             for (let i = 0; i < 10; i++, pointR++) {
+    //                 if (arr[pointR]?.r.x) {
+    //                     counterR++;
+    //                     console.log("X");
+    //                     if (i === 9) {
+    //                         console.log("pointR", pointR);
+    //                         // rightCoordinates.push(arr[pointR].l)
+    //                         rightCoordinates = arr.slice(pointR - 9, pointR + 1)
+    //                         console.log("rightCoordinates = ", rightCoordinates);
+    //                         // console.log("arr = ", arr);
+    //                     }
+    //                 }
     //             }
-    //         }
-    //         console.log("rightCoordinates = ", rightCoordinates);
-    //         for (var i = 0; i < 8; i++, indexR++) {
-    //             if (rightCoordinates[indexR]?.x === rightCoordinates[indexR + 1]?.x || (Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 5) {
-    //                 console.log("1(y)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
-    //                 if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-    //                     console.log("2(1)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
-    //                     m2.push(1);
-    //                 } //negative
-    //                 else if (rightCoordinates[indexR]?.y === rightCoordinates[indexR + 1]?.y) {
-    //                     console.log("9(?)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
-    //                     let temp = m2[m2.length - 1];
-    //                     m2.push(temp);
-    //                 } //negative or positive
-    //                 else {
-    //                     console.log("3(0)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
-    //                     m2.push(0);
-    //                 } //positive
-    //             }
-    //             else if (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x) {
-    //                 console.log("4(1)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
-    //                 m2.push(1);
-    //             } //negative
-    //             else {
-    //                 console.log("5(0)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
-    //                 m2.push(0);
-    //             } //positive
-    //         }
+    //             if (counterR % 10 === 0) {
+    //                 for (let indexR = 0; indexR < 9; indexR++) {
+    //                     if (rightCoordinates[indexR]?.r.x !== (-1) && rightCoordinates[indexR + 1]?.r.x !== (-1)) {
+    //                         if ((Math.abs(rightCoordinates[indexR]?.r.x - rightCoordinates[indexR + 1]?.r.x)) < 6) {
+    //                             if (rightCoordinates[indexR]?.r.y > rightCoordinates[indexR + 1]?.r.y) {
+    //                                 console.log("A1 - 0");
+    //                                 m2.push(0);
+    //                             }
+    //                             else if (rightCoordinates[indexR]?.r.y < rightCoordinates[indexR + 1]?.r.y) {
+    //                                 console.log("A2 - 1");
+    //                                 m2.push(1);
+    //                             }
+    //                             else if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6 && (Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) > 0) {
+    //                                 console.log("A3 - ?");
+    //                                 console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+    //                                 tempR = m2[m2.length - 1];
+    //                                 m2.push(tempR);
+    //                             }
+    //                             //(rightCoordinates[indexR]?.r.y === rightCoordinates[indexR + 1]?.r.y)
+    //                             else {
+    //                                 console.log("=A= - 1");
+    //                                 m2.push(1);
+    //                             }
+    //                         }
+    //                         else if (rightCoordinates[indexR]?.r.x < rightCoordinates[indexR + 1]?.r.x) {
+    //                             if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6 && (Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) > 0) {
+    //                                 console.log("B1 - ?");
+    //                                 console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+    //                                 tempR = m2[m2.length - 1];
+    //                                 m2.push(tempR);
+    //                             }
+    //                             else if (rightCoordinates[indexR]?.r.y === rightCoordinates[indexR + 1]?.r.y) {
+    //                                 console.log("=B= - 0");
+    //                                 m2.push(0);
+    //                             }
+    //                             else if (rightCoordinates[indexR]?.r.y > rightCoordinates[indexR + 1]?.r.y) {
+    //                                 console.log("B2 - 0");
+    //                                 m2.push(0);
+    //                             }
+    //                             //(rightCoordinates[indexR]?.r.y < rightCoordinates[indexR + 1]?.r.y)
+    //                             else {
+    //                                 console.log("B3 - 1");
+    //                                 m2.push(1);
+    //                             }
+    //                         }
+    //                         // (rightCoordinates[indexR]?.r.x > rightCoordinates[indexR + 1]?.r.x)
+    //                         else {
+    //                             if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6 && (Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) > 0) {
+    //                                 console.log("C1 - ?");
+    //                                 console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+    //                                 tempR = m2[m2.length - 1];
+    //                                 m2.push(tempR);
+    //                             }
+    //                             else if (rightCoordinates[indexR]?.r.y === rightCoordinates[indexR + 1]?.r.y) {
+    //                                 console.log("=C= - 1");
+    //                                 m2.push(1);
+    //                             }
+    //                             else if (rightCoordinates[indexR]?.r.y > rightCoordinates[indexR + 1]?.r.y) {
+    //                                 console.log("C2 - 0");
+    //                                 m2.push(0);
+    //                             }
+    //                             //(rightCoordinates[indexR]?.r.y < rightCoordinates[indexR + 1]?.r.y)
+    //                             else {
+    //                                 console.log("C3 - 1");
+    //                                 m2.push(1);
+    //                             }
+    //                         }
 
-    //         console.log("m2", m2);
+    //                         console.log("m2 = ", m2);
 
-    //         // number of change direction
-    //         if (m2.length >= 2) {
-    //             for (pointM2; pointM2 < m2.length - 1; pointM2++) {
-
-    //                 //View changes on the left screen
-    //                 if (m2[pointM2] !== m2[pointM2 + 1]) {
-    //                     change2++;
-    //                     document.getElementById("SeveralChanges2").innerHTML = change2 / 10;
+    //                         for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+    //                             //View changes on the left screen
+    //                             if (m2[pointM2]) {
+    //                                 if (m2[pointM2] !== m2[pointM2 + 1]) {
+    //                                     change2++;
+    //                                     document.getElementById("SeveralChanges2").innerHTML = change2 / 10;
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
     //                 }
     //             }
     //         }
-    //     }
-    }
+    //         frequencyR();
+    //     }, 1000)
+    // }
 
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
@@ -259,8 +340,6 @@ const Coloring = (props) => {
         }, 2000);
     }
 
-
-
     return (
         <React.Fragment>
             <div className='container'>
@@ -286,9 +365,9 @@ const Coloring = (props) => {
                     <canvas id="canvasR" width="650" height="600"
                         onPointerUp={() => {
                             setRight({ x: -1, y: -1 })
-                            m2 = [];
-                            change2 = 0;
-                            document.getElementById("SeveralChanges2").innerHTML = 0;
+                            // m2 = [];
+                            // change2 = 0;
+                            // document.getElementById("SeveralChanges2").innerHTML = 0;
                         }}
                     >
                         <RightCanvas color={location.state[1]} setRight={setRight} />
