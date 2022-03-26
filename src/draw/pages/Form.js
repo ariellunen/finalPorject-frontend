@@ -64,7 +64,7 @@ const Form = (props) => {
             <TextField id="outlined-basic" label="שם" variant="outlined" onChange={onChangeFisrt} value={firstKide} />
             <h2>ילד 2</h2>
             <TextField id="outlined-basic" label="שם" variant="outlined" onChange={onChangeSecond} value={secondtKide} />
-            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">סיום</Button>
+            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>
         </Box>
     )
 };

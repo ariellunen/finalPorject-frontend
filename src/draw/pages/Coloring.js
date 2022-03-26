@@ -9,26 +9,24 @@ import { Link } from 'react-router-dom';
 
 let counter1 = 0, counter2 = 0;
 let timeIndex1, timeIndex2;
-let m1 = [], m2 = [], temp1 = [], temp2 = [];
+let m1 = [], m2 = [];
 let change1 = 0, change2 = 0;
 let pointM1 = 0;
 let pointM2 = 0;
 let pointL = 0;
-let indexL = 0;
+let indexL = 1;
 let pointR = 0;
-let indexR = 0;
+let indexR = 1;
 let counter = 0;
 let arr = [];
 let leftCoordinates = [];
 let rightCoordinates = [];
 
-
-
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(new Date());
     useEffect(() => {
         // setStartedTime(new Date());
-        console.log(typeof(startedTime))
+        console.log(typeof (startedTime))
         clearTimer(getDeadTime());
         timeIndex1 = setInterval(frequencyL, 100);
         timeIndex2 = setInterval(frequencyR, 100);
@@ -45,108 +43,142 @@ const Coloring = (props) => {
         counter++;
     }, [left, right])
 
-    ///////////////////////////////////////////////////
+    ////////////////////ALGORITEM SYNC/////////////////////
 
     const frequencyL = () => {
-        counter1++;
-        if (counter1 % 5 === 0) {
-            // frequencyL();
-            clearInterval(timeIndex1);
-        }
-        for (var i = 0; i < 10; i++) {
-            leftCoordinates.push(arr[pointL].l)
-            pointL++;
-        }
-        console.log("leftCoordinates = ", leftCoordinates);
-        for (var i = 0; i < 8; i++, indexL++) {
-            if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) === 5) {
-                if (leftCoordinates[indexL]?.y >>> leftCoordinates[indexL + 1]?.y) { m1.push(0); }
-                else { m1.push(1); }
+        if (arr[pointL + 1]?.r.x) {
+            counter1++;
+            if (counter1 % 5 === 0) {
+                frequencyL();
+                // clearInterval(timeIndex1);
             }
-            else if (leftCoordinates[indexL]?.x >>> leftCoordinates[indexL + 1]?.x) { m1.push(1); }
-            else { m1.push(0); }
+            for (var i = 0; i < 10; i++, pointL++) {
+                if (arr[pointL].l !== undefined) {
+                    leftCoordinates.push(arr[pointL].l)
+                }
+            }
+            console.log("leftCoordinates = ", leftCoordinates);
+            for (var i = 0; i < 8; i++, indexL++) {
+                if (leftCoordinates[indexL]?.x === (-1)) {
+                    console.log("reeeeeeeek");
+                    m1 =[];
+                    document.getElementById("SeveralChanges1").innerHTML = 0;
+                    // change1++;
+                }
+                else {
+                    if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 5) {
+                        console.log("1(y)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+                        if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
+                            console.log("2(1)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
+                            m1.push(1);
+                        } //negative
+                        else if (leftCoordinates[indexL]?.y === leftCoordinates[indexL + 1]?.y) {
+                            console.log("9(?)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
+                            let temp = m1[m1.length - 1];
+                            m1.push(temp);
+                        } //negative or positive
+                        else {
+                            console.log("3(0)-", leftCoordinates[indexL]?.y, leftCoordinates[indexL + 1]?.y);
+                            m1.push(0);
+                        } //positive
+                    }
+                    else if (leftCoordinates[indexL]?.x > leftCoordinates[indexL + 1]?.x) {
+                        console.log("4(1)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+                        m1.push(1);
+                    } //negative
+                    else {
+                        console.log("5(0)-", leftCoordinates[indexL]?.x, leftCoordinates[indexL + 1]?.x);
+                        m1.push(0);
+                    } //positive
+                }
 
-            console.log("m1", m1);
+                console.log("m1", m1);
 
-            // number of change direction
-            if (m1.length >= 2) {
-                for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                    // console.log("pointM1=", pointM1)
-                    console.log(m1[pointM1])
-                    // console.log("mm1[pointM1]=", mm1[pointM1]);
-                    // console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
-
-                    if (m1[pointM1] !== m1[pointM1 + 1]) {
-                        change1++;
-                        seeChange1(change1 / 10);
+                // number of change direction
+                if (m1.length >= 2) {
+                    for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                        // console.log("pointM1=", pointM1)
+                        // console.log(m1[pointM1])
+                        
+                        //View changes on the left screen
+                        if (m1[pointM1] !== m1[pointM1 + 1]) {
+                            change1++;
+                            document.getElementById("SeveralChanges1").innerHTML = change1/10;
+                        }
                     }
                 }
             }
         }
     }
-    //View changes on the left screen
-    const seeChange1 = (change1) => {
-        document.getElementById("SeveralChanges1").innerHTML = change1;
-    }
-
 
     //Right side frequency algorithem
     const frequencyR = () => {
-        //     if (arr[pointR + 1]?.r.x) {
-        //         counter2++;
-        //         if (counter2 % 5 === 0) {
-        //             frequencyR();
-        //         }
-        //         for (var i = 0; i < 10; i++) {
-        //             if (rightCoordinates[pointR] !== undefined) {
-        //                 temp2.push(rightCoordinates[pointR])
-        //                 pointR++;
-        //             }
-        //         }
-        //         // console.log("temp = ", temp2);
-        //         for (var i = 0; i < 8; i++, indexR++) {
-        //             if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
-        //                 m2 = 0;
-        //             }
-        //             else {
-        //                 m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
-        //             }
+        if (arr[pointR + 1]?.r.x) {
+            counter2++;
+            if (counter2 % 5 === 0) {
+                frequencyR();
+                // clearInterval(timeIndex2);
+            }
+            for (var i = 0; i < 10; i++, pointR++) {
+                if (arr[pointR].r !== null) {
+                    rightCoordinates.push(arr[pointR].r)
+                }
+            }
+            console.log("rightCoordinates = ", rightCoordinates);
+            for (var i = 0; i < 8; i++, indexR++) {
+                if (rightCoordinates[indexR]?.x === (-1)) {
+                    console.log("reeeeeeeek");
+                    m2 =[];
+                    change2 = 0;
+                    document.getElementById("SeveralChanges2").innerHTML = 0;
+                    // change2++;
+                }
+                else {
+                    if (rightCoordinates[indexR]?.x === rightCoordinates[indexR + 1]?.x || (Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 5) {
+                        console.log("1(y)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
+                        if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
+                            console.log("2(1)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
+                            m2.push(1);
+                        } //negative
+                        else if (rightCoordinates[indexR]?.y === rightCoordinates[indexR + 1]?.y) {
+                            console.log("9(?)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
+                            let temp = m2[m2.length - 1];
+                            m2.push(temp);
+                        } //negative or positive
+                        else {
+                            console.log("3(0)-", rightCoordinates[indexR]?.y, rightCoordinates[indexR + 1]?.y);
+                            m2.push(0);
+                        } //positive
+                    }
+                    else if (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x) {
+                        console.log("4(1)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
+                        m2.push(1);
+                    } //negative
+                    else {
+                        console.log("5(0)-", rightCoordinates[indexR]?.x, rightCoordinates[indexR + 1]?.x);
+                        m2.push(0);
+                    } //positive
+                }
 
-        //             // console.log("m2", m2);
-        //             // positive incline = 1, negative incline = 2
-        //             if (m2 > 0) { mm2.push(1); }
-        //             else if (m2 < 0) { mm2.push(2); }
-        //             else { console.log("loTOV"); }
+                console.log("m2", m2);
 
-        //             // console.log("mm2", mm2);
-        //             // number of change direction
-        //             if (mm2.length >= 2) {
-        //                 for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
-        //                     // console.log("pointM2=", pointM2)
-        //                     // console.log(mm2[pointM2])
-        //                     // console.log("mm2[pointM2]=", mm2[pointM2]);
-        //                     // console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
-
-        //                     if (mm2[pointM2] !== mm2[pointM2 + 1]) {
-        //                         change2++;
-        //                         seeChange2(change2 / 10);
-        //                     }
-        //                 }
-        //             }
-        //         }
-
-        //         // sync between 2 users, under 2 changes in the direcation
-        //         if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
-        //             document.getElementById("b").innerHTML += "F ";
-        //         }
-        //     }
+                // number of change direction
+                if (m2.length >= 2) {
+                    for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+                        // console.log("pointM2=", pointM2)
+                        // console.log(m2[pointM2])
+                        
+                        //View changes on the left screen
+                        if (m2[pointM2] !== m2[pointM1 + 1]) {
+                            change2++;
+                            document.getElementById("SeveralChanges2").innerHTML = change2/10;
+                        }
+                    }
+                }
+            }
+        }
     }
-
-    //View changes to the right screen
-    const seeChange2 = (change2) => {
-        document.getElementById("SeveralChanges2").innerHTML = change2;
-    }
-
+    
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
     const Ref = useRef(null);
@@ -211,8 +243,8 @@ const Coloring = (props) => {
     const onSubmit = () => {
         fetchGetAPI();
         const date = new Date();
-        console.log(typeof(date))
-        if(arr.length !== 1){
+        console.log(typeof (date))
+        if (arr.length !== 1) {
             arr.shift();
         }
         setTimeout(async () => {

@@ -9,7 +9,7 @@ import {
 import Users from './user/pages/Users';
 import ColorPicker from './draw/pages/ColorPicker';
 import Coloring from './draw/pages/Coloring';
-import Analysis from './analysis/pages/Analysis'
+import Analysis from './analysis/pages/analysis'
 import Form from './draw/pages/Form';
 
 const App = () => {
