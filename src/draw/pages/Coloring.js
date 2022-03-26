@@ -47,111 +47,98 @@ const Coloring = (props) => {
     ///////////////////////////////////////////////////
 
     const frequencyL = () => {
-        if (arr[pointL + 1]?.l.x) {
-            counter1++;
-            if (counter1 % 5 === 0) {
-                // frequencyL();
-                clearInterval(timeIndex1);
+        counter1++;
+        if (counter1 % 5 === 0) {
+            // frequencyL();
+            clearInterval(timeIndex1);
+        }
+        for (var i = 0; i < 10; i++) {
+            leftCoordinates.push(arr[pointL].l)
+            pointL++;
+        }
+        console.log("leftCoordinates = ", leftCoordinates);
+        for (var i = 0; i < 8; i++, indexL++) {
+            if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) === 5) {
+                if (leftCoordinates[indexL]?.y >>> leftCoordinates[indexL + 1]?.y) { m1.push(0); }
+                else { m1.push(1); }
             }
-            for (var i = 0; i < 10; i++) {
-                leftCoordinates.push(arr[pointL].l)
-                pointL++;
-            }
-            // console.log("leftCoordinates = ", leftCoordinates);
-            for (var i = 0; i < 8; i++, indexL++) {
-                if (leftCoordinates[indexL]?.x === leftCoordinates[indexL + 1]?.x || (Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) === 5) {
-                    if (leftCoordinates[indexL]?.y >>> leftCoordinates[indexL + 1]?.y) { //negative
-                        m1.push(0);
-                    }
-                    else { //positive
-                        m1.push(1);
-                    }
-                }
-                else if (leftCoordinates[indexL]?.x >>> leftCoordinates[indexL + 1]?.x) { //positive
-                    m1.push(1);
-                }
-                else { //negative
-                    m1.push(0);
-                }
+            else if (leftCoordinates[indexL]?.x >>> leftCoordinates[indexL + 1]?.x) { m1.push(1); }
+            else { m1.push(0); }
 
-                console.log("m1", m1);
+            console.log("m1", m1);
 
-                // number of change direction
-                if (m1.length >= 2) {
-                    for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                        // console.log("pointM1=", pointM1)
-                        // console.log(mm1[pointM1])
-                        // console.log("mm1[pointM1]=", mm1[pointM1]);
-                        // console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
+            // number of change direction
+            if (m1.length >= 2) {
+                for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                    // console.log("pointM1=", pointM1)
+                    console.log(m1[pointM1])
+                    // console.log("mm1[pointM1]=", mm1[pointM1]);
+                    // console.log("mm1[pointM1 + 1]=", mm1[pointM1 + 1]);
 
-                        if (m1[pointM1] !== m1[pointM1 + 1]) {
-                            change1++;
-                            seeChange1(change1 / 10);
-                        }
+                    if (m1[pointM1] !== m1[pointM1 + 1]) {
+                        change1++;
+                        seeChange1(change1 / 10);
                     }
                 }
-            }
-            if ((Math.abs(change1 / 10 - change2 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
-                document.getElementById("b").innerHTML += "F ";
             }
         }
     }
-
-    //Right side frequency algorithem
-    const frequencyR = () => {
-    //     if (arr[pointR + 1]?.r.x) {
-    //         counter2++;
-    //         if (counter2 % 5 === 0) {
-    //             frequencyR();
-    //         }
-    //         for (var i = 0; i < 10; i++) {
-    //             if (rightCoordinates[pointR] !== undefined) {
-    //                 temp2.push(rightCoordinates[pointR])
-    //                 pointR++;
-    //             }
-    //         }
-    //         // console.log("temp = ", temp2);
-    //         for (var i = 0; i < 8; i++, indexR++) {
-    //             if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
-    //                 m2 = 0;
-    //             }
-    //             else {
-    //                 m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
-    //             }
-
-    //             // console.log("m2", m2);
-    //             // positive incline = 1, negative incline = 2
-    //             if (m2 > 0) { mm2.push(1); }
-    //             else if (m2 < 0) { mm2.push(2); }
-    //             else { console.log("loTOV"); }
-
-    //             // console.log("mm2", mm2);
-    //             // number of change direction
-    //             if (mm2.length >= 2) {
-    //                 for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
-    //                     // console.log("pointM2=", pointM2)
-    //                     // console.log(mm2[pointM2])
-    //                     // console.log("mm2[pointM2]=", mm2[pointM2]);
-    //                     // console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
-
-    //                     if (mm2[pointM2] !== mm2[pointM2 + 1]) {
-    //                         change2++;
-    //                         seeChange2(change2 / 10);
-    //                     }
-    //                 }
-    //             }
-    //         }
-
-    //         // sync between 2 users, under 2 changes in the direcation
-    //         if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
-    //             document.getElementById("b").innerHTML += "F ";
-    //         }
-    //     }
-    }
-
     //View changes on the left screen
     const seeChange1 = (change1) => {
         document.getElementById("SeveralChanges1").innerHTML = change1;
+    }
+
+
+    //Right side frequency algorithem
+    const frequencyR = () => {
+        //     if (arr[pointR + 1]?.r.x) {
+        //         counter2++;
+        //         if (counter2 % 5 === 0) {
+        //             frequencyR();
+        //         }
+        //         for (var i = 0; i < 10; i++) {
+        //             if (rightCoordinates[pointR] !== undefined) {
+        //                 temp2.push(rightCoordinates[pointR])
+        //                 pointR++;
+        //             }
+        //         }
+        //         // console.log("temp = ", temp2);
+        //         for (var i = 0; i < 8; i++, indexR++) {
+        //             if (temp2[indexR]?.x === temp2[indexR + 1]?.x) {
+        //                 m2 = 0;
+        //             }
+        //             else {
+        //                 m2 = (((temp2[indexR].y) - (temp2[indexR + 1].y)) / ((temp2[indexR].x) - (temp2[indexR + 1].x)));
+        //             }
+
+        //             // console.log("m2", m2);
+        //             // positive incline = 1, negative incline = 2
+        //             if (m2 > 0) { mm2.push(1); }
+        //             else if (m2 < 0) { mm2.push(2); }
+        //             else { console.log("loTOV"); }
+
+        //             // console.log("mm2", mm2);
+        //             // number of change direction
+        //             if (mm2.length >= 2) {
+        //                 for (pointM2; pointM2 < mm2.length - 1; pointM2++) {
+        //                     // console.log("pointM2=", pointM2)
+        //                     // console.log(mm2[pointM2])
+        //                     // console.log("mm2[pointM2]=", mm2[pointM2]);
+        //                     // console.log("mm2[pointM2 + 1]=", mm2[pointM2 + 1]);
+
+        //                     if (mm2[pointM2] !== mm2[pointM2 + 1]) {
+        //                         change2++;
+        //                         seeChange2(change2 / 10);
+        //                     }
+        //                 }
+        //             }
+        //         }
+
+        //         // sync between 2 users, under 2 changes in the direcation
+        //         if ((Math.abs(change2 / 10 - change1 / 10) <= 1) && (Math.abs(change2 / 10 - change1 / 10) > 0)) {
+        //             document.getElementById("b").innerHTML += "F ";
+        //         }
+        //     }
     }
 
     //View changes to the right screen
@@ -222,7 +209,7 @@ const Coloring = (props) => {
 
     const onSubmit = () => {
         fetchGetAPI();
-        if(arr.length !== 1){
+        if (arr.length !== 1) {
             arr.shift();
             arr.pop();
         }
