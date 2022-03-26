@@ -10,7 +10,7 @@ const Analysis = (props) => {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                 });
                 const responseData = await response.json();
-                drawing = responseData.drawing[14];
+                drawing = responseData.drawing[15];
                 console.log(drawing)
             } catch (err) {
                 console.log(err);
@@ -51,7 +51,7 @@ const Analysis = (props) => {
                     }
 
                 }
-            }, 1000)
+            }, 2000)
         })
     }
 
@@ -75,7 +75,7 @@ const Analysis = (props) => {
 
                 }
                 console.log(cor, i)
-            }, 1000)
+            }, 2000)
         })
     }
 
@@ -92,7 +92,7 @@ const Analysis = (props) => {
                     height={`600px`}
                 />
                 <canvas
-                id='rightCanvas'
+                    id='rightCanvas'
                     width={`650px`}
                     height={`600px`}
                 />
