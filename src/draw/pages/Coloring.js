@@ -52,11 +52,11 @@ const Coloring = (props) => {
                 for (let i = 0; i < 10; i++, pointL++) {
                     if (arr[pointL]?.l.x) {
                         counterL++;
-                        console.log("X");
+                        // console.log("X");
                         if (i === 9) {
-                            console.log("pointL", pointL);
+                            // console.log("pointL", pointL);
                             leftCoordinates = arr.slice(pointL - 9, pointL + 1)
-                            console.log("leftCoordinates = ", leftCoordinates);
+                            // console.log("leftCoordinates = ", leftCoordinates);
                             // console.log("arr = ", arr);
                         }
                     }
@@ -66,73 +66,60 @@ const Coloring = (props) => {
                         if (leftCoordinates[indexL]?.l.x !== (-1) && leftCoordinates[indexL + 1]?.l.x !== (-1)) {
                             if ((Math.abs(leftCoordinates[indexL]?.l.x - leftCoordinates[indexL + 1]?.l.x)) < 6) {
                                 if (leftCoordinates[indexL]?.l.y > leftCoordinates[indexL + 1]?.l.y) {
-                                    console.log("A1 - 0");
+                                    // console.log("A1 - 0");
                                     m1.push(0);
                                 }
                                 else if (leftCoordinates[indexL]?.l.y < leftCoordinates[indexL + 1]?.l.y) {
-                                    console.log("A2 - 1");
+                                    // console.log("A2 - 1");
                                     m1.push(1);
                                 }
-                                else if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 && (Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) > 0) {
-                                    console.log("A3 - ?");
-                                    console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+                                else { //((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 )
+                                    // console.log("A3 - ?");
+                                    // console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
                                     tempL = m1[m1.length - 1];
                                     m1.push(tempL);
-                                }
-                                else { //(leftCoordinates[indexL]?.l.y === leftCoordinates[indexL + 1]?.l.y)
-                                    console.log("=A= - 1");
-                                    m1.push(1);
                                 }
                             }
                             else if (leftCoordinates[indexL]?.l.x < leftCoordinates[indexL + 1]?.l.x) {
-                                if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 && (Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) > 0) {
-                                    console.log("B1 - ?");
-                                    console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+                                if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6) {
+                                    // console.log("B1 - ?");
+                                    // console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
                                     tempL = m1[m1.length - 1];
                                     m1.push(tempL);
                                 }
-                                else if (leftCoordinates[indexL]?.l.y === leftCoordinates[indexL + 1]?.l.y) {
-                                    console.log("=B= - 0");
-                                    m1.push(0);
-                                }
                                 else if (leftCoordinates[indexL]?.l.y > leftCoordinates[indexL + 1]?.l.y) {
-                                    console.log("B2 - 0");
+                                    // console.log("B2 - 0");
                                     m1.push(0);
                                 }
                                 else { //(leftCoordinates[indexL]?.l.y < leftCoordinates[indexL + 1]?.l.y)
-                                    console.log("B3 - 1");
+                                    // console.log("B3 - 1");
                                     m1.push(1);
                                 }
                             }
                             else { // (leftCoordinates[indexL]?.l.x > leftCoordinates[indexL + 1]?.l.x)
-                                if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6 && (Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) > 0) {
-                                    console.log("C1 - ?");
-                                    console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+                                if ((Math.abs(leftCoordinates[indexL]?.l.y - leftCoordinates[indexL + 1]?.l.y)) < 6) {
+                                    // console.log("C1 - ?");
+                                    // console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
                                     tempL = m1[m1.length - 1];
                                     m1.push(tempL);
                                 }
-                                else if (leftCoordinates[indexL]?.l.y === leftCoordinates[indexL + 1]?.l.y) {
-                                    console.log("=C= - 1");
-                                    m1.push(1);
-                                }
                                 else if (leftCoordinates[indexL]?.l.y > leftCoordinates[indexL + 1]?.l.y) {
-                                    console.log("C2 - 0");
+                                    // console.log("C2 - 0");
                                     m1.push(0);
                                 }
                                 else { //(leftCoordinates[indexL]?.l.y < leftCoordinates[indexL + 1]?.l.y)
-                                    console.log("C3 - 1");
+                                    // console.log("C3 - 1");
                                     m1.push(1);
                                 }
                             }
-
                             console.log("m1 = ", m1);
-
-                            for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                                if (m1[pointM1]) { //View changes on the left screen
+                            if (m1.length >= 2) {
+                                for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                                    //View changes on the left screen
                                     if (m1[pointM1] !== m1[pointM1 + 1]) {
                                         change1++;
-                                        document.getElementById("SeveralChanges1").innerHTML = change1 / 10;
                                     }
+                                    document.getElementById("SeveralChanges1").innerHTML = change1 / 10;
                                 }
                             }
                         }
@@ -172,28 +159,19 @@ const Coloring = (props) => {
     //                                 console.log("A2 - 1");
     //                                 m2.push(1);
     //                             }
-    //                             else if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6 && (Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) > 0) {
+    //                             else { //((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6)
     //                                 console.log("A3 - ?");
     //                                 console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
     //                                 tempR = m2[m2.length - 1];
     //                                 m2.push(tempR);
     //                             }
-    //                             //(rightCoordinates[indexR]?.r.y === rightCoordinates[indexR + 1]?.r.y)
-    //                             else {
-    //                                 console.log("=A= - 1");
-    //                                 m2.push(1);
-    //                             }
     //                         }
     //                         else if (rightCoordinates[indexR]?.r.x < rightCoordinates[indexR + 1]?.r.x) {
-    //                             if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6 && (Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) > 0) {
+    //                             if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6) {
     //                                 console.log("B1 - ?");
     //                                 console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
     //                                 tempR = m2[m2.length - 1];
     //                                 m2.push(tempR);
-    //                             }
-    //                             else if (rightCoordinates[indexR]?.r.y === rightCoordinates[indexR + 1]?.r.y) {
-    //                                 console.log("=B= - 0");
-    //                                 m2.push(0);
     //                             }
     //                             else if (rightCoordinates[indexR]?.r.y > rightCoordinates[indexR + 1]?.r.y) {
     //                                 console.log("B2 - 0");
@@ -207,15 +185,11 @@ const Coloring = (props) => {
     //                         }
     //                         // (rightCoordinates[indexR]?.r.x > rightCoordinates[indexR + 1]?.r.x)
     //                         else {
-    //                             if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6 && (Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) > 0) {
+    //                             if ((Math.abs(rightCoordinates[indexR]?.r.y - rightCoordinates[indexR + 1]?.r.y)) < 6) {
     //                                 console.log("C1 - ?");
     //                                 console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
     //                                 tempR = m2[m2.length - 1];
     //                                 m2.push(tempR);
-    //                             }
-    //                             else if (rightCoordinates[indexR]?.r.y === rightCoordinates[indexR + 1]?.r.y) {
-    //                                 console.log("=C= - 1");
-    //                                 m2.push(1);
     //                             }
     //                             else if (rightCoordinates[indexR]?.r.y > rightCoordinates[indexR + 1]?.r.y) {
     //                                 console.log("C2 - 0");
@@ -227,16 +201,15 @@ const Coloring = (props) => {
     //                                 m2.push(1);
     //                             }
     //                         }
-
-    //                         console.log("m2 = ", m2);
-
-    //                         for (pointM2; pointM2 < m2.length - 1; pointM2++) {
-    //                             //View changes on the left screen
-    //                             if (m2[pointM2]) {
-    //                                 if (m2[pointM2] !== m2[pointM2 + 1]) {
+    //                         // console.log("m2 = ", m2);
+    //                         if (m2.length >= 2) {
+    //                             for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+    //                                 //View changes on the left screen
+    //                                 if (m2[pointM2] !== m1[pointM2 + 1]) {
+    //                                     console.log("|");
     //                                     change2++;
-    //                                     document.getElementById("SeveralChanges2").innerHTML = change2 / 10;
     //                                 }
+    //                                 document.getElementById("SeveralChanges2").innerHTML = change2 / 10;
     //                             }
     //                         }
     //                     }
