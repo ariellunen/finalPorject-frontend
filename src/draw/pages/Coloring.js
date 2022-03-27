@@ -64,11 +64,11 @@ const Coloring = (props) => {
                 for (let i = 0; i < 10; i++, pointL++) {
                     if (allLeftCoordinates[pointL]?.x) {
                         counterL++;
-                        console.log("X");
+                        // console.log("X");
                         if (i === 9) {
                             // console.log("pointL", pointL);
                             leftCoordinates = allLeftCoordinates.slice(pointL - 9, pointL + 1)
-                            console.log("leftCoordinates = ", leftCoordinates);
+                            // console.log("leftCoordinates = ", leftCoordinates);
                             // console.log("arr = ", arr);
                         }
                     }
@@ -76,9 +76,6 @@ const Coloring = (props) => {
                 if (counterL % 10 === 0) {
                     for (let indexL = 0; indexL < 9; indexL++) {
                         if (leftCoordinates[indexL]?.x !== (-1) && leftCoordinates[indexL + 1]?.x !== (-1)) {
-                            console.log("leftCoordinates[indexL]?.x",leftCoordinates[indexL]?.x);
-                            console.log("leftCoordinates[indexL + 1]?.x",leftCoordinates[indexL + 1]?.x);
-
                             if ((Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 6) {
                                 if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
                                     // console.log("A1 - 0");
@@ -152,12 +149,12 @@ const Coloring = (props) => {
                 for (let i = 0; i < 10; i++, pointR++) {
                     if (allRightCoordinates[pointR]?.x) {
                         counterR++;
-                        console.log("X");
+                        // console.log("X");
                         if (i === 9) {
-                            console.log("pointR", pointR);
+                            // console.log("pointR", pointR);
                             // rightCoordinates.push(allRightCoordinates[pointR])
                             rightCoordinates = allRightCoordinates.slice(pointR - 9, pointR + 1)
-                            console.log("rightCoordinates = ", rightCoordinates);
+                            // console.log("rightCoordinates = ", rightCoordinates);
                             // console.log("allRightCoordinates = ", allRightCoordinates);
                         }
                     }
@@ -167,61 +164,60 @@ const Coloring = (props) => {
                         if (rightCoordinates[indexR]?.x !== (-1) && rightCoordinates[indexR + 1]?.x !== (-1)) {
                             if ((Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 6) {
                                 if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-                                    console.log("A1 - 0");
+                                    // console.log("A1 - 0");
                                     m2.push(0);
                                 }
                                 else if (rightCoordinates[indexR]?.y < rightCoordinates[indexR + 1]?.y) {
-                                    console.log("A2 - 1");
+                                    // console.log("A2 - 1");
                                     m2.push(1);
                                 }
                                 else { //((Math.abs(rightCoordinates[indexR]?.y - rightCoordinates[indexR + 1]?.y)) < 6)
-                                    console.log("A3 - ?");
-                                    console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+                                    // console.log("A3 - ?");
+                                    // console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
                                     tempR = m2[m2.length - 1];
                                     m2.push(tempR);
                                 }
                             }
                             else if (rightCoordinates[indexR]?.x < rightCoordinates[indexR + 1]?.x) {
                                 if ((Math.abs(rightCoordinates[indexR]?.y - rightCoordinates[indexR + 1]?.y)) < 6) {
-                                    console.log("B1 - ?");
-                                    console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+                                    // console.log("B1 - ?");
+                                    // console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
                                     tempR = m2[m2.length - 1];
                                     m2.push(tempR);
                                 }
                                 else if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-                                    console.log("B2 - 0");
+                                    // console.log("B2 - 0");
                                     m2.push(0);
                                 }
                                 //(rightCoordinates[indexR]?.y < rightCoordinates[indexR + 1]?.y)
                                 else {
-                                    console.log("B3 - 1");
+                                    // console.log("B3 - 1");
                                     m2.push(1);
                                 }
                             }
                             // (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x)
                             else {
                                 if ((Math.abs(rightCoordinates[indexR]?.y - rightCoordinates[indexR + 1]?.y)) < 6) {
-                                    console.log("C1 - ?");
-                                    console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+                                    // console.log("C1 - ?");
+                                    // console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
                                     tempR = m2[m2.length - 1];
                                     m2.push(tempR);
                                 }
                                 else if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-                                    console.log("C2 - 0");
+                                    // console.log("C2 - 0");
                                     m2.push(0);
                                 }
                                 //(rightCoordinates[indexR]?.y < rightCoordinates[indexR + 1]?.y)
                                 else {
-                                    console.log("C3 - 1");
+                                    // console.log("C3 - 1");
                                     m2.push(1);
                                 }
                             }
-                            // console.log("m2 = ", m2);
+                            console.log("m2 = ", m2);
                             if (m2.length >= 2) {
                                 for (pointM2; pointM2 < m2.length - 1; pointM2++) {
                                     //View changes on the left screen
-                                    if (m2[pointM2] !== m1[pointM2 + 1]) {
-                                        console.log("|");
+                                    if (m2[pointM2] !== m2[pointM2 + 1]) {
                                         change2++;
                                     }
                                     document.getElementById("SeveralChanges2").innerHTML = change2 / 10;
