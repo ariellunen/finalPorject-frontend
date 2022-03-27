@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -18,6 +18,39 @@ const bull = (
 );
 
 const Cards = (props) => {
+    const [firstKide, setFirstKide] = useState(false);
+    const [secondKide, setSecondKide] = useState(false);
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        const getKide = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${props.item.firstKide}`, {
+                });
+                const responseData = await response.json();
+                console.log(responseData.user.name)
+                setFirstKide(responseData.user.name);
+            } catch (err) {
+                console.log(err);
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${props.item.secondKide}`, {
+                });
+                const responseData = await response.json();
+                console.log(responseData.user.name)
+                setSecondKide(responseData.user.name);
+                setIsReady(true);
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        console.log(props.item.firstKide)
+        getKide();
+
+    }, [isReady]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -35,9 +68,9 @@ const Cards = (props) => {
                     adjective
                 </Typography>
                 <Typography variant="body2">
-                    well meaning and kindly.
+                    {firstKide}
                     <br />
-                    {'"a benevolent smile"'}
+                    {secondKide}
                 </Typography>
             </CardContent>
             <CardActions>
@@ -48,7 +81,7 @@ const Cards = (props) => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Recovery draw={props.item}/>
+                    <Recovery draw={props.item} />
 
                 </Modal>
             </CardActions>
@@ -56,9 +89,13 @@ const Cards = (props) => {
     );
 
     return (
-        <Box sx={{ minWidth: 275, width: '75%'}}>
-            <Card style={{marginTop : 10}} variant="outlined">{card}</Card>
-        </Box>
+        <React.Fragment>
+
+            {isReady && <Box sx={{ minWidth: 275, width: '75%' }}>
+                <Card style={{ marginTop: 10 }} variant="outlined">{card}</Card>
+            </Box>}
+        </React.Fragment>
+
     );
 }
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cards from '../component/Cards';
 
+
 const AllDraw = () => {
     const [isReady, setIsReady] = useState(false);
-    const [drawing, setDrawing] = useState(false);
+    const [data, setData] = useState(false);
 
     useEffect(() => {
         const getDraw = async () => {
@@ -11,22 +12,24 @@ const AllDraw = () => {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                 });
                 const responseData = await response.json();
-                setDrawing(responseData.drawing);
+                console.log(responseData.drawing)
+                setData(responseData.drawing);
                 setIsReady(true);
             } catch (err) {
                 console.log(err);
             }
         }
+        
         getDraw();
-        console.log(isReady)
+
     }, [isReady]);
 
     return (
         <React.Fragment>
-            {drawing === undefined &&
+            {data === undefined &&
                 <div>wait</div>
             }
-            {isReady && drawing.map((item, key) => {
+            {isReady && data.map((item, key) => {
                 return(
                     <Cards item={item} key={key}/>
                 )
