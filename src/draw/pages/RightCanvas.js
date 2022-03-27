@@ -26,7 +26,7 @@ const RightCanvas = (props) => {
                         context.arc(posx, posy, 20, 0, 2 * Math.PI);
                         context.fill();
                         props.setRight({x:posx, y:posy});
-
+                        props.handleCoordinate(posx, posy);
                     }
                 }
             })

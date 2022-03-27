@@ -26,6 +26,7 @@ const LeftCanvas = (props) => {
                         context.arc(posx, posy, 20, 0, 2 * Math.PI);
                         context.fill();
                         props.setLeft({x:posx, y:posy})
+                        props.handleCoordinate(posx, posy);
                     }
                 }
             })
