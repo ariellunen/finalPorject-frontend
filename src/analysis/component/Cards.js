@@ -28,7 +28,6 @@ const Cards = (props) => {
                 const response = await fetch(`http://localhost:3000/api/users/${props.item.firstKide}`, {
                 });
                 const responseData = await response.json();
-                console.log(responseData.user.name)
                 setFirstKide(responseData.user.name);
             } catch (err) {
                 console.log(err);
@@ -38,7 +37,6 @@ const Cards = (props) => {
                 const response = await fetch(`http://localhost:3000/api/users/${props.item.secondKide}`, {
                 });
                 const responseData = await response.json();
-                console.log(responseData.user.name)
                 setSecondKide(responseData.user.name);
                 setIsReady(true);
 
@@ -47,7 +45,6 @@ const Cards = (props) => {
             }
         }
 
-        console.log(props.item.firstKide)
         getKide();
 
     }, [isReady]);
@@ -59,17 +56,22 @@ const Cards = (props) => {
         <React.Fragment>
             <div dir="rtl">
                 <CardContent>
-                    {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Word of the Day
-                    </Typography> */}
+                    <Typography sx={{ fontSize: 19 }} color="text.secondary" gutterBottom>
+                    {props.item.timeStarted.slice(0,10)}
+                    </Typography>
                     <Typography variant="h4" component="div">
-                    {firstKide}{bull}{secondKide}
+                        {firstKide}{bull}{secondKide}
+                    </Typography>
+                    <br />
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        שעת התחלה 
+                        &nbsp;                       
+                        {props.item.timeStarted.slice(11, -6)}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        :תאריך ושעת התחלה
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        :תאריך ושעת סיום
+                        שעת סיום
+                        &nbsp;
+                        {props.item.timeDone.slice(11, -6)}
                     </Typography>
                     {/* <Typography variant="body2">
                         {firstKide}
@@ -86,7 +88,7 @@ const Cards = (props) => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Recovery draw={props.item} />
+                    <Recovery draw={props.item} index={props.index} />
 
                 </Modal>
             </CardActions>

@@ -12,14 +12,17 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+
 const Recovery = (props) => {
-    let drawing;
     const ctxRightRef = useRef(null);
     const ctxLeftRef = useRef(null);
+
     useEffect(() => {
+
         const canvas = document.getElementById('rightCanvas');
         const ctx = canvas.getContext("2d");
         ctx.lineWidth = 12;
+        ctx.strokeStyle = props.draw.colorSecond;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctxRightRef.current = ctx;
@@ -27,13 +30,15 @@ const Recovery = (props) => {
         const canvasLeft = document.getElementById('leftCanvas');
         const ctxx = canvasLeft.getContext("2d");
         ctxx.lineWidth = 12;
+        ctxx.strokeStyle = props.draw.colorFirst;
         ctxx.lineCap = "round";
         ctxx.lineJoin = "round";
         ctxLeftRef.current = ctxx;
+
+
     }, [])
 
     let i = 0;
-    console.log(props.draw.coordinate)
     const handleClick = () => {
         setTimeout(function () {
             if (i < props.draw.coordinate.length) {

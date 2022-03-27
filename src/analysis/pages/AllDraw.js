@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 const AllDraw = () => {
     const [isReady, setIsReady] = useState(false);
     const [data, setData] = useState(false);
-
     useEffect(() => {
         const getDraw = async () => {
             try {
@@ -19,9 +18,7 @@ const AllDraw = () => {
                 console.log(err);
             }
         }
-
         getDraw();
-
     }, [isReady]);
 
     return (
@@ -39,7 +36,7 @@ const AllDraw = () => {
                         bgcolor: 'background.paper',
                         borderRadius: 1,
                     }}>
-                        <Cards item={item} key={key} />
+                        <Cards item={item} key={key} index={key}/>
                     </Box>
                 )
             })}

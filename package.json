@@ -11,6 +11,7 @@
     "bootstrap": "^5.1.3",
     "interactjs": "^1.10.11",
     "material-design-inspired-color-picker": "^1.7.2",
+    "moment-timezone": "^0.5.34",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-media-recorder": "^1.6.3",

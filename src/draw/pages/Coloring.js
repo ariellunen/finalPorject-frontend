@@ -5,6 +5,7 @@ import RightCanvas from './RightCanvas';
 import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+let moment = require('moment-timezone');
 
 let counter = 0;
 let arr = [];
@@ -27,7 +28,7 @@ let change2 = 0;
 
 
 const Coloring = (props) => {
-    const [startedTime, setStartedTime] = useState(new Date());
+    const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
         // setStartedTime(new Date());
         clearTimer(getDeadTime());
@@ -295,10 +296,13 @@ const Coloring = (props) => {
     const onSubmit = () => {
         fetchGetAPI();
         const date = new Date();
-        console.log(typeof (date))
+        console.log(location.state[0])
+        console.log(location.state[1])
         if (arr.length !== 1) {
             arr.shift();
         }
+
+        
         setTimeout(async () => {
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
@@ -310,9 +314,10 @@ const Coloring = (props) => {
                         firstKide: user1,
                         secondKide: user2,
                         timeStarted: startedTime,
-                        timeDone: date,
                         sync: '10',
                         coordinate: arr,
+                        colorFirst: location.state[0].color,
+                        colorSecond: location.state[1].color
                     })
                 });
 
@@ -339,9 +344,6 @@ const Coloring = (props) => {
                     <canvas id="canvasL" width="650" height="600"
                         onPointerUp={() => {
                             setLeft({ x: -1, y: -1 })
-                            // m1 = [];
-                            // change1 = 0;
-                            // document.getElementById("SeveralChanges1").innerHTML = 0;
                         }}
                     >
                         <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} setLeft={setLeft} />
@@ -349,9 +351,6 @@ const Coloring = (props) => {
                     <canvas id="canvasR" width="650" height="600"
                         onPointerUp={() => {
                             setRight({ x: -1, y: -1 })
-                            // m2 = [];
-                            // change2 = 0;
-                            // document.getElementById("SeveralChanges2").innerHTML = 0;
                         }}
                     >
                         <RightCanvas handleCoordinate={handleRightCoordinate} color={location.state[1]} setRight={setRight} />
