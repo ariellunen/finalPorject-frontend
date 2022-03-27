@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cards from '../component/Cards';
-
+import Box from '@mui/material/Box';
 
 const AllDraw = () => {
     const [isReady, setIsReady] = useState(false);
@@ -19,7 +19,7 @@ const AllDraw = () => {
                 console.log(err);
             }
         }
-        
+
         getDraw();
 
     }, [isReady]);
@@ -30,10 +30,19 @@ const AllDraw = () => {
                 <div>wait</div>
             }
             {isReady && data.map((item, key) => {
-                return(
-                    <Cards item={item} key={key}/>
+                return (
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        p: 1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                    }}>
+                        <Cards item={item} key={key} />
+                    </Box>
                 )
-            })}    
+            })}
         </React.Fragment>
     )
 }

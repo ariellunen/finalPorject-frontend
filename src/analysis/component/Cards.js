@@ -57,24 +57,29 @@ const Cards = (props) => {
 
     const card = (
         <React.Fragment>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Word of the Day
-                </Typography>
-                <Typography variant="h5" component="div">
-                    be{bull}nev{bull}o{bull}lent
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
-                </Typography>
-                <Typography variant="body2">
-                    {firstKide}
-                    <br />
-                    {secondKide}
-                </Typography>
-            </CardContent>
+            <div dir="rtl">
+                <CardContent>
+                    {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        Word of the Day
+                    </Typography> */}
+                    <Typography variant="h4" component="div">
+                    {firstKide}{bull}{secondKide}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        :תאריך ושעת התחלה
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        :תאריך ושעת סיום
+                    </Typography>
+                    {/* <Typography variant="body2">
+                        {firstKide}
+                        <br />
+                        {secondKide}
+                    </Typography> */}
+                </CardContent>
+            </div>
             <CardActions>
-                <Button onClick={handleOpen}>Open modal</Button>
+                <Button variant="outlined" onClick={handleOpen}>שחזור</Button>
                 <Modal
                     open={open}
                     onClose={handleClose}
