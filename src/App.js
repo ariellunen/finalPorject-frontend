@@ -9,8 +9,8 @@ import {
 import Users from './user/pages/Users';
 import ColorPicker from './draw/pages/ColorPicker';
 import Coloring from './draw/pages/Coloring';
-import Analysis from './analysis/pages/Analysis'
 import Form from './draw/pages/Form';
+import AllDraw from './analysis/pages/AllDraw';
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
           <Coloring />
         </Route>
         <Route path="/analysis" exact>
-          <Analysis />
+          <AllDraw />
         </Route>
         <Route path="/form" exact>
           <Form />
