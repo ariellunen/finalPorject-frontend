@@ -31,7 +31,6 @@ const Coloring = (props) => {
     useEffect(() => {
         // setStartedTime(new Date());
         clearTimer(getDeadTime());
-        frequencyL();
         frequencyR();
     }, []);
 
@@ -48,7 +47,8 @@ const Coloring = (props) => {
 
     const handleLeftCoordinate = (x, y) => {
         allLeftCoordinates.push({ x, y });
-        console.log("left", allLeftCoordinates);
+        frequencyL();
+        // console.log("left", allLeftCoordinates);
     }
 
     const handleRightCoordinate = (x, y) => {
