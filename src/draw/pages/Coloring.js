@@ -60,7 +60,7 @@ const Coloring = (props) => {
     ////////////////////ALGORITEM SYNC/////////////////////
 
     const frequencyL = () => {
-        setTimeout(function () {
+        // setTimeout(function () {
             if (allLeftCoordinates[pointL + 1]?.x) {
                 for (let i = 0; i < 10; i++, pointL++) {
                     if (allLeftCoordinates[pointL]?.x) {
@@ -139,8 +139,8 @@ const Coloring = (props) => {
                     }
                 }
             }
-            frequencyL();
-        }, 1000)
+            // frequencyL();
+        // }, 1000)
     }
 
     //Right side frequency algorithem
@@ -295,7 +295,6 @@ const Coloring = (props) => {
 
     const onSubmit = () => {
         fetchGetAPI();
-        const date = new Date();
         console.log(location.state[0])
         console.log(location.state[1])
         if (arr.length !== 1) {

@@ -36,7 +36,7 @@ const AllDraw = () => {
                         bgcolor: 'background.paper',
                         borderRadius: 1,
                     }}>
-                        <Cards item={item} key={key} index={key}/>
+                        <Cards item={item} key={key} index={key} />
                     </Box>
                 )
             })}

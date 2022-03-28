@@ -57,15 +57,15 @@ const Cards = (props) => {
             <div dir="rtl">
                 <CardContent>
                     <Typography sx={{ fontSize: 19 }} color="text.secondary" gutterBottom>
-                    {props.item.timeStarted.slice(0,10)}
+                        {props.item.timeStarted.slice(0, 10)}
                     </Typography>
                     <Typography variant="h4" component="div">
                         {firstKide}{bull}{secondKide}
                     </Typography>
                     <br />
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        שעת התחלה 
-                        &nbsp;                       
+                        שעת התחלה
+                        &nbsp;
                         {props.item.timeStarted.slice(11, -6)}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">

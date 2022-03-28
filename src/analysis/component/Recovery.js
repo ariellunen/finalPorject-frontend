@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 const style = {
     position: 'absolute',
@@ -111,12 +112,7 @@ const Recovery = (props) => {
     }
     return (
         <Box sx={style}>
-            {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography> */}
+
             <div style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>
                 <canvas
                     id='leftCanvas'
@@ -129,9 +125,7 @@ const Recovery = (props) => {
                     height={`600px`}
                 />
             </div>
-            <button onClick={() => {
-                handleClick();
-            }}>play</button>
+            <Button variant="outlined" onClick={handleClick}>התחל</Button>
         </Box>
     )
 }
