@@ -9,7 +9,6 @@ let moment = require('moment-timezone');
 
 let counter = 0;
 let arr = [];
-
 let m1 = [], m2 = [];
 let leftCoordinates = [];
 let rightCoordinates = [];
@@ -23,13 +22,7 @@ let indexL = 0;
 let indexR = 0;
 let cchange1 = 0;
 let cchange2 = 0;
-let leftX = 0, leftY = 0;
-let ctx
-let canvasL
 
-let x = 0;
-let y = 0;
-let drawwing = false;
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
@@ -324,22 +317,6 @@ const Coloring = (props) => {
                 console.log(err);
             }
         }, 2000);
-    }
-
-    const [lastPosition, setPosition] = useState({
-        x: 0,
-        y: 0
-    });
-
-    const handlePosLeft = (x, y) => {
-        // console.log(" kfkfkfkf",x,y)
-        leftX = x
-        leftY = y
-
-        // setPosition({
-        //     x: x,
-        //     y: y
-        // })
     }
 
     return (

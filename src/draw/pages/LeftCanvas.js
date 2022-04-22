@@ -76,7 +76,6 @@ const LeftCanvas = (props) => {
             canvas.beginPath();
             canvas.lineWidth = lineWidth;
             canvas.strokeStyle = props.color.color;
-            canvas.fillStyle = 'red'
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
         })
