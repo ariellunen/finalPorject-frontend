@@ -19,7 +19,6 @@ const Recovery = (props) => {
     const ctxLeftRef = useRef(null);
 
     useEffect(() => {
-
         const canvas = document.getElementById('rightCanvas');
         const ctx = canvas.getContext("2d");
         ctx.lineWidth = 12;

@@ -23,8 +23,13 @@ let indexL = 0;
 let indexR = 0;
 let cchange1 = 0;
 let cchange2 = 0;
+let leftX = 0, leftY = 0;
+let ctx
+let canvasL
 
-
+let x = 0;
+let y = 0;
+let drawwing = false;
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
@@ -321,6 +326,22 @@ const Coloring = (props) => {
         }, 2000);
     }
 
+    const [lastPosition, setPosition] = useState({
+        x: 0,
+        y: 0
+    });
+
+    const handlePosLeft = (x, y) => {
+        // console.log(" kfkfkfkf",x,y)
+        leftX = x
+        leftY = y
+
+        // setPosition({
+        //     x: x,
+        //     y: y
+        // })
+    }
+
     return (
         <React.Fragment>
             <div className='container'>
@@ -333,24 +354,16 @@ const Coloring = (props) => {
                 </div>
                 <div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
-                    <canvas id="canvasL" width="650" height="600"
-                        onPointerUp={() => {
-                            setLeft({ x: -1, y: -1 })
-                            change1 = 0;
-                            cchange1 = 0;
-                        }}
-                    >
-                        <LeftCanvas handleCoordinate={handleLeftCoordinate} color={location.state[0]} setLeft={setLeft} />
-                    </canvas>
-                    <canvas id="canvasR" width="650" height="600"
-                        onPointerUp={() => {
-                            setRight({ x: -1, y: -1 })
-                            change2 = 0;
-                            cchange2 = 0;
-                        }}
-                    >
-                        <RightCanvas handleCoordinate={handleRightCoordinate} color={location.state[1]} setRight={setRight} />
-                    </canvas>
+                    <LeftCanvas
+                        handleCoordinate={handleLeftCoordinate}
+                        color={location.state[0]}
+                        setLeft={setLeft}
+                    />
+                    <RightCanvas
+                        handleCoordinate={handleRightCoordinate}
+                        color={location.state[1]}
+                        setRight={setRight}
+                    />
                     <p id="SeveralChanges2">{cchange2}</p>
                 </div>
                 <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>

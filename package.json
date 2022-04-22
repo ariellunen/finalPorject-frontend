@@ -13,6 +13,7 @@
     "material-design-inspired-color-picker": "^1.7.2",
     "moment-timezone": "^0.5.34",
     "react": "^16.11.0",
+    "react-canvas-paint": "^1.0.1",
     "react-dom": "^16.11.0",
     "react-media-recorder": "^1.6.3",
     "react-router-dom": "^5.1.2",
