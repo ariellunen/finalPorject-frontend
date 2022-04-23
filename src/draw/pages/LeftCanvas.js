@@ -58,6 +58,8 @@ import interact from 'interactjs';
 import './Canvas.css';
 
 let canvas;
+let down;
+let timeTakenL = 0;
 const LeftCanvas = (props) => {
     const lineWidth = 20;
     const shadowColor = '#333';
@@ -73,6 +75,7 @@ const LeftCanvas = (props) => {
             canvas = event.target.getContext('2d')
             event.preventDefault();
             event.stopPropagation();
+            down = Date.now();
             canvas.beginPath();
             canvas.lineWidth = lineWidth;
             canvas.strokeStyle = props.color.color;
@@ -83,6 +86,8 @@ const LeftCanvas = (props) => {
         interact('#canvasL').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
+            timeTakenL = Date.now() - down;
+            // צריך לשמור בשרת את טיימטייק - זה יהיה ניתוח שלא בזמן אמת;
             props.setLeft({ x: -1, y: -1 })
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
