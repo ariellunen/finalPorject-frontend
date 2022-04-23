@@ -141,9 +141,6 @@ const Coloring = (props) => {
                 <div id='time'>
                     <h2>{timer}</h2>
                 </div>
-                <div>
-                    <p id="b"></p>
-                </div>
                 <div id="canvasGrid">
                     {/* <p id="SeveralChanges1">{cchange1}</p> */}
                     <p id="SeveralChanges1">0</p>
