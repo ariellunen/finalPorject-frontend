@@ -83,6 +83,7 @@ const LeftCanvas = (props) => {
         interact('#canvasL').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
+            props.setLeft({ x: -1, y: -1 })
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
                 canvas.shadowBlur = shadowBlur;

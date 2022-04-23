@@ -37,7 +37,7 @@ const Coloring = (props) => {
 
     useEffect(() => {
         arr[counter] = { l: left, r: right }
-        // console.log('arr', arr)
+        console.log('arr', arr)
         counter++;
     }, [left, right])
 
@@ -225,7 +225,6 @@ const Coloring = (props) => {
         }
     }
 
-
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
     const Ref = useRef(null);
@@ -245,7 +244,6 @@ const Coloring = (props) => {
     const startTimer = (e) => {
         let { total, hours, minutes, seconds } = getTimeRemaining(e);
         if (total >= 0) {
-
             // update the timer
             setTimer(
                 (hours > 9 ? hours : '0' + hours) + ':' +
@@ -308,6 +306,8 @@ const Coloring = (props) => {
                         timeDone: date,
                         sync: '10',
                         coordinate: arr,
+                        colorFirst: location.state[1].color,
+                        colorSecond: location.state[0].color,
                     })
                 });
 
