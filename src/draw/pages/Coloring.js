@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
 import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../shared/context/auth-context';
+
 let moment = require('moment-timezone');
 
 let counter = 0;
@@ -13,6 +15,7 @@ let leftCoordinates = [];
 let rightCoordinates = [];
 
 const Coloring = (props) => {
+    const auth = useContext(AuthContext);
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
         // setStartedTime(new Date());
@@ -87,12 +90,12 @@ const Coloring = (props) => {
     let user2;
     const fetchGetAPI = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/users/', {
+            const response = await fetch('http://localhost:3000/api/users/children/', {
             });
             const responseData = await response.json();
-            const len = responseData.users.length;
-            user2 = responseData.users[len - 2];
-            user1 = responseData.users[len - 1];
+            const len = responseData.children.length;
+            user2 = responseData.children[len - 2];
+            user1 = responseData.children[len - 1];
             console.log(user2, user1)
 
         } catch (err) {
@@ -109,8 +112,21 @@ const Coloring = (props) => {
         }
         setTimeout(async () => {
             try {
+                // const formData = new FormData();
+                // formData.append('firstKide', user1);
+                // formData.append('secondKide', user2);
+                // formData.append('timeStarted', startedTime);
+                // formData.append('timeDone', date);
+                // formData.append('sync', 10);
+                // formData.append('coordinate', arr);
+                // formData.append('colorFirst', location.state[1].color);
+                // formData.append('colorSecond', location.state[0].color);
+                // await sendRequest('http://localhost:3000/api/drawing', 'POST', formData, {
+                //     Authorization: 'Bearer ' + auth.token
+                //   });
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
+                    // Authorization: 'Bearer ' + auth.token,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -127,6 +143,7 @@ const Coloring = (props) => {
                 });
 
                 const responseData = await response.json();
+                console.log(user1, user2, startedTime, date, arr, location.state[1].color)
                 console.log(responseData);
             } catch (err) {
                 console.log(err);

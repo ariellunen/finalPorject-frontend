@@ -20,7 +20,7 @@ const Form = (props) => {
 
     const onSubmit = async event => {
        try{
-            const response = await fetch('http://localhost:3000/api/users/signup/', {
+            const response = await fetch('http://localhost:3000/api/users/signupChild/', {
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ const Form = (props) => {
         }
 
         try{
-            const response = await fetch('http://localhost:3000/api/users/signup/', {
+            const response = await fetch('http://localhost:3000/api/users/signupChild/', {
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'
