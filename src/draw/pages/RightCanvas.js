@@ -95,6 +95,7 @@ const LeftCanvas = (props) => {
                 canvas.stroke();
             }
             state.mousedown = false;
+            document.getElementById("SeveralChanges2").innerHTML = 0;
         })
         interact('#canvasR')
             .draggable({
@@ -134,7 +135,7 @@ const LeftCanvas = (props) => {
 
     return (
         <React.Fragment>
-            <canvas id="canvasR" width="650" height="600"></canvas>
+            <canvas id="canvasR" width="800" height="800"></canvas>
         </React.Fragment>
     )
 };

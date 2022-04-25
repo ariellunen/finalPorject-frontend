@@ -96,6 +96,7 @@ const LeftCanvas = (props) => {
                 canvas.stroke();
             }
             state.mousedown = false;
+            document.getElementById("SeveralChanges1").innerHTML = 0;
         })
         interact('#canvasL')
             .draggable({
@@ -135,9 +136,12 @@ const LeftCanvas = (props) => {
         // interact(window).on('resize', resizeCanvases)
     }, [])
 
+    const onSubmit = () => {
+        console.log("wefgh");
+    }
     return (
         <React.Fragment>
-            <canvas id="canvasL" width="650" height="600"></canvas>
+            <canvas id="canvasL" width="800" height="800"></canvas>
         </React.Fragment>
     )
 };
