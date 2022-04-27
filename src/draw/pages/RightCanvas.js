@@ -60,7 +60,7 @@ import './Canvas.css';
 let canvas;
 let down;
 let timeTakenR = 0;
-const LeftCanvas = (props) => {
+const RightCanvas = (props) => {
     const lineWidth = 20;
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
@@ -140,4 +140,4 @@ const LeftCanvas = (props) => {
     )
 };
 
-export default LeftCanvas;
+export default RightCanvas;

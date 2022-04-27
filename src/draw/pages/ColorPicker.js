@@ -10,6 +10,7 @@ const ColorPicker = (props) => {
         { name: '', color: '' },
         { name: '', color: '' },
     ]
+
     const [counter, setCounter] = useState(0);
     const [users, setUsers] = useState(usersData);
     const [isReady, setIsReady] = useState(false);
@@ -58,7 +59,7 @@ const ColorPicker = (props) => {
                     <CircularProgress />
                 </Box>
             }
-            {isReady && counter === 2 && history.replace('/drawing/coloring', users)}
+            {isReady && counter === 2 && history.replace('/drawing/shapes', users)}
             {isReady && usersData[1].name !== undefined && counter < 2 && (
                 <Colors handleColor={handleColor} name={users[counter]} />
             )}

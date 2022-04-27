@@ -102,7 +102,7 @@ const fileUpload = () => {
     //         viewDrawing()
     //     });
     try {
-        const data = fs.readFileSync('Circle.txt', 'utf8')
+        const data = fs.readFileSync('../shape/Circle.txt', 'utf8')
         console.log(data)
     } catch (err) {
         console.error(err)

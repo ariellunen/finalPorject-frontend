@@ -14,6 +14,7 @@ import AllDraw from './analysis/pages/AllDraw';
 import Auth from './user/pages/Auth';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
+import ShapesPicker from './draw/pages/ShapesPicker';
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -30,6 +31,9 @@ const App = () => {
         </Route>
         <Route path="/drawing/color" exact>
           <ColorPicker />
+        </Route>
+        <Route path="/drawing/shapes" exact>
+          <ShapesPicker />
         </Route>
         <Route path="/drawing/coloring" exact>
           <Coloring />

@@ -1,0 +1,14 @@
+.btn {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    border-color: transparent;
+    margin: 40px;
+    font-size: 50px;
+}
+
+#shapes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

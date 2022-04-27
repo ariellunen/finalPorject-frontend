@@ -4,7 +4,6 @@ import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
 import canvas from './LeftCanvas';
 import './Coloring.css';
-import './Circle.txt';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -28,7 +27,7 @@ const Coloring = (props) => {
 
     const [left, setLeft] = useState({ x: -1, y: -1 })
     const [right, setRight] = useState({ y: -1, x: -1 })
-    const { frequencyL, frequencyR } = require("./FrequencyAlgo").default;
+    // const { frequencyL, frequencyR } = require("./FrequencyAlgo").default;
 
     useEffect(() => {
         arr[counter] = { l: left, r: right }
@@ -44,7 +43,7 @@ const Coloring = (props) => {
         // frequencyR(rightCoordinates);
     }
 
-    setInterval(frequencyL(leftCoordinates), 1000);
+    // setInterval(frequencyL(leftCoordinates), 1000);
 
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
@@ -140,13 +139,12 @@ const Coloring = (props) => {
                         timeDone: date,
                         sync: '10',
                         coordinate: arr,
-                        colorFirst: location.state[1].color,
-                        colorSecond: location.state[0].color,
+                        colorFirst: location.state.state[1].color,
+                        colorSecond: location.state.state[0].color,
                     })
                 });
 
                 const responseData = await response.json();
-                console.log(user1, user2, startedTime, date, arr, location.state[1].color)
                 console.log(responseData);
             } catch (err) {
                 console.log(err);
@@ -166,12 +164,12 @@ const Coloring = (props) => {
                     <p id="SeveralChanges1">0</p>
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
-                        color={location.state[0]}
+                        color={location.state.state[0]}
                         setLeft={setLeft}
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
-                        color={location.state[1]}
+                        color={location.state.state[1]}
                         setRight={setRight}
                     />
                     {/* <p id="SeveralChanges2">{cchange2}</p> */}
