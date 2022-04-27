@@ -24,13 +24,14 @@ const ColorPicker = (props) => {
 
     const fetchAPI = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/users/', {
+            const response = await fetch('http://localhost:3000/api/users/children', {
             });
             const responseData = await response.json();
+            console.log(responseData)
             data.push(responseData)
-            const len = data[0].users.length;
-            usersData[0].name = data[0].users[len - 2].name;
-            usersData[1].name = data[0].users[len - 1].name;
+            const len = data[0].children.length;
+            usersData[0].name = data[0].children[len - 2].name;
+            usersData[1].name = data[0].children[len - 1].name;
             setIsReady(true);
         } catch (err) {
             console.log(err);
