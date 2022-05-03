@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Colors from '../component/Colors';
 import { useHistory } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 

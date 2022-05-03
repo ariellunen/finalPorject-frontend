@@ -25,7 +25,7 @@ const Cards = (props) => {
     useEffect(() => {
         const getKide = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/users/${props.item.firstKide}`, {
+                const response = await fetch(`http://localhost:3000/api/users/children/${props.item.firstKide}`, {
                 });
                 const responseData = await response.json();
                 setFirstKide(responseData.user.name);
@@ -34,7 +34,7 @@ const Cards = (props) => {
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/api/users/${props.item.secondKide}`, {
+                const response = await fetch(`http://localhost:3000/api/users/children/${props.item.secondKide}`, {
                 });
                 const responseData = await response.json();
                 setSecondKide(responseData.user.name);

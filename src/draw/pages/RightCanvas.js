@@ -87,7 +87,8 @@ const RightCanvas = (props) => {
             event.preventDefault();
             event.stopPropagation();
             timeTakenR = Date.now() - down;
-            // צריך לשמור בשרת את טיימטייק - זה יהיה ניתוח שלא בזמן אמת;
+            props.secondsR.push(timeTakenR / 1000);
+            // צריך לשמור בשרת את סקנד - זה יהיה ניתוח שלא בזמן אמת;
             props.setRight({ x: -1, y: -1 })
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
@@ -95,7 +96,6 @@ const RightCanvas = (props) => {
                 canvas.stroke();
             }
             state.mousedown = false;
-            document.getElementById("SeveralChanges2").innerHTML = 0;
         })
         interact('#canvasR')
             .draggable({

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Shapes.css';
 
 const Shapes = (props) => {
@@ -6,22 +6,21 @@ const Shapes = (props) => {
     const onClick = (s) => {
         props.handleShape(shape);
     }
-    console.log(shape);
 
     return (
         <div>
             <div id='shapes'>
-                <button className='btn one' onClick={() => {
+                <button className='btn' onClick={() => {
                     shape = 'circle';
                     onClick()
                 }}>circle
                 </button>
-                <button className='btn two' onClick={() => {
+                <button className='btn' onClick={() => {
                     shape = 'triangular';
                     onClick()
                 }}>triangular
                 </button>
-                <button className='btn tree' onClick={() => {
+                <button className='btn' onClick={() => {
                     shape = 'square';
                     onClick()
                 }}>square</button>
