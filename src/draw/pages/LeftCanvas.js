@@ -146,8 +146,6 @@ const LeftCanvas = (props) => {
     ///////////////////////////////////////////////
 
     let coordinates = [];
-    let oldCoordinates = [];
-
     const dda = (x0, y0, x1, y1) => {
         ctx.beginPath();
         ctx.moveTo(x0, y0);
@@ -181,10 +179,8 @@ const LeftCanvas = (props) => {
             for (let i = 0; i < lines.length; i++) {
                 const values = lines[i].split(',')
                 coordinates.push([])
-                oldCoordinates.push([])
                 for (let j = 0; j < values.length; j++) {
                     coordinates[i].push(parseInt(values[j]))
-                    oldCoordinates[i].push(parseInt(values[j]))
                 }
             }
             viewDrawing()
