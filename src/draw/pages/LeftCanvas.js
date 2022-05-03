@@ -56,8 +56,9 @@
 import React, { useEffect } from 'react';
 import interact from 'interactjs';
 import './Canvas.css';
-import mytext from "./test.js"
-
+import circleCor from "../shape/CircleL";
+import triangularCor from "../shape/TriangularL"
+import heartCor from "../shape/HeartL"
 
 let canvas;
 let down;
@@ -91,7 +92,6 @@ const LeftCanvas = (props) => {
             event.stopPropagation();
             timeTakenL = Date.now() - down;
             props.secondsL.push(timeTakenL / 1000);
-            // צריך לשמור בשרת את סקנד - זה יהיה ניתוח שלא בזמן אמת;
             props.setLeft({ x: -1, y: -1 })
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
@@ -128,9 +128,9 @@ const LeftCanvas = (props) => {
             ) {
                 delete canvas.width
                 delete canvas.height
-                let rect = canvas.getBoundingClientRect()
-                canvas.width = rect.width
-                canvas.height = rect.height
+                // let rect = canvas.getBoundingClientRect()
+                // canvas.width = rect.width
+                // canvas.height = rect.height
             })
         }
         resizeCanvases()
@@ -143,8 +143,8 @@ const LeftCanvas = (props) => {
         ctx = document.getElementById("canvasL").getContext('2d');
         fileUpload()
     }, []);
-    ///////////////////////////////////////////////
 
+    //Upload the drawing
     let coordinates = [];
     const dda = (x0, y0, x1, y1) => {
         ctx.beginPath();
@@ -153,9 +153,7 @@ const LeftCanvas = (props) => {
         ctx.stroke();
     };
 
-    // MyCircle()
     const circle = (x1, y1, r) => {
-        console.log("4");
         let x = 0
         let y = r
         let p = 3 - 2 * x
@@ -164,7 +162,6 @@ const LeftCanvas = (props) => {
         ctx.stroke();
     }
 
-    // // myBezuerCurve
     const bezierCurve = (x0, y0, x1, y1, x2, y2, x3, y3) => {
         ctx.beginPath();
         ctx.moveTo(x0, y0);
@@ -173,9 +170,9 @@ const LeftCanvas = (props) => {
     }
 
     const fileUpload = () => {
-        if (mytext) {
+        if (heartCor) {
             coordinates = []
-            const lines = mytext.split('\n')
+            const lines = heartCor.split('\n')
             for (let i = 0; i < lines.length; i++) {
                 const values = lines[i].split(',')
                 coordinates.push([])
@@ -187,13 +184,11 @@ const LeftCanvas = (props) => {
         }
     }
 
-    //Upload all the drawing by coordinates
     const viewDrawing = () => {
         console.log(coordinates);
         for (let i = 0; i < coordinates.length; i++) {
             if (coordinates[i].length === 3) {
                 circle(coordinates[i][0], coordinates[i][1], coordinates[i][2])
-
             } else if (coordinates[i].length === 4) {
                 dda(coordinates[i][0], coordinates[i][1],
                     coordinates[i][2], coordinates[i][3])
@@ -204,7 +199,6 @@ const LeftCanvas = (props) => {
             }
         }
     }
-    ///////////////////////////////////////////////
 
     return (
         <React.Fragment>

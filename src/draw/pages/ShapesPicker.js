@@ -31,8 +31,8 @@ const ShapesPicker = (props) => {
         //     case 'triangular':
         //         console.log("triangular");
         //         break;
-        //     case 'square':
-        //         console.log("square");
+        //     case 'heart':
+        //         console.log("heart");
         //         break;
         // }
     }

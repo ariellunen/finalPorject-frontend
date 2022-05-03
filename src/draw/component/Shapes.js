@@ -21,9 +21,9 @@ const Shapes = (props) => {
                 }}>triangular
                 </button>
                 <button className='btn' onClick={() => {
-                    shape = 'square';
+                    shape = 'heart';
                     onClick()
-                }}>square</button>
+                }}>heart</button>
             </div>
         </div>
     )
