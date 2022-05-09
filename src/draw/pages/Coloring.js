@@ -14,6 +14,16 @@ let arr = [];
 
 let leftCoordinates = [];
 let rightCoordinates = [];
+
+let CircularBufferL = require("circular-buffer");
+let bufL = new CircularBufferL(100);
+// let CircularBufferTineL = require("circular-buffer");
+// let timeCorL = new CircularBufferTineL(100);
+let CircularBufferR = require("circular-buffer");
+let bufR = new CircularBufferR(100);
+// let CircularBufferTimeR = require("circular-buffer");
+// let timeCorR = new CircularBufferTimeR(100);
+
 let pointM1 = 0;
 let pointM2 = 0;
 let tempL = 0;
@@ -31,6 +41,12 @@ let secondsR = [];
 let changeL = [];
 let changeR = [];
 let timer2;
+let timeTakenL;
+let down;
+
+let Interval;
+let seconds;
+let tens = 0;
 
 const Coloring = (props) => {
     const auth = useContext(AuthContext);
@@ -51,99 +67,186 @@ const Coloring = (props) => {
     }, [left, right])
 
     const handleLeftCoordinate = (x, y) => {
+        // timeCorL.push(Date.now());
+        Interval = setInterval(startTimerCor, 1000);
+        // console.log("1", timeCorL.toarray());
+        // seconds = {timer};
         leftCoordinates.push({ x, y });
-        frequencyL();
+        bufL.push({ x, y });
+        // console.log(seconds);
+        if (leftCoordinates.length % 100 === 0) {
+            // clearInterval(Interval);
+            // console.log("time:", seconds,":",tens);
+            // console.log("time:", seconds);
+            // tens = 0;
+            // seconds = 0;
+            // timeTakenL = Date.now() - timeCorL.get(0);
+            // console.log("2", timeTakenL);
+            frequencyL();
+        };
+    }
+    const startTimerCor = () => {
+        clearInterval(Interval);
+        tens++;
+        // console.log("tens", tens);
+        if (tens > 99) {
+        //     console.log("seconds", seconds);
+        //     seconds++;
+        console.log("HI");
+
+            tens = 0;
+
+        }
     }
 
     const handleRightCoordinate = (x, y) => {
         rightCoordinates.push({ x, y });
-        frequencyR();
+        // frequencyR();
     }
 
     ////////////////////ALGORITEM SYNC/////////////////////
-
     const frequencyL = () => {
-        // setTimeout(function () {
-        if (leftCoordinates[indexL + 1]?.x) {
-            for (indexL; indexL < leftCoordinates.length - 1; indexL++) {
-                // if (leftCoordinates[indexL]?.x !== (-1) && leftCoordinates[indexL + 1]?.x !== (-1)) {
-                if ((Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 15) {
-                    if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
-                        // console.log("A1 - 0");
-                        m1.push(0);
-                    }
-                    else if (leftCoordinates[indexL]?.y < leftCoordinates[indexL + 1]?.y) {
-                        // console.log("A2 - 1");
-                        m1.push(1);
-                    }
-                    else { //((Math.abs(leftCoordinates[indexL]?.y - leftCoordinates[indexL + 1]?.y)) < 15 )
-                        // console.log("A3 - ?");
-                        // console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
-                        tempL = m1[m1.length - 1];
-                        m1.push(tempL);
-                    }
-                }
-                else if (leftCoordinates[indexL]?.x < leftCoordinates[indexL + 1]?.x) {
+        for (let i = 0; i < bufL.size() - 1; i++) {
+            if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 15) {
+                if (bufL.get(i).y > bufL.get(i + 1).y) {
                     m1.push(0);
                 }
-                else {
+                if (bufL.get(i).y < bufL.get(i + 1).y) {
                     m1.push(1);
                 }
-                if (m1.length >= 2) {
-                    for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                        //View changes on the left screen
-                        if (m1[pointM1] !== m1[pointM1 + 1]) {
-                            change1++;
-                            cchange1 = change1 / 10;
-                            changeL.push({ change: cchange1, time: timer2 });
-                        }
+                // else { //((Math.abs(bufL.get(i).y - bufL.get(i+1).y)) < 15 )
+                //     tempL = m1[m1.length - 1];
+                //     m1.push(tempL);
+                // }
+            }
+            else if (bufL.get(i).x < bufL.get(i + 1).x) {
+                m1.push(1);
+            }
+            else {
+                m1.push(0);
+            }
+            if (m1.length >= 2) {
+                for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                    //View changes on the left screen
+                    if (m1[pointM1] !== m1[pointM1 + 1]) {
+                        console.log(m1);
+                        change1++;
+                        cchange1 = change1 / 10;
+                        changeL.push({ change: cchange1, time: timer2 });
                     }
                 }
             }
         }
     }
 
-    // console.log(changeL);
-    //Right side frequency algorithem
-    const frequencyR = () => {
-        if (rightCoordinates[indexR + 1]?.x) {
-            for (indexR; indexR < rightCoordinates.length - 1; indexR++) {
-                // if (rightCoordinates[indexR]?.x !== (-1) && rightCoordinates[indexR + 1]?.x !== (-1)) {
-                if ((Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 15) {
-                    if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-                        // console.log("A1 - 0");
-                        m2.push(0);
-                    }
-                    else if (rightCoordinates[indexR]?.y < rightCoordinates[indexR + 1]?.y) {
-                        // console.log("A2 - 1");
-                        m2.push(1);
-                    }
-                    else { //((Math.abs(rightCoordinates[indexR]?.y - rightCoordinates[indexR + 1]?.y)) < 15)
-                        // console.log("A3 - ?");
-                        // console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
-                        tempR = m2[m2.length - 1];
-                        m2.push(tempR);
-                    }
-                }
-                else if (rightCoordinates[indexR]?.x < rightCoordinates[indexR + 1]?.x) {
-                    m2.push(0);
-                }
-                else { // (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x)
-                    m2.push(1);
-                }
-                if (m2.length >= 2) {
-                    for (pointM2; pointM2 < m2.length - 1; pointM2++) {
-                        //View changes on the left screen
-                        if (m2[pointM2] !== m2[pointM2 + 1]) {
-                            change2++;
-                        }
-                        cchange2 = change2 / 10;
-                        changeR.push(cchange2);
-                    }
-                }
-            }
-        }
-    }
+    // const frequencyL = () => {
+    //     // setTimeout(function () {
+    //     if (leftCoordinates[indexL + 1]?.x) {
+    //         for (indexL; indexL < leftCoordinates.length - 1; indexL++) {
+    //             // if (leftCoordinates[indexL]?.x !== (-1) && leftCoordinates[indexL + 1]?.x !== (-1)) {
+    //             if ((Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 15) {
+    //                 if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
+    //                     // console.log("A1 - 0");
+    //                     m1.push(0);
+    //                 }
+    //                 else if (leftCoordinates[indexL]?.y < leftCoordinates[indexL + 1]?.y) {
+    //                     // console.log("A2 - 1");
+    //                     m1.push(1);
+    //                 }
+    //                 else { //((Math.abs(leftCoordinates[indexL]?.y - leftCoordinates[indexL + 1]?.y)) < 15 )
+    //                     // console.log("A3 - ?");
+    //                     // console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
+    //                     tempL = m1[m1.length - 1];
+    //                     m1.push(tempL);
+    //                 }
+    //             }
+    //             else if (leftCoordinates[indexL]?.x < leftCoordinates[indexL + 1]?.x) {
+    //                 m1.push(0);
+    //             }
+    //             else {
+    //                 m1.push(1);
+    //             }
+    //             if (m1.length >= 2) {
+    //                 for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+    //                     //View changes on the left screen
+    //                     if (m1[pointM1] !== m1[pointM1 + 1]) {
+    //                         change1++;
+    //                         cchange1 = change1 / 10;
+    //                         changeL.push({ change: cchange1, time: timer2 });
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    // // console.log(changeL);
+    // //Right side frequency algorithem
+    // const frequencyR = () => {
+    //     if (rightCoordinates[indexR + 1]?.x) {
+    //         for (indexR; indexR < rightCoordinates.length - 1; indexR++) {
+    //             // if (rightCoordinates[indexR]?.x !== (-1) && rightCoordinates[indexR + 1]?.x !== (-1)) {
+    //             if ((Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 15) {
+    //                 if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
+    //                     // console.log("A1 - 0");
+    //                     m2.push(0);
+    //                 }
+    //                 else if (rightCoordinates[indexR]?.y < rightCoordinates[indexR + 1]?.y) {
+    //                     // console.log("A2 - 1");
+    //                     m2.push(1);
+    //                 }
+    //                 else { //((Math.abs(rightCoordinates[indexR]?.y - rightCoordinates[indexR + 1]?.y)) < 15)
+    //                     // console.log("A3 - ?");
+    //                     // console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
+    //                     tempR = m2[m2.length - 1];
+    //                     m2.push(tempR);
+    //                 }
+    //             }
+    //             else if (rightCoordinates[indexR]?.x < rightCoordinates[indexR + 1]?.x) {
+    //                 m2.push(0);
+    //             }
+    //             else { // (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x)
+    //                 m2.push(1);
+    //             }
+    //             if (m2.length >= 2) {
+    //                 for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+    //                     //View changes on the left screen
+    //                     if (m2[pointM2] !== m2[pointM2 + 1]) {
+    //                         change2++;
+    //                     }
+    //                     cchange2 = change2 / 10;
+    //                     changeR.push(cchange2);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    ////////////////////NEW/////////////////////
+
+    // const frequencyL = () => {
+
+    //     console.log(bufL.capacity()); // -> 100
+    //     bufL.enq(1);
+    //     bufL.enq(2);
+    //     console.log(bufL.size()); // -> 2
+    //     bufL.toarray(); // -> [2,1]
+    //     bufL.push(3);
+    //     bufL.toarray(); // -> [2,1,3]
+    //     bufL.enq(4);
+    //     console.log(bufL.size()); // -> 3  (despite having added a fourth item!)
+    //     bufL.toarray(); // -> [4,2,1]
+    //     bufL.get(0); // -> 4  (last enqueued item is at start of buffer)
+    //     bufL.get(0, 2); // -> [4,2,1]  (2-parameter get takes start and end)
+    //     bufL.toarray(); // -> [4,2,1]  (equivalent to bufL.get(0,bufL.size() - 1) )
+    //     console.log(bufL.deq()); // -> 1
+    //     bufL.toarray(); // -> [4,2]
+    //     bufL.pop(); // -> 2  (deq and pop are functionally the same)
+    //     bufL.deq(); // -> 4
+    //     bufL.toarray(); // -> []
+    //     bufL.deq(); // -> throws RangeError("CircularBuffer dequeue on empty buffer")
+    // }
+    ////////////////////NEW/////////////////////
+
 
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
