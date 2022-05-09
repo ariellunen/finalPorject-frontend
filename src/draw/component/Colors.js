@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './Colors.css';
 
 const ColorPicker = (props) => {

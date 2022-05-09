@@ -16,6 +16,8 @@ import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
 import Admin from './user/pages/Admin';
 import AddUser from './user/components/AddUser';
+import ShapesPicker from './draw/pages/ShapesPicker';
+
 const App = () => {
   const { token, login, logout, userId, emaill } = useAuth();
   console.log(emaill, userId);
@@ -25,14 +27,14 @@ const App = () => {
     if (userId === '6277c1484517cb29c0cd1d11') {
       routes = (
         <Switch>
-        <Route path="/admin">
-          <Admin />
-        </Route>
-        <Route path="/addUser">
-          <AddUser />
-        </Route>
-        <Redirect to="/admin" />
-      </Switch>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          <Route path="/addUser">
+            <AddUser />
+          </Route>
+          <Redirect to="/admin" />
+        </Switch>
       )
     } else {
       routes = (
@@ -53,6 +55,9 @@ const App = () => {
               </Route>
               <Route path="/form" exact>
                 <Form />
+              </Route>
+              <Route path="/drawing/shapes" exact>
+                <ShapesPicker />
               </Route>
               <Redirect to="/" />
             </Switch>
@@ -80,7 +85,7 @@ const App = () => {
         userId: userId,
         login: login,
         logout: logout,
-        emaill:emaill
+        emaill: emaill
       }}
     >
       <Router>
