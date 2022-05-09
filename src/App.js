@@ -14,44 +14,60 @@ import AllDraw from './analysis/pages/AllDraw';
 import Auth from './user/pages/Auth';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
-
+import Admin from './user/pages/Admin';
+import AddUser from './user/components/AddUser';
 const App = () => {
-  const { token, login, logout, userId } = useAuth();
-
+  const { token, login, logout, userId, emaill } = useAuth();
+  console.log(emaill, userId);
   let routes;
 
   if (token) {
-    routes = (
-      <Switch>
-        <Router>
-      <Switch>
-        <Route path="/" exact>
-          <MainNavigation />
+    if (userId === '6277c1484517cb29c0cd1d11') {
+      routes = (
+        <Switch>
+        <Route path="/admin">
+          <Admin />
         </Route>
-        <Route path="/drawing/color" exact>
-          <ColorPicker />
+        <Route path="/addUser">
+          <AddUser />
         </Route>
-        <Route path="/drawing/coloring" exact>
-          <Coloring />
-        </Route>
-        <Route path="/analysis" exact>
-          <AllDraw />
-        </Route>
-        <Route path="/form" exact>
-          <Form />
-        </Route>
-        <Redirect to="/" />
+        <Redirect to="/admin" />
       </Switch>
-    </Router>
-      </Switch>
-    );
+      )
+    } else {
+      routes = (
+        <Switch>
+          <Router>
+            <Switch>
+              <Route path="/" exact>
+                <MainNavigation />
+              </Route>
+              <Route path="/drawing/color" exact>
+                <ColorPicker />
+              </Route>
+              <Route path="/drawing/coloring" exact>
+                <Coloring />
+              </Route>
+              <Route path="/analysis" exact>
+                <AllDraw />
+              </Route>
+              <Route path="/form" exact>
+                <Form />
+              </Route>
+              <Redirect to="/" />
+            </Switch>
+          </Router>
+        </Switch>
+      );
+    }
+
   } else {
     routes = (
       <Switch>
-        <Route path="/auth">
+        <Route path="/">
           <Auth />
         </Route>
-        <Redirect to="/auth" />
+        <Redirect to="/" />
       </Switch>
     );
   }
@@ -63,7 +79,8 @@ const App = () => {
         token: token,
         userId: userId,
         login: login,
-        logout: logout
+        logout: logout,
+        emaill:emaill
       }}
     >
       <Router>
@@ -72,30 +89,6 @@ const App = () => {
       </Router>
     </AuthContext.Provider>
   );
-
-  
-  // return (
-  //   <Router>
-  //     <Switch>
-  //       <Route path="/" exact>
-  //         <Auth />
-  //       </Route>
-  //       <Route path="/drawing/color" exact>
-  //         <ColorPicker />
-  //       </Route>
-  //       <Route path="/drawing/coloring" exact>
-  //         <Coloring />
-  //       </Route>
-  //       <Route path="/analysis" exact>
-  //         <AllDraw />
-  //       </Route>
-  //       <Route path="/form" exact>
-  //         <Form />
-  //       </Route>
-  //       <Redirect to="/" />
-  //     </Switch>
-  //   </Router>
-  // );
 };
 
 export default App;
