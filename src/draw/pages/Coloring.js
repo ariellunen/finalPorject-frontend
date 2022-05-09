@@ -17,12 +17,8 @@ let rightCoordinates = [];
 
 let CircularBufferL = require("circular-buffer");
 let bufL = new CircularBufferL(100);
-// let CircularBufferTineL = require("circular-buffer");
-// let timeCorL = new CircularBufferTineL(100);
 let CircularBufferR = require("circular-buffer");
 let bufR = new CircularBufferR(100);
-// let CircularBufferTimeR = require("circular-buffer");
-// let timeCorR = new CircularBufferTimeR(100);
 
 let pointM1 = 0;
 let pointM2 = 0;
@@ -33,20 +29,20 @@ let change2 = 0;
 let cchange1 = 0;
 let cchange2 = 0;
 let m1 = [], m2 = [];
-let indexL = 0;
-let indexR = 0;
+
+let startTimeL;
+let stopTimeL;
+let floatL = true;
+
+let startTimeR;
+let stopTimeR;
+let floatR = true;
 
 let secondsL = [];
 let secondsR = [];
 let changeL = [];
 let changeR = [];
 let timer2;
-let timeTakenL;
-let down;
-
-let Interval;
-let seconds;
-let tens = 0;
 
 const Coloring = (props) => {
     const auth = useContext(AuthContext);
@@ -67,71 +63,68 @@ const Coloring = (props) => {
     }, [left, right])
 
     const handleLeftCoordinate = (x, y) => {
-        // timeCorL.push(Date.now());
-        Interval = setInterval(startTimerCor, 1000);
-        // console.log("1", timeCorL.toarray());
-        // seconds = {timer};
         leftCoordinates.push({ x, y });
         bufL.push({ x, y });
-        // console.log(seconds);
-        if (leftCoordinates.length % 100 === 0) {
-            // clearInterval(Interval);
-            // console.log("time:", seconds,":",tens);
-            // console.log("time:", seconds);
-            // tens = 0;
-            // seconds = 0;
-            // timeTakenL = Date.now() - timeCorL.get(0);
-            // console.log("2", timeTakenL);
-            frequencyL();
-        };
-    }
-    const startTimerCor = () => {
-        clearInterval(Interval);
-        tens++;
-        // console.log("tens", tens);
-        if (tens > 99) {
-        //     console.log("seconds", seconds);
-        //     seconds++;
-        console.log("HI");
-
-            tens = 0;
-
+        if (bufL.get(0)?.x && floatL) {
+            startTimeL = Date.now();
+            floatL = false;
         }
+        if (leftCoordinates.length % 100 === 0) {
+            if (bufL.get(99)?.x && !floatL) {
+                stopTimeL = (Date.now() - startTimeL) / 1000;
+                floatL = true
+                frequencyL(stopTimeL);
+            }
+        };
     }
 
     const handleRightCoordinate = (x, y) => {
         rightCoordinates.push({ x, y });
-        // frequencyR();
+        bufR.push({ x, y });
+        if (bufR.get(0)?.x && floatR) {
+            startTimeR = Date.now();
+            floatR = false;
+        }
+        if (rightCoordinates.length % 100 === 0) {
+            if (bufR.get(99)?.x && !floatR) {
+                stopTimeR = (Date.now() - startTimeR) / 1000;
+                floatR = true
+                frequencyR(stopTimeR);
+            }
+        };
     }
 
     ////////////////////ALGORITEM SYNC/////////////////////
-    const frequencyL = () => {
+
+    const frequencyL = (stopTimeL) => {
         for (let i = 0; i < bufL.size() - 1; i++) {
-            if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 15) {
-                if (bufL.get(i).y > bufL.get(i + 1).y) {
-                    m1.push(0);
+            if (bufL.get(i).x <= bufL.get(i + 1).x) {
+                if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 10) {
+                    if (bufL.get(i).y > bufL.get(i + 1).y) {
+                        m1.push(1);
+                    }
+                    else if ((Math.abs(bufL.get(i).y - bufL.get(i + 1).y)) < 10) {
+                        tempL = m1[m1.length - 1];
+                        m1.push(tempL);
+                    }
+                    else {
+                        m1.push(0);
+                    }
                 }
-                if (bufL.get(i).y < bufL.get(i + 1).y) {
+                else {
                     m1.push(1);
                 }
-                // else { //((Math.abs(bufL.get(i).y - bufL.get(i+1).y)) < 15 )
-                //     tempL = m1[m1.length - 1];
-                //     m1.push(tempL);
-                // }
-            }
-            else if (bufL.get(i).x < bufL.get(i + 1).x) {
-                m1.push(1);
             }
             else {
                 m1.push(0);
             }
             if (m1.length >= 2) {
                 for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                    console.log(m1);
                     //View changes on the left screen
                     if (m1[pointM1] !== m1[pointM1 + 1]) {
-                        console.log(m1);
                         change1++;
-                        cchange1 = change1 / 10;
+                        cchange1 = (change1 / stopTimeL).toFixed(2);
                         changeL.push({ change: cchange1, time: timer2 });
                     }
                 }
@@ -139,114 +132,41 @@ const Coloring = (props) => {
         }
     }
 
-    // const frequencyL = () => {
-    //     // setTimeout(function () {
-    //     if (leftCoordinates[indexL + 1]?.x) {
-    //         for (indexL; indexL < leftCoordinates.length - 1; indexL++) {
-    //             // if (leftCoordinates[indexL]?.x !== (-1) && leftCoordinates[indexL + 1]?.x !== (-1)) {
-    //             if ((Math.abs(leftCoordinates[indexL]?.x - leftCoordinates[indexL + 1]?.x)) < 15) {
-    //                 if (leftCoordinates[indexL]?.y > leftCoordinates[indexL + 1]?.y) {
-    //                     // console.log("A1 - 0");
-    //                     m1.push(0);
-    //                 }
-    //                 else if (leftCoordinates[indexL]?.y < leftCoordinates[indexL + 1]?.y) {
-    //                     // console.log("A2 - 1");
-    //                     m1.push(1);
-    //                 }
-    //                 else { //((Math.abs(leftCoordinates[indexL]?.y - leftCoordinates[indexL + 1]?.y)) < 15 )
-    //                     // console.log("A3 - ?");
-    //                     // console.log("??? = ", m1.length - 1, m1[m1.length - 1]);
-    //                     tempL = m1[m1.length - 1];
-    //                     m1.push(tempL);
-    //                 }
-    //             }
-    //             else if (leftCoordinates[indexL]?.x < leftCoordinates[indexL + 1]?.x) {
-    //                 m1.push(0);
-    //             }
-    //             else {
-    //                 m1.push(1);
-    //             }
-    //             if (m1.length >= 2) {
-    //                 for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-    //                     //View changes on the left screen
-    //                     if (m1[pointM1] !== m1[pointM1 + 1]) {
-    //                         change1++;
-    //                         cchange1 = change1 / 10;
-    //                         changeL.push({ change: cchange1, time: timer2 });
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    // // console.log(changeL);
-    // //Right side frequency algorithem
-    // const frequencyR = () => {
-    //     if (rightCoordinates[indexR + 1]?.x) {
-    //         for (indexR; indexR < rightCoordinates.length - 1; indexR++) {
-    //             // if (rightCoordinates[indexR]?.x !== (-1) && rightCoordinates[indexR + 1]?.x !== (-1)) {
-    //             if ((Math.abs(rightCoordinates[indexR]?.x - rightCoordinates[indexR + 1]?.x)) < 15) {
-    //                 if (rightCoordinates[indexR]?.y > rightCoordinates[indexR + 1]?.y) {
-    //                     // console.log("A1 - 0");
-    //                     m2.push(0);
-    //                 }
-    //                 else if (rightCoordinates[indexR]?.y < rightCoordinates[indexR + 1]?.y) {
-    //                     // console.log("A2 - 1");
-    //                     m2.push(1);
-    //                 }
-    //                 else { //((Math.abs(rightCoordinates[indexR]?.y - rightCoordinates[indexR + 1]?.y)) < 15)
-    //                     // console.log("A3 - ?");
-    //                     // console.log("??? = ", m2.length - 1, m2[m2.length - 1]);
-    //                     tempR = m2[m2.length - 1];
-    //                     m2.push(tempR);
-    //                 }
-    //             }
-    //             else if (rightCoordinates[indexR]?.x < rightCoordinates[indexR + 1]?.x) {
-    //                 m2.push(0);
-    //             }
-    //             else { // (rightCoordinates[indexR]?.x > rightCoordinates[indexR + 1]?.x)
-    //                 m2.push(1);
-    //             }
-    //             if (m2.length >= 2) {
-    //                 for (pointM2; pointM2 < m2.length - 1; pointM2++) {
-    //                     //View changes on the left screen
-    //                     if (m2[pointM2] !== m2[pointM2 + 1]) {
-    //                         change2++;
-    //                     }
-    //                     cchange2 = change2 / 10;
-    //                     changeR.push(cchange2);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    ////////////////////NEW/////////////////////
-
-    // const frequencyL = () => {
-
-    //     console.log(bufL.capacity()); // -> 100
-    //     bufL.enq(1);
-    //     bufL.enq(2);
-    //     console.log(bufL.size()); // -> 2
-    //     bufL.toarray(); // -> [2,1]
-    //     bufL.push(3);
-    //     bufL.toarray(); // -> [2,1,3]
-    //     bufL.enq(4);
-    //     console.log(bufL.size()); // -> 3  (despite having added a fourth item!)
-    //     bufL.toarray(); // -> [4,2,1]
-    //     bufL.get(0); // -> 4  (last enqueued item is at start of buffer)
-    //     bufL.get(0, 2); // -> [4,2,1]  (2-parameter get takes start and end)
-    //     bufL.toarray(); // -> [4,2,1]  (equivalent to bufL.get(0,bufL.size() - 1) )
-    //     console.log(bufL.deq()); // -> 1
-    //     bufL.toarray(); // -> [4,2]
-    //     bufL.pop(); // -> 2  (deq and pop are functionally the same)
-    //     bufL.deq(); // -> 4
-    //     bufL.toarray(); // -> []
-    //     bufL.deq(); // -> throws RangeError("CircularBuffer dequeue on empty buffer")
-    // }
-    ////////////////////NEW/////////////////////
-
+    const frequencyR = (stopTimeR) => {
+        for (let i = 0; i < bufR.size() - 1; i++) {
+            if (bufR.get(i).x <= bufR.get(i + 1).x) {
+                if ((Math.abs(bufR.get(i).x - bufR.get(i + 1).x)) < 10) {
+                    if (bufR.get(i).y > bufR.get(i + 1).y) {
+                        m2.push(1);
+                    }
+                    else if ((Math.abs(bufR.get(i).y - bufR.get(i + 1).y)) < 10) {
+                        tempR = m2[m2.length - 1];
+                        m2.push(tempR);
+                    }
+                    else {
+                        m2.push(0);
+                    }
+                }
+                else {
+                    m2.push(1);
+                }
+            }
+            else {
+                m2.push(0);
+            }
+            if (m2.length >= 2) {
+                for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+                    console.log(m2);
+                    //View changes on the righ screen
+                    if (m2[pointM2] !== m2[pointM2 + 1]) {
+                        change2++;
+                        cchange2 = (change2 / stopTimeR).toFixed(2);
+                        changeR.push({ change: cchange2, time: timer2 });
+                    }
+                }
+            }
+        }
+    }
 
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
@@ -359,7 +279,7 @@ const Coloring = (props) => {
                 <div id='time'>
                     <h2>{timer}</h2>
                 </div>
-                <div id="canvasGrid">
+                < div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
@@ -378,7 +298,7 @@ const Coloring = (props) => {
                 </div>
                 <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
             </div>
-        </React.Fragment>
+        </React.Fragment >
     )
 };
 
