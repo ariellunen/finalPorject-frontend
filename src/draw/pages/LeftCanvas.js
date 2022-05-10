@@ -85,7 +85,7 @@ const LeftCanvas = (props) => {
             canvas.strokeStyle = props.color.color;
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
-            props.setMouse(false);
+            props.setMouseL(false);
 
         })
 
@@ -95,7 +95,7 @@ const LeftCanvas = (props) => {
             timeTakenL = Date.now() - down;
             props.secondsL.push(timeTakenL / 1000);
             props.setLeft({ x: -1, y: -1 })
-            props.setMouse(true);
+            props.setMouseL(true);
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
                 canvas.shadowBlur = shadowBlur;

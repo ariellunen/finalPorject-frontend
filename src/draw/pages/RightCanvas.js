@@ -85,6 +85,7 @@ const RightCanvas = (props) => {
             canvas.strokeStyle = props.color.color;
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
+            props.setMouseR(false);
         })
 
         interact('#canvasR').on('up', function (event) {
@@ -93,6 +94,7 @@ const RightCanvas = (props) => {
             timeTakenR = Date.now() - down;
             props.secondsR.push(timeTakenR / 1000);
             props.setRight({ x: -1, y: -1 })
+            props.setMouseR(true);
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
                 canvas.shadowBlur = shadowBlur;

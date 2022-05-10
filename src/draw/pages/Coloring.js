@@ -60,7 +60,6 @@ const Coloring = (props) => {
     useEffect(() => {
         arr[counter] = { l: left, r: right }
         counter++;
-
     }, [left, right])
 
     const handleLeftCoordinate = (x, y) => {
@@ -73,7 +72,9 @@ const Coloring = (props) => {
         if (leftCoordinates.length % 100 === 0) {
             if (bufL.get(99)?.x && !floatL) {
                 stopTimeL = (Date.now() - startTimeL) / 1000;
-                floatL = true
+                floatL = true;
+                cchange1 = 0;
+                change1 = 0;
                 frequencyL(stopTimeL);
             }
         };
@@ -89,7 +90,9 @@ const Coloring = (props) => {
         if (rightCoordinates.length % 100 === 0) {
             if (bufR.get(99)?.x && !floatR) {
                 stopTimeR = (Date.now() - startTimeR) / 1000;
-                floatR = true
+                floatR = true;
+                cchange2 = 0;
+                change2 = 0;
                 frequencyR(stopTimeR);
             }
         };
@@ -97,81 +100,119 @@ const Coloring = (props) => {
 
     ////////////////////ALGORITEM SYNC/////////////////////
 
-    const [mouseUp, setMouse] = useState(false);
-    console.log("mouse",mouseUp)
+    const [mouseUpL, setMouseL] = useState(false);
+    // console.log("mouse",mouseUpL)
 
-    if(mouseUp === true){
+    if (mouseUpL === true) {
         cchange1 = 0;
         change1 = 0;
     }
 
+    const [mouseUpR, setMouseR] = useState(false);
+    // console.log("mouse",mouseUpR)
+
+    if (mouseUpR === true) {
+        cchange2 = 0;
+        change2 = 0;
+    }
+
     const frequencyL = (stopTimeL) => {
+        console.log(bufL.toarray());
         for (let i = 0; i < bufL.size() - 1; i++) {
-            if (bufL.get(i).x <= bufL.get(i + 1).x) {
-                if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 10) {
-                    if (bufL.get(i).y > bufL.get(i + 1).y) {
-                        m1.push(1);
-                    }
-                    else if ((Math.abs(bufL.get(i).y - bufL.get(i + 1).y)) < 10) {
-                        tempL = m1[m1.length - 1];
-                        m1.push(tempL);
-                    }
-                    else {
-                        m1.push(0);
-                    }
-                }
-                else {
+            if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 5) {
+                if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)) {
+                    console.log("1");
                     m1.push(1);
                 }
+                else if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)){
+                    console.log("1");
+                    m1.push(0);
+                }
+                else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)){
+                    console.log("1");
+                    m1.push(1);
+                }
+                else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)){
+                    console.log("1");
+                    m1.push(0);
+                }
+                else { //=
+                    tempL = m1[m1.length - 1];
+                    console.log("3");
+                    m1.push(tempL);
+                }
             }
-            else {
+            else if (bufL.get(i).x < bufL.get(i + 1).x) {
+                console.log("1");
+                m1.push(1);
+            } else if (bufL.get(i).x > bufL.get(i + 1).x) {
+                console.log("2");
                 m1.push(0);
+            } else {
+                tempL = m1[m1.length - 1];
+                console.log("3");
+                m1.push(tempL);
             }
-            if (m1.length >= 2) {
-                for (pointM1; pointM1 < m1.length - 1; pointM1++) {
-                    console.log(m1);
-                    //View changes on the left screen
-                    if (m1[pointM1] !== m1[pointM1 + 1]) {
-                        change1++;
-                        cchange1 = (change1 / stopTimeL).toFixed(2);
-                        changeL.push({ change: cchange1, time: timer2 });
-                    }
+        }
+        if (m1.length >= 2) {
+            console.log(m1);
+            for (pointM1; pointM1 < m1.length - 1; pointM1++) {
+                //View changes on the left screen
+                if (m1[pointM1] !== m1[pointM1 + 1]) {
+                    change1++;
+                    cchange1 = (change1 / stopTimeL).toFixed(2);
+                    changeL.push({ change: cchange1, time: timer2 });
                 }
             }
         }
     }
 
     const frequencyR = (stopTimeR) => {
+        console.log(bufR.toarray());
         for (let i = 0; i < bufR.size() - 1; i++) {
-            if (bufR.get(i).x <= bufR.get(i + 1).x) {
-                if ((Math.abs(bufR.get(i).x - bufR.get(i + 1).x)) < 10) {
-                    if (bufR.get(i).y > bufR.get(i + 1).y) {
-                        m2.push(1);
-                    }
-                    else if ((Math.abs(bufR.get(i).y - bufR.get(i + 1).y)) < 10) {
-                        tempR = m2[m2.length - 1];
-                        m2.push(tempR);
-                    }
-                    else {
-                        m2.push(0);
-                    }
-                }
-                else {
+            if ((Math.abs(bufR.get(i).x - bufR.get(i + 1).x)) < 5) {
+                if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
+                    console.log("1");
                     m2.push(1);
                 }
+                else if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)){
+                    console.log("1");
+                    m2.push(0);
+                }
+                else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)){
+                    console.log("1");
+                    m2.push(1);
+                }
+                else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)){
+                    console.log("1");
+                    m2.push(0);
+                }
+                else { //=
+                    tempR = m2[m2.length - 1];
+                    console.log("3");
+                    m2.push(tempR);
+                }
             }
-            else {
+            else if (bufR.get(i).x < bufR.get(i + 1).x) {
+                console.log("1");
+                m2.push(1);
+            } else if (bufR.get(i).x > bufR.get(i + 1).x) {
+                console.log("2");
                 m2.push(0);
+            } else {
+                tempR = m2[m2.length - 1];
+                console.log("3");
+                m2.push(tempR);
             }
-            if (m2.length >= 2) {
-                for (pointM2; pointM2 < m2.length - 1; pointM2++) {
-                    console.log(m2);
-                    //View changes on the righ screen
-                    if (m2[pointM2] !== m2[pointM2 + 1]) {
-                        change2++;
-                        cchange2 = (change2 / stopTimeR).toFixed(2);
-                        changeR.push({ change: cchange2, time: timer2 });
-                    }
+        }
+        if (m2.length >= 2) {
+            console.log(m2);
+            for (pointM2; pointM2 < m2.length - 1; pointM2++) {
+                //View changes on the left screen
+                if (m2[pointM2] !== m2[pointM2 + 1]) {
+                    change2++;
+                    cchange2 = (change2 / stopTimeR).toFixed(2);
+                    changeR.push({ change: cchange2, time: timer2 });
                 }
             }
         }
@@ -296,13 +337,14 @@ const Coloring = (props) => {
                         setLeft={setLeft}
                         secondsL={secondsL}
                         cchange1={cchange1}
-                        setMouse={setMouse}
+                        setMouseL={setMouseL}
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
                         color={location.state.state[1]}
                         setRight={setRight}
                         secondsR={secondsR}
+                        setMouseR={setMouseR}
 
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
