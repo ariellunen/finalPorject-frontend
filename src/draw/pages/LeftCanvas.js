@@ -65,7 +65,10 @@ let down;
 let timeTakenL = 0;
 let ctx;
 let lineWidth;
+let uploadCoor;
+
 const LeftCanvas = (props) => {
+    let selectedShape = sessionStorage.getItem("selectedShape");
     // const lineWidth = 36; //12 / 24 / 36
     lineWidth = props.lineWidthL;
     console.log(lineWidth);
@@ -147,6 +150,17 @@ const LeftCanvas = (props) => {
 
     useEffect(() => {
         ctx = document.getElementById("canvasL").getContext('2d');
+        switch (selectedShape) {
+            case 'circle':
+                uploadCoor = circleCor;
+                break;
+            case 'triangular':
+                uploadCoor = triangularCor;
+                break;
+            case 'heart':
+                uploadCoor = heartCor;
+                break;
+        }
         fileUpload()
     }, []);
 
@@ -176,9 +190,9 @@ const LeftCanvas = (props) => {
     }
 
     const fileUpload = () => {
-        if (heartCor) {
+        if (uploadCoor) {
             coordinates = []
-            const lines = heartCor.split('\n')
+            const lines = uploadCoor.split('\n')
             for (let i = 0; i < lines.length; i++) {
                 const values = lines[i].split(',')
                 coordinates.push([])
