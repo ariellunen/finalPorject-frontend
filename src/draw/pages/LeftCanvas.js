@@ -64,8 +64,11 @@ let canvas;
 let down;
 let timeTakenL = 0;
 let ctx;
+let lineWidth;
 const LeftCanvas = (props) => {
-    const lineWidth = 20;
+    // const lineWidth = 36; //12 / 24 / 36
+    lineWidth = props.lineWidthL;
+    console.log(lineWidth);
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
 

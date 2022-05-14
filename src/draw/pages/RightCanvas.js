@@ -64,8 +64,11 @@ let canvas;
 let down;
 let timeTakenR = 0;
 let ctx;
+let lineWidth;
+
 const RightCanvas = (props) => {
-    const lineWidth = 20;
+    // const lineWidth = 36; //12 / 24 / 36
+    lineWidth = props.lineWidthR;
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
 

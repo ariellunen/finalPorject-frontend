@@ -44,6 +44,9 @@ let changeL = [];
 let changeR = [];
 let timer2;
 
+let lineWidthL = 24;
+let lineWidthR = 24;
+
 const Coloring = (props) => {
     const auth = useContext(AuthContext);
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
@@ -124,15 +127,15 @@ const Coloring = (props) => {
                     console.log("1");
                     m1.push(1);
                 }
-                else if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)){
+                else if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)) {
                     console.log("1");
                     m1.push(0);
                 }
-                else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)){
+                else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)) {
                     console.log("1");
                     m1.push(1);
                 }
-                else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)){
+                else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)) {
                     console.log("1");
                     m1.push(0);
                 }
@@ -175,15 +178,15 @@ const Coloring = (props) => {
                     console.log("1");
                     m2.push(1);
                 }
-                else if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)){
+                else if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)) {
                     console.log("1");
                     m2.push(0);
                 }
-                else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)){
+                else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
                     console.log("1");
                     m2.push(1);
                 }
-                else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)){
+                else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)) {
                     console.log("1");
                     m2.push(0);
                 }
@@ -322,6 +325,14 @@ const Coloring = (props) => {
         }, 2000);
     }
 
+    const changeLineWidthL12 = () => {console.log("12"); lineWidthL = 12;}
+    const changeLineWidthL24 = () => {lineWidthL = 24;}
+    const changeLineWidthL36 = () => {lineWidthL = 36;}
+
+    const changeLineWidthR12 = () => {lineWidthR = 12;}
+    const changeLineWidthR24 = () => {lineWidthR = 24;}
+    const changeLineWidthR36 = () => {lineWidthR = 36;}
+
     return (
         <React.Fragment>
             <div className='container'>
@@ -331,6 +342,9 @@ const Coloring = (props) => {
                 </div>
                 < div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
+                    <Button onClick={changeLineWidthL12}>1</Button>
+                    <Button type='submit' onClick={changeLineWidthL24}>2</Button>
+                    <Button type='submit' onClick={changeLineWidthL36}>3</Button>
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
                         color={location.state.state[0]}
@@ -338,6 +352,7 @@ const Coloring = (props) => {
                         secondsL={secondsL}
                         cchange1={cchange1}
                         setMouseL={setMouseL}
+                        lineWidthL={lineWidthL}
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
@@ -345,9 +360,12 @@ const Coloring = (props) => {
                         setRight={setRight}
                         secondsR={secondsR}
                         setMouseR={setMouseR}
-
+                        lineWidthR={lineWidthR}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
+                    <Button onClick={changeLineWidthR12}>1</Button>
+                    <Button onClick={changeLineWidthR24}>2</Button>
+                    <Button onClick={changeLineWidthR36}>3</Button>
                 </div>
                 <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
             </div>
