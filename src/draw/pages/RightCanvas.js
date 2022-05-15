@@ -73,7 +73,8 @@ const RightCanvas = (props) => {
     lineWidth = props.lineWidthR;
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
-
+    console.log(props.color);
+    
     const state = {
         mousedown: false
     };
@@ -87,7 +88,7 @@ const RightCanvas = (props) => {
             down = Date.now();
             canvas.beginPath();
             canvas.lineWidth = lineWidth;
-            canvas.strokeStyle = props.color.color;
+            canvas.strokeStyle = props.color;
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
             props.setMouseR(false);

@@ -46,6 +46,8 @@ let timer2;
 
 let lineWidthL = 24;
 let lineWidthR = 24;
+let cync = true;
+let temp;
 
 const Coloring = (props) => {
     const auth = useContext(AuthContext);
@@ -56,7 +58,8 @@ const Coloring = (props) => {
     }, []);
 
     const location = useLocation();
-
+    temp = location.state.state[1].color;
+    // console.log(temp);
     const [left, setLeft] = useState({ x: -1, y: -1 })
     const [right, setRight] = useState({ y: -1, x: -1 })
 
@@ -171,7 +174,7 @@ const Coloring = (props) => {
     }
 
     const frequencyR = (stopTimeR) => {
-        console.log(bufR.toarray());
+        // console.log(bufR.toarray());
         for (let i = 0; i < bufR.size() - 1; i++) {
             if ((Math.abs(bufR.get(i).x - bufR.get(i + 1).x)) < 5) {
                 if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
@@ -209,7 +212,7 @@ const Coloring = (props) => {
             }
         }
         if (m2.length >= 2) {
-            console.log(m2);
+            // console.log(m2);
             for (pointM2; pointM2 < m2.length - 1; pointM2++) {
                 //View changes on the left screen
                 if (m2[pointM2] !== m2[pointM2 + 1]) {
@@ -218,6 +221,11 @@ const Coloring = (props) => {
                     changeR.push({ change: cchange2, time: timer2 });
                 }
             }
+        }
+        if (Math.abs(cchange1 - cchange2) > 0.5) {
+            cync = false;
+            temp = 'green';
+            // console.log(temp);
         }
     }
 
@@ -325,13 +333,13 @@ const Coloring = (props) => {
         }, 2000);
     }
 
-    const changeLineWidthL12 = () => {console.log("12"); lineWidthL = 12;}
-    const changeLineWidthL24 = () => {lineWidthL = 24;}
-    const changeLineWidthL36 = () => {lineWidthL = 36;}
+    const changeLineWidthL12 = () => { console.log("12"); lineWidthL = 12; }
+    const changeLineWidthL24 = () => { lineWidthL = 24; }
+    const changeLineWidthL36 = () => { lineWidthL = 36; }
 
-    const changeLineWidthR12 = () => {lineWidthR = 12;}
-    const changeLineWidthR24 = () => {lineWidthR = 24;}
-    const changeLineWidthR36 = () => {lineWidthR = 36;}
+    const changeLineWidthR12 = () => { lineWidthR = 12; }
+    const changeLineWidthR24 = () => { lineWidthR = 24; }
+    const changeLineWidthR36 = () => { lineWidthR = 36; }
 
     return (
         <React.Fragment>
@@ -356,11 +364,12 @@ const Coloring = (props) => {
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
-                        color={location.state.state[1]}
+                        // color={location.state.state[1].color}
                         setRight={setRight}
                         secondsR={secondsR}
                         setMouseR={setMouseR}
                         lineWidthR={lineWidthR}
+                        color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
                     <Button onClick={changeLineWidthR12}>1</Button>
