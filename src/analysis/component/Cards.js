@@ -21,14 +21,13 @@ const Cards = (props) => {
     const [firstKide, setFirstKide] = useState(false);
     const [secondKide, setSecondKide] = useState(false);
     const [isReady, setIsReady] = useState(false);
-
     useEffect(() => {
         const getKide = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/users/children/${props.item.firstKide}`, {
                 });
                 const responseData = await response.json();
-                setFirstKide(responseData.user.name);
+                setFirstKide(responseData.child.name);
             } catch (err) {
                 console.log(err);
             }
@@ -37,7 +36,8 @@ const Cards = (props) => {
                 const response = await fetch(`http://localhost:3000/api/users/children/${props.item.secondKide}`, {
                 });
                 const responseData = await response.json();
-                setSecondKide(responseData.user.name);
+                console.log(responseData)
+                setSecondKide(responseData.child.name);
                 setIsReady(true);
 
             } catch (err) {

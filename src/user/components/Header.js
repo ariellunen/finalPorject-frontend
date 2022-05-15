@@ -63,7 +63,7 @@ function Header(props) {
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
-                Authentication
+                {props.header}
               </Typography>
             </Grid>
             <Grid item>
