@@ -6,7 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Recovery from '../component/Recovery';
+// import Recovery from '../component/Recovery';
+import DrawDetails from '../pages/DrawDetails';
+import { Link } from 'react-router-dom';
 
 const bull = (
     <Box
@@ -81,16 +83,18 @@ const Cards = (props) => {
                 </CardContent>
             </div>
             <CardActions>
-                <Button variant="outlined" onClick={handleOpen}>שחזור</Button>
-                <Modal
+                {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
+                <Button variant="contained" type='submit' component={Link} to="/analysis/details">סיום</Button>
+
+                {/* <Modal
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Recovery draw={props.item} index={props.index} />
+                    <DrawDetails draw={props.item} index={props.index} />
 
-                </Modal>
+                </Modal> */}
             </CardActions>
         </React.Fragment>
     );
