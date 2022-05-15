@@ -15,7 +15,7 @@ import Auth from './user/pages/Auth';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
 import Admin from './user/pages/Admin';
-import AddUser from './user/components/AddUser';
+import AddUser from './user/pages/AddUser';
 import ShapesPicker from './draw/pages/ShapesPicker';
 
 const App = () => {

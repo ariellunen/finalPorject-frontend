@@ -8,6 +8,7 @@ import Link from '@mui/material/Link';
 import Navigator from '../components/Navigator';
 import Content from '../components/Content';
 import Header from '../components/Header';
+import ContentAddUser from '../components/ContentAddUser';
 
 let theme = createTheme({
     palette: {
@@ -167,9 +168,9 @@ const AddUser = () => {
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                 <CssBaseline />
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <Header onDrawerToggle={handleDrawerToggle} />
+                    <Header onDrawerToggle={handleDrawerToggle} header={'משתמש חדש'}/>
                     <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
-                        <Content />
+                        <ContentAddUser />
                     </Box>
                 </Box>
             </Box>
