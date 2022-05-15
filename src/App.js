@@ -17,7 +17,7 @@ import { useAuth } from './shared/hooks/auth-hook';
 import Admin from './user/pages/Admin';
 import AddUser from './user/pages/AddUser';
 import ShapesPicker from './draw/pages/ShapesPicker';
-
+import DrawDetails from './analysis/pages/DrawDetails';
 const App = () => {
   const { token, login, logout, userId, emaill } = useAuth();
   console.log(emaill, userId);
@@ -52,6 +52,9 @@ const App = () => {
               </Route>
               <Route path="/analysis" exact>
                 <AllDraw />
+              </Route>
+              <Route path="/analysis/details" exact>
+                <DrawDetails />
               </Route>
               <Route path="/form" exact>
                 <Form />
