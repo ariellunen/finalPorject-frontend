@@ -6,6 +6,7 @@ import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
+import { now } from 'moment-timezone';
 
 let moment = require('moment-timezone');
 
@@ -46,8 +47,8 @@ let timer2;
 
 let lineWidthL = 24;
 let lineWidthR = 24;
-let cync = true;
-let temp;
+// let cync = true;
+// let temp;
 
 const Coloring = (props) => {
     const auth = useContext(AuthContext);
@@ -58,7 +59,7 @@ const Coloring = (props) => {
     }, []);
 
     const location = useLocation();
-    temp = location.state.state[1].color;
+    // temp = location.state.state[1].color;
     // console.log(temp);
     const [left, setLeft] = useState({ x: -1, y: -1 })
     const [right, setRight] = useState({ y: -1, x: -1 })
@@ -222,12 +223,20 @@ const Coloring = (props) => {
                 }
             }
         }
-        if (Math.abs(cchange1 - cchange2) > 0.5) {
-            cync = false;
-            temp = 'green';
-            // console.log(temp);
-        }
+        // if (Math.abs(cchange1 - cchange2) > 0.5) {
+
+        //     console.log("nowwwwwwwwwwww");
+        //     cync = false;
+        //     // temp = 'yellow';
+        //     colorChange();
+        //     // console.log(temp);
+        // }
     }
+
+    // const colorChange = () =>{
+    //     temp = 'yellow';
+    // }
+    // console.log(temp);
 
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
@@ -341,6 +350,8 @@ const Coloring = (props) => {
     const changeLineWidthR24 = () => { lineWidthR = 24; }
     const changeLineWidthR36 = () => { lineWidthR = 36; }
 
+    // console.log(temp);
+
     return (
         <React.Fragment>
             <div className='container'>
@@ -364,12 +375,12 @@ const Coloring = (props) => {
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
-                        // color={location.state.state[1].color}
+                        color={location.state.state[1].color}
                         setRight={setRight}
                         secondsR={secondsR}
                         setMouseR={setMouseR}
                         lineWidthR={lineWidthR}
-                        color = {temp}
+                        // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
                     <Button onClick={changeLineWidthR12}>1</Button>

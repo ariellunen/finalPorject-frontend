@@ -66,6 +66,7 @@ let timeTakenR = 0;
 let ctx;
 let lineWidth;
 let uploadCoor;
+// let color;
 
 const RightCanvas = (props) => {
     let selectedShape = sessionStorage.getItem("selectedShape");
@@ -73,7 +74,8 @@ const RightCanvas = (props) => {
     lineWidth = props.lineWidthR;
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
-    console.log(props.color);
+    // color = props.color;
+    // console.log(props.color);
     
     const state = {
         mousedown: false
