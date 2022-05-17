@@ -12,7 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Link } from 'react-router-dom';
 
-export default function Content() {
+export default function Content(props) {
     return (
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <AppBar
@@ -37,7 +37,17 @@ export default function Content() {
                                 variant="standard"
                             />
                         </Grid>
-                        <Grid item>
+                        {props.kide && <Grid item>
+                            <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addKide'>
+                                הוספת משתמש
+                            </Button>
+                            <Tooltip title="Reload">
+                                <IconButton>
+                                    <RefreshIcon color="inherit" sx={{ display: 'block' }} />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>}
+                        {!props.kide && <Grid item>
                             <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addUser'>
                                 הוספת משתמש
                             </Button>
@@ -46,7 +56,18 @@ export default function Content() {
                                     <RefreshIcon color="inherit" sx={{ display: 'block' }} />
                                 </IconButton>
                             </Tooltip>
-                        </Grid>
+                        </Grid>}
+                        {/* <Grid item>
+                            <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addUser'>
+                                הוספת משתמש
+                            </Button>
+                            <Tooltip title="Reload">
+                                <IconButton>
+                                    <RefreshIcon color="inherit" sx={{ display: 'block' }} />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid> */}
+                        
                     </Grid>
                 </Toolbar>
             </AppBar>

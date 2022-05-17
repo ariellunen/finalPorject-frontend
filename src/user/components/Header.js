@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -14,11 +14,14 @@ import Tabs from '@mui/material/Tabs';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { AuthContext } from '../../shared/context/auth-context';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 function Header(props) {
   const { onDrawerToggle } = props;
+  const auth = useContext(AuthContext);
 
   return (
     <React.Fragment>
@@ -46,7 +49,7 @@ function Header(props) {
             </Grid>
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
-                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
+                <LogoutIcon onClick={auth.logout} />
               </IconButton>
             </Grid>
           </Grid>
@@ -86,14 +89,23 @@ function Header(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-        <Tabs value={0} textColor="inherit">
-          <Tab label="Users" />
-          <Tab label="Sign-in method" />
+      {props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
+        <Tabs value={1} textColor="inherit">
+          <Tab label="אנשי מקצוע \ מדריכים" onClick={props.notKide}/>
+          <Tab label="ילדים" />
           <Tab label="Templates" />
           <Tab label="Usage" />
         </Tabs>
-      </AppBar>
+      </AppBar>}
+      {!props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
+        <Tabs value={0} textColor="inherit">
+          <Tab label="אנשי מקצוע \ מדריכים"/>
+          <Tab label="ילדים" onClick={props.isKide}/>
+          <Tab label="Templates" />
+          <Tab label="Usage" />
+        </Tabs>
+      </AppBar>}
+      
     </React.Fragment>
   );
 }
