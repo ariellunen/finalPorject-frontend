@@ -13,17 +13,21 @@ const Shapes = (props) => {
                 <button className='btn' onClick={() => {
                     shape = 'circle';
                     onClick()
-                }}>circle
+                }}>עיגול
                 </button>
                 <button className='btn' onClick={() => {
                     shape = 'triangular';
                     onClick()
-                }}>triangular
+                }}>משולש
                 </button>
                 <button className='btn' onClick={() => {
                     shape = 'heart';
                     onClick()
-                }}>heart</button>
+                }}>לב</button>
+                <button className='btn' onClick={() => {
+                    shape = 'david';
+                    onClick()
+                }}>מגן דוד</button>
             </div>
         </div>
     )

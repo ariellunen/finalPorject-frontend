@@ -59,6 +59,7 @@ import './Canvas.css';
 import circleCor from "../shape/CircleR"
 import triangularCor from "../shape/TriangularR"
 import heartCor from "../shape/HeartR"
+import davidCor from "../shape/DavidR"
 
 let canvas;
 let down;
@@ -76,7 +77,7 @@ const RightCanvas = (props) => {
     const shadowBlur = lineWidth / 4;
     // color = props.color;
     // console.log(props.color);
-    
+
     const state = {
         mousedown: false
     };
@@ -157,6 +158,9 @@ const RightCanvas = (props) => {
                 break;
             case 'heart':
                 uploadCoor = heartCor;
+                break;
+            case 'david':
+                uploadCoor = davidCor;
                 break;
         }
         fileUpload()
