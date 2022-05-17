@@ -1,3 +1,15 @@
 #graphs{
+    width: 1500px;
+}
+#cync{
+    display: flex;
+    width: 900px;
+}
+#sec{
+    display: flex;
     width: 700px;
+}
+#lineWidth{
+    display: flex;
+    width: 600px;
 }

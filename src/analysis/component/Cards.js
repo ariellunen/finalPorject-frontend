@@ -38,7 +38,7 @@ const Cards = (props) => {
                 const response = await fetch(`http://localhost:3000/api/users/children/${props.item.secondKide}`, {
                 });
                 const responseData = await response.json();
-                console.log(responseData)
+                // console.log(responseData)
                 setSecondKide(responseData.child.name);
                 setIsReady(true);
 
@@ -48,11 +48,11 @@ const Cards = (props) => {
         }
 
         getKide();
-
     }, [isReady]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    console.log(props.item);
 
     const card = (
         <React.Fragment>
@@ -84,7 +84,8 @@ const Cards = (props) => {
             </div>
             <CardActions>
                 {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
-                <Button variant="contained" type='submit' component={Link} to="/analysis/details">סיום</Button>
+                <Button variant="contained" type='submit' component={Link} to="/analysis/details"
+                data={props.item} index={props.index}>ניתוח</Button>
 
                 {/* <Modal
                     open={open}

@@ -1,44 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js';
 import './DrawDetails.css';
+import { fontSize } from '@mui/material/node_modules/@mui/system';
+import Button from '@mui/material/Button';
+import CardActions from '@mui/material/CardActions';
+import { Link } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+
 
 let ctx1;
 let ctx2;
 let ctx3;
 let ctx4;
 let ctx5;
+let ctx6;
+let ctx7;
 
 const DrawDetails = (props) => {
-    console.log(props);
+    console.log(props.data);
+    console.log(props.index);
     useEffect(() => {
         ctx1 = document.getElementById('Chart1').getContext('2d');
         Chart1();
         ctx2 = document.getElementById('Chart2').getContext('2d');
         Chart2();
+        ctx7 = document.getElementById('Chart7').getContext('2d');
+        Chart7();
         ctx3 = document.getElementById('Chart3').getContext('2d');
         Chart3();
-        ctx4 = document.getElementById('Chart4').getContext('2d');
-        Chart4();
-        ctx5 = document.getElementById('Chart5').getContext('2d');
-        Chart5();
+        ctx6 = document.getElementById('Chart6').getContext('2d');
+        Chart6();
+        // ctx4 = document.getElementById('Chart4').getContext('2d');
+        // Chart4();
+        // ctx5 = document.getElementById('Chart5').getContext('2d');
+        // Chart5();
     }, []);
 
     const Chart1 = () => {
-        let xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-        let myChart = new Chart(ctx1, {
+        let xValues = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20];
+        let child1 = [1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2, 1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2]
+        let child2 = [0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3, 0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3]
+        let together = [];
+        for (let i = 0; i < xValues.length; i++) {
+            let temp;
+            temp = Math.abs((child1[i] + child2[i]) / 2).toFixed(2);
+            together.push(temp);
+        }
+        new Chart(ctx1, {
             type: "line",
             data: {
                 labels: xValues,
                 datasets: [{
-                    data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+                    label: 'לינוי',
+                    data: child1,
                     borderColor: "red",
                     fill: false,
                 }, {
-                    data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
-                    borderColor: "green",
+                    label: 'ממוצע',
+                    data: together,
+                    borderColor: "black",
                     fill: false
                 }, {
-                    data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
+                    label: 'טל',
+                    data: child2,
                     borderColor: "blue",
                     fill: false
                 }]
@@ -47,20 +71,21 @@ const DrawDetails = (props) => {
                 legend: { display: true },
                 title: {
                     display: true,
-                    text: "World Wide Wine Production 2018"
+                    text: "סינכרון בין טל ללינוי",
+                    fontSize: 20
                 }
             }
         });
     }
     const Chart2 = () => {
-        var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        var yValues = [55, 49, 44, 24, 15];
-        var barColors = [
-            "#b91d47",
-            "#00aba9",
-            "#2b5797",
-            "#e8c3b9",
-            "#1e7145"
+        // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+        // let yValues = [55, 49, 44, 24, 15];
+        let xValues = ["עבה", "רגיל", "דק"];
+        let yValues = [55, 49, 44];
+        let barColors = [
+            "rgba(255,0,0,1)",
+            "rgba(255,70,70,0.94)",
+            "rgba(255,94,94,0.83)"
         ];
 
         new Chart(ctx2, {
@@ -75,15 +100,51 @@ const DrawDetails = (props) => {
             options: {
                 title: {
                     display: true,
-                    text: "World Wide Wine Production 2018"
+                    text: "עובי קו - לינוי",
+                    fontSize: 20
+                }
+            }
+        });
+    }
+    const Chart7 = () => {
+        let xValues = ["עבה", "רגיל", "דק"];
+        let yValues = [5.9, 10, 14];
+        let barColors = [
+            "rgba(23, 0, 255, 1)",
+            "rgba(0,78,255,0.8)",
+            "rgba(0,109,255,0.55)"
+        ];
+
+        new Chart(ctx7, {
+            type: "doughnut",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "עובי קו - טל",
+                    fontSize: 20
                 }
             }
         });
     }
     const Chart3 = () => {
-        var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        var yValues = [55, 49, 44, 24, 15];
-        var barColors = ["red", "green", "blue", "orange", "brown"];
+        // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+        // let yValues = [55, 49, 44, 24, 15];
+        let xValues = [];
+        let yValues = [3.017, 2.449];
+        let namber = 1;
+        for (let i = 0; i < yValues.length; i++) {
+            xValues.push(namber);
+            namber++
+        }
+        console.log(xValues);
+        let barColors = "red";
         new Chart(ctx3, {
             type: "horizontalBar",
             data: {
@@ -97,17 +158,52 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: "World Wine Production 2018"
+                    text: "משך זמן לחיצה - לינוי",
+                    fontSize: 20
                 },
-                scales: {
-                    xAxes: [{ ticks: { min: 10, max: 60 } }]
-                }
+                // scales: {
+                //     xAxes: [{ ticks: { min: 1, max: 60 } }]
+                // }
+            }
+        });
+    }
+    const Chart6 = () => {
+        // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+        // let yValues = [55, 49, 44, 24, 15];
+        let xValues = [];
+        let yValues = [3.017, 2.449, 5.7, 2.3, 0.5, 4];
+        let namber = 1;
+        for (let i = 0; i < yValues.length; i++) {
+            xValues.push(namber);
+            namber++
+        }
+        console.log(xValues);
+        let barColors = "blue";
+        new Chart(ctx6, {
+            type: "horizontalBar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "משך זמן לחיצה - טל",
+                    fontSize: 20
+                },
+                // scales: {
+                //     xAxes: [{ ticks: { min: 1, max: 60 } }]
+                // }
             }
         });
     }
     const Chart4 = () => {
-        var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-        var yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+        let xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+        let yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
 
         new Chart(ctx4, {
             type: "line",
@@ -130,9 +226,9 @@ const DrawDetails = (props) => {
         });
     }
     const Chart5 = () => {
-        var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        var yValues = [55, 49, 44, 24, 15];
-        var barColors = [
+        let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+        let yValues = [55, 49, 44, 24, 15];
+        let barColors = [
             "rgba(255,0,0,1.0)",
             "rgba(255,0,0,0.8)",
             "rgba(255,0,0,0.6)",
@@ -161,14 +257,37 @@ const DrawDetails = (props) => {
             }
         });
     }
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     return (
         <React.Fragment>
+            <CardActions>
+                <Button variant="outlined" onClick={handleOpen}>שחזור</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <DrawDetails draw={props.item} index={props.index} />
+
+                </Modal>
+            </CardActions>
             <div id='graphs'>
-                <canvas id="Chart1"></canvas>
-                <canvas id="Chart2"></canvas>
-                <canvas id="Chart3"></canvas>
-                <canvas id="Chart4"></canvas>
-                <canvas id="Chart5"></canvas>
+                <div id='cync'>
+                    <canvas id="Chart1"></canvas>
+                </div>
+                <div id='sec'>
+                    <canvas id="Chart3"></canvas>
+                    <canvas id="Chart6"></canvas>
+                </div>
+                <div id='lineWidth'>
+                    <canvas id="Chart2"></canvas>
+                    <canvas id="Chart7"></canvas>
+                </div>
+                {/* <canvas id="Chart4"></canvas>
+                <canvas id="Chart5"></canvas> */}
             </div>
         </React.Fragment>
     );
