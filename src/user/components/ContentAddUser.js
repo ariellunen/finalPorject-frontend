@@ -22,6 +22,7 @@ const ContentAddUser = () => {
     const auth = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
+    const history = useHistory();
 
     const [formState, inputHandler, setFormData] = useForm(
         {
@@ -55,124 +56,52 @@ const ContentAddUser = () => {
 
             const responseData = await response.json();
             console.log(responseData);
+            history.replace('/admin')
         } catch (err) {
             console.log(err);
         }
-    }
-
-    const [isKide, setIsKide] = useState(false);
-    const handleKide = () => {
-        setIsKide(true);
-    }
-
-    const handleUsers = () => {
-        setIsKide(false);
-    }
-    let form;
-    if (isKide) {
-        form = (
-            <React.Fragment>
-                <Grid item xs={6}>
-                    <Button variant="contained" onClick={handleKide}>ילד\ה</Button>
-                </Grid>
-                <Grid item xs={6}>
-                    <Button variant="outline" onClick={handleUsers}>פסיכולוג\מדריך</Button>
-                </Grid>
-                <ErrorModal error={error} onClear={clearError} />
-                <Card className="authentication">
-                    <hr />
-                    <form onSubmit={authSubmitHandler}>
-                        <Input
-                            element="input"
-                            id="name"
-                            type="text"
-                            label="Your Name"
-                            validators={[VALIDATOR_REQUIRE()]}
-                            errorText="Please enter a name."
-                            onInput={inputHandler}
-                        />
-
-                        <Input
-                            element="input"
-                            id="email"
-                            type="email"
-                            label="E-Mail"
-                            validators={[VALIDATOR_EMAIL()]}
-                            errorText="Please enter a valid email address."
-                            onInput={inputHandler}
-                        />
-                        <Input
-                            element="input"
-                            id="password"
-                            type="password"
-                            label="Password"
-                            validators={[VALIDATOR_MINLENGTH(6)]}
-                            errorText="Please enter a valid password, at least 6 characters."
-                            onInput={inputHandler}
-                        />
-                        <Button type="submit" disabled={!formState.isValid}>
-                            SIGNUP
-                        </Button>
-                    </form>
-                </Card>
-            </React.Fragment>
-        )
-
-    }
-    else {
-        form = (
-            <React.Fragment>
-                <Grid item xs={6}>
-                    <Button variant="outlined" onClick={handleKide}>ילד\ה</Button>
-                </Grid>
-                <Grid item xs={6}>
-                    <Button variant="contained" onClick={handleUsers}>פסיכולוג\מדריך</Button>
-                </Grid>
-                <ErrorModal error={error} onClear={clearError} />
-                <Card className="authentication">
-                    <hr />
-                    <form onSubmit={authSubmitHandler}>
-                        <Input
-                            element="input"
-                            id="name"
-                            type="text"
-                            label="Your Name"
-                            validators={[VALIDATOR_REQUIRE()]}
-                            errorText="Please enter a name."
-                            onInput={inputHandler}
-                        />
-
-                        <Input
-                            element="input"
-                            id="email"
-                            type="email"
-                            label="E-Mail"
-                            validators={[VALIDATOR_EMAIL()]}
-                            errorText="Please enter a valid email address."
-                            onInput={inputHandler}
-                        />
-                        <Input
-                            element="input"
-                            id="password"
-                            type="password"
-                            label="Password"
-                            validators={[VALIDATOR_MINLENGTH(6)]}
-                            errorText="Please enter a valid password, at least 6 characters."
-                            onInput={inputHandler}
-                        />
-                        <Button type="submit" disabled={!formState.isValid}>
-                            SIGNUP
-                        </Button>
-                    </form>
-                </Card>
-            </React.Fragment>
-        )
     }
     return (
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    {form}
+                <ErrorModal error={error} onClear={clearError} />
+                <Card className="authentication">
+                    <hr />
+                    <form onSubmit={authSubmitHandler}>
+                        <Input
+                            element="input"
+                            id="name"
+                            type="text"
+                            label="Your Name"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a name."
+                            onInput={inputHandler}
+                        />
+
+                        <Input
+                            element="input"
+                            id="email"
+                            type="email"
+                            label="E-Mail"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please enter a valid email address."
+                            onInput={inputHandler}
+                        />
+                        <Input
+                            element="input"
+                            id="password"
+                            type="password"
+                            label="Password"
+                            validators={[VALIDATOR_MINLENGTH(6)]}
+                            errorText="Please enter a valid password, at least 6 characters."
+                            onInput={inputHandler}
+                        />
+                        <Button type="submit" disabled={!formState.isValid}>
+                            SIGNUP
+                        </Button>
+                    </form>
+                </Card>
                 </Grid>
             </Typography>
         </Paper>

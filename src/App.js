@@ -14,10 +14,13 @@ import AllDraw from './analysis/pages/AllDraw';
 import Auth from './user/pages/Auth';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
-import Admin from './user/pages/Admin';
-import AddUser from './user/pages/AddUser';
+import Admin from './user/components/Admin';
+import AddUser from './user/components/AddUser';
 import ShapesPicker from './draw/pages/ShapesPicker';
 import DrawDetails from './analysis/pages/DrawDetails';
+import AdminKide from './user/components/AdminKide';
+import Main from './user/pages/Main';
+import AddKide from './user/components/AddKide';
 const App = () => {
   const { token, login, logout, userId, emaill } = useAuth();
   console.log(emaill, userId);
@@ -28,7 +31,10 @@ const App = () => {
       routes = (
         <Switch>
           <Route path="/admin">
-            <Admin />
+            <Main />
+          </Route>
+          <Route path="/addKide">
+            <AddKide />
           </Route>
           <Route path="/addUser">
             <AddUser />
