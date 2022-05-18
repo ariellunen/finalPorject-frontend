@@ -60,6 +60,7 @@ import circleCor from "../shape/CircleL";
 import triangularCor from "../shape/TriangularL"
 import heartCor from "../shape/HeartL"
 import davidCor from "../shape/DavidL"
+import homeCor from "../shape/HomeL"
 
 let canvas;
 let down;
@@ -163,6 +164,9 @@ const LeftCanvas = (props) => {
                 break;
             case 'david':
                 uploadCoor = davidCor;
+                break;
+            case 'home':
+                uploadCoor = homeCor;
                 break;
         }
         fileUpload()

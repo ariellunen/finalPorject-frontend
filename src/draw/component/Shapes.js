@@ -28,6 +28,10 @@ const Shapes = (props) => {
                     shape = 'david';
                     onClick()
                 }}>מגן דוד</button>
+                <button className='btn' onClick={() => {
+                    shape = 'home';
+                    onClick()
+                }}>בית</button>
             </div>
         </div>
     )
