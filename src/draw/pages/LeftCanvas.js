@@ -77,7 +77,7 @@ let uploadCoor;
 // let particles = [];
 
 const LeftCanvas = (props) => {
-//--------------------------------------Animation 1---------------------------------------------//
+    //--------------------------------------Animation 1---------------------------------------------//
     // class Layer {
     //     constructor(ccttxx) {
     //         this.ccttxx = ccttxx;
@@ -265,7 +265,7 @@ const LeftCanvas = (props) => {
     //     init();
     // };
 
-//--------------------------------------Animation 2---------------------------------------------//
+    //--------------------------------------Animation 2---------------------------------------------//
 
     let ccctttxxx, ctxx, w, h;
     let fireworks = [],
@@ -379,6 +379,8 @@ const LeftCanvas = (props) => {
             }
         }
         update() {
+            // ctxx.clearRect(0, 0, w, h);
+            // ctxx.globalAlpha = 0.5;
             let progress = 1 - (this.ttl - this.tick) / this.ttl;
             this.y = h - (h - this.targetY) * easeOutQuart(progress);
             this.alpha = 1 - easeOutQuart(progress);
@@ -439,7 +441,7 @@ const LeftCanvas = (props) => {
         resizeReset();
     };
 
-
+    //---------------------------------------------------------------------------------------------//
 
     let selectedShape = sessionStorage.getItem("selectedShape");
     // const lineWidth = 36; //12 / 24 / 36
