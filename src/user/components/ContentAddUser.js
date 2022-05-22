@@ -17,11 +17,45 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import '../pages/Auth.css';
 import { useHistory } from 'react-router-dom';
+import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import { styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+
+const StyledFormControlLabel = styled((props) => <FormControlLabel {...props} />)(
+    ({ theme, checked }) => ({
+        '.MuiFormControlLabel-label': checked && {
+            color: theme.palette.primary.main,
+        },
+    }),
+);
+
+function MyFormControlLabel(props) {
+    const radioGroup = useRadioGroup();
+
+    let checked = false;
+
+    if (radioGroup) {
+        checked = radioGroup.value === props.value;
+    }
+
+    return <StyledFormControlLabel checked={checked} {...props} />;
+}
+
+MyFormControlLabel.propTypes = {
+    /**
+     * The value of the component.
+     */
+    value: PropTypes.any,
+};
+
 
 const ContentAddUser = () => {
     const auth = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
+    const [userType, setUserType] = useState();
     const history = useHistory();
 
     const [formState, inputHandler, setFormData] = useForm(
@@ -40,6 +74,7 @@ const ContentAddUser = () => {
 
     const authSubmitHandler = async event => {
         event.preventDefault();
+
         try {
             const response = await fetch('http://localhost:3000/api/users/signup', {
                 method: 'POST',
@@ -50,7 +85,7 @@ const ContentAddUser = () => {
                     email: formState.inputs.email.value,
                     password: formState.inputs.password.value,
                     name: formState.inputs.name.value,
-                    userType: 'instruction'
+                    userType: userType
                 })
             });
 
@@ -65,43 +100,47 @@ const ContentAddUser = () => {
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <ErrorModal error={error} onClear={clearError} />
-                <Card className="authentication">
-                    <hr />
-                    <form onSubmit={authSubmitHandler}>
-                        <Input
-                            element="input"
-                            id="name"
-                            type="text"
-                            label="Your Name"
-                            validators={[VALIDATOR_REQUIRE()]}
-                            errorText="Please enter a name."
-                            onInput={inputHandler}
-                        />
+                    <ErrorModal error={error} onClear={clearError} />
+                    <Card className="authentication">
+                        <hr />
+                        <form onSubmit={authSubmitHandler}>
+                            <Input
+                                element="input"
+                                id="name"
+                                type="text"
+                                label="שם המדריך\פסיכולוג"
+                                validators={[VALIDATOR_REQUIRE()]}
+                                errorText="Please enter a name."
+                                onInput={inputHandler}
+                            />
 
-                        <Input
-                            element="input"
-                            id="email"
-                            type="email"
-                            label="E-Mail"
-                            validators={[VALIDATOR_EMAIL()]}
-                            errorText="Please enter a valid email address."
-                            onInput={inputHandler}
-                        />
-                        <Input
-                            element="input"
-                            id="password"
-                            type="password"
-                            label="Password"
-                            validators={[VALIDATOR_MINLENGTH(6)]}
-                            errorText="Please enter a valid password, at least 6 characters."
-                            onInput={inputHandler}
-                        />
-                        <Button type="submit" disabled={!formState.isValid}>
-                            SIGNUP
-                        </Button>
-                    </form>
-                </Card>
+                            <Input
+                                element="input"
+                                id="email"
+                                type="email"
+                                label="E-Mail"
+                                validators={[VALIDATOR_EMAIL()]}
+                                errorText="Please enter a valid email address."
+                                onInput={inputHandler}
+                            />
+                            <Input
+                                element="input"
+                                id="password"
+                                type="password"
+                                label="Password"
+                                validators={[VALIDATOR_MINLENGTH(6)]}
+                                errorText="Please enter a valid password, at least 6 characters."
+                                onInput={inputHandler}
+                            />
+                            <RadioGroup name="use-radio-group" defaultValue="specialist" onChange={(event, value) => { setUserType(value) }}>
+                                <MyFormControlLabel value="specialist" label="פסיכולוג\ית" control={<Radio />} />
+                                <MyFormControlLabel value="instruction" label="מדריכ\ה" control={<Radio />} />
+                            </RadioGroup>
+                            <Button type="submit" disabled={!formState.isValid}>
+                                SIGNUP
+                            </Button>
+                        </form>
+                    </Card>
                 </Grid>
             </Typography>
         </Paper>
