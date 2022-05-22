@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
+let first, second;
+let child = [];
 const ColorPicker = (props) => {
     const usersData = [
         { name: '', color: '' },
@@ -14,7 +16,6 @@ const ColorPicker = (props) => {
     const [users, setUsers] = useState(usersData);
     const [isReady, setIsReady] = useState(false);
     const history = useHistory();
-    let data = [];
 
     useEffect(() => {
         setTimeout(() => {
@@ -22,20 +23,14 @@ const ColorPicker = (props) => {
         }, 2000);
     }, []);
 
+
     const fetchAPI = async () => {
-        try {
-            const response = await fetch('http://localhost:3000/api/users/children', {
-            });
-            const responseData = await response.json();
-            console.log(responseData)
-            data.push(responseData)
-            const len = data[0].children.length;
-            usersData[0].name = data[0].children[len - 2].name;
-            usersData[1].name = data[0].children[len - 1].name;
-            setIsReady(true);
-        } catch (err) {
-            console.log(err);
-        }
+        first = JSON.parse(localStorage.getItem('firstKide'));
+        second = JSON.parse(localStorage.getItem('secondtKide'));
+        child.push(first)
+        child.push(second)
+        console.log(first, second, child)
+        setIsReady(true);
     }
 
 
@@ -60,7 +55,7 @@ const ColorPicker = (props) => {
             }
             {isReady && counter === 2 && history.replace('/drawing/shapes', users)}
             {isReady && usersData[1].name !== undefined && counter < 2 && (
-                <Colors handleColor={handleColor} name={users[counter]} />
+                <Colors handleColor={handleColor} name={child[counter]} />
             )}
         </div>
     )

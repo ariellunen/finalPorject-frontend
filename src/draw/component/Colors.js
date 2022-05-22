@@ -7,11 +7,9 @@ const ColorPicker = (props) => {
         props.handleColor(color);
     }
 
-    console.log(props.name.name)
-
     return (
         <div>
-            <h1>{props.name.name}</h1>
+            <h1>{props.name}</h1>
             <div id='colors'>
                 <button className='btn first' onClick={() => {
                     color = 'yellow';

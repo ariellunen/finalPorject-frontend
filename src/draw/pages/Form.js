@@ -7,12 +7,14 @@ import { useHistory } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete'
 
 let child = [];
+let name;
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState('');
     const [secondtKide, setSecondKide] = useState('');
     const [children, setChildren] = useState([])
     const history = useHistory();
     const [isReady, setIsReady] = useState(false);
+    const [items, setItems] = useState([]);
 
     useEffect(() => {
         getAllChildren();
@@ -29,7 +31,6 @@ const Form = (props) => {
 
             const responseData = await response.json();
             setChildren(responseData.children)
-            console.log(children)
             child = children.children;
             setIsReady(true);
 
@@ -38,68 +39,22 @@ const Form = (props) => {
         }
     }
 
-    const onChangeFisrt = (e) => {
-        console.log(e.target.value)
-        setFirstKide(e.target.value);
-    }
-
-    const onChangeSecond = (e) => {
-        setSecondKide(e.target.value);
-    }
-
     const onSubmit = async event => {
-        try {
-            const response = await fetch('http://localhost:3000/api/users/signupChild/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: firstKide
-                })
-            });
+        setItems([firstKide, secondtKide]);
+        console.log(items)
 
-            const responseData = await response.json();
-            console.log(responseData);
-
-        } catch (err) {
-            console.log(err);
-        }
-
-        try {
-            const response = await fetch('http://localhost:3000/api/users/signupChild/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: secondtKide
-                })
-            });
-
-            const responseData = await response.json();
-            console.log(responseData);
-        } catch (err) {
-            console.log(err);
-        }
+        localStorage.setItem('firstKide', JSON.stringify(firstKide));
+        localStorage.setItem('secondtKide', JSON.stringify(secondtKide));
+        // setItems(firstKide, secondtKide)
     }
+    console.log(secondtKide)
+    console.log(firstKide)
 
     return (
-        // child.length !== 0 && <Box component="form"
-        //     sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }}
-        //     noValidate
-        //     autoComplete="off"
-        // >
-        //     <Autocomplete
-        //         disablePortal
-        //         id="combo-box-demo"
-        //         options={child}
-        //         sx={{ width: 300 }}
-        //         renderInput={(params) => <TextField {...params} label="Movie" />}
-        //     />
         <React.Fragment>
             {isReady && <Box>
                 <Autocomplete
+                    onChange={(event, value) => setFirstKide(value.name)}
                     id="country-select-demo"
                     sx={{ width: 300 }}
                     options={children}
@@ -119,7 +74,7 @@ const Form = (props) => {
                     )}
                     renderInput={(params) => (
                         <TextField
-                        onChange={onChangeFisrt} value={firstKide}
+                            value={name}
                             {...params}
                             label="ילד 1"
                             inputProps={{
@@ -130,6 +85,7 @@ const Form = (props) => {
                     )}
                 />
                 <Autocomplete
+                    onChange={(event, value) => setSecondKide(value.name)}
                     id="country-select-demo"
                     sx={{ width: 300 }}
                     options={children}
@@ -142,7 +98,6 @@ const Form = (props) => {
                     )}
                     renderInput={(params) => (
                         <TextField
-                        onChange={onChangeSecond} value={secondtKide}
                             {...params}
                             label="ילד 2"
                             inputProps={{
