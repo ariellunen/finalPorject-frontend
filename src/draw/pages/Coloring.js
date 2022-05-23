@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
 import { now } from 'moment-timezone';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+
 
 let moment = require('moment-timezone');
 
@@ -364,6 +366,10 @@ const Coloring = (props) => {
                     <Button onClick={changeLineWidthL12}>1</Button>
                     <Button type='submit' onClick={changeLineWidthL24}>2</Button>
                     <Button type='submit' onClick={changeLineWidthL36}>3</Button>
+                    <div id="lifebar">
+                        <progress value={cchange1} max="10"></progress>
+                    </div>
+                    {/* <LinearProgress variant="determinate" {...props} value={cchange1} /> */}
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
                         color={location.state.state[0]}
@@ -380,7 +386,7 @@ const Coloring = (props) => {
                         secondsR={secondsR}
                         setMouseR={setMouseR}
                         lineWidthR={lineWidthR}
-                        // color = {temp}
+                    // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
                     <Button onClick={changeLineWidthR12}>1</Button>
