@@ -61,6 +61,7 @@ import triangularCor from "../shape/TriangularR"
 import heartCor from "../shape/HeartR"
 import davidCor from "../shape/DavidR"
 import homeCor from "../shape/HomeR"
+import { Abc } from '@mui/icons-material';
 
 let canvas;
 let down;
@@ -75,6 +76,7 @@ let flag = true;
 let area;
 let fill;
 let fillPercentage;
+let flagCnc = true;
 
 const RightCanvas = (props) => {
     let selectedShape = sessionStorage.getItem("selectedShape");
@@ -83,7 +85,12 @@ const RightCanvas = (props) => {
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
     // color = props.color;
-    // console.log(props.color);
+    // console.log(props.cchange2);
+    // console.log(props.cchange1);
+    console.log(props);
+    if (Math.abs(props.cchange2 - props.cchange1) > 2) {
+        flagCnc = false;
+    }
 
     const state = {
         mousedown: false
@@ -98,7 +105,11 @@ const RightCanvas = (props) => {
             down = Date.now();
             canvas.beginPath();
             canvas.lineWidth = lineWidth;
-            canvas.strokeStyle = props.color;
+            console.log(flagCnc)
+            if (flagCnc) {
+                canvas.strokeStyle = props.color;
+            }
+
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
             props.setMouseR(false);
@@ -132,6 +143,12 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
+                        console.log(flagCnc)
+                        if (flagCnc) {
+                            console.log("111111111111111")
+                            // changeToWhite()
+                            canvas.strokeStyle = props.color;
+                        }
                         x = event.clientX;
                         y = event.clientY;
                         if (x > 0 && x < 800 && y > 0 && y < 800) {
@@ -161,6 +178,12 @@ const RightCanvas = (props) => {
         resizeCanvases()
         // interact(window).on('resize', resizeCanvases)
     }, [])
+
+    function changeToWhite(data) {
+        for (var i = 0; i < data.length; i++) {
+          data[i] = 255;
+        }
+      }
 
     useEffect(() => {
         ctx = document.getElementById("canvasR")
@@ -256,7 +279,7 @@ const RightCanvas = (props) => {
     }
     const indexCheck = (x, y) => {
         const { data } = context.getImageData(x, y, 1, 1);
-        console.log(data[2])
+        // console.log(data[2])
         // if (data[2] !== 240) {
         //     flag = false;
         // }

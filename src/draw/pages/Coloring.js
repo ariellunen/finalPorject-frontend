@@ -384,8 +384,11 @@ const Coloring = (props) => {
                         color={location.state.state[1].color}
                         setRight={setRight}
                         secondsR={secondsR}
+                        cchange1={cchange1}
+                        cchange2={cchange2}
                         setMouseR={setMouseR}
                         lineWidthR={lineWidthR}
+                        rightCoordinates = {rightCoordinates}
                     // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
