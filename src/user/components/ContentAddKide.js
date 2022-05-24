@@ -18,37 +18,57 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import '../pages/Auth.css';
 import { useHistory } from 'react-router-dom';
 import { TextField } from '@mui/material';
-
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 const ContentAddKide = () => {
-    const auth = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
+    const [imageUp, setImageUp] = useState();
     const history = useHistory();
 
-    // const [formState, inputHandler, setFormData] = useForm(
-    //     {
-    //         name: {
-    //             value: '',
-    //             isValid: false
-    //         },
-    //     },
-    //     false
-    // );
+    const [formState, inputHandler, setFormData] = useForm(
+        {
+            name: {
+                value: '',
+                isValid: false,
+            },
+            image: {
+                value: '',
+                isValid: false,
+            }
+        },
+        false,
+    );
+    console.log(formState)
+    const handleImage = (e) => {
+        console.log(e)
+        // setImage()
+    }
 
     const authSubmitHandler = async event => {
         event.preventDefault();
+        console.log(formState.inputs);
         try {
-            const response = await fetch('http://localhost:3000/api/users/signupChild/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name
-                })
-            });
+            const formData = new FormData();
+            formData.append('name', formState.inputs.name.value);
+            formData.append('image', formState.inputs.image.value);
+            // formData.append('image', name);
+            const responseData = await sendRequest(
+                'http://localhost:3000/api/users/signupChild/',
+               'POST',
+               formData,                
+            );
+            // const response = await fetch('http://localhost:3000/api/users/signupChild/', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         name: formState.inputs.name.value,
+            //         // image: formState.inputs.image.value
+            //     })
+            // });
 
-            const responseData = await response.json();
+            // const responseData = await response.json();
             console.log(responseData);
             history.replace('/admin')
 
@@ -65,22 +85,20 @@ const ContentAddKide = () => {
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    {/* <ErrorModal error={error} onClear={clearError} /> */}
+                    <ErrorModal error={error} onClear={clearError} />
                     <Card className="authentication">
                         <hr />
                         <form onSubmit={authSubmitHandler}>
-                            <TextField
-                                onChange={onChangeName}
-                                value={name}
+                        <Input
                                 element="input"
                                 id="name"
                                 type="text"
-                                label="Your Name"
-                                // validators={[VALIDATOR_REQUIRE()]}
+                                label="שם הילד\ה"
+                                validators={[VALIDATOR_REQUIRE()]}
                                 errorText="Please enter a name."
-                            // onInput={inputHandler}
+                                onInput={inputHandler}
                             />
-
+                            <ImageUpload center id="image" onInput={inputHandler} />
                             {/* <Input
                                 element="input"
                                 id="email"
@@ -99,8 +117,8 @@ const ContentAddKide = () => {
                                 errorText="Please enter a valid password, at least 6 characters."
                                 onInput={inputHandler}
                             /> */}
-                            <Button type="submit">
-                                SIGNUP
+                            <Button type="submit" disabled={!formState.isValid}>
+                                {'SIGNUP'}
                             </Button>
                         </form>
                     </Card>

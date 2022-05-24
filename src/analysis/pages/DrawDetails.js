@@ -6,6 +6,10 @@ import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import { Link } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
+import { useLocation } from 'react-router-dom';
+
+/*...*/
+
 
 
 let ctx1;
@@ -19,6 +23,9 @@ let ctx7;
 const DrawDetails = (props) => {
     console.log(props.data);
     console.log(props.index);
+    const location = useLocation();
+    const data = location;
+    console.log(data);
     useEffect(() => {
         ctx1 = document.getElementById('Chart1').getContext('2d');
         Chart1();

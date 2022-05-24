@@ -84,8 +84,10 @@ const Cards = (props) => {
             </div>
             <CardActions>
                 {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
-                <Button variant="contained" type='submit' component={Link} to="/analysis/details"
-                data={props.item} index={props.index}>ניתוח</Button>
+                {/* <Button variant="contained" type='submit' component={Link} to="/analysis/details"
+                state={props.item} index={props.index}>ניתוח</Button> */}
+                <Link to="/analysis/details" state={props.item}>Link Text</Link>
+
 
                 {/* <Modal
                     open={open}

@@ -51,7 +51,6 @@ let lineWidthR = 24;
 // let temp;
 
 const Coloring = (props) => {
-    const auth = useContext(AuthContext);
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
         // setStartedTime(new Date());
