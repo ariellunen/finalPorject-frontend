@@ -1,11 +1,219 @@
-import React, { useState, useCallback } from 'react';
+// import React, { useState, useEffect } from 'react';
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Redirect,
+//   Switch
+// } from 'react-router-dom';
+// import MainNavigation from './user/pages/MainNavigation';
+// import ColorPicker from './draw/pages/ColorPicker';
+// import Coloring from './draw/pages/Coloring';
+// import Form from './draw/pages/Form';
+// import AllDraw from './analysis/pages/AllDraw';
+// import Auth from './user/pages/Auth';
+// import { AuthContext } from './shared/context/auth-context';
+// import { useAuth } from './shared/hooks/auth-hook';
+// import Admin from './user/components/Admin';
+// import AddUser from './user/components/AddUser';
+// import ShapesPicker from './draw/pages/ShapesPicker';
+// import DrawDetails from './analysis/pages/DrawDetails';
+// import AdminKide from './user/components/AdminKide';
+// import Main from './user/pages/Main';
+// import AddKide from './user/components/AddKide';
+// import Definitions from './user/components/Definitions';
+// const App = () => {
+
+//   const { token, login, logout, userId, emaill, userTypee } = useAuth();
+//   let routes;
+//   const [permission, setPermission] = useState(false);
+//   const [user, setUser] = useState();
+//   const handlePermissionOn = () => {
+//     setPermission(true)
+//   }
+//   const handlePermissionOff = () => {
+//     setPermission(false)
+//   }
+
+//   useEffect(() => {
+//     console.log(userTypee);
+
+//   }, [permission])
+
+//   console.log("perrr", permission, userId)
+
+//   useEffect(() => {
+//     const getUser = async () => {
+//       try {
+//         const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+//           headers: {
+//             'Content-Type': 'application/json'
+//           }
+//         });
+//         const responseData = await response.json();
+//         setUser(responseData)
+//         console.log(responseData)
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     }
+//     getUser()
+//   }, [userId])
+//   // const getUser = async () => {
+//   //   try {
+//   //     const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+//   //       headers: {
+//   //         'Content-Type': 'application/json'
+//   //       }
+//   //     });
+//   //     const responseData = await response.json();
+//   //     setUser(responseData)
+//   //     console.log(responseData)
+//   //   } catch (err) {
+//   //     console.log(err);
+//   //   }
+//   // }
+//   // console.log(user)
+
+//   if (token) {
+//     if (userId === '6277c1484517cb29c0cd1d11') {
+//       routes = (
+//         <Switch>
+//           <Route path="/admin">
+//             <Main />
+//           </Route>
+//           <Route path="/addKide">
+//             <AddKide />
+//           </Route>
+//           <Route path="/addUser">
+//             <AddUser />
+//           </Route>
+//           <Route path="/definitions">
+//             <Definitions handlePermissionOn={handlePermissionOn} handlePermissionOff={handlePermissionOff} />
+//           </Route>
+//           <Redirect to="/admin" />
+//         </Switch>
+//       )
+//     } else {
+//       if (permission) {
+//         routes = (
+//           <Switch>
+//             <Router>
+//               <Switch>
+//                 <Route path="/" exact>
+//                   <MainNavigation />
+//                 </Route>
+//                 <Route path="/drawing/color" exact>
+//                   <ColorPicker />
+//                 </Route>
+//                 <Route path="/drawing/coloring" exact>
+//                   <Coloring />
+//                 </Route>
+//                 <Route path="/analysis" exact>
+//                   <AllDraw />
+//                 </Route>
+//                 <Route path="/analysis/details" exact>
+//                   <DrawDetails />
+//                 </Route>
+//                 <Route path="/form" exact>
+//                   <Form />
+//                 </Route>
+//                 <Route path="/drawing/shapes" exact>
+//                   <ShapesPicker />
+//                 </Route>
+//                 <Redirect to="/" />
+//               </Switch>
+//             </Router>
+//           </Switch>
+//         );
+//       }
+//       //TODO need to check user type
+//       else {
+//         if (user.userType === 'specialist') {
+//           <Switch>
+//             <Router>
+//               <Switch>
+//                 <Route path="/" exact>
+//                   <AllDraw />
+//                 </Route>
+//                 <Route path="/analysis" exact>
+//                   <AllDraw />
+//                 </Route>
+//                 <Route path="/analysis/details" exact>
+//                   <DrawDetails />
+//                 </Route>
+//                 <Redirect to="/analysis" />
+//               </Switch>
+//             </Router>
+//           </Switch>
+//         } else {
+//           <Switch>
+//             <Router>
+//               <Switch>
+//                 <Route path="/" exact>
+//                   <MainNavigation />
+//                 </Route>
+//                 <Route path="/drawing/color" exact>
+//                   <ColorPicker />
+//                 </Route>
+//                 <Route path="/drawing/coloring" exact>
+//                   <Coloring />
+//                 </Route>
+//                 <Route path="/form" exact>
+//                   <Form />
+//                 </Route>
+//                 <Route path="/drawing/shapes" exact>
+//                   <ShapesPicker />
+//                 </Route>
+//                 <Redirect to="/" />
+//               </Switch>
+//             </Router>
+//           </Switch>
+//         }
+//       }
+
+//     }
+
+//   } else {
+//     routes = (
+//       <Switch>
+//         <Route path="/">
+//           <Auth />
+//         </Route>
+//         <Redirect to="/" />
+//       </Switch>
+//     );
+//   }
+
+//   return (
+//     <AuthContext.Provider
+//       value={{
+//         isLoggedIn: !!token,
+//         token: token,
+//         userId: userId,
+//         login: login,
+//         logout: logout,
+//         emaill: emaill,
+//         userTypee: userTypee
+//       }}
+//     >
+//       <Router>
+//         {/* <MainNavigation /> */}
+//         <main>{routes}</main>
+//       </Router>
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export default App;
+
+
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch
 } from 'react-router-dom';
-
 import MainNavigation from './user/pages/MainNavigation';
 import ColorPicker from './draw/pages/ColorPicker';
 import Coloring from './draw/pages/Coloring';
@@ -21,10 +229,59 @@ import DrawDetails from './analysis/pages/DrawDetails';
 import AdminKide from './user/components/AdminKide';
 import Main from './user/pages/Main';
 import AddKide from './user/components/AddKide';
+import Definitions from './user/components/Definitions';
 const App = () => {
-  const { token, login, logout, userId, emaill } = useAuth();
-  console.log(emaill, userId);
+
+  const { token, login, logout, userId, emaill, userTypee } = useAuth();
   let routes;
+  const [permission, setPermission] = useState(false);
+  const [user, setUser] = useState();
+  const handlePermissionOn = () => {
+    setPermission(true)
+  }
+  const handlePermissionOff = () => {
+    setPermission(false)
+  }
+
+  useEffect(() => {
+    console.log(userTypee);
+
+  }, [permission])
+
+  console.log("perrr", permission, userId)
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData = await response.json();
+        setUser(responseData)
+        console.log(responseData)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUser()
+  }, [userId])
+  // const getUser = async () => {
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     const responseData = await response.json();
+  //     setUser(responseData)
+  //     console.log(responseData)
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  // console.log(user)
 
   if (token) {
     if (userId === '6277c1484517cb29c0cd1d11') {
@@ -39,40 +296,90 @@ const App = () => {
           <Route path="/addUser">
             <AddUser />
           </Route>
+          <Route path="/definitions">
+            <Definitions handlePermissionOn={handlePermissionOn} handlePermissionOff={handlePermissionOff} />
+          </Route>
           <Redirect to="/admin" />
         </Switch>
       )
     } else {
-      routes = (
-        <Switch>
-          <Router>
-            <Switch>
-              <Route path="/" exact>
-                <MainNavigation />
-              </Route>
-              <Route path="/drawing/color" exact>
-                <ColorPicker />
-              </Route>
-              <Route path="/drawing/coloring" exact>
-                <Coloring />
-              </Route>
-              <Route path="/analysis" exact>
-                <AllDraw />
-              </Route>
-              <Route path="/analysis/details" exact>
-                <DrawDetails />
-              </Route>
-              <Route path="/form" exact>
-                <Form />
-              </Route>
-              <Route path="/drawing/shapes" exact>
-                <ShapesPicker />
-              </Route>
-              <Redirect to="/" />
-            </Switch>
-          </Router>
-        </Switch>
-      );
+      // if (permission) {
+        routes = (
+          <Switch>
+            <Router>
+              <Switch>
+                <Route path="/" exact>
+                  <MainNavigation />
+                </Route>
+                <Route path="/drawing/color" exact>
+                  <ColorPicker />
+                </Route>
+                <Route path="/drawing/coloring" exact>
+                  <Coloring />
+                </Route>
+                <Route path="/analysis" exact>
+                  <AllDraw />
+                </Route>
+                <Route path="/analysis/details" exact>
+                  <DrawDetails />
+                </Route>
+                <Route path="/form" exact>
+                  <Form />
+                </Route>
+                <Route path="/drawing/shapes" exact>
+                  <ShapesPicker />
+                </Route>
+                <Redirect to="/" />
+              </Switch>
+            </Router>
+          </Switch>
+        );
+      // }
+      //TODO need to check user type
+      // else {
+      //   // if (user.userType === 'specialist') {
+      //     <Switch>
+      //       <Router>
+      //         <Switch>
+      //           <Route path="/" exact>
+      //             <AllDraw />
+      //           </Route>
+      //           <Route path="/analysis" exact>
+      //             <AllDraw />
+      //           </Route>
+      //           <Route path="/analysis/details" exact>
+      //             <DrawDetails />
+      //           </Route>
+      //           <Redirect to="/analysis" />
+      //         </Switch>
+      //       </Router>
+      //     </Switch>
+      //   } else {
+      //     <Switch>
+      //       <Router>
+      //         <Switch>
+      //           <Route path="/" exact>
+      //             <MainNavigation />
+      //           </Route>
+      //           <Route path="/drawing/color" exact>
+      //             <ColorPicker />
+      //           </Route>
+      //           <Route path="/drawing/coloring" exact>
+      //             <Coloring />
+      //           </Route>
+      //           <Route path="/form" exact>
+      //             <Form />
+      //           </Route>
+      //           <Route path="/drawing/shapes" exact>
+      //             <ShapesPicker />
+      //           </Route>
+      //           <Redirect to="/" />
+      //         </Switch>
+      //       </Router>
+      //     </Switch>
+      //   }
+      // }
+
     }
 
   } else {
@@ -94,7 +401,8 @@ const App = () => {
         userId: userId,
         login: login,
         logout: logout,
-        emaill: emaill
+        emaill: emaill,
+        userTypee: userTypee
       }}
     >
       <Router>

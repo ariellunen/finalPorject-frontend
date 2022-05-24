@@ -17,7 +17,8 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
-
+import Definitions from './Definitions';
+import Main from '../pages/Main';
 const categories = [
   {
     id: 'Build',
@@ -26,23 +27,24 @@ const categories = [
         id: 'Authentication',
         icon: <PeopleIcon />,
         active: true,
+        route: <Main /> 
       },
-      { id: 'Database', icon: <DnsRoundedIcon /> },
-      { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Hosting', icon: <PublicIcon /> },
-      { id: 'Functions', icon: <SettingsEthernetIcon /> },
-      {
-        id: 'Machine learning',
-        icon: <SettingsInputComponentIcon />,
-      },
+      // { id: 'Database', icon: <DnsRoundedIcon /> },
+      // { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
+      // { id: 'Hosting', icon: <PublicIcon /> },
+      // { id: 'Functions', icon: <SettingsEthernetIcon /> },
+      // {
+      //   id: 'Machine learning',
+      //   icon: <SettingsInputComponentIcon />,
+      // },
     ],
   },
   {
     id: 'Quality',
     children: [
-      { id: 'Analytics', icon: <SettingsIcon /> },
-      { id: 'Performance', icon: <TimerIcon /> },
-      { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
+      { id: 'הגדרות', icon: <SettingsIcon />, route: <Definitions /> },
+      // { id: 'Performance', icon: <TimerIcon /> },
+      // { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
     ],
   },
 ];
@@ -82,8 +84,9 @@ export default function Navigator(props) {
             <ListItem sx={{ py: 2, px: 3 }}>
               <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
-              <ListItem disablePadding key={childId}>
+            
+            {children.map(({ id: childId, icon, active, route }) => (
+              <ListItem disablePadding key={childId} onClick={route}>
                 <ListItemButton selected={active} sx={item}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText>{childId}</ListItemText>

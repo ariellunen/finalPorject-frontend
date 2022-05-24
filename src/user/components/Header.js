@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import HelpIcon from '@mui/icons-material/Help';
 import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Tab from '@mui/material/Tab';
@@ -16,6 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../shared/context/auth-context';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -39,18 +40,17 @@ function Header(props) {
               </IconButton>
             </Grid>
             {/* <Grid item xs /> */}
-
-            <Grid item>
-              <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <LogoutIcon onClick={auth.logout} />
               </IconButton>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Alerts • No alerts">
+                <IconButton color="inherit" component={Link} to='/definitions'>
+                  <SettingsIcon />
+                </IconButton>
+              </Tooltip>
             </Grid>
           </Grid>
         </Toolbar>
@@ -69,7 +69,7 @@ function Header(props) {
                 {props.header}
               </Typography>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Button
                 sx={{ borderColor: lightColor }}
                 variant="outlined"
@@ -85,27 +85,27 @@ function Header(props) {
                   <HelpIcon />
                 </IconButton>
               </Tooltip>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Toolbar>
       </AppBar>
       {props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={1} textColor="inherit">
-          <Tab label="אנשי מקצוע \ מדריכים" onClick={props.notKide}/>
+          <Tab label="אנשי מקצוע \ מדריכים" onClick={props.notKide} />
           <Tab label="ילדים" />
-          <Tab label="Templates" />
-          <Tab label="Usage" />
+          <Tab label="הגדרות" />
+          {/* <Tab label="Usage" /> */}
         </Tabs>
       </AppBar>}
       {!props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={0} textColor="inherit">
-          <Tab label="אנשי מקצוע \ מדריכים"/>
-          <Tab label="ילדים" onClick={props.isKide}/>
-          <Tab label="Templates" />
-          <Tab label="Usage" />
+          <Tab label="אנשי מקצוע \ מדריכים" />
+          <Tab label="ילדים" onClick={props.isKide} />
+          <Tab label="הגדרות" />
+          {/* <Tab label="Usage" /> */}
         </Tabs>
       </AppBar>}
-      
+
     </React.Fragment>
   );
 }

@@ -6,6 +6,10 @@ import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import { Link } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
+import { useLocation } from 'react-router-dom';
+
+/*...*/
+
 
 
 let ctx1;
@@ -20,6 +24,14 @@ let yValuesSec3 = [];
 let sec3;
 
 const DrawDetails = (props) => {
+<<<<<<< HEAD
+    console.log(props.data);
+    console.log(props.index);
+    const location = useLocation();
+    const data = location;
+    console.log(data);
+=======
+>>>>>>> 57094fa8b1d18dc42be56504103cf51d88237548
     useEffect(() => {
         yValuesSec2.push(3.017);
         yValuesSec2.push(2.449);

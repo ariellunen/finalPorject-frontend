@@ -17,6 +17,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Avatar from '@mui/material/Avatar';
 let children = [];
 let users = [];
 export default function Content(props) {
@@ -29,7 +30,7 @@ export default function Content(props) {
                 });
                 const responseData = await response.json();
                 children.push(responseData);
-                console.log(responseData)
+                console.log("children",responseData)
 
             } catch (err) {
                 console.log(err);
@@ -131,6 +132,7 @@ export default function Content(props) {
                                     >
                                         <TableCell component="th" scope="row">
                                             {child.name}
+                                            <Avatar alt="Remy Sharp" src={`http://localhost:3000/${child.image}`} />
                                         </TableCell>
                                     </TableRow>
                                 ))}

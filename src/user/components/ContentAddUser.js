@@ -44,15 +44,11 @@ function MyFormControlLabel(props) {
 }
 
 MyFormControlLabel.propTypes = {
-    /**
-     * The value of the component.
-     */
     value: PropTypes.any,
 };
 
 
 const ContentAddUser = () => {
-    const auth = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [userType, setUserType] = useState();
