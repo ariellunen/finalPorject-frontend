@@ -17,42 +17,48 @@ let ctx2;
 let ctx3;
 let ctx4;
 let ctx5;
-let ctx6;
-let ctx7;
+
+let yValuesSec2 = [];
+let sec2;
+let yValuesSec3 = [];
+let sec3;
 
 const DrawDetails = (props) => {
+<<<<<<< HEAD
     console.log(props.data);
     console.log(props.index);
     const location = useLocation();
     const data = location;
     console.log(data);
+=======
+>>>>>>> 57094fa8b1d18dc42be56504103cf51d88237548
     useEffect(() => {
+        yValuesSec2.push(3.017);
+        yValuesSec2.push(2.449);
+        sec2 = yValuesSec2.length;
+        yValuesSec3.push(3.017);
+        yValuesSec3.push(2.449);
+        yValuesSec3.push(5.7);
+        yValuesSec3.push(2.3);
+        yValuesSec3.push(4);
+        sec3 = yValuesSec3.length;
+
         ctx1 = document.getElementById('Chart1').getContext('2d');
         Chart1();
         ctx2 = document.getElementById('Chart2').getContext('2d');
         Chart2();
-        ctx7 = document.getElementById('Chart7').getContext('2d');
-        Chart7();
         ctx3 = document.getElementById('Chart3').getContext('2d');
         Chart3();
-        ctx6 = document.getElementById('Chart6').getContext('2d');
-        Chart6();
-        // ctx4 = document.getElementById('Chart4').getContext('2d');
-        // Chart4();
-        // ctx5 = document.getElementById('Chart5').getContext('2d');
-        // Chart5();
+        ctx4 = document.getElementById('Chart4').getContext('2d');
+        Chart4();
+        ctx5 = document.getElementById('Chart5').getContext('2d');
+        Chart5();
     }, []);
 
     const Chart1 = () => {
         let xValues = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20];
         let child1 = [1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2, 1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2]
         let child2 = [0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3, 0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3]
-        let together = [];
-        for (let i = 0; i < xValues.length; i++) {
-            let temp;
-            temp = Math.abs((child1[i] + child2[i]) / 2).toFixed(2);
-            together.push(temp);
-        }
         new Chart(ctx1, {
             type: "line",
             data: {
@@ -61,12 +67,7 @@ const DrawDetails = (props) => {
                     label: 'לינוי',
                     data: child1,
                     borderColor: "red",
-                    fill: false,
-                }, {
-                    label: 'ממוצע',
-                    data: together,
-                    borderColor: "black",
-                    fill: false
+                    fill: true,
                 }, {
                     label: 'טל',
                     data: child2,
@@ -85,6 +86,82 @@ const DrawDetails = (props) => {
         });
     }
     const Chart2 = () => {
+        let xValues = [];
+        let namber = 1;
+        if (sec2 < sec3) {
+            for (let i = 0; i < sec3; i++) {
+                xValues.push(namber);
+                namber++
+            }
+        }
+        else {
+            for (let i = 0; i < yValuesSec2.length; i++) {
+                xValues.push(namber);
+                namber++
+            }
+        }
+        let barColors = "red";
+        new Chart(ctx2, {
+            type: "horizontalBar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValuesSec2
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "משך זמן לחיצה - לינוי",
+                    fontSize: 20
+                },
+                scales: {
+                    xAxes: [{ ticks: { min: 0 } }]
+                }
+            }
+        });
+    }
+    const Chart3 = () => {
+        let xValues = [];
+        let namber = 1;
+        if (sec2 < sec3) {
+            for (let i = 0; i < yValuesSec3.length; i++) {
+                xValues.push(namber);
+                namber++
+            }
+        }
+        else {
+            for (let i = 0; i < sec2; i++) {
+                xValues.push(namber);
+                namber++
+            }
+        }
+        let barColors = "blue";
+        new Chart(ctx3, {
+            type: "horizontalBar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValuesSec3
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "משך זמן לחיצה - טל",
+                    fontSize: 20
+                },
+                scales: {
+                    xAxes: [{ ticks: { min: 0 } }]
+                }
+            }
+        });
+    }
+    const Chart4 = () => {
         // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
         // let yValues = [55, 49, 44, 24, 15];
         let xValues = ["עבה", "רגיל", "דק"];
@@ -95,7 +172,7 @@ const DrawDetails = (props) => {
             "rgba(255,94,94,0.83)"
         ];
 
-        new Chart(ctx2, {
+        new Chart(ctx4, {
             type: "doughnut",
             data: {
                 labels: xValues,
@@ -111,9 +188,10 @@ const DrawDetails = (props) => {
                     fontSize: 20
                 }
             }
+            
         });
     }
-    const Chart7 = () => {
+    const Chart5 = () => {
         let xValues = ["עבה", "רגיל", "דק"];
         let yValues = [5.9, 10, 14];
         let barColors = [
@@ -122,7 +200,7 @@ const DrawDetails = (props) => {
             "rgba(0,109,255,0.55)"
         ];
 
-        new Chart(ctx7, {
+        new Chart(ctx5, {
             type: "doughnut",
             data: {
                 labels: xValues,
@@ -140,130 +218,7 @@ const DrawDetails = (props) => {
             }
         });
     }
-    const Chart3 = () => {
-        // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        // let yValues = [55, 49, 44, 24, 15];
-        let xValues = [];
-        let yValues = [3.017, 2.449];
-        let namber = 1;
-        for (let i = 0; i < yValues.length; i++) {
-            xValues.push(namber);
-            namber++
-        }
-        console.log(xValues);
-        let barColors = "red";
-        new Chart(ctx3, {
-            type: "horizontalBar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: "משך זמן לחיצה - לינוי",
-                    fontSize: 20
-                },
-                // scales: {
-                //     xAxes: [{ ticks: { min: 1, max: 60 } }]
-                // }
-            }
-        });
-    }
-    const Chart6 = () => {
-        // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        // let yValues = [55, 49, 44, 24, 15];
-        let xValues = [];
-        let yValues = [3.017, 2.449, 5.7, 2.3, 0.5, 4];
-        let namber = 1;
-        for (let i = 0; i < yValues.length; i++) {
-            xValues.push(namber);
-            namber++
-        }
-        console.log(xValues);
-        let barColors = "blue";
-        new Chart(ctx6, {
-            type: "horizontalBar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: "משך זמן לחיצה - טל",
-                    fontSize: 20
-                },
-                // scales: {
-                //     xAxes: [{ ticks: { min: 1, max: 60 } }]
-                // }
-            }
-        });
-    }
-    const Chart4 = () => {
-        let xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-        let yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
 
-        new Chart(ctx4, {
-            type: "line",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    fill: false,
-                    lineTension: 0,
-                    backgroundColor: "rgba(0,0,255,1.0)",
-                    borderColor: "rgba(0,0,255,0.1)",
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: { display: false },
-                scales: {
-                    yAxes: [{ ticks: { min: 6, max: 16 } }],
-                }
-            }
-        });
-    }
-    const Chart5 = () => {
-        let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        let yValues = [55, 49, 44, 24, 15];
-        let barColors = [
-            "rgba(255,0,0,1.0)",
-            "rgba(255,0,0,0.8)",
-            "rgba(255,0,0,0.6)",
-            "rgba(255,0,0,0.4)",
-            "rgba(255,0,0,0.2)"
-        ];
-
-        new Chart(ctx5, {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: { display: false },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                }
-            }
-        });
-    }
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -286,15 +241,13 @@ const DrawDetails = (props) => {
                     <canvas id="Chart1"></canvas>
                 </div>
                 <div id='sec'>
+                    <canvas id="Chart2"></canvas>
                     <canvas id="Chart3"></canvas>
-                    <canvas id="Chart6"></canvas>
                 </div>
                 <div id='lineWidth'>
-                    <canvas id="Chart2"></canvas>
-                    <canvas id="Chart7"></canvas>
+                    <canvas id="Chart4"></canvas>
+                    <canvas id="Chart5"></canvas>
                 </div>
-                {/* <canvas id="Chart4"></canvas>
-                <canvas id="Chart5"></canvas> */}
             </div>
         </React.Fragment>
     );

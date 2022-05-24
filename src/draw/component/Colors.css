@@ -1,4 +1,4 @@
-.btn {
+.btnN {
     height: 300px;
     width: 300px;
     border-radius: 50%;
@@ -6,16 +6,41 @@
     margin: 40px;
 }
 
-.first{
-    background-color: yellow;
+.A {
+    background-color: DarkViolet;
 }
 
-.second{
+.B {
+    background-color: pink;
+}
+
+.C {
+    background-color: orange;
+}
+
+.D {
+
+    background-color: LightSkyBlue;
+}
+
+.E {
+    background-color: LimeGreen;
+}
+
+.F {
     background-color: red;
 }
 
-.third{
+.G {
+    background-color: Sienna;
+}
+
+.H {
     background-color: blue;
+}
+
+.I {
+    background-color: Yellow;
 }
 
 #colors {
