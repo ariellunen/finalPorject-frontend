@@ -10,7 +10,10 @@ import { useLocation } from 'react-router-dom';
 
 /*...*/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c50ab4de4ed10ec74bd7a497c8c19e2b0c47776
 let ctx1;
 let ctx2;
 let ctx3;
@@ -27,8 +30,15 @@ const DrawDetails = (props) => {
     console.log(props.index);
     const location = useLocation();
     const data = location;
+<<<<<<< HEAD
     console.log(data);
     
+=======
+    const storedData = JSON.parse(localStorage.getItem('Item'));
+    const Names = JSON.parse(localStorage.getItem('Names'));
+    console.log(storedData);
+
+>>>>>>> 3c50ab4de4ed10ec74bd7a497c8c19e2b0c47776
     useEffect(() => {
         yValuesSec2.push(3.017);
         yValuesSec2.push(2.449);
@@ -61,12 +71,12 @@ const DrawDetails = (props) => {
             data: {
                 labels: xValues,
                 datasets: [{
-                    label: 'לינוי',
+                    label: Names[1],
                     data: child1,
                     borderColor: "red",
                     fill: true,
                 }, {
-                    label: 'טל',
+                    label: Names[0],
                     data: child2,
                     borderColor: "blue",
                     fill: false
@@ -76,7 +86,7 @@ const DrawDetails = (props) => {
                 legend: { display: true },
                 title: {
                     display: true,
-                    text: "סינכרון בין טל ללינוי",
+                    text: `סנכרון בין ${Names[0]} לבין ${Names[1]}`,
                     fontSize: 20
                 }
             }

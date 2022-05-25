@@ -61,6 +61,7 @@ import triangularCor from "../shape/TriangularR"
 import heartCor from "../shape/HeartR"
 import davidCor from "../shape/DavidR"
 import homeCor from "../shape/HomeR"
+import { Abc } from '@mui/icons-material';
 
 let canvas;
 let down;
@@ -70,11 +71,15 @@ let context;
 let lineWidth;
 let uploadCoor;
 let p;
+let c;
 let x, y;
 let flag = true;
 let area;
 let fill;
 let fillPercentage;
+let flagCnc = true;
+let latestX;
+let latestY;
 
 const RightCanvas = (props) => {
     let selectedShape = sessionStorage.getItem("selectedShape");
@@ -83,7 +88,15 @@ const RightCanvas = (props) => {
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
     // color = props.color;
-    // console.log(props.color);
+    // console.log(props.cchange2);
+    // console.log(props.cchange1);
+    // console.log(props);
+    if (Math.abs(props.cchange2 - props.cchange1) > 2) {
+        flagCnc = false;
+    }
+    else {
+        flagCnc = true;
+    }
 
     const state = {
         mousedown: false
@@ -99,9 +112,19 @@ const RightCanvas = (props) => {
             canvas.beginPath();
             canvas.lineWidth = lineWidth;
             canvas.strokeStyle = props.color;
+            // canvas.fillStyle = props.color;
+            // console.log(props.rightCoordinates.length);
+            // console.log(props.rightCoordinates[6]);
+            // canvas.fillRect(800,10,1,1);
+            // for (let i = 0; i < props.rightCoordinates.length; i++) {
+            //     console.log('789789789789');
+            //     props.rightCoordinates[i].fillStyle = 'red';
+
+            // }
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
             props.setMouseR(false);
+
         })
 
         interact('#canvasR').on('up', function (event) {
@@ -132,6 +155,12 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
+                        if (!flagCnc) {
+                            changeToWhite()
+                        }
+                        else {
+                            changeToColor()
+                        }
                         x = event.clientX;
                         y = event.clientY;
                         if (x > 0 && x < 800 && y > 0 && y < 800) {
@@ -161,6 +190,50 @@ const RightCanvas = (props) => {
         resizeCanvases()
         // interact(window).on('resize', resizeCanvases)
     }, [])
+
+    const changeToWhite = () => {
+        let arr = props.arr;
+        if (flagCnc) {
+            return
+        }
+        context.beginPath();
+        for (let i = 1; i < arr.length - 1; i++) {
+            // if (arr[i].r.x === -1) { 
+            //     context.moveTo(arr[--i].r.x, arr[--i].r.y);
+            //     context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+            //  }
+            if (arr[i].r.x === -1) { ++i }
+            console.log("no = ", arr);
+            context.moveTo(arr[i].r.x, arr[i].r.y);
+            context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+            context.lineWidth = lineWidth;
+            context.strokeStyle = 'LightGrey';
+        }
+        context.stroke();
+    }
+
+    const changeToColor = () => {
+        let arr = props.arr;
+        if (!flagCnc) {
+            // latestX = arr[arr.length - 1].r.x;
+            // latestY = arr[arr.length - 1].r.y;
+            return
+        }
+        context.beginPath();
+        for (let i = 1; i < arr.length - 1; i++) {
+            // if (arr[i].r.x === -1) {
+            //     context.moveTo(arr[--i].r.x, arr[--i].r.y);
+            //     context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+            // }
+            if (arr[i].r.x === -1) { ++i }
+            console.log("yes = ", arr);
+            context.moveTo(arr[i].r.x, arr[i].r.y);
+            context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+            context.lineWidth = lineWidth;
+            context.strokeStyle = props.color;
+        }
+        context.stroke();
+    }
 
     useEffect(() => {
         ctx = document.getElementById("canvasR")
@@ -256,13 +329,6 @@ const RightCanvas = (props) => {
     }
     const indexCheck = (x, y) => {
         const { data } = context.getImageData(x, y, 1, 1);
-        console.log(data[2])
-        // if (data[2] !== 240) {
-        //     flag = false;
-        // }
-        // else {
-        //     flag = true;
-        // }
         if (data[2] === 240) {
             flag = true;
         }
@@ -374,7 +440,7 @@ const RightCanvas = (props) => {
 
     return (
         <React.Fragment>
-            <canvas id="canvasR" width="800" height="800"></canvas>
+            <canvas id="canvasR" width="800" height="800" penwidth='30'></canvas>
         </React.Fragment>
     )
 };
