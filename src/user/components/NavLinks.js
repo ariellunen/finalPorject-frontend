@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 const NavLinks = (props) => {
   const auth = useContext(AuthContext);
@@ -16,21 +18,15 @@ const NavLinks = (props) => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
+         
+          <IconButton color="inherit" sx={{ p: 0.5 }} >
+            <LogoutIcon onClick={auth.logout} />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             ציורים בסנכרון
           </Typography>
-          {auth.isLoggedIn && (
-             <Button color="inherit" onClick={auth.logout}>Logout</Button>
-          )}
+          <Button sx={{backgroundImage: 'url(https://i.postimg.cc/j2cmDRGQ/Breadcrumbs-8.png)', height: '40px', width:'40px', backgroundSize: '43px', backgroundRepeat: 'no-repeat'}}></Button>
+
         </Toolbar>
       </AppBar>
     </Box>

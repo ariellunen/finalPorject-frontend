@@ -19,6 +19,9 @@ import '../pages/Auth.css';
 import { useHistory } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import ImageUpload from '../../shared/components/FormElements/ImageUpload';
+import { CameraFeed } from '../../shared/components/FormElements/CameraFeed';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 const ContentAddKide = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
@@ -54,21 +57,9 @@ const ContentAddKide = () => {
             // formData.append('image', name);
             const responseData = await sendRequest(
                 'http://localhost:3000/api/users/signupChild/',
-               'POST',
-               formData,                
+                'POST',
+                formData,
             );
-            // const response = await fetch('http://localhost:3000/api/users/signupChild/', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         name: formState.inputs.name.value,
-            //         // image: formState.inputs.image.value
-            //     })
-            // });
-
-            // const responseData = await response.json();
             console.log(responseData);
             history.replace('/admin')
 
@@ -81,6 +72,21 @@ const ContentAddKide = () => {
         setName(e.target.value);
     }
 
+    const uploadImage = async file => {
+        const formData = new FormData();
+        formData.append('file', file);
+        console.log(file)
+
+        // Connect to a seaweedfs instance
+    };
+
+    const [alignment, setAlignment] = useState('upload');
+
+    const handleChange = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
+
+    console.log(alignment)
     return (
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
@@ -89,7 +95,7 @@ const ContentAddKide = () => {
                     <Card className="authentication">
                         <hr />
                         <form onSubmit={authSubmitHandler}>
-                        <Input
+                            <Input
                                 element="input"
                                 id="name"
                                 type="text"
@@ -98,25 +104,18 @@ const ContentAddKide = () => {
                                 errorText="Please enter a name."
                                 onInput={inputHandler}
                             />
-                            <ImageUpload center id="image" onInput={inputHandler} />
-                            {/* <Input
-                                element="input"
-                                id="email"
-                                type="email"
-                                label="E-Mail"
-                                validators={[VALIDATOR_EMAIL()]}
-                                errorText="Please enter a valid email address."
-                                onInput={inputHandler}
-                            />
-                            <Input
-                                element="input"
-                                id="password"
-                                type="password"
-                                label="Password"
-                                validators={[VALIDATOR_MINLENGTH(6)]}
-                                errorText="Please enter a valid password, at least 6 characters."
-                                onInput={inputHandler}
-                            /> */}
+                            {alignment === 'takeImage' && <CameraFeed sendFile={uploadImage} />}
+                            {alignment === 'upload' && <ImageUpload center id="image" onInput={inputHandler} />}
+                            <ToggleButtonGroup
+                                color="primary"
+                                value={alignment}
+                                exclusive
+                                onChange={handleChange}
+                            >
+                                <ToggleButton value="upload">העלאת תמונה</ToggleButton>
+                                <ToggleButton value="takeImage">צילום תמונה</ToggleButton>
+                            </ToggleButtonGroup>
+
                             <Button type="submit" disabled={!formState.isValid}>
                                 {'SIGNUP'}
                             </Button>
