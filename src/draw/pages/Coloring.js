@@ -387,7 +387,7 @@ const Coloring = (props) => {
                         cchange2={cchange2}
                         setMouseR={setMouseR}
                         lineWidthR={lineWidthR}
-                        rightCoordinates = {rightCoordinates}
+                        arr = {arr}
                     // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
