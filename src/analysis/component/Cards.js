@@ -57,7 +57,6 @@ const Cards = (props) => {
     arr.push(firstKide)
     arr.push(secondKide)
 
-
     const card = (
         <React.Fragment>
             <div dir="rtl">
@@ -93,7 +92,6 @@ const Cards = (props) => {
 
     return (
         <React.Fragment>
-
             {isReady && <Box sx={{ minWidth: 275, width: '75%' }}>
                 <Card style={{ marginTop: 10 }} variant="outlined">{card}</Card>
             </Box>}

@@ -51,6 +51,7 @@ let lineWidthL = 24;
 let lineWidthR = 24;
 // let cync = true;
 // let temp;
+let secondTotal;
 
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
@@ -169,7 +170,7 @@ const Coloring = (props) => {
                 if (m1[pointM1] !== m1[pointM1 + 1]) {
                     change1++;
                     cchange1 = (change1 / stopTimeL).toFixed(2);
-                    changeL.push({ change: cchange1, time: timer2 });
+                    changeL.push({ change: cchange1, time: secondTotal });
                 }
             }
         }
@@ -220,7 +221,7 @@ const Coloring = (props) => {
                 if (m2[pointM2] !== m2[pointM2 + 1]) {
                     change2++;
                     cchange2 = (change2 / stopTimeR).toFixed(2);
-                    changeR.push({ change: cchange2, time: timer2 });
+                    changeR.push({ change: cchange2, time: secondTotal });
                 }
             }
         }
@@ -250,6 +251,7 @@ const Coloring = (props) => {
         const seconds = Math.floor((total / 1000) % 60);
         const minutes = Math.floor((total / 1000 / 60) % 60);
         const hours = Math.floor((total / 1000 * 60 * 60) % 24);
+        secondTotal = 1200-(total/1000);
         return {
             total, hours, minutes, seconds
         };
@@ -264,11 +266,11 @@ const Coloring = (props) => {
                 (minutes > 9 ? minutes : '0' + minutes) + ':'
                 + (seconds > 9 ? seconds : '0' + seconds)
             )
-            timer2 = (
-                (hours > 9 ? hours : '0' + hours) + ':' +
-                (minutes > 9 ? minutes : '0' + minutes) + ':'
-                + (seconds > 9 ? seconds : '0' + seconds)
-            )
+            // timer2 = (
+            //     (hours > 9 ? hours : '0' + hours) + ':' +
+            //     (minutes > 9 ? minutes : '0' + minutes) + ':'
+            //     + (seconds > 9 ? seconds : '0' + seconds)
+            // )
         }
     }
 
@@ -326,7 +328,7 @@ const Coloring = (props) => {
                         secondKide: user2.id,
                         timeStarted: startedTime,
                         timeDone: date,
-                        sync: '10',
+                        secondTotal: secondTotal,
                         coordinate: arr,
                         colorFirst: location.state.state[1].color,
                         colorSecond: location.state.state[0].color,
