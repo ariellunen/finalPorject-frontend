@@ -155,12 +155,13 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        if (!flagCnc) {
-                            changeToWhite()
-                        }
-                        else {
-                            changeToColor()
-                        }
+                        // if (!flagCnc) {
+                        //     changeToWhite()
+                        // }
+                        // else {
+                        //     changeToColor()
+                        // }
+                        console.log(event.clientX);
                         x = event.clientX;
                         y = event.clientY;
                         if (x > 0 && x < 800 && y > 0 && y < 800) {
@@ -196,6 +197,7 @@ const RightCanvas = (props) => {
         if (flagCnc) {
             return
         }
+        console.log("no = ", arr);
         context.beginPath();
         for (let i = 1; i < arr.length - 1; i++) {
             // if (arr[i].r.x === -1) { 
@@ -203,7 +205,6 @@ const RightCanvas = (props) => {
             //     context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
             //  }
             if (arr[i].r.x === -1) { ++i }
-            console.log("no = ", arr);
             context.moveTo(arr[i].r.x, arr[i].r.y);
             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
             context.lineWidth = lineWidth;
@@ -212,21 +213,22 @@ const RightCanvas = (props) => {
         context.stroke();
     }
 
-    const changeToColor = () => {
+    const changeToColor = (cor, i) => {
         let arr = props.arr;
         if (!flagCnc) {
             // latestX = arr[arr.length - 1].r.x;
             // latestY = arr[arr.length - 1].r.y;
             return
         }
+        console.log("yes = ", arr);
         context.beginPath();
         for (let i = 1; i < arr.length - 1; i++) {
             // if (arr[i].r.x === -1) {
             //     context.moveTo(arr[--i].r.x, arr[--i].r.y);
             //     context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
             // }
-            if (arr[i].r.x === -1) { ++i }
-            console.log("yes = ", arr);
+            // if (arr[i].r.x === -1) { ++i }
+            if (arr[i].r.x === -1) { return }
             context.moveTo(arr[i].r.x, arr[i].r.y);
             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
             context.lineWidth = lineWidth;
