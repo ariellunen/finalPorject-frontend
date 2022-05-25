@@ -4,6 +4,7 @@ import './Shapes.css';
 const Shapes = (props) => {
     let shape = '';
     const onClick = (s) => {
+        localStorage.setItem('shape', JSON.stringify(shape));
         props.handleShape(shape);
     }
 

@@ -1,50 +1,14 @@
 .btnN {
-    height: 300px;
-    width: 300px;
-    border-radius: 50%;
+    height: 120px;
+    width: 120px;
     border-color: transparent;
-    margin: 40px;
-}
-
-.A {
-    background-color: DarkViolet;
-}
-
-.B {
-    background-color: pink;
-}
-
-.C {
-    background-color: orange;
-}
-
-.D {
-
-    background-color: LightSkyBlue;
-}
-
-.E {
-    background-color: LimeGreen;
-}
-
-.F {
-    background-color: red;
-}
-
-.G {
-    background-color: Sienna;
-}
-
-.H {
-    background-color: blue;
-}
-
-.I {
-    background-color: Yellow;
 }
 
 #colors {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    justify-content: space-between;;
+    width: 460px;
+    margin-top: 95px;
 }

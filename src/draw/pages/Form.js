@@ -9,17 +9,20 @@ import NavLink from '../../user/components/NavLinks';
 import { green } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import AvatarGroup from '@mui/material/AvatarGroup';
 let child = [];
 let name;
 const Form = (props) => {
-    const [firstKide, setFirstKide] = useState('');
+    const [firstKide, setFirstKide] = useState(null);
     const [secondtKide, setSecondKide] = useState('');
     const [children, setChildren] = useState([])
     const history = useHistory();
     const [isReady, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
+    console.log(firstKide)
     useEffect(() => {
         getAllChildren();
     }, [])
@@ -46,31 +49,33 @@ const Form = (props) => {
         localStorage.setItem('firstKide', JSON.stringify(firstKide));
         localStorage.setItem('secondtKide', JSON.stringify(secondtKide));
     }
-    console.log(secondtKide)
-    console.log(firstKide)
 
+    console.log('first', firstKide)
     return (
         <React.Fragment>
             <NavLink />
-            {/* <Box component="main" sx={{ marginTop: '40px', textAlignLast: 'center', position: 'relative', whiteSpace: 'nowrap' }}> */}
-            <Box component="main" sx={{ display: 'flex', marginTop: '40px', placeContent: 'center' }}>
-                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid' }}>
+            {isReady && <Box component="main" sx={{ display: 'flex', marginTop: '40px', placeContent: 'center' }}>
+                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
+                        {children.slice(0, 8).map((child) => {
+                            return <Avatar onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100 }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        })}
+                    </Box>
                     <Autocomplete
                         onChange={(event, value) => setFirstKide(value)}
                         id="country-select-demo"
-                        sx={{ width: 300 }}
+                        sx={{ width: '300px', marginTop: '35px' }}
                         options={children}
                         autoHighlight
                         getOptionLabel={(option) => option.name}
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                {/* <img
-                                loading="lazy"
-                                width="20"
-                                // src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                alt=""
-                            /> */}
+                                <img
+                                    loading="lazy"
+                                    width="20"
+                                    src={`http://localhost:3000/${option.image}`}
+                                    alt=""
+                                />
                                 {option.name}
                             </Box>
                         )}
@@ -86,54 +91,30 @@ const Form = (props) => {
                             />
                         )}
                     />
+                    {firstKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop:'12px'}}></Avatar>}
+                    {firstKide !== null && <Avatar alt={firstKide.name} src={`http://localhost:3000/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop:'12px'}}></Avatar>}
                 </Box>
-                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderLeft: 'none', borderTop: 'solid', borderRight: 'solid', borderBottom: 'solid' }}>
+                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
+                        {children.slice(0, 8).map((child) => {
+                            return <Avatar onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100 }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        })}
+                    </Box>
                     <Autocomplete
                         onChange={(event, value) => setSecondKide(value)}
                         id="country-select-demo"
-                        sx={{ width: 300, background: 'lightGrey', borderRadius: 10 }}
+                        sx={{ width: '300px', marginTop: '35px' }}
                         options={children}
                         autoHighlight
                         getOptionLabel={(option) => option.name}
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                {option.name}
-                            </Box>
-                        )}
-                        renderInput={(params) => (
-                            // <SearchIcon />
-                            <TextField
-                                {...params}
-                                label="שם הילד/ה"
-                                inputProps={{
-                                    ...params.inputProps,
-                                    autoComplete: 'new-password', // disable autocomplete and autofill
-                                }}
-                            />
-                        )}
-
-                    />
-                </Box>
-
-            </Box>
-            {isReady &&
-                <Box>
-                    {/* <Autocomplete
-                        onChange={(event, value) => setFirstKide(value.name)}
-                        id="country-select-demo"
-                        sx={{ width: 300, position: 'absolute' }}
-                        options={children}
-                        autoHighlight
-                        getOptionLabel={(option) => option.name}
-                        renderOption={(props, option) => (
-                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                {/* <img
-                                loading="lazy"
-                                width="20"
-                                // src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                alt=""
-                        /> }
+                                <img
+                                    loading="lazy"
+                                    width="20"
+                                    src={`http://localhost:3000/${option.image}`}
+                                    alt=""
+                                />
                                 {option.name}
                             </Box>
                         )}
@@ -141,17 +122,19 @@ const Form = (props) => {
                             <TextField
                                 value={name}
                                 {...params}
-                                label="ילד 1"
+                                label={"שם הילד/ה"}
                                 inputProps={{
                                     ...params.inputProps,
                                     autoComplete: 'new-password', // disable autocomplete and autofill
                                 }}
                             />
                         )}
-                    /> */}
-
-                    <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>
-                </Box>}
+                    />
+                    {secondtKide === null && <Avatar sx={{ bgcolor: '#4454a3' , width: 150, height: 150, marginTop:'12px'}}></Avatar>}
+                    {secondtKide !== null && <Avatar alt={secondtKide.name} src={`http://localhost:3000/${secondtKide.image}`} sx={{ width: 150, height: 150, marginTop:'12px'}}></Avatar>}
+                </Box>
+            </Box>}
+            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>
         </React.Fragment>
     )
 };
