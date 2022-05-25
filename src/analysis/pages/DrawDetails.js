@@ -10,10 +10,6 @@ import { useLocation } from 'react-router-dom';
 
 /*...*/
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3c50ab4de4ed10ec74bd7a497c8c19e2b0c47776
 let ctx1;
 let ctx2;
 let ctx3;
@@ -30,15 +26,10 @@ const DrawDetails = (props) => {
     console.log(props.index);
     const location = useLocation();
     const data = location;
-<<<<<<< HEAD
-    console.log(data);
-    
-=======
     const storedData = JSON.parse(localStorage.getItem('Item'));
     const Names = JSON.parse(localStorage.getItem('Names'));
     console.log(storedData);
 
->>>>>>> 3c50ab4de4ed10ec74bd7a497c8c19e2b0c47776
     useEffect(() => {
         yValuesSec2.push(3.017);
         yValuesSec2.push(2.449);

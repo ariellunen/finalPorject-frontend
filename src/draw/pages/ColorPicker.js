@@ -55,7 +55,7 @@ const ColorPicker = (props) => {
             }
             {isReady && counter === 2 && history.replace('/drawing/shapes', users)}
             {isReady && usersData[1].name !== undefined && counter < 2 && (
-                <Colors handleColor={handleColor} name={child[counter]} />
+                <Colors handleColor={handleColor} name={child[counter].name} />
             )}
         </div>
     )

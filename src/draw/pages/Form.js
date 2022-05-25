@@ -56,7 +56,7 @@ const Form = (props) => {
             <Box component="main" sx={{ display: 'flex', marginTop: '40px', placeContent: 'center' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid' }}>
                     <Autocomplete
-                        onChange={(event, value) => setFirstKide(value.name)}
+                        onChange={(event, value) => setFirstKide(value)}
                         id="country-select-demo"
                         sx={{ width: 300 }}
                         options={children}
@@ -89,7 +89,7 @@ const Form = (props) => {
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderLeft: 'none', borderTop: 'solid', borderRight: 'solid', borderBottom: 'solid' }}>
                     <Autocomplete
-                        onChange={(event, value) => setSecondKide(value.name)}
+                        onChange={(event, value) => setSecondKide(value)}
                         id="country-select-demo"
                         sx={{ width: 300, background: 'lightGrey', borderRadius: 10 }}
                         options={children}
