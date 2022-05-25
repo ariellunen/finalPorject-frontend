@@ -471,7 +471,7 @@ const LeftCanvas = (props) => {
             down = Date.now();
             canvas.beginPath();
             canvas.lineWidth = 36;
-            canvas.strokeStyle = props.color.color;
+            canvas.strokeStyle = props.color;
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
             props.setMouseL(false);

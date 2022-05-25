@@ -315,7 +315,6 @@ const Coloring = (props) => {
             arr.shift();
         }
         setTimeout(async () => {
-            console.log(location.state.state[0].color)
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
@@ -330,12 +329,13 @@ const Coloring = (props) => {
                         timeDone: date,
                         secondTotal: secondTotal,
                         coordinate: arr,
-                        colorFirst: location.state.state[1].color,
-                        colorSecond: location.state.state[0].color,
+                        colorFirst: JSON.parse(localStorage.getItem('firstColor')),
+                        colorSecond: JSON.parse(localStorage.getItem('secondColor')),
                         changesL: changeL,
                         changesR: changeR,
                         secondsL: secondsL,
                         secondsR: secondsR,
+                        shape: JSON.parse(localStorage.getItem('shape'))
                     })
                 });
 
@@ -355,8 +355,6 @@ const Coloring = (props) => {
     const changeLineWidthR24 = () => { lineWidthR = 24; }
     const changeLineWidthR36 = () => { lineWidthR = 36; }
 
-    // console.log(temp);
-
     return (
         <React.Fragment>
             <div className='container'>
@@ -375,7 +373,7 @@ const Coloring = (props) => {
                     {/* <LinearProgress variant="determinate" {...props} value={cchange1} /> */}
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
-                        color={location.state.state[0]}
+                        color={JSON.parse(localStorage.getItem('firstColor'))}
                         setLeft={setLeft}
                         secondsL={secondsL}
                         cchange1={cchange1}
@@ -384,7 +382,7 @@ const Coloring = (props) => {
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
-                        color={location.state.state[1].color}
+                        color={JSON.parse(localStorage.getItem('secondColor'))}
                         setRight={setRight}
                         secondsR={secondsR}
                         cchange1={cchange1}
