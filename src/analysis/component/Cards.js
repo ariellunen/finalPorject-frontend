@@ -50,16 +50,13 @@ const Cards = (props) => {
         getKide();
     }, [isReady]);
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
     console.log(props.item);
-    const [data, setData] = useState(props.item)    
-    console.log("data",props.item.firstKide, props.item.secondKide)
+    const [data, setData] = useState(props.item)
+    console.log("data", props.item.firstKide, props.item.secondKide)
     let arr = []
     arr.push(firstKide)
     arr.push(secondKide)
-    localStorage.setItem('Item', JSON.stringify(props.item));
-    localStorage.setItem('Names', JSON.stringify(arr));
+
 
     const card = (
         <React.Fragment>
@@ -82,30 +79,14 @@ const Cards = (props) => {
                         &nbsp;
                         {props.item.timeDone.slice(11, -6)}
                     </Typography>
-                    {/* <Typography variant="body2">
-                        {firstKide}
-                        <br />
-                        {secondKide}
-                    </Typography> */}
                 </CardContent>
             </div>
             <CardActions>
-                {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
-                {/* <Button variant="contained" type='submit' component={Link} to="/analysis/details"
-                state={props.item} index={props.index}>ניתוח</Button> */}
-                <Button variant="contained" type='submit' component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button> 
+                <Button variant="contained" type='submit' onClick={(() => {
+                    localStorage.setItem('Item', JSON.stringify(props.item));
+                    localStorage.setItem('Names', JSON.stringify(arr));
+                })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
                 <Link to="/analysis/details" state={data}>Link Text</Link>
-
-
-                {/* <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <DrawDetails draw={props.item} index={props.index} />
-
-                </Modal> */}
             </CardActions>
         </React.Fragment>
     );

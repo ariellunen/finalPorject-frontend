@@ -295,8 +295,9 @@ const Coloring = (props) => {
             });
             const responseData = await response.json();
             const len = responseData.children.length;
-            user2 = responseData.children[len - 2];
-            user1 = responseData.children[len - 1];
+            console.log(responseData)
+            user2 = JSON.parse(localStorage.getItem('secondtKide'));
+            user1 = JSON.parse(localStorage.getItem('firstKide'));
             console.log(user2, user1)
 
         } catch (err) {
@@ -312,6 +313,7 @@ const Coloring = (props) => {
             arr.shift();
         }
         setTimeout(async () => {
+            console.log(location.state.state[0].color)
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
@@ -320,8 +322,8 @@ const Coloring = (props) => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        firstKide: user1,
-                        secondKide: user2,
+                        firstKide: user1.id,
+                        secondKide: user2.id,
                         timeStarted: startedTime,
                         timeDone: date,
                         sync: '10',

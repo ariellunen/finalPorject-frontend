@@ -11,7 +11,6 @@ const AllDraw = () => {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                 });
                 const responseData = await response.json();
-                console.log("drawing",responseData.drawing)
                 setData(responseData.drawing);
                 setIsReady(true);
             } catch (err) {
