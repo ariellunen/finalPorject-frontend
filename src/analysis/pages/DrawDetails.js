@@ -8,8 +8,13 @@ import { Link } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
 import { useLocation } from 'react-router-dom';
 import Recovery from '../component/Recovery';
-
-/*...*/
+import NavLink from '../../user/components/NavLinks';
+import ReplayIcon from '@mui/icons-material/Replay';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import IconButton from "@material-ui/core/IconButton";
 
 let ctx1;
 let ctx2;
@@ -25,6 +30,18 @@ let sec3;
 let a, b, c, d, e, f;
 
 let counterTotal;
+
+const breadcrumbs = [
+    <Typography key="1" color="text.primary" component={Link} to='/'>
+        תפריט ראשי
+    </Typography>,
+    <Typography key="2" color="text.primary" component={Link} to='/analysis'>
+        כל הציורים
+    </Typography>,
+    <Typography key="3" color="text.primary">
+        ניתוח הציור
+    </Typography>,
+];
 
 const DrawDetails = (props) => {
     console.log(props.data);
@@ -267,7 +284,7 @@ const DrawDetails = (props) => {
                 legend: { display: true },
                 title: {
                     display: true,
-                    text: `סנכרון בין ${Names[0]} לבין ${Names[1]}`,
+                    text: `זמן הצביעה בין ${Names[0]} לבין ${Names[1]} נמשך ${storedData.secondTotal} שניות `,
                     fontSize: 20
                 }
             }
@@ -406,8 +423,21 @@ const DrawDetails = (props) => {
     const handleClose = () => setOpen(false);
     return (
         <React.Fragment>
+            <NavLink />
+            <Stack spacing={2} >
+                <Breadcrumbs
+                    sx={{ marginTop: 1, marginLeft: 3 }}
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                >
+                    {breadcrumbs}
+                </Breadcrumbs>
+            </Stack>
             <CardActions>
-                <Button variant="outlined" onClick={handleOpen}>שחזור</Button>
+                <IconButton xs={{ marginTop: 100 }}>
+                    <ReplayIcon onClick={handleOpen} fontSize={'large'} />
+                </IconButton>
+                {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -418,21 +448,21 @@ const DrawDetails = (props) => {
 
                 </Modal>
             </CardActions>
+            <div style={{display: 'flex' }}>
             <div id='graphs'>
-                <input type="range" name="foo" />
-                <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
                 <div id='cync'>
-                    <div>זמן הצביעה נמשך {storedData.secondTotal} שניות</div>
                     <canvas id="Chart1"></canvas>
                 </div>
                 <div id='sec'>
-                    <canvas id="Chart3"></canvas> 
+                    <canvas id="Chart3"></canvas>
                     <canvas id="Chart2"></canvas>
                 </div>
                 <div id='lineWidth'>
                     <canvas id="Chart5"></canvas>
                     <canvas id="Chart4"></canvas>
                 </div>
+            </div>
+            {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
             </div>
         </React.Fragment>
     );

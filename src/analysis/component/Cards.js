@@ -85,7 +85,6 @@ const Cards = (props) => {
                     localStorage.setItem('Item', JSON.stringify(props.item));
                     localStorage.setItem('Names', JSON.stringify(arr));
                 })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
-                <Link to="/analysis/details" state={data}>Link Text</Link>
             </CardActions>
         </React.Fragment>
     );
