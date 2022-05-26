@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
 import { now } from 'moment-timezone';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import NavLink from '../../user/components/NavLinks';
 
 
 let moment = require('moment-timezone');
@@ -271,6 +271,7 @@ const Coloring = (props) => {
             //     + (seconds > 9 ? seconds : '0' + seconds)
             // )
         }
+        secondTotal = 1200-(total/1000);
     }
 
     const clearTimer = (e) => {
@@ -309,7 +310,6 @@ const Coloring = (props) => {
     const onSubmit = () => {
         fetchGetAPI();
         const date = new Date();
-        // console.log(typeof (date))
         if (arr.length !== 1) {
             arr.shift();
         }
@@ -317,7 +317,6 @@ const Coloring = (props) => {
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
-                    // Authorization: 'Bearer ' + auth.token,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -348,11 +347,8 @@ const Coloring = (props) => {
 
     return (
         <React.Fragment>
+            <NavLink />
             <div className='container'>
-                <h1>זמן צביעה</h1>
-                <div id='time'>
-                    <h2>{timer}</h2>
-                </div>
                 < div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
                     <div id="lifebar">
@@ -382,6 +378,9 @@ const Coloring = (props) => {
                     // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
+                </div>
+                <div id='time'>
+                    <h2>{timer}</h2>
                 </div>
                 <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
             </div>
