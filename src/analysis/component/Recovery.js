@@ -29,7 +29,6 @@ const style = {
 let drawData;
 let uploadCoorL;
 let uploadCoorR;
-let selectedShape = 'heart';
 let ctx;
 let ctxx;
 let speed;
@@ -38,13 +37,10 @@ const Recovery = (props) => {
     const ctxLeftRef = useRef(null);
 
     useEffect(() => {
-        // drawData = JSON.parse(localStorage.getItem('item'));
-        console.log("drawData",props.storedData)
         drawData = props.storedData;
         const canvas = document.getElementById('rightCanvas');
         ctx = canvas.getContext("2d");
         ctx.lineWidth = 12;
-        // ctx.strokeStyle = drawData.colorSecond;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctxRightRef.current = ctx;
@@ -52,13 +48,12 @@ const Recovery = (props) => {
         const canvasLeft = document.getElementById('leftCanvas');
         ctxx = canvasLeft.getContext("2d");
         ctxx.lineWidth = 12;
-        // ctxx.strokeStyle = drawData.colorFirst;
         ctxx.lineCap = "round";
         ctxx.lineJoin = "round";
         ctxLeftRef.current = ctxx;
         speed = 100;
 
-        switch (selectedShape) {
+        switch (drawData.shape) {
             case 'circle':
                 uploadCoorL = circleCorL;
                 uploadCoorR = circleCorR;
@@ -88,7 +83,6 @@ const Recovery = (props) => {
     const speedChange1 = () => {speed = 100;}
     const speedChange125 = () => {speed = 10;}
     const speedChange15 = () => {speed = 1;}
-
 
     let i = 0;
     const handleClick = () => {

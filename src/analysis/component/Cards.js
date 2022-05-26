@@ -50,9 +50,9 @@ const Cards = (props) => {
         getKide();
     }, [isReady]);
     const [open, setOpen] = React.useState(false);
-    console.log(props.item);
+    // console.log(props.item);
     const [data, setData] = useState(props.item)
-    console.log("data", props.item.firstKide, props.item.secondKide)
+    // console.log("data", props.item.firstKide, props.item.secondKide)
     let arr = []
     arr.push(firstKide)
     arr.push(secondKide)

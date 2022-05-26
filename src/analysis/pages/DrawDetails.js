@@ -22,7 +22,9 @@ let sec2;
 let yValuesSec3 = [];
 let sec3;
 
-let a,b,c,d,e,f;
+let a, b, c, d, e, f;
+
+let counterTotal;
 
 const DrawDetails = (props) => {
     console.log(props.data);
@@ -157,15 +159,18 @@ const DrawDetails = (props) => {
     }
 
     const Chart1 = () => {
-        let arrLx =[];
-        let arrRx =[];
-        let arrLy =[];
-        let arrRy =[];
-        for (let i =0; i <storedData.changesL.length; i++){
+        let xValues = [];
+        let child1 = [];
+        let child2 = [];
+        let arrLx = [];
+        let arrRx = [];
+        let arrLy = [];
+        let arrRy = [];
+        for (let i = 0; i < storedData.changesL.length; i++) {
             arrLx.push(storedData.changesL[i].time);
             arrLy.push(storedData.changesL[i].change);
         }
-        for (let i =0; i <storedData.changesR.length; i++){
+        for (let i = 0; i < storedData.changesR.length; i++) {
             arrRx.push(storedData.changesR[i].time);
             arrRy.push(storedData.changesR[i].change);
         }
@@ -173,11 +178,50 @@ const DrawDetails = (props) => {
         console.log(arrRx);
         console.log(arrLy);
         console.log(arrRy);
-        
-        // let xValues = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20];
-        // let child1 = [1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2, 1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2]
-        // let child2 = [0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3, 0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3]
-        new Chart(ctx1, {
+
+        let counterL = 1;
+        let counterR = 1;
+        for (let i = 0; i < arrLx.length - 1; i++) {
+            if (arrLx[i] != arrLx[i + 1]) { counterL++ }
+        }
+        for (let i = 0; i < arrRx.length - 1; i++) {
+            if (arrRx[i] != arrRx[i + 1]) { counterR++ }
+        }
+        if (arrLy.length === 0) { counterL = 0 }
+        if (arrRy.length === 0) { counterR = 0 }
+        counterTotal = counterR + counterL;
+
+        let arrayR = [];
+        for (let i = 1; i < 21; i++) {
+            let x = arrRx.filter((v) => (v === i)).length;
+            arrayR.push(x)
+        }
+
+        let arrayL = [];
+        for (let i = 1; i < 21; i++) {
+            let x = arrLx.filter((v) => (v === i)).length;
+            arrayL.push(x)
+        }
+        console.log(arrayL);
+        console.log(arrayR);
+
+        for (let i = 0; i < 20; i++) {
+            if (arrayL[i] !== 0 || arrayR[i] !== 0) {
+                if (arrayL[i] && arrayR[i]) {
+                    counterTotal--;
+                }
+            }
+        }
+
+        for (let i = 0; i < storedData.secondTotal; i++) {
+            child1.push(i);
+        } for (let i = 0; i < storedData.secondTotal; i++) {
+            child2.push(i);
+        }
+
+        // child1 = [1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2, 1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2]
+        // child2 = [0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3, 0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3]
+        // new Chart(ctx1, {
         //     type: "line",
         //     data: {
         //         labels: xValues,
@@ -193,8 +237,33 @@ const DrawDetails = (props) => {
         //             fill: false
         //         }]
         //     },
+        //     options: {
+        //         legend: { display: true },
+        //         title: {
+        //             display: true,
+        //             text: `סנכרון בין ${Names[0]} לבין ${Names[1]}`,
+        //             fontSize: 20
+        //         }
+        //     }
+        // });
 
+        new Chart(ctx1, {
+            type: "scatter",
+            data: {
+                datasets: [{
+                    label: Names[1],
+                    pointRadius: 4,
+                    pointBackgroundColor: storedData.colorFirst,
+                    data: storedData.changesL
+                }, {
+                    label: Names[0],
+                    pointRadius: 6,
+                    pointBackgroundColor: storedData.colorSecond,
+                    data: storedData.changesR
+                }]
+            },
             options: {
+                legend: { display: true },
                 legend: { display: true },
                 title: {
                     display: true,
@@ -345,21 +414,24 @@ const DrawDetails = (props) => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Recovery storedData={storedData}/>
+                    <Recovery storedData={storedData} />
 
                 </Modal>
             </CardActions>
             <div id='graphs'>
+                <input type="range" name="foo" />
+                <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
                 <div id='cync'>
+                    <div>זמן הצביעה נמשך {storedData.secondTotal} שניות</div>
                     <canvas id="Chart1"></canvas>
                 </div>
                 <div id='sec'>
+                    <canvas id="Chart3"></canvas> 
                     <canvas id="Chart2"></canvas>
-                    <canvas id="Chart3"></canvas>
                 </div>
                 <div id='lineWidth'>
-                    <canvas id="Chart4"></canvas>
                     <canvas id="Chart5"></canvas>
+                    <canvas id="Chart4"></canvas>
                 </div>
             </div>
         </React.Fragment>
