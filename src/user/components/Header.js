@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import HelpIcon from '@mui/icons-material/Help';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Tab from '@mui/material/Tab';
@@ -17,12 +16,26 @@ import Typography from '@mui/material/Typography';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../shared/context/auth-context';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Link } from 'react-router-dom';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
+
+function LinkTab(props) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
 
 function Header(props) {
   const { onDrawerToggle } = props;
   const auth = useContext(AuthContext);
+
 
   return (
     <React.Fragment>
@@ -46,7 +59,7 @@ function Header(props) {
               </IconButton>
             </Grid>
             <Grid item>
-              <Tooltip title="Alerts • No alerts">
+              <Tooltip title="definitions">
                 <IconButton color="inherit" component={Link} to='/definitions'>
                   <SettingsIcon />
                 </IconButton>
@@ -69,32 +82,15 @@ function Header(props) {
                 {props.header}
               </Typography>
             </Grid>
-            {/* <Grid item>
-              <Button
-                sx={{ borderColor: lightColor }}
-                variant="outlined"
-                color="inherit"
-                size="small"
-              >
-                Web setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Help">
-                <IconButton color="inherit">
-                  <HelpIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid> */}
           </Grid>
         </Toolbar>
       </AppBar>
       {props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={1} textColor="inherit">
+        <LinkTab label="Page One" href="/drafts" />
           <Tab label="אנשי מקצוע \ מדריכים" onClick={props.notKide} />
           <Tab label="ילדים" />
           <Tab label="הגדרות" />
-          {/* <Tab label="Usage" /> */}
         </Tabs>
       </AppBar>}
       {!props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>

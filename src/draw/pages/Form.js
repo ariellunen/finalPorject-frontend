@@ -12,6 +12,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import AvatarGroup from '@mui/material/AvatarGroup';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
 let child = [];
 let name;
 const Form = (props) => {
@@ -22,7 +26,15 @@ const Form = (props) => {
     const [isReady, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
-    console.log(firstKide)
+    const breadcrumbs = [
+        <Typography key="1" color="text.primary" component={Link} to='/'>
+            תפריט ראשי
+        </Typography>,
+        <Typography key="2" color="text.primary">
+            בחירת ילדים
+        </Typography>,
+    ];
+
     useEffect(() => {
         getAllChildren();
     }, [])
@@ -45,16 +57,23 @@ const Form = (props) => {
 
     const onSubmit = async event => {
         setItems([firstKide, secondtKide]);
-        console.log(items)
         localStorage.setItem('firstKide', JSON.stringify(firstKide));
         localStorage.setItem('secondtKide', JSON.stringify(secondtKide));
     }
 
-    console.log('first', firstKide)
     return (
         <React.Fragment>
             <NavLink />
-            {isReady && <Box component="main" sx={{ display: 'flex', marginTop: '40px', placeContent: 'center' }}>
+            <Stack spacing={2} >
+                <Breadcrumbs
+                    sx={{ marginTop: 1, marginLeft: 3 }}
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                >
+                    {breadcrumbs}
+                </Breadcrumbs>
+            </Stack>
+            {isReady && <Box component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
                         {children.slice(0, 8).map((child) => {
@@ -91,8 +110,8 @@ const Form = (props) => {
                             />
                         )}
                     />
-                    {firstKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop:'12px'}}></Avatar>}
-                    {firstKide !== null && <Avatar alt={firstKide.name} src={`http://localhost:3000/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop:'12px'}}></Avatar>}
+                    {firstKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {firstKide !== null && <Avatar alt={firstKide.name} src={`http://localhost:3000/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
@@ -130,8 +149,8 @@ const Form = (props) => {
                             />
                         )}
                     />
-                    {secondtKide === null && <Avatar sx={{ bgcolor: '#4454a3' , width: 150, height: 150, marginTop:'12px'}}></Avatar>}
-                    {secondtKide !== null && <Avatar alt={secondtKide.name} src={`http://localhost:3000/${secondtKide.image}`} sx={{ width: 150, height: 150, marginTop:'12px'}}></Avatar>}
+                    {secondtKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {secondtKide !== null && <Avatar alt={secondtKide.name} src={`http://localhost:3000/${secondtKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
             </Box>}
             <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>

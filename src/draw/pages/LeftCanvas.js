@@ -61,6 +61,7 @@ import triangularCor from "../shape/TriangularL"
 import heartCor from "../shape/HeartL"
 import davidCor from "../shape/DavidL"
 import homeCor from "../shape/HomeL"
+let flagCnc = true;
 
 let canvas;
 let down;
@@ -85,6 +86,7 @@ let fillPercentage;
 // let particles = [];
 
 const LeftCanvas = (props) => {
+    
     //--------------------------------------Animation 1---------------------------------------------//
     // class Layer {
     //     constructor(ccttxx) {
@@ -457,6 +459,12 @@ const LeftCanvas = (props) => {
     // console.log(lineWidth);
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
+    if (Math.abs(props.cchange2 - props.cchange1) > 2) {
+        flagCnc = false;
+    }
+    else {
+        flagCnc = true;
+    }
 
     const state = {
         mousedown: false
@@ -470,7 +478,7 @@ const LeftCanvas = (props) => {
             event.stopPropagation();
             down = Date.now();
             canvas.beginPath();
-            canvas.lineWidth = 36;
+            canvas.lineWidth = document.getElementById("lineWidth").value;;
             canvas.strokeStyle = props.color;
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
@@ -487,7 +495,6 @@ const LeftCanvas = (props) => {
             if (state.mousedown) {
                 canvas.shadowColor = shadowColor;
                 canvas.shadowBlur = shadowBlur;
-                canvas.fillStyle = 'red'
                 canvas.stroke();
             }
             state.mousedown = false;
@@ -506,6 +513,12 @@ const LeftCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
+                        if (!flagCnc) {
+                            changeToWhite()
+                        }
+                        // else {
+                        //     changeToColor()
+                        // }
                         x = event.clientX;
                         y = event.clientY;
                         if (x > 0 && x < 800 && y > 0 && y < 800) {
@@ -545,7 +558,7 @@ const LeftCanvas = (props) => {
         switch (selectedShape) {
             case 'circle':
                 uploadCoor = circleCor;
-                filling2(800,400,390, 'Ivory')
+                filling2(800, 400, 390, 'Ivory')
                 break;
             case 'triangular':
                 uploadCoor = triangularCor;
@@ -554,8 +567,8 @@ const LeftCanvas = (props) => {
             case 'heart':
                 uploadCoor = heartCor;
                 filling(800, 150, 350, 150, 800, 750, 'Ivory')
-                filling8(800,150,700,50,400,50,350,150, 'Ivory')
-                filling8(350,150,250,350,600,700,800,750, 'Ivory')
+                filling8(800, 150, 700, 50, 400, 50, 350, 150, 'Ivory')
+                filling8(350, 150, 250, 350, 600, 700, 800, 750, 'Ivory')
                 break;
             case 'david':
                 uploadCoor = davidCor;
@@ -564,16 +577,40 @@ const LeftCanvas = (props) => {
                 break;
             case 'home':
                 uploadCoor = homeCor;
-                filling(800, 10, 250, 400, 800, 400,'Ivory')
-                filling4(800, 400, 550, 400, 550, 550, 800, 550,'Ivory')
-                filling4(700, 550, 550, 550, 550, 780, 700, 780,'Ivory')
-                filling4(700, 780, 700, 550, 800, 550, 800, 780,'Ivory')
+                filling(800, 10, 250, 400, 800, 400, 'Ivory')
+                filling4(800, 400, 550, 400, 550, 550, 800, 550, 'Ivory')
+                filling4(700, 550, 550, 550, 550, 780, 700, 780, 'Ivory')
+                filling4(700, 780, 700, 550, 800, 550, 800, 780, 'Ivory')
                 break;
         }
-        
+
         fileUpload();
         quantityPixelsArea();
     }, []);
+
+
+    const changeToWhite = () => {
+        let arr = props.arr;
+        if (flagCnc) {
+            return
+        }
+        for (let i = 1; i < arr.length - 1; i++) {
+            context.lineWidth = document.getElementById("lineWidth").value;
+            context.strokeStyle = 'LightGrey';
+            
+            if (arr[i].l.x === -1) {
+                context.closePath();
+            }
+            else if(arr[i].l.x !== -1 && arr[i + 1].l.x !== -1) {
+                context.beginPath();
+                context.moveTo(arr[i].l.x, arr[i].l.y);
+                context.lineTo(arr[i + 1].l.x, arr[i + 1].l.y);
+                context.stroke();
+            }
+        }
+        context.stroke();
+    }
+
 
     const quantityPixelsArea = () => {
         p = context.getImageData(0, 0, ctx.width, ctx.height).data;
@@ -626,7 +663,7 @@ const LeftCanvas = (props) => {
             switch (selectedShape) {
                 case 'circle':
                     uploadCoor = circleCor;
-                    filling2(800,400,390, color)
+                    filling2(800, 400, 390, color)
                     break;
                 case 'triangular':
                     uploadCoor = triangularCor;
@@ -635,8 +672,8 @@ const LeftCanvas = (props) => {
                 case 'heart':
                     uploadCoor = heartCor;
                     filling(800, 150, 350, 150, 800, 750, color)
-                    filling8(800,150,700,50,400,50,350,150, color)
-                    filling8(350,150,250,350,600,700,800,750, color)
+                    filling8(800, 150, 700, 50, 400, 50, 350, 150, color)
+                    filling8(350, 150, 250, 350, 600, 700, 800, 750, color)
                     break;
                 case 'david':
                     uploadCoor = davidCor;
@@ -645,10 +682,10 @@ const LeftCanvas = (props) => {
                     break;
                 case 'home':
                     uploadCoor = homeCor;
-                    filling(800, 10, 250, 400, 800, 400,color)
-                    filling4(800, 400, 550, 400, 550, 550, 800, 550,color)
-                    filling4(700, 550, 550, 550, 550, 780, 700, 780,color)
-                    filling4(700, 780, 700, 550, 800, 550, 800, 780,color)
+                    filling(800, 10, 250, 400, 800, 400, color)
+                    filling4(800, 400, 550, 400, 550, 550, 800, 550, color)
+                    filling4(700, 550, 550, 550, 550, 780, 700, 780, color)
+                    filling4(700, 780, 700, 550, 800, 550, 800, 780, color)
                     break;
             }
             viewDrawing();
@@ -658,12 +695,6 @@ const LeftCanvas = (props) => {
     const indexCheck = (x, y) => {
         const { data } = context.getImageData(x, y, 1, 1);
         console.log(data[2])
-        // if (data[2] !== 240) {
-        //     flag = false;
-        // }
-        // else {
-        //     flag = true;
-        // }
         if (data[2] === 240) {
             flag = true;
         }
@@ -776,7 +807,12 @@ const LeftCanvas = (props) => {
 
     return (
         <React.Fragment>
+            <div>
+                <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
+                <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+            </div>
             <canvas id="canvasL" width="800" height="800"></canvas>
+
         </React.Fragment >
     )
 };
