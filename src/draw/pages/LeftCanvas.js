@@ -811,7 +811,7 @@ const LeftCanvas = (props) => {
                 <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
                 <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
             </div>
-            <canvas id="canvasL" width="800" height="800"></canvas>
+            <canvas id="canvasL" width="620" height="470"></canvas>
 
         </React.Fragment >
     )

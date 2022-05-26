@@ -435,7 +435,7 @@ const RightCanvas = (props) => {
 
     return (
         <React.Fragment>
-            <canvas id="canvasR" width="800" height="800" penwidth='30'></canvas>
+            <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas>
             <div>
                 <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
                 <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
