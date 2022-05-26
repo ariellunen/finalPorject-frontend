@@ -61,7 +61,6 @@ import triangularCor from "../shape/TriangularR"
 import heartCor from "../shape/HeartR"
 import davidCor from "../shape/DavidR"
 import homeCor from "../shape/HomeR"
-import { Abc } from '@mui/icons-material';
 
 let canvas;
 let down;
@@ -84,7 +83,7 @@ let latestY;
 const RightCanvas = (props) => {
     let selectedShape = sessionStorage.getItem("selectedShape");
     // const lineWidth = 36; //12 / 24 / 36
-    lineWidth = props.lineWidthR;
+    // lineWidth = props.lineWidthR;
     const shadowColor = '#333';
     const shadowBlur = lineWidth / 4;
     // color = props.color;
@@ -104,23 +103,15 @@ const RightCanvas = (props) => {
 
     useEffect(() => {
         // on pointer down
+
         interact('#canvasR').on('down', function (event) {
             canvas = event.target.getContext('2d')
             event.preventDefault();
             event.stopPropagation();
             down = Date.now();
             canvas.beginPath();
-            canvas.lineWidth = lineWidth;
+            canvas.lineWidth = document.getElementById("lineWidth").value;
             canvas.strokeStyle = props.color;
-            // canvas.fillStyle = props.color;
-            // console.log(props.rightCoordinates.length);
-            // console.log(props.rightCoordinates[6]);
-            // canvas.fillRect(800,10,1,1);
-            // for (let i = 0; i < props.rightCoordinates.length; i++) {
-            //     console.log('789789789789');
-            //     props.rightCoordinates[i].fillStyle = 'red';
-
-            // }
             canvas.shadowColor = null;
             canvas.shadowBlur = null;
             props.setMouseR(false);
@@ -155,13 +146,12 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        // if (!flagCnc) {
-                        //     changeToWhite()
-                        // }
+                        if (!flagCnc) {
+                            changeToWhite()
+                        }
                         // else {
                         //     changeToColor()
                         // }
-                        console.log(event.clientX);
                         x = event.clientX;
                         y = event.clientY;
                         if (x > 0 && x < 800 && y > 0 && y < 800) {
@@ -197,45 +187,48 @@ const RightCanvas = (props) => {
         if (flagCnc) {
             return
         }
-        console.log("no = ", arr);
-        context.beginPath();
         for (let i = 1; i < arr.length - 1; i++) {
-            // if (arr[i].r.x === -1) { 
-            //     context.moveTo(arr[--i].r.x, arr[--i].r.y);
-            //     context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-            //  }
-            if (arr[i].r.x === -1) { ++i }
-            context.moveTo(arr[i].r.x, arr[i].r.y);
-            context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-            context.lineWidth = lineWidth;
+            context.lineWidth = document.getElementById("lineWidth").value;
             context.strokeStyle = 'LightGrey';
+            
+            if (arr[i].r.x === -1) {
+                context.closePath();
+            }
+            else if(arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
+                context.beginPath();
+                context.moveTo(arr[i].r.x, arr[i].r.y);
+                context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+                context.stroke();
+            }
         }
         context.stroke();
     }
 
-    const changeToColor = (cor, i) => {
-        let arr = props.arr;
-        if (!flagCnc) {
-            // latestX = arr[arr.length - 1].r.x;
-            // latestY = arr[arr.length - 1].r.y;
-            return
-        }
-        console.log("yes = ", arr);
-        context.beginPath();
-        for (let i = 1; i < arr.length - 1; i++) {
-            // if (arr[i].r.x === -1) {
-            //     context.moveTo(arr[--i].r.x, arr[--i].r.y);
-            //     context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-            // }
-            // if (arr[i].r.x === -1) { ++i }
-            if (arr[i].r.x === -1) { return }
-            context.moveTo(arr[i].r.x, arr[i].r.y);
-            context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-            context.lineWidth = lineWidth;
-            context.strokeStyle = props.color;
-        }
-        context.stroke();
-    }
+    // const changeToColor = () => {
+    //     let arr = props.arr;
+    //     if (!flagCnc) {
+    //         return
+    //     }
+    //     context.beginPath();
+    //     for (let i = 0; i < arr.length - 1; i++) {
+    //         context.lineWidth = document.getElementById("lineWidth").value;
+    //         context.strokeStyle = props.color;
+    //         if(arr[i].r.x === -1 && arr[i+1].r.x !== -1){
+    //             context.closePath();
+    //         }
+    //         else if (arr[i].r.x === -1) {
+    //             context.closePath();
+    //         }
+    //         else if(arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
+    //             context.beginPath();
+    //             context.moveTo(arr[i].r.x, arr[i].r.y);
+    //             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+    //             context.stroke();
+    //         }
+            
+    //     }
+    //     context.stroke();
+    // }
 
     useEffect(() => {
         ctx = document.getElementById("canvasR")
@@ -282,7 +275,7 @@ const RightCanvas = (props) => {
                 area++
             }
         }
-        console.log(area);
+        // console.log(area);
     }
     const quantityPixels = () => {
         p = context.getImageData(0, 0, ctx.width, ctx.height).data;
@@ -292,9 +285,9 @@ const RightCanvas = (props) => {
                 fill++
             }
         }
-        console.log(fill);
+        // console.log(fill);
         fillPercentage = ((area - fill) * 100) / area;
-        console.log(fillPercentage);
+        // console.log(fillPercentage);
         if (fillPercentage > 95) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             let color = props.color;
@@ -425,7 +418,7 @@ const RightCanvas = (props) => {
     }
 
     const viewDrawing = () => {
-        console.log(coordinates);
+        // console.log(coordinates);
         for (let i = 0; i < coordinates.length; i++) {
             if (coordinates[i].length === 3) {
                 circle(coordinates[i][0], coordinates[i][1], coordinates[i][2])
@@ -443,6 +436,11 @@ const RightCanvas = (props) => {
     return (
         <React.Fragment>
             <canvas id="canvasR" width="800" height="800" penwidth='30'></canvas>
+            <div>
+                <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
+                <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+            </div>
+
         </React.Fragment>
     )
 };

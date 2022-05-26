@@ -14,7 +14,7 @@ let moment = require('moment-timezone');
 
 let counter = 0;
 let arr = [];
-
+let secondTotal;
 let leftCoordinates = [];
 let rightCoordinates = [];
 
@@ -48,10 +48,9 @@ let changeR = [];
 let timer2;
 
 let lineWidthL = 24;
-let lineWidthR = 24;
+// let lineWidthR = 24;
 // let cync = true;
 // let temp;
-let secondTotal;
 
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
@@ -126,45 +125,45 @@ const Coloring = (props) => {
     }
 
     const frequencyL = (stopTimeL) => {
-        console.log(bufL.toarray());
+        // console.log(bufL.toarray());
         for (let i = 0; i < bufL.size() - 1; i++) {
             if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 5) {
                 if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m1.push(1);
                 }
                 else if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m1.push(0);
                 }
                 else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m1.push(1);
                 }
                 else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m1.push(0);
                 }
                 else { //=
                     tempL = m1[m1.length - 1];
-                    console.log("3");
+                    // console.log("3");
                     m1.push(tempL);
                 }
             }
             else if (bufL.get(i).x < bufL.get(i + 1).x) {
-                console.log("1");
+                // console.log("1");
                 m1.push(1);
             } else if (bufL.get(i).x > bufL.get(i + 1).x) {
-                console.log("2");
+                // console.log("2");
                 m1.push(0);
             } else {
                 tempL = m1[m1.length - 1];
-                console.log("3");
+                // console.log("3");
                 m1.push(tempL);
             }
         }
         if (m1.length >= 2) {
-            console.log(m1);
+            // console.log(m1);
             for (pointM1; pointM1 < m1.length - 1; pointM1++) {
                 //View changes on the left screen
                 if (m1[pointM1] !== m1[pointM1 + 1]) {
@@ -181,36 +180,36 @@ const Coloring = (props) => {
         for (let i = 0; i < bufR.size() - 1; i++) {
             if ((Math.abs(bufR.get(i).x - bufR.get(i + 1).x)) < 5) {
                 if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m2.push(1);
                 }
                 else if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m2.push(0);
                 }
                 else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m2.push(1);
                 }
                 else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)) {
-                    console.log("1");
+                    // console.log("1");
                     m2.push(0);
                 }
                 else { //=
                     tempR = m2[m2.length - 1];
-                    console.log("3");
+                    // console.log("3");
                     m2.push(tempR);
                 }
             }
             else if (bufR.get(i).x < bufR.get(i + 1).x) {
-                console.log("1");
+                // console.log("1");
                 m2.push(1);
             } else if (bufR.get(i).x > bufR.get(i + 1).x) {
-                console.log("2");
+                // console.log("2");
                 m2.push(0);
             } else {
                 tempR = m2[m2.length - 1];
-                console.log("3");
+                // console.log("3");
                 m2.push(tempR);
             }
         }
@@ -310,7 +309,7 @@ const Coloring = (props) => {
     const onSubmit = () => {
         fetchGetAPI();
         const date = new Date();
-        console.log(typeof (date))
+        // console.log(typeof (date))
         if (arr.length !== 1) {
             arr.shift();
         }
@@ -347,14 +346,6 @@ const Coloring = (props) => {
         }, 2000);
     }
 
-    const changeLineWidthL12 = () => { console.log("12"); lineWidthL = 12; }
-    const changeLineWidthL24 = () => { lineWidthL = 24; }
-    const changeLineWidthL36 = () => { lineWidthL = 36; }
-
-    const changeLineWidthR12 = () => { lineWidthR = 12; }
-    const changeLineWidthR24 = () => { lineWidthR = 24; }
-    const changeLineWidthR36 = () => { lineWidthR = 36; }
-
     return (
         <React.Fragment>
             <div className='container'>
@@ -364,9 +355,6 @@ const Coloring = (props) => {
                 </div>
                 < div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
-                    <Button onClick={changeLineWidthL12}>1</Button>
-                    <Button type='submit' onClick={changeLineWidthL24}>2</Button>
-                    <Button type='submit' onClick={changeLineWidthL36}>3</Button>
                     <div id="lifebar">
                         <progress value={cchange1} max="10"></progress>
                     </div>
@@ -378,7 +366,9 @@ const Coloring = (props) => {
                         secondsL={secondsL}
                         cchange1={cchange1}
                         setMouseL={setMouseL}
-                        lineWidthL={lineWidthL}
+                        arr={arr}
+                        cchange2={cchange2}
+
                     />
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
@@ -388,14 +378,10 @@ const Coloring = (props) => {
                         cchange1={cchange1}
                         cchange2={cchange2}
                         setMouseR={setMouseR}
-                        lineWidthR={lineWidthR}
-                        arr = {arr}
+                        arr={arr}
                     // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
-                    <Button onClick={changeLineWidthR12}>1</Button>
-                    <Button onClick={changeLineWidthR24}>2</Button>
-                    <Button onClick={changeLineWidthR36}>3</Button>
                 </div>
                 <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
             </div>
