@@ -50,13 +50,12 @@ const Cards = (props) => {
         getKide();
     }, [isReady]);
     const [open, setOpen] = React.useState(false);
-    console.log(props.item);
+    // console.log(props.item);
     const [data, setData] = useState(props.item)
-    console.log("data", props.item.firstKide, props.item.secondKide)
+    // console.log("data", props.item.firstKide, props.item.secondKide)
     let arr = []
     arr.push(firstKide)
     arr.push(secondKide)
-
 
     const card = (
         <React.Fragment>
@@ -93,7 +92,6 @@ const Cards = (props) => {
 
     return (
         <React.Fragment>
-
             {isReady && <Box sx={{ minWidth: 275, width: '75%' }}>
                 <Card style={{ marginTop: 10 }} variant="outlined">{card}</Card>
             </Box>}
