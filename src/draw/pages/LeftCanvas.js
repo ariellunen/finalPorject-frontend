@@ -86,7 +86,7 @@ let fillPercentage;
 // let particles = [];
 
 const LeftCanvas = (props) => {
-    
+
     //--------------------------------------Animation 1---------------------------------------------//
     // class Layer {
     //     constructor(ccttxx) {
@@ -597,11 +597,11 @@ const LeftCanvas = (props) => {
         for (let i = 1; i < arr.length - 1; i++) {
             context.lineWidth = document.getElementById("lineWidth").value;
             context.strokeStyle = 'LightGrey';
-            
+
             if (arr[i].l.x === -1) {
                 context.closePath();
             }
-            else if(arr[i].l.x !== -1 && arr[i + 1].l.x !== -1) {
+            else if (arr[i].l.x !== -1 && arr[i + 1].l.x !== -1) {
                 context.beginPath();
                 context.moveTo(arr[i].l.x, arr[i].l.y);
                 context.lineTo(arr[i + 1].l.x, arr[i + 1].l.y);
@@ -808,10 +808,14 @@ const LeftCanvas = (props) => {
     return (
         <React.Fragment>
             <div>
-                <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
-                <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+                {/* <canvas id="canvasL" width="620" height="470"></canvas> */}
+                <canvas id="canvasL" width="800" height="800"></canvas>
+                <div>
+                    <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
+                    <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+                </div>
             </div>
-            <canvas id="canvasL" width="620" height="470"></canvas>
+
 
         </React.Fragment >
     )

@@ -190,11 +190,11 @@ const RightCanvas = (props) => {
         for (let i = 1; i < arr.length - 1; i++) {
             context.lineWidth = document.getElementById("lineWidth").value;
             context.strokeStyle = 'LightGrey';
-            
+
             if (arr[i].r.x === -1) {
                 context.closePath();
             }
-            else if(arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
+            else if (arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
                 context.beginPath();
                 context.moveTo(arr[i].r.x, arr[i].r.y);
                 context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
@@ -225,7 +225,7 @@ const RightCanvas = (props) => {
     //             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
     //             context.stroke();
     //         }
-            
+
     //     }
     //     context.stroke();
     // }
@@ -435,10 +435,13 @@ const RightCanvas = (props) => {
 
     return (
         <React.Fragment>
-            <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas>
             <div>
-                <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
-                <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+                {/* <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas> */}
+                <canvas id="canvasR" width="800" height="800" penwidth='30'></canvas>
+                <div>
+                    <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
+                    <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+                </div>
             </div>
 
         </React.Fragment>

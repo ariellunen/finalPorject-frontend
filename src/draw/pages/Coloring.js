@@ -351,9 +351,9 @@ const Coloring = (props) => {
             <div className='container'>
                 < div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
-                    <div id="lifebar">
+                    {/* <div id="lifebar">
                         <progress value={cchange1} max="10"></progress>
-                    </div>
+                    </div> */}
                     {/* <LinearProgress variant="determinate" {...props} value={cchange1} /> */}
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
