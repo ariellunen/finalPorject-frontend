@@ -167,12 +167,12 @@ const DrawDetails = (props) => {
         let arrLy = [];
         let arrRy = [];
         for (let i = 0; i < storedData.changesL.length; i++) {
-            arrLx.push(storedData.changesL[i].time);
-            arrLy.push(storedData.changesL[i].change);
+            arrLx.push(storedData.changesL[i].x);
+            arrLy.push(storedData.changesL[i].y);
         }
         for (let i = 0; i < storedData.changesR.length; i++) {
-            arrRx.push(storedData.changesR[i].time);
-            arrRy.push(storedData.changesR[i].change);
+            arrRx.push(storedData.changesR[i].x);
+            arrRy.push(storedData.changesR[i].y);
         }
         console.log(arrLx);
         console.log(arrRx);
