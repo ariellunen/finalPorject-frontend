@@ -44,8 +44,6 @@ const breadcrumbs = [
 ];
 
 const DrawDetails = (props) => {
-    console.log(props.data);
-    console.log(props.index);
     const location = useLocation();
     const data = location;
     const storedData = JSON.parse(localStorage.getItem('Item'));
@@ -181,106 +179,87 @@ const DrawDetails = (props) => {
         let child2 = [];
         let arrLx = [];
         let arrRx = [];
-        let arrLy = [];
-        let arrRy = [];
-        for (let i = 0; i < storedData.changesL.length; i++) {
-            arrLx.push(storedData.changesL[i].x);
-            arrLy.push(storedData.changesL[i].y);
-        }
-        for (let i = 0; i < storedData.changesR.length; i++) {
-            arrRx.push(storedData.changesR[i].x);
-            arrRy.push(storedData.changesR[i].y);
-        }
-        console.log(arrLx);
-        console.log(arrRx);
-        console.log(arrLy);
-        console.log(arrRy);
 
-        let counterL = 1;
-        let counterR = 1;
-        for (let i = 0; i < arrLx.length - 1; i++) {
-            if (arrLx[i] != arrLx[i + 1]) { counterL++ }
-        }
-        for (let i = 0; i < arrRx.length - 1; i++) {
-            if (arrRx[i] != arrRx[i + 1]) { counterR++ }
-        }
-        if (arrLy.length === 0) { counterL = 0 }
-        if (arrRy.length === 0) { counterR = 0 }
-        counterTotal = counterR + counterL;
+        //מפריד את המערך של התדירות לציר של תדירויות וציר של שניות
+        for (let i = 0; i < storedData.changesL.length; i++) { arrLx.push(storedData.changesL[i].x); }
+        for (let i = 0; i < storedData.changesR.length; i++) { arrRx.push(storedData.changesR[i].x); }
 
-        let arrayR = [];
-        for (let i = 1; i < 21; i++) {
-            let x = arrRx.filter((v) => (v === i)).length;
-            arrayR.push(x)
-        }
+        let avgL, avgR;
+        let arrayL = [], arrayR = [];
+        let totalL, totalR;
 
-        let arrayL = [];
-        for (let i = 1; i < 21; i++) {
+        for (let i = 0; i < storedData.secondTotal; i++) {
             let x = arrLx.filter((v) => (v === i)).length;
-            arrayL.push(x)
-        }
-        console.log(arrayL);
-        console.log(arrayR);
-
-        for (let i = 0; i < 20; i++) {
-            if (arrayL[i] !== 0 || arrayR[i] !== 0) {
-                if (arrayL[i] && arrayR[i]) {
-                    counterTotal--;
+            avgL = 0;
+            if (x != 0) {
+                totalL = 0;
+                for (let j = 0; j < storedData.changesL.length; j++) {
+                    if (storedData.changesL[j].x === i) {
+                        let number = Number(storedData.changesL[j].y)
+                        totalL += number;
+                    }
                 }
+                avgL = (totalL / x).toFixed(2);
             }
+            arrayL.push({ ces: i, change: x, avg: avgL });
         }
 
         for (let i = 0; i < storedData.secondTotal; i++) {
-            child1.push(i);
-        } for (let i = 0; i < storedData.secondTotal; i++) {
-            child2.push(i);
+            let x = arrRx.filter((v) => (v === i)).length;
+            avgR = 0;
+            if (x != 0) {
+                totalR = 0;
+                for (let j = 0; j < storedData.changesR.length; j++) {
+                    if (storedData.changesR[j].x === i) {
+                        let number = Number(storedData.changesR[j].y)
+                        totalR += number;
+                    }
+                }
+                avgR = (totalR / x).toFixed(2);
+            }
+            arrayR.push({ ces: i, change: x, avg: avgR });
         }
 
-        // child1 = [1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2, 1.5, 2.7, 0, 0, 2.3, 6.5, 4.2, 0, 1.5, 5.2, 0, 0, 0, 1, 2, 3.2, 3.2, 1.5, 1.5, 0.2]
-        // child2 = [0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3, 0.3, 0, 0, 5.2, 1.2, 6.3, 2.4, 0, 0, 1.2, 1.5, 1.9, 3.7, 6.7, 0, 0, 2.9, 6.7, 0, 1.3]
-        // new Chart(ctx1, {
-        //     type: "line",
-        //     data: {
-        //         labels: xValues,
-        //         datasets: [{
-        //             label: Names[1],
-        //             data: child1,
-        //             borderColor: storedData.colorFirst,
-        //             fill: true,
-        //         }, {
-        //             label: Names[0],
-        //             data: child2,
-        //             borderColor: storedData.colorSecond,
-        //             fill: false
-        //         }]
-        //     },
-        //     options: {
-        //         legend: { display: true },
-        //         title: {
-        //             display: true,
-        //             text: `סנכרון בין ${Names[0]} לבין ${Names[1]}`,
-        //             fontSize: 20
-        //         }
-        //     }
-        // });
+        let cync = [];
+        for (let i = 0; i < arrayL.length; i++) {
+            child1.push(arrayL[i].avg);
+            child2.push(arrayR[i].avg);
+            if ((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) {
+                if (arrayL[i].avg > arrayR[i].avg) {
+                    cync.push(arrayL[i].avg)
+                }
+                else { cync.push(arrayR[i].avg) }
+            }
+            else { cync.push(0) }
+        }
 
+        //ציר האיקס עבור זמן השניות הכולל
+        for (let i = 0; i < storedData.secondTotal; i++) {
+            xValues.push(i)
+        }
+
+        //מילוי נקודות הסנכרון
         new Chart(ctx1, {
-            type: "scatter",
+            type: "line",
             data: {
+                labels: xValues,
                 datasets: [{
+                    label: 'ראה מקומות סנכרון',
+                    data: cync,
+                    fill: true
+                }, {
                     label: Names[1],
-                    pointRadius: 4,
-                    pointBackgroundColor: storedData.colorFirst,
-                    data: storedData.changesL
+                    data: child2,
+                    borderColor: storedData.colorSecond,
+                    fill: false
                 }, {
                     label: Names[0],
-                    pointRadius: 6,
-                    pointBackgroundColor: storedData.colorSecond,
-                    data: storedData.changesR
+                    data: child1,
+                    borderColor: storedData.colorFirst,
+                    fill: false,
                 }]
             },
             options: {
-                legend: { display: true },
                 legend: { display: true },
                 title: {
                     display: true,
@@ -319,7 +298,7 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `משך זמן לחיצה ${Names[1]}`,
+                    text: `מספר נגיעות במסך של ${Names[0]}`,
                     fontSize: 20
                 },
                 scales: {
@@ -357,7 +336,7 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `משך זמן לחיצה ${Names[0]}`,
+                    text: `מספר נגיעות במסך של ${Names[1]}`,
                     fontSize: 20
                 },
                 scales: {
@@ -386,7 +365,7 @@ const DrawDetails = (props) => {
             options: {
                 title: {
                     display: true,
-                    text: `עובי קו ${Names[1]}`,
+                    text: `עובי קו ${Names[0]}`,
                     fontSize: 20
                 }
             }
@@ -411,7 +390,7 @@ const DrawDetails = (props) => {
             options: {
                 title: {
                     display: true,
-                    text: `עובי קו ${Names[0]}`,
+                    text: `עובי קו ${Names[1]}`,
                     fontSize: 20
                 }
             }
@@ -448,21 +427,21 @@ const DrawDetails = (props) => {
 
                 </Modal>
             </CardActions>
-            <div style={{display: 'flex' }}>
-            <div id='graphs'>
-                <div id='cync'>
-                    <canvas id="Chart1"></canvas>
+            <div style={{ display: 'flex' }}>
+                <div id='graphs'>
+                    <div id='cync'>
+                        <canvas id="Chart1"></canvas>
+                    </div>
+                    <div id='sec'>
+                        <canvas id="Chart3"></canvas>
+                        <canvas id="Chart2"></canvas>
+                    </div>
+                    <div id='lineWidth'>
+                        <canvas id="Chart5"></canvas>
+                        <canvas id="Chart4"></canvas>
+                    </div>
                 </div>
-                <div id='sec'>
-                    <canvas id="Chart3"></canvas>
-                    <canvas id="Chart2"></canvas>
-                </div>
-                <div id='lineWidth'>
-                    <canvas id="Chart5"></canvas>
-                    <canvas id="Chart4"></canvas>
-                </div>
-            </div>
-            {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
+                {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
             </div>
         </React.Fragment>
     );
