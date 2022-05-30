@@ -100,16 +100,20 @@ const Coloring = (props) => {
     // console.log("mouse",mouseUpL)
 
     if (mouseUpL === true) {
-        cchange1 = 0;
-        change1 = 0;
+        setTimeout(() => {
+            cchange1 = 0;
+            change1 = 0;
+        }, 1000);
     }
 
     const [mouseUpR, setMouseR] = useState(false);
     // console.log("mouse",mouseUpR)
 
     if (mouseUpR === true) {
-        cchange2 = 0;
-        change2 = 0;
+        setTimeout(() => {
+            cchange2 = 0;
+            change2 = 0;
+        }, 1000);
     }
 
     const frequencyL = (stopTimeL) => {
@@ -323,7 +327,7 @@ const Coloring = (props) => {
     const [doneLeft, setDoneLeft] = useState(false);
     const [doneRight, setDoneRight] = useState(false);
 
-    if(doneLeft && doneRight === true) {
+    if (doneLeft && doneRight === true) {
         console.log('wooooo')
     }
 
@@ -333,7 +337,7 @@ const Coloring = (props) => {
             <div className='container'>
                 <div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
-                    {doneLeft && doneRight === true && <Confetti style={{width: '100%'}}/>}
+                    {doneLeft && doneRight === true && <Confetti style={{ width: '100%' }} />}
                     {/* <div id="lifebar">
                         <progress value={cchange1} max="10"></progress>
                     </div> */}
