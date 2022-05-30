@@ -453,12 +453,10 @@ let area;
 let fill;
 let fillPercentage;
 let selectedShape;
-let colorr;
-let lineee;
+let color;
+let line;
 const LeftCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
-    const [color, setColor] = useState('LightGrey');
-    const [line, setLine] = useState('20');
     //check if it sync
     // if (Math.abs(props.cchange2 - props.cchange1) > 2) {
     //     flagCnc = false;
@@ -469,16 +467,13 @@ const LeftCanvas = (props) => {
     useEffect(() => {
         ctx = document.getElementById("canvasL")
         context = ctx.getContext('2d');
-        setLine(document.getElementById("lineWidthL").value);
-        lineee = document.getElementById("lineWidthL").value;
+        line = document.getElementById("lineWidthL").value;
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange2 === 0) {
             context.beginPath();
             context.lineWidth = document.getElementById("lineWidthL").value;
-            setLine(document.getElementById("lineWidthL").value);
-            lineee = document.getElementById("lineWidthL").value;
-            colorr = 'LightGrey'
+            line = document.getElementById("lineWidthL").value;
+            color = 'LightGrey'
             context.strokeStyle = 'LightGrey';
-            setColor('LightGrey')
             context.lineTo(x, y);
             context.stroke();
         }
@@ -486,13 +481,11 @@ const LeftCanvas = (props) => {
         else {
             context.beginPath();
             context.lineWidth = document.getElementById("lineWidthL").value;
-            setLine(document.getElementById("lineWidthL").value);
             context.strokeStyle = props.color;
-            setColor(props.color)
             context.lineTo(x, y);
             context.stroke();
-            lineee = document.getElementById("lineWidthL").value;
-            colorr = props.color
+            line = document.getElementById("lineWidthL").value;
+            color = props.color
         }
         // on pointer down
         interact('#canvasL').on('down', function (event) {
@@ -502,12 +495,10 @@ const LeftCanvas = (props) => {
             down = Date.now();
             canvas.beginPath();
             canvas.lineWidth = document.getElementById("lineWidthL").value;
-            setLine(document.getElementById("lineWidthL").value);
             canvas.strokeStyle = 'LightGrey';
-            setColor('LightGrey')
             props.setMouseL(false);
-            lineee = document.getElementById("lineWidthL").value;
-            colorr = 'LightGrey'
+            line = document.getElementById("lineWidthL").value;
+            color = 'LightGrey'
         })
 
         interact('#canvasL').on('up', function (event) {
@@ -515,7 +506,7 @@ const LeftCanvas = (props) => {
             event.stopPropagation();
             timeTakenL = Date.now() - down;
             props.secondsL.push(timeTakenL / 1000);
-            props.setLeft({ x: -1, y: -1, color: colorr, line: lineee })
+            props.setLeft({ x: -1, y: -1, color: color, line: line })
             props.setMouseL(true);
             canvas.stroke();
             quantityPixels();
@@ -546,11 +537,9 @@ const LeftCanvas = (props) => {
                         // }
                         // if (flag) {
                         canvas.lineTo(event.clientX, event.clientY);
-                        // }
-                        // canvas.lineTo(event.clientX, event.clientY);
                         canvas.stroke();
-                        props.setLeft({ x: event.clientX, y: event.clientX, color: colorr, line: lineee })
-                        props.handleCoordinate(event.clientX, event.clientY, colorr, lineee);
+                        props.setLeft({ x: event.clientX, y: event.clientY, color: color, line: line })
+                        props.handleCoordinate(event.clientX, event.clientY, color, line);
                     }
                 }
             })
@@ -560,14 +549,9 @@ const LeftCanvas = (props) => {
             ) {
                 delete canvas.width
                 delete canvas.height
-                // let rect = canvas.getBoundingClientRect()
-                // canvas.width = rect.width
-                // canvas.height = rect.height
             })
         }
         resizeCanvases()
-        // interact(window).on('resize', resizeCanvases)
-        // }, [props.cchange2, props.cchange1, color, line, props])
     }, [props.cchange2, props.cchange1])
 
 

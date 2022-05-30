@@ -76,10 +76,11 @@ let area;
 let fill;
 let fillPercentage;
 let flagCnc = true;
+let color;
+let line;
 
 const RightCanvas = (props) => {
     let selectedShape = sessionStorage.getItem("selectedShape");
-    const [color, setColor] = useState('');
     //check if it sync
     // if (Math.abs(props.cchange2 - props.cchange1) > 2) {
     //     flagCnc = false;
@@ -92,11 +93,12 @@ const RightCanvas = (props) => {
         ctx = document.getElementById("canvasR")
         context = ctx.getContext('2d');
         // on pointer down
-        if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange1 === 0){
+        if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange1 === 0) {
             context.beginPath();
             context.lineWidth = document.getElementById("lineWidthR").value;
+            line = document.getElementById("lineWidthL").value;
+            color = 'LightGrey'
             context.strokeStyle = 'LightGrey';
-            setColor('LightGrey')
             context.lineTo(x, y);
             context.stroke();
         }
@@ -105,9 +107,10 @@ const RightCanvas = (props) => {
             context.beginPath();
             context.lineWidth = document.getElementById("lineWidthR").value;
             context.strokeStyle = props.color;
-            setColor(props.color)
             context.lineTo(x, y);
             context.stroke();
+            line = document.getElementById("lineWidthL").value;
+            color = props.color
         }
 
         interact('#canvasR').on('down', function (event) {
@@ -118,8 +121,9 @@ const RightCanvas = (props) => {
             canvas.beginPath();
             canvas.lineWidth = document.getElementById("lineWidthR").value;
             canvas.strokeStyle = 'LightGrey';
-            setColor('LightGrey')
             props.setMouseR(false);
+            line = document.getElementById("lineWidthL").value;
+            color = 'LightGrey'
         })
 
         interact('#canvasR').on('up', function (event) {
@@ -127,7 +131,7 @@ const RightCanvas = (props) => {
             event.stopPropagation();
             timeTakenR = Date.now() - down;
             props.secondsR.push(timeTakenR / 1000);
-            props.setRight({ x: -1, y: -1 })
+            props.setRight({ x: -1, y: -1, color: color, line: line })
             props.setMouseR(true);
             canvas.stroke();
             quantityPixels();
@@ -151,15 +155,15 @@ const RightCanvas = (props) => {
                         // else {
                         //     changeToColor()
                         // }
-                        x = event.clientX;
-                        y = event.clientY;
                         // if (x > 0 && x < 800 && y > 0 && y < 800) {
                         //     indexCheck(x, y);
                         // }
                         // if (flag) {
+                        x = event.clientX;
+                        y = event.clientY;
                         canvas.lineTo(event.clientX, event.clientY);
                         canvas.stroke();
-                        props.setRight({ x: event.clientX, y: event.clientY });
+                        props.setRight({ x: event.clientX, y: event.clientY, color: color, line: line })
                         props.handleCoordinate(event.clientX, event.clientY, color);
                     }
                 }
@@ -178,7 +182,7 @@ const RightCanvas = (props) => {
         }
         resizeCanvases()
         // interact(window).on('resize', resizeCanvases)
-    }, [props.cchange2, props.cchange1 ])
+    }, [props.cchange2, props.cchange1])
 
     //Coloring to grey
     // const changeToWhite = () => {
@@ -253,7 +257,7 @@ const RightCanvas = (props) => {
         // context.moveTo(x, y;
         context.lineTo(x, y);
         context.stroke();
-        
+
     }
 
     const changeToColor = () => {

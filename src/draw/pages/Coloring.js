@@ -50,8 +50,8 @@ const Coloring = (props) => {
         clearTimer(getDeadTime());
     }, []);
 
-    const [left, setLeft] = useState({ x: -1, y: -1, color:'LightGrey',line: '20' })
-    const [right, setRight] = useState({ y: -1, x: -1 })
+    const [left, setLeft] = useState({ x: -1, y: -1, color: 'LightGrey', line: '20' })
+    const [right, setRight] = useState({ y: -1, x: -1, color: 'LightGrey', line: '20' })
 
     useEffect(() => {
         arr[counter] = { l: left, r: right }
@@ -59,8 +59,7 @@ const Coloring = (props) => {
     }, [left, right])
 
     const handleLeftCoordinate = (x, y, color, line) => {
-        test.push({x,y, color, line});
-        leftCoordinates.push({ x, y, color, line});
+        leftCoordinates.push({ x, y, color, line });
         bufL.push({ x, y });
         if (bufL.get(0)?.x && floatL) {
             startTimeL = Date.now();
@@ -298,10 +297,13 @@ const Coloring = (props) => {
     const onSubmit = () => {
         fetchGetAPI();
         const date = new Date();
+        console.log(date)
         if (arr.length !== 1) {
             arr.shift();
         }
         setTimeout(async () => {
+            console.log(user1.id, user2.id, startedTime, secondTotal, JSON.parse(localStorage.getItem('firstColor')),
+                JSON.parse(localStorage.getItem('secondColor')), changeL, changeR, secondsL, secondsR, JSON.parse(localStorage.getItem('shape')))
             try {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                     method: 'POST',
@@ -312,7 +314,7 @@ const Coloring = (props) => {
                         firstKide: user1.id,
                         secondKide: user2.id,
                         timeStarted: startedTime,
-                        timeDone: date,
+                        // timeDone: date,
                         secondTotal: secondTotal,
                         coordinate: arr,
                         colorFirst: JSON.parse(localStorage.getItem('firstColor')),

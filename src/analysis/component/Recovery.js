@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+
 import circleCorL from "../../draw/shape/CircleL";
 import triangularCorL from "../../draw/shape/TriangularL"
 import heartCorL from "../../draw/shape/HeartL"
 import davidCorL from "../../draw/shape/DavidL"
 import homeCorL from "../../draw/shape/HomeL"
+
 import circleCorR from "../../draw/shape/CircleR";
 import triangularCorR from "../../draw/shape/TriangularR"
 import heartCorR from "../../draw/shape/HeartR"
@@ -72,10 +74,6 @@ const Recovery = (props) => {
                 uploadCoorL = homeCorL;
                 uploadCoorR = homeCorR;
                 break;
-            default:
-                uploadCoorL = circleCorL;
-                uploadCoorR = circleCorR;
-                break;
         }
         fileUpload();
         handleClick();
@@ -92,14 +90,12 @@ const Recovery = (props) => {
             if (i < drawData.coordinate.length) {
                 draw(drawData.coordinate[i], i);
                 i++;
-                console.log(drawData.coordinate[i])
                 handleClick();
             }
         }, speed)
 
     }
 
-    
     const draw = (cor, i) => {
         // both -1
         if (cor.r.x === -1 && cor.l.x === -1) {
@@ -126,7 +122,8 @@ const Recovery = (props) => {
                 ctxRightRef.current.beginPath();
                 ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
                 ctxRightRef.current.lineTo(drawData.coordinate[i + 1].r.x, drawData.coordinate[i + 1].r.y);
-                ctxRightRef.current.strokeStyle = drawData.colorSecond;
+                ctxRightRef.current.strokeStyle = cor.r.color;
+                ctxRightRef.current.lineWidth = cor.r.line;
                 ctxRightRef.current.stroke();
             }
         }
@@ -141,7 +138,8 @@ const Recovery = (props) => {
                 ctxRightRef.current.beginPath();
                 ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
                 ctxRightRef.current.lineTo(drawData.coordinate[i + 1].r.x, drawData.coordinate[i + 1].r.y);
-                ctxRightRef.current.strokeStyle = drawData.colorSecond;
+                ctxRightRef.current.strokeStyle = cor.r.color;
+                ctxRightRef.current.lineWidth = cor.r.line;
                 ctxRightRef.current.stroke();
             }
             else if (drawData.coordinate[i + 1].r.x === -1 && drawData.coordinate[i + 1].l.x !== -1) {
@@ -163,7 +161,8 @@ const Recovery = (props) => {
                 ctxRightRef.current.beginPath();
                 ctxRightRef.current.moveTo(cor.r.x, cor.r.y);
                 ctxRightRef.current.lineTo(drawData.coordinate[i + 1].r.x, drawData.coordinate[i + 1].r.y);
-                ctxRightRef.current.strokeStyle = drawData.colorSecond;
+                ctxRightRef.current.strokeStyle = cor.r.color;
+                ctxRightRef.current.lineWidth = cor.r.line;
                 ctxRightRef.current.stroke();
             }
         }
