@@ -355,6 +355,7 @@ const RightCanvas = (props) => {
             let color = props.color;
             shapesSelected(color);
             viewDrawing();
+            props.setDoneRight(true);
         }
     }
     //check limits - flag
