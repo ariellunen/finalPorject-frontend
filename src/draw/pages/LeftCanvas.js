@@ -96,6 +96,7 @@ const LeftCanvas = (props) => {
                         canvas.stroke();
                         props.setLeft({ x: event.clientX, y: event.clientY, color: color, line: line })
                         props.handleCoordinate(event.clientX, event.clientY, color, line);
+                        quantityPixels();
                     }
                 }
             })
@@ -158,29 +159,27 @@ const LeftCanvas = (props) => {
         switch (selectedShape) {
             case 'circle':
                 uploadCoor = circleCor;
-                filling2(800, 400, 390, color)
+                filling2(620, 235, 230, color)
                 break;
             case 'triangular':
                 uploadCoor = triangularCor;
-                filling(800, 10, 250, 790, 800, 790, color)
+                filling(620, 10, 250, 460, 620, 460, color)
                 break;
             case 'heart':
                 uploadCoor = heartCor;
-                filling(800, 150, 350, 150, 800, 750, color)
-                filling8(800, 150, 700, 50, 400, 50, 350, 150, color)
-                filling8(350, 150, 250, 350, 600, 700, 800, 750, color)
+                filling(620, 100, 250, 100, 620, 460, color)
+                filling8(620, 100, 540, 0, 340, 0, 250, 100, color)
+                filling8(250, 100, 50, 350, 440, 400, 620, 460, color)
                 break;
             case 'david':
                 uploadCoor = davidCor;
-                filling(800, 20, 300, 650, 800, 650, color)
-                filling(800, 140, 300, 140, 800, 780, color)
+                filling(620, 20, 250, 370, 620, 370, color)
+                filling(620, 100, 250, 100, 620, 450, color)
                 break;
             case 'home':
                 uploadCoor = homeCor;
-                filling(800, 10, 250, 400, 800, 400, color)
-                filling4(800, 400, 550, 400, 550, 550, 800, 550, color)
-                filling4(700, 550, 550, 550, 550, 780, 700, 780, color)
-                filling4(700, 780, 700, 550, 800, 550, 800, 780, color)
+                filling(620, 10, 250, 250, 620, 250, color)
+                filling4(400, 250, 620, 250, 620, 460, 400, 460, color)
                 break;
             default:
                 uploadCoor = circleCor;
@@ -199,7 +198,7 @@ const LeftCanvas = (props) => {
             }
         }
         fillPercentage = ((area - fill) * 100) / area;
-        if (fillPercentage > 95) {
+        if (fillPercentage > 93) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             shapesSelected(props.color);
             viewDrawing();
@@ -323,8 +322,7 @@ const LeftCanvas = (props) => {
     return (
         <React.Fragment>
             <div>
-                {/* <Confetti /> */}
-                <canvas id="canvasL" width="800" height="800"></canvas>
+                <canvas id="canvasL" width="620" height="470"></canvas>
                 <div>
                     <input type="range" min="4" max="20" id="lineWidthL" name='lineWidthL' step="8" />
                     <output for="lineWidthL"></output>
