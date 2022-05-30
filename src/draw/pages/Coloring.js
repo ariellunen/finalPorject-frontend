@@ -5,7 +5,7 @@ import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import NavLink from '../../user/components/NavLinks';
-
+import Confetti from "react-confetti";
 
 let moment = require('moment-timezone');
 let counter = 0;
@@ -333,8 +333,12 @@ const Coloring = (props) => {
         }, 2000);
     }
 
+    const [doneLeft, setDoneLeft] = useState(false);
+    const [doneRight, setDoneRight] = useState(false);
 
-
+    if(doneLeft && doneRight === true) {
+        console.log('wooooo')
+    }
 
     return (
         <React.Fragment>
@@ -342,6 +346,7 @@ const Coloring = (props) => {
             <div className='container'>
                 <div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
+                    {doneLeft && doneRight === true && <Confetti style={{width: '100%'}}/>}
                     {/* <div id="lifebar">
                         <progress value={cchange1} max="10"></progress>
                     </div> */}
@@ -355,6 +360,7 @@ const Coloring = (props) => {
                         setMouseL={setMouseL}
                         arr={arr}
                         cchange2={cchange2}
+                        setDoneLeft={setDoneLeft}
 
                     />
                     <RightCanvas
@@ -366,6 +372,7 @@ const Coloring = (props) => {
                         cchange2={cchange2}
                         setMouseR={setMouseR}
                         arr={arr}
+                        setDoneRight={setDoneRight}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
                 </div>
