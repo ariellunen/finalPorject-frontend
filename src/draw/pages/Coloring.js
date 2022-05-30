@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import LeftCanvas from './LeftCanvas';
 import RightCanvas from './RightCanvas';
 import './Coloring.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../shared/context/auth-context';
-import { now } from 'moment-timezone';
 import NavLink from '../../user/components/NavLinks';
 
 
 let moment = require('moment-timezone');
-
 let counter = 0;
 let arr = [];
 let secondTotal;
@@ -45,13 +41,8 @@ let secondsL = [];
 let secondsR = [];
 let changeL = [];
 let changeR = [];
-let timer2;
 
-let lineWidthL = 24;
-// let lineWidthR = 24;
-// let cync = true;
-// let temp;
-
+let test = [];
 const Coloring = (props) => {
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
@@ -59,10 +50,7 @@ const Coloring = (props) => {
         clearTimer(getDeadTime());
     }, []);
 
-    const location = useLocation();
-    // temp = location.state.state[1].color;
-    // console.log(temp);
-    const [left, setLeft] = useState({ x: -1, y: -1 })
+    const [left, setLeft] = useState({ x: -1, y: -1, color:'LightGrey',line: '20' })
     const [right, setRight] = useState({ y: -1, x: -1 })
 
     useEffect(() => {
@@ -70,8 +58,9 @@ const Coloring = (props) => {
         counter++;
     }, [left, right])
 
-    const handleLeftCoordinate = (x, y) => {
-        leftCoordinates.push({ x, y });
+    const handleLeftCoordinate = (x, y, color, line) => {
+        test.push({x,y, color, line});
+        leftCoordinates.push({ x, y, color, line});
         bufL.push({ x, y });
         if (bufL.get(0)?.x && floatL) {
             startTimeL = Date.now();
@@ -220,7 +209,7 @@ const Coloring = (props) => {
                 if (m2[pointM2] !== m2[pointM2 + 1]) {
                     change2++;
                     cchange2 = (change2 / stopTimeR).toFixed(2);
-                    changeR.push({ x: secondTotal, y: cchange2  });
+                    changeR.push({ x: secondTotal, y: cchange2 });
                 }
             }
         }
@@ -264,14 +253,14 @@ const Coloring = (props) => {
                 (minutes > 9 ? minutes : '0' + minutes) + ':'
                 + (seconds > 9 ? seconds : '0' + seconds)
             )
-            secondTotal = 1200-(total/1000);
+            secondTotal = 1200 - (total / 1000);
             // timer2 = (
             //     (hours > 9 ? hours : '0' + hours) + ':' +
             //     (minutes > 9 ? minutes : '0' + minutes) + ':'
             //     + (seconds > 9 ? seconds : '0' + seconds)
             // )
         }
-        secondTotal = 1200-(total/1000);
+        secondTotal = 1200 - (total / 1000);
     }
 
     const clearTimer = (e) => {
@@ -296,7 +285,6 @@ const Coloring = (props) => {
             const response = await fetch('http://localhost:3000/api/users/children/', {
             });
             const responseData = await response.json();
-            const len = responseData.children.length;
             console.log(responseData)
             user2 = JSON.parse(localStorage.getItem('secondtKide'));
             user1 = JSON.parse(localStorage.getItem('firstKide'));
@@ -344,6 +332,7 @@ const Coloring = (props) => {
             }
         }, 2000);
     }
+
 
     return (
         <React.Fragment>

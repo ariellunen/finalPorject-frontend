@@ -53,7 +53,7 @@
 
 // export default RightCanvas;
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import interact from 'interactjs';
 import './Canvas.css';
 import circleCor from "../shape/CircleR"
@@ -67,7 +67,6 @@ let down;
 let timeTakenR = 0;
 let ctx;
 let context;
-let lineWidth;
 let uploadCoor;
 let p;
 let c;
@@ -77,32 +76,39 @@ let area;
 let fill;
 let fillPercentage;
 let flagCnc = true;
-let latestX;
-let latestY;
 
 const RightCanvas = (props) => {
     let selectedShape = sessionStorage.getItem("selectedShape");
-    // const lineWidth = 36; //12 / 24 / 36
-    // lineWidth = props.lineWidthR;
-    const shadowColor = '#333';
-    const shadowBlur = lineWidth / 4;
-    // color = props.color;
-    // console.log(props.cchange2);
-    // console.log(props.cchange1);
-    // console.log(props);
-    if (Math.abs(props.cchange2 - props.cchange1) > 2) {
-        flagCnc = false;
-    }
-    else {
-        flagCnc = true;
-    }
-
-    const state = {
-        mousedown: false
-    };
+    const [color, setColor] = useState('');
+    //check if it sync
+    // if (Math.abs(props.cchange2 - props.cchange1) > 2) {
+    //     flagCnc = false;
+    // }
+    // else {
+    //     flagCnc = true;
+    // }
 
     useEffect(() => {
+        ctx = document.getElementById("canvasR")
+        context = ctx.getContext('2d');
         // on pointer down
+        if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange1 === 0){
+            context.beginPath();
+            context.lineWidth = document.getElementById("lineWidthR").value;
+            context.strokeStyle = 'LightGrey';
+            setColor('LightGrey')
+            context.lineTo(x, y);
+            context.stroke();
+        }
+
+        else {
+            context.beginPath();
+            context.lineWidth = document.getElementById("lineWidthR").value;
+            context.strokeStyle = props.color;
+            setColor(props.color)
+            context.lineTo(x, y);
+            context.stroke();
+        }
 
         interact('#canvasR').on('down', function (event) {
             canvas = event.target.getContext('2d')
@@ -110,12 +116,10 @@ const RightCanvas = (props) => {
             event.stopPropagation();
             down = Date.now();
             canvas.beginPath();
-            canvas.lineWidth = document.getElementById("lineWidth").value;
-            canvas.strokeStyle = props.color;
-            canvas.shadowColor = null;
-            canvas.shadowBlur = null;
+            canvas.lineWidth = document.getElementById("lineWidthR").value;
+            canvas.strokeStyle = 'LightGrey';
+            setColor('LightGrey')
             props.setMouseR(false);
-
         })
 
         interact('#canvasR').on('up', function (event) {
@@ -125,12 +129,7 @@ const RightCanvas = (props) => {
             props.secondsR.push(timeTakenR / 1000);
             props.setRight({ x: -1, y: -1 })
             props.setMouseR(true);
-            if (state.mousedown) {
-                canvas.shadowColor = shadowColor;
-                canvas.shadowBlur = shadowBlur;
-                canvas.stroke();
-            }
-            state.mousedown = false;
+            canvas.stroke();
             quantityPixels();
         })
         interact('#canvasR')
@@ -146,23 +145,22 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        if (!flagCnc) {
-                            changeToWhite()
-                        }
+                        // if (!flagCnc) {
+                        // changeToWhite()
+                        // }
                         // else {
                         //     changeToColor()
                         // }
                         x = event.clientX;
                         y = event.clientY;
-                        if (x > 0 && x < 800 && y > 0 && y < 800) {
-                            indexCheck(x, y);
-                        }
-                        if (flag) {
-                            canvas.lineTo(event.clientX, event.clientY);
-                        }
+                        // if (x > 0 && x < 800 && y > 0 && y < 800) {
+                        //     indexCheck(x, y);
+                        // }
+                        // if (flag) {
+                        canvas.lineTo(event.clientX, event.clientY);
                         canvas.stroke();
                         props.setRight({ x: event.clientX, y: event.clientY });
-                        props.handleCoordinate(event.clientX, event.clientY);
+                        props.handleCoordinate(event.clientX, event.clientY, color);
                     }
                 }
             })
@@ -180,30 +178,45 @@ const RightCanvas = (props) => {
         }
         resizeCanvases()
         // interact(window).on('resize', resizeCanvases)
-    }, [])
+    }, [props.cchange2, props.cchange1 ])
 
-    const changeToWhite = () => {
-        let arr = props.arr;
-        if (flagCnc) {
-            return
-        }
-        for (let i = 1; i < arr.length - 1; i++) {
-            context.lineWidth = document.getElementById("lineWidth").value;
-            context.strokeStyle = 'LightGrey';
+    //Coloring to grey
+    // const changeToWhite = () => {
+    //     let arr = props.arr;
+    //     if (flagCnc) {
+    //         return
+    //     }
+    //     for (let i = 1; i < arr.length - 1; i++) {
+    //         context.lineWidth = document.getElementById("lineWidthR").value;
+    //         context.strokeStyle = 'LightGrey';
 
-            if (arr[i].r.x === -1) {
-                context.closePath();
-            }
-            else if (arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
-                context.beginPath();
-                context.moveTo(arr[i].r.x, arr[i].r.y);
-                context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-                context.stroke();
-            }
-        }
-        context.stroke();
-    }
+    //         if (arr[i].r.x === -1) {
+    //             context.closePath();
+    //         }
+    //         else if (arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
+    //             context.beginPath();
+    //             context.moveTo(arr[i].r.x, arr[i].r.y);
+    //             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
+    //             context.stroke();
+    //         }
+    //         // else if (arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
+    //         //     context.beginPath();
+    //         //     const { data } = context.getImageData(x, y, 1, 1);
+    //         //     if (data[2] === 240) {
+    //         //         flag = true;
+    //         //     }
+    //         //     else {
+    //         //         flag = false;
+    //         //     }
+    //         //     context.moveTo(arr[i].r.x, arr[i].r.y);
+    //         //     if (flag) { context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y); }
+    //         //     context.stroke();
+    //         // }
+    //     }
+    //     context.stroke();
+    // }
 
+    //coloring all the coloring to the color
     // const changeToColor = () => {
     //     let arr = props.arr;
     //     if (!flagCnc) {
@@ -230,43 +243,86 @@ const RightCanvas = (props) => {
     //     context.stroke();
     // }
 
+    const changeToWhite = () => {
+        if (flagCnc) {
+            return
+        }
+        context.beginPath();
+        context.lineWidth = document.getElementById("lineWidthR").value;
+        context.strokeStyle = 'LightGrey';
+        // context.moveTo(x, y;
+        context.lineTo(x, y);
+        context.stroke();
+        
+    }
+
+    const changeToColor = () => {
+        if (!flagCnc) {
+            return
+        }
+        context.beginPath();
+        context.lineWidth = document.getElementById("lineWidthR").value;
+        context.strokeStyle = props.color;
+        // context.moveTo(x, y;
+        context.lineTo(x, y);
+        context.stroke();
+    }
+
+
+    const shapesSelected = (color) => {
+        switch (selectedShape) {
+            case 'circle':
+                uploadCoor = circleCor;
+                filling2(0, 400, 390, color)
+                break;
+            case 'triangular':
+                uploadCoor = triangularCor;
+                filling(0, 10, 550, 790, 0, 790, color)
+                break;
+            case 'heart':
+                uploadCoor = heartCor;
+                filling(0, 150, 450, 150, 0, 750, color)
+                filling8(0, 150, 100, 50, 400, 50, 450, 150, color)
+                filling8(450, 150, 550, 350, 200, 700, 0, 750, color)
+                break;
+            case 'david':
+                uploadCoor = davidCor;
+                filling(0, 20, 500, 650, 0, 650, color)
+                filling(0, 140, 500, 140, 0, 780, color)
+                break;
+            case 'home':
+                uploadCoor = homeCor;
+                filling(0, 10, 550, 400, 0, 400, color)
+                filling4(0, 400, 250, 400, 250, 550, 0, 550, color)
+                filling4(100, 550, 250, 550, 250, 780, 100, 780, color)
+                filling4(100, 780, 100, 550, 0, 550, 0, 780, color)
+                break;
+            default:
+                uploadCoor = circleCor;
+                filling2(0, 400, 390, color)
+                break;
+        }
+    }
+
+    // const id = setInterval(() => {
+    //     startTimerrr();
+    // }, 500)
+
+    // const startTimerrr = () => {
+    //     props.handleCoordinate(x, y);
+    // }
+
     useEffect(() => {
         ctx = document.getElementById("canvasR")
         context = ctx.getContext('2d');
         context.fillStyle = "#fff";
         context.fillRect(0, 0, ctx.width, ctx.height);
-        switch (selectedShape) {
-            case 'circle':
-                uploadCoor = circleCor;
-                filling2(0, 400, 390, 'Ivory')
-                break;
-            case 'triangular':
-                uploadCoor = triangularCor;
-                filling(0, 10, 550, 790, 0, 790, 'Ivory')
-                break;
-            case 'heart':
-                uploadCoor = heartCor;
-                filling(0, 150, 450, 150, 0, 750, 'Ivory')
-                filling8(0, 150, 100, 50, 400, 50, 450, 150, 'Ivory')
-                filling8(450, 150, 550, 350, 200, 700, 0, 750, 'Ivory')
-                break;
-            case 'david':
-                uploadCoor = davidCor;
-                filling(0, 20, 500, 650, 0, 650, 'Ivory')
-                filling(0, 140, 500, 140, 0, 780, 'Ivory')
-                break;
-            case 'home':
-                uploadCoor = homeCor;
-                filling(0, 10, 550, 400, 0, 400, 'Ivory')
-                filling4(0, 400, 250, 400, 250, 550, 0, 550, 'Ivory')
-                filling4(100, 550, 250, 550, 250, 780, 100, 780, 'Ivory')
-                filling4(100, 780, 100, 550, 0, 550, 0, 780, 'Ivory')
-                break;
-        }
+        shapesSelected('Ivory')
         fileUpload()
         quantityPixelsArea();
     }, []);
 
+    //check how much left to coloring
     const quantityPixelsArea = () => {
         p = context.getImageData(0, 0, ctx.width, ctx.height).data;
         area = 0;
@@ -277,6 +333,8 @@ const RightCanvas = (props) => {
         }
         // console.log(area);
     }
+
+    //check drawing pixels area - for 95% coloring 
     const quantityPixels = () => {
         p = context.getImageData(0, 0, ctx.width, ctx.height).data;
         fill = 0;
@@ -285,43 +343,15 @@ const RightCanvas = (props) => {
                 fill++
             }
         }
-        // console.log(fill);
         fillPercentage = ((area - fill) * 100) / area;
-        // console.log(fillPercentage);
         if (fillPercentage > 95) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             let color = props.color;
-            switch (selectedShape) {
-                case 'circle':
-                    uploadCoor = circleCor;
-                    filling2(0, 400, 390, color)
-                    break;
-                case 'triangular':
-                    uploadCoor = triangularCor;
-                    filling(0, 10, 550, 790, 0, 790, color)
-                    break;
-                case 'heart':
-                    uploadCoor = heartCor;
-                    filling(0, 150, 450, 150, 0, 750, color)
-                    filling8(0, 150, 100, 50, 400, 50, 450, 150, color)
-                    filling8(450, 150, 550, 350, 200, 700, 0, 750, color)
-                    break;
-                case 'david':
-                    uploadCoor = davidCor;
-                    filling(0, 20, 500, 650, 0, 650, color)
-                    filling(0, 140, 500, 140, 0, 780, color)
-                    break;
-                case 'home':
-                    uploadCoor = homeCor;
-                    filling(0, 10, 550, 400, 0, 400, color)
-                    filling4(0, 400, 250, 400, 250, 550, 0, 550, color)
-                    filling4(100, 550, 250, 550, 250, 780, 100, 780, color)
-                    filling4(100, 780, 100, 550, 0, 550, 0, 780, color)
-                    break;
-            }
+            shapesSelected(color);
             viewDrawing();
         }
     }
+    //check limits - flag
     const indexCheck = (x, y) => {
         const { data } = context.getImageData(x, y, 1, 1);
         if (data[2] === 240) {
@@ -439,8 +469,8 @@ const RightCanvas = (props) => {
                 {/* <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas> */}
                 <canvas id="canvasR" width="800" height="800" penwidth='30'></canvas>
                 <div>
-                    <input type="range" min="4" max="20" id="lineWidth" name='lineWidth' step="8" />
-                    <output for="lineWidth" onforminput="value = lineWidth.valueAsNumber;"></output>
+                    <input type="range" min="4" max="20" id="lineWidthR" name='lineWidthR' step="8" />
+                    <output for="lineWidthR" onforminput="value = lineWidthR.valueAsNumber;"></output>
                 </div>
             </div>
 
