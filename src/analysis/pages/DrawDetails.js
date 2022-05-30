@@ -224,7 +224,7 @@ const DrawDetails = (props) => {
         for (let i = 0; i < arrayL.length; i++) {
             child1.push(arrayL[i].avg);
             child2.push(arrayR[i].avg);
-            if ((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) {
+            if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((arrayL[i].avg != 0) && (arrayR[i].avg !== 0))){
                 if (arrayL[i].avg > arrayR[i].avg) {
                     cync.push(arrayL[i].avg)
                 }

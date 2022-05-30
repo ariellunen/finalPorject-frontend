@@ -26,13 +26,6 @@ let color;
 let line;
 const LeftCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
-    //check if it sync
-    // if (Math.abs(props.cchange2 - props.cchange1) > 2) {
-    //     flagCnc = false;
-    // }
-    // else {
-    //     flagCnc = true;
-    // }
     useEffect(() => {
         ctx = document.getElementById("canvasL")
         context = ctx.getContext('2d');
@@ -93,12 +86,6 @@ const LeftCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        // if (!flagCnc) {
-                        //     changeToWhite()
-                        // }
-                        // else {
-                        //     changeToColor()
-                        // }
                         x = event.clientX;
                         y = event.clientY;
                         // if (x > 0 && x < 800 && y > 0 && y < 800) {
@@ -123,16 +110,6 @@ const LeftCanvas = (props) => {
         resizeCanvases()
     }, [props.cchange2, props.cchange1])
 
-
-
-    // const id = setInterval(() => {
-    //     startTimerrr();
-    // }, 500)
-
-    // const startTimerrr = () => {
-    //     props.handleCoordinate(x, y);
-    // }
-
     useEffect(() => {
         ctx = document.getElementById("canvasL");
         context = ctx.getContext('2d');
@@ -143,31 +120,6 @@ const LeftCanvas = (props) => {
         quantityPixelsArea();
     }, []);
 
-
-    //Filiing in grey
-    const changeToWhite = () => {
-        let arr = props.arr;
-        if (flagCnc) {
-            return
-        }
-        for (let i = 1; i < arr.length - 1; i++) {
-            context.lineWidth = document.getElementById("lineWidthL").value;
-            context.strokeStyle = 'LightGrey';
-
-            if (arr[i].l.x === -1) {
-                context.closePath();
-            }
-            else if (arr[i].l.x !== -1 && arr[i + 1].l.x !== -1) {
-                context.beginPath();
-                context.moveTo(arr[i].l.x, arr[i].l.y);
-                context.lineTo(arr[i + 1].l.x, arr[i + 1].l.y);
-                context.stroke();
-            }
-        }
-        context.stroke();
-    }
-
-
     const quantityPixelsArea = () => {
         p = context.getImageData(0, 0, ctx.width, ctx.height).data;
         area = 0;
@@ -176,10 +128,8 @@ const LeftCanvas = (props) => {
                 area++
             }
         }
-        console.log(area);
+        // console.log(area);
     }
-
-
 
     // const quantityPixels = () => {
     //     p = context.getImageData(0, 0, ctx.width, ctx.height).data;

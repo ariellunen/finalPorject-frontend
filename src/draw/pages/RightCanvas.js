@@ -79,21 +79,14 @@ let fillPercentage;
 let flagCnc = true;
 let color;
 let line;
+let selectedShape;
 
 const RightCanvas = (props) => {
-    let selectedShape = sessionStorage.getItem("selectedShape");
-
-    //check if it sync
-    // if (Math.abs(props.cchange2 - props.cchange1) > 2) {
-    //     flagCnc = false;
-    // }
-    // else {
-    //     flagCnc = true;
-    // }
-
+    selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {
         ctx = document.getElementById("canvasR")
         context = ctx.getContext('2d');
+        line = document.getElementById("lineWidthR").value;
         // on pointer down
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange1 === 0) {
             context.beginPath();
@@ -151,16 +144,9 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        // if (!flagCnc) {
-                        // changeToWhite()
-                        // }
-                        // else {
-                        //     changeToColor()
-                        // }
                         // if (x > 0 && x < 800 && y > 0 && y < 800) {
                         //     indexCheck(x, y);
                         // }
-                        // if (flag) {
                         x = event.clientX;
                         y = event.clientY;
                         canvas.lineTo(event.clientX, event.clientY);
@@ -176,104 +162,10 @@ const RightCanvas = (props) => {
             ) {
                 delete canvas.width
                 delete canvas.height
-                // let rect = canvas.getBoundingClientRect()
-                // canvas.width = rect.width
-                // canvas.height = rect.height
-                // console.log( canvas.width);
             })
         }
         resizeCanvases()
-        // interact(window).on('resize', resizeCanvases)
     }, [props.cchange2, props.cchange1])
-
-    //Coloring to grey
-    // const changeToWhite = () => {
-    //     let arr = props.arr;
-    //     if (flagCnc) {
-    //         return
-    //     }
-    //     for (let i = 1; i < arr.length - 1; i++) {
-    //         context.lineWidth = document.getElementById("lineWidthR").value;
-    //         context.strokeStyle = 'LightGrey';
-
-    //         if (arr[i].r.x === -1) {
-    //             context.closePath();
-    //         }
-    //         else if (arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
-    //             context.beginPath();
-    //             context.moveTo(arr[i].r.x, arr[i].r.y);
-    //             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-    //             context.stroke();
-    //         }
-    //         // else if (arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
-    //         //     context.beginPath();
-    //         //     const { data } = context.getImageData(x, y, 1, 1);
-    //         //     if (data[2] === 240) {
-    //         //         flag = true;
-    //         //     }
-    //         //     else {
-    //         //         flag = false;
-    //         //     }
-    //         //     context.moveTo(arr[i].r.x, arr[i].r.y);
-    //         //     if (flag) { context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y); }
-    //         //     context.stroke();
-    //         // }
-    //     }
-    //     context.stroke();
-    // }
-
-    //coloring all the coloring to the color
-    // const changeToColor = () => {
-    //     let arr = props.arr;
-    //     if (!flagCnc) {
-    //         return
-    //     }
-    //     context.beginPath();
-    //     for (let i = 0; i < arr.length - 1; i++) {
-    //         context.lineWidth = document.getElementById("lineWidth").value;
-    //         context.strokeStyle = props.color;
-    //         if(arr[i].r.x === -1 && arr[i+1].r.x !== -1){
-    //             context.closePath();
-    //         }
-    //         else if (arr[i].r.x === -1) {
-    //             context.closePath();
-    //         }
-    //         else if(arr[i].r.x !== -1 && arr[i + 1].r.x !== -1) {
-    //             context.beginPath();
-    //             context.moveTo(arr[i].r.x, arr[i].r.y);
-    //             context.lineTo(arr[i + 1].r.x, arr[i + 1].r.y);
-    //             context.stroke();
-    //         }
-
-    //     }
-    //     context.stroke();
-    // }
-
-    const changeToWhite = () => {
-        if (flagCnc) {
-            return
-        }
-        context.beginPath();
-        context.lineWidth = document.getElementById("lineWidthR").value;
-        context.strokeStyle = 'LightGrey';
-        // context.moveTo(x, y;
-        context.lineTo(x, y);
-        context.stroke();
-
-    }
-
-    const changeToColor = () => {
-        if (!flagCnc) {
-            return
-        }
-        context.beginPath();
-        context.lineWidth = document.getElementById("lineWidthR").value;
-        context.strokeStyle = props.color;
-        // context.moveTo(x, y;
-        context.lineTo(x, y);
-        context.stroke();
-    }
-
 
     const shapesSelected = (color) => {
         switch (selectedShape) {
@@ -309,14 +201,6 @@ const RightCanvas = (props) => {
                 break;
         }
     }
-
-    // const id = setInterval(() => {
-    //     startTimerrr();
-    // }, 500)
-
-    // const startTimerrr = () => {
-    //     props.handleCoordinate(x, y);
-    // }
 
     useEffect(() => {
         ctx = document.getElementById("canvasR")

@@ -15,9 +15,9 @@ let leftCoordinates = [];
 let rightCoordinates = [];
 
 let CircularBufferL = require("circular-buffer");
-let bufL = new CircularBufferL(100);
+let bufL = new CircularBufferL(80);
 let CircularBufferR = require("circular-buffer");
-let bufR = new CircularBufferR(100);
+let bufR = new CircularBufferR(80);
 
 let pointM1 = 0;
 let pointM2 = 0;
@@ -65,8 +65,8 @@ const Coloring = (props) => {
             startTimeL = Date.now();
             floatL = false;
         }
-        if (leftCoordinates.length % 100 === 0) {
-            if (bufL.get(99)?.x && !floatL) {
+        if (leftCoordinates.length % 80 === 0) {
+            if (bufL.get(79)?.x && !floatL) {
                 stopTimeL = (Date.now() - startTimeL) / 1000;
                 floatL = true;
                 cchange1 = 0;
@@ -76,15 +76,15 @@ const Coloring = (props) => {
         };
     }
 
-    const handleRightCoordinate = (x, y) => {
-        rightCoordinates.push({ x, y });
+    const handleRightCoordinate = (x, y, color, line) => {
+        rightCoordinates.push({ x, y, color, line });
         bufR.push({ x, y });
         if (bufR.get(0)?.x && floatR) {
             startTimeR = Date.now();
             floatR = false;
         }
-        if (rightCoordinates.length % 100 === 0) {
-            if (bufR.get(99)?.x && !floatR) {
+        if (rightCoordinates.length % 80 === 0) {
+            if (bufR.get(79)?.x && !floatR) {
                 stopTimeR = (Date.now() - startTimeR) / 1000;
                 floatR = true;
                 cchange2 = 0;
@@ -212,20 +212,7 @@ const Coloring = (props) => {
                 }
             }
         }
-        // if (Math.abs(cchange1 - cchange2) > 0.5) {
-
-        //     console.log("nowwwwwwwwwwww");
-        //     cync = false;
-        //     // temp = 'yellow';
-        //     colorChange();
-        //     // console.log(temp);
-        // }
     }
-
-    // const colorChange = () =>{
-    //     temp = 'yellow';
-    // }
-    // console.log(temp);
 
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
