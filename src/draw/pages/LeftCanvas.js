@@ -438,8 +438,9 @@ import triangularCor from "../shape/TriangularL"
 import heartCor from "../shape/HeartL"
 import davidCor from "../shape/DavidL"
 import homeCor from "../shape/HomeL"
-let flagCnc = true;
+import Confetti from "react-confetti";
 
+let flagCnc = true;
 let canvas;
 let down;
 let timeTakenL = 0;
@@ -609,6 +610,8 @@ const LeftCanvas = (props) => {
         }
         console.log(area);
     }
+
+
 
     // const quantityPixels = () => {
     //     p = context.getImageData(0, 0, ctx.width, ctx.height).data;
@@ -797,10 +800,11 @@ const LeftCanvas = (props) => {
         }
     }
 
+
     return (
         <React.Fragment>
             <div>
-                {/* <canvas id="canvasL" width="620" height="470"></canvas> */}
+                {/* <Confetti /> */}
                 <canvas id="canvasL" width="800" height="800"></canvas>
                 <div>
                     <input type="range" min="4" max="20" id="lineWidthL" name='lineWidthL' step="8" />

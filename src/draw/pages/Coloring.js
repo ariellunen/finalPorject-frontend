@@ -296,8 +296,6 @@ const Coloring = (props) => {
 
     const onSubmit = () => {
         fetchGetAPI();
-        const date = new Date();
-        console.log(date)
         if (arr.length !== 1) {
             arr.shift();
         }
@@ -336,11 +334,13 @@ const Coloring = (props) => {
     }
 
 
+
+
     return (
         <React.Fragment>
             <NavLink />
             <div className='container'>
-                < div id="canvasGrid">
+                <div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
                     {/* <div id="lifebar">
                         <progress value={cchange1} max="10"></progress>
@@ -366,7 +366,6 @@ const Coloring = (props) => {
                         cchange2={cchange2}
                         setMouseR={setMouseR}
                         arr={arr}
-                    // color = {temp}
                     />
                     <p id="SeveralChanges2">{cchange2}</p>
                 </div>
