@@ -248,15 +248,15 @@ const DrawDetails = (props) => {
                     data: cync,
                     fill: true
                 }, {
-                    label: Names[1],
-                    data: child2,
-                    borderColor: storedData.colorSecond,
-                    fill: false
-                }, {
                     label: Names[0],
                     data: child1,
                     borderColor: storedData.colorFirst,
                     fill: false,
+                }, {
+                    label: Names[1],
+                    data: child2,
+                    borderColor: storedData.colorSecond,
+                    fill: false
                 }]
             },
             options: {
@@ -346,12 +346,20 @@ const DrawDetails = (props) => {
         });
     }
     const Chart4 = () => {
-        // let xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        // let yValues = [55, 49, 44, 24, 15];
+        let x = 0, y = 0, z = 0;
+        let counX = 0, counY = 0, counZ = 0;
+        for (let i = 0; i < storedData.coordinate.length; i++) {
+            if (storedData.coordinate[i].l.line === '20') { counX++ }
+            else if (storedData.coordinate[i].l.line === '12') { counY++ }
+            else if (storedData.coordinate[i].l.line === '4') { counZ++ }
+        }
+        x = ((100 * counX) / storedData.coordinate.length).toFixed(3);
+        y = ((100 * counY) / storedData.coordinate.length).toFixed(3);
+        z = ((100 * counZ) / storedData.coordinate.length).toFixed(3);
+
         let xValues = ["עבה", "רגיל", "דק"];
-        let yValues = [55, 49, 44];
+        let yValues = [x, y, z];
         let barColors = [a, b, c];
-        console.log(barColors);
 
         new Chart(ctx4, {
             type: "doughnut",
@@ -373,10 +381,20 @@ const DrawDetails = (props) => {
         });
     }
     const Chart5 = () => {
+        let x = 0, y = 0, z = 0;
+        let counX = 0, counY = 0, counZ = 0;
+        for (let i = 0; i < storedData.coordinate.length; i++) {
+            if (storedData.coordinate[i].r.line === '20') { counX++ }
+            else if (storedData.coordinate[i].r.line === '12') { counY++ }
+            else if (storedData.coordinate[i].r.line === '4') { counZ++ }
+        }
+        x = ((100 * counX) / storedData.coordinate.length).toFixed(3);
+        y = ((100 * counY) / storedData.coordinate.length).toFixed(3);
+        z = ((100 * counZ) / storedData.coordinate.length).toFixed(3);
+
         let xValues = ["עבה", "רגיל", "דק"];
-        let yValues = [5.9, 10, 14];
+        let yValues = [x, y, z];
         let barColors = [d, e, f];
-        console.log(barColors);
 
         new Chart(ctx5, {
             type: "doughnut",
@@ -433,12 +451,12 @@ const DrawDetails = (props) => {
                         <canvas id="Chart1"></canvas>
                     </div>
                     <div id='sec'>
-                        <canvas id="Chart3"></canvas>
                         <canvas id="Chart2"></canvas>
+                        <canvas id="Chart3"></canvas>
                     </div>
                     <div id='lineWidth'>
-                        <canvas id="Chart5"></canvas>
                         <canvas id="Chart4"></canvas>
+                        <canvas id="Chart5"></canvas>
                     </div>
                 </div>
                 {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
