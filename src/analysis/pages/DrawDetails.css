@@ -1,13 +1,10 @@
-#graphs{
-    width: 1395px;
-}
 #cync{
     display: flex;
     width: 1200px;
 }
 #sec{
     display: flex;
-    width: 700px;
+    width: 600px;
 }
 #lineWidth{
     display: flex;

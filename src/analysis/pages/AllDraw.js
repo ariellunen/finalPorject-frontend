@@ -50,22 +50,21 @@ const AllDraw = () => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <Box sx={{flexWrap: 'wrap', justifyContent: 'center'}}>
-            {isReady && data.map((item, key) => {
-                return (
-                    <Box sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
-                        p: 1,
-                        m: 1,
-                        bgcolor: 'background.paper',
-                        borderRadius: 1,
-                    }}>
-                        <Cards item={item} key={key} index={key} />
-                    </Box>
-                )
-            })}
+            <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap'}}>
+                {isReady && data.map((item, key) => {
+                    return (
+                        <Box sx={{
+                            justifyContent: 'center',
+                            p: 1,
+                            m: 1,
+                            bgcolor: 'background.paper',
+                            borderRadius: 1,
+                            width: '40%',
+                        }}>
+                            <Cards item={item} key={key} index={key}/>
+                        </Box>
+                    )
+                })}
             </Box>
         </React.Fragment>
     )
