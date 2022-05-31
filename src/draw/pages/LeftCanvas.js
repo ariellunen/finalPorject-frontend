@@ -7,7 +7,8 @@ import heartCor from "../shape/HeartL"
 import davidCor from "../shape/DavidL"
 import homeCor from "../shape/HomeL"
 import Confetti from "react-confetti";
-
+import Avatar from '@mui/material/Avatar';
+import './LeftCanvas.css'
 let flagCnc = true;
 let canvas;
 let down;
@@ -318,14 +319,25 @@ const LeftCanvas = (props) => {
         }
     }
 
-
     return (
         <React.Fragment>
-            <div>
-                <canvas id="canvasL" width="620" height="470"></canvas>
-                <div>
+            <div className='containerL'>
+                <canvas id="canvasL" width="620" height="470" penwidth='30'></canvas>
+                <div id='contentL'>
+                    <div id="myDivL">
+                        <Avatar
+                            sx={{ width: 50, height: 50 }}
+                            alt={'left'}
+                            src={`http://localhost:3000/${JSON.parse(localStorage.getItem('firstKide')).image}`}
+                        />
+                        <div>{`${JSON.parse(localStorage.getItem('firstKide')).name}`}</div>
+
+                    </div>
+                    
+                    <progress id='progressL' value={props.cchange1} max="10"></progress>
+                    <img src='https://i.postimg.cc/0jLXYJWx/Breadcrumbs-25.png' alt="turtel" id='turtelL' />
+                    <img src='https://i.postimg.cc/SRT236FF/Breadcrumbs-26.png' alt="bunny" id='bunnyL' />
                     <input type="range" min="4" max="20" id="lineWidthL" name='lineWidthL' step="8" />
-                    <output for="lineWidthL"></output>
                 </div>
             </div>
 

@@ -61,7 +61,8 @@ import triangularCor from "../shape/TriangularR"
 import heartCor from "../shape/HeartR"
 import davidCor from "../shape/DavidR"
 import homeCor from "../shape/HomeR"
-import './Ballons.css';
+import './RightCanvas.css';
+import Avatar from '@mui/material/Avatar';
 
 let canvas;
 let down;
@@ -191,7 +192,7 @@ const RightCanvas = (props) => {
                 break;
             case 'home':
                 uploadCoor = homeCor;
-                filling(0,10,370,250, 0, 250, color)
+                filling(0, 10, 370, 250, 0, 250, color)
                 filling4(0, 250, 220, 250, 220, 460, 0, 460, color)
                 break;
             default:
@@ -446,15 +447,23 @@ const RightCanvas = (props) => {
         })();
     }
 
-
     return (
         <React.Fragment>
-            <div>
-                {/* <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas> */}
+            <div className='container'>
                 <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas>
-                <div>
+                <div id='content'>
+                    <div id="myDiv">
+                        <div>{`${JSON.parse(localStorage.getItem('secondtKide')).name}`}</div>
+                        <Avatar
+                            sx={{ width: 50, height: 50 }}
+                            alt={'left'}
+                            src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondtKide')).image}`}
+                        />
+                    </div>
+                    <progress id='progress' value={props.cchange2} max="10"></progress>
+                    <img src='https://i.postimg.cc/qRZpdjRL/Breadcrumbs-28.png' alt="turtel" id='turtel' />
+                    <img src='https://i.postimg.cc/pyMb27tD/Breadcrumbs-27.png' alt="bunny" id='bunny' />
                     <input type="range" min="4" max="20" id="lineWidthR" name='lineWidthR' step="8" />
-                    <output for="lineWidthR" onforminput="value = lineWidthR.valueAsNumber;"></output>
                 </div>
             </div>
 

@@ -279,13 +279,13 @@ const Recovery = (props) => {
             <div style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>
                 <canvas
                     id='leftCanvas'
-                    width={`800px`}
-                    height={`800px`}
+                    width={`620px`}
+                    height={`470px`}
                 />
                 <canvas
                     id='rightCanvas'
-                    width={`800px`}
-                    height={`800px`}
+                    width={`620px`}
+                    height={`470px`}
                 />
             </div>
             {/* <Button variant="outlined" onClick={handleClick}>התחל</Button> */}

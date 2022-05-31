@@ -433,7 +433,7 @@ const DrawDetails = (props) => {
                 <Typography variant="h4" sx={{ margin: 'auto'}}>זמן הצביעה בין {Names[0]} לבין {Names[1]} נמשך {storedData.secondTotal} שניות</Typography>
                 <CardActions>
                     <IconButton>
-                        <ReplayIcon fill= {'black'} onClick={handleOpen} sx={{height: '160px', width: '160px'}} />
+                        <ReplayIcon fill= {'black'} onClick={handleOpen} sx={{height: '100px', width: '100px'}} />
                     </IconButton>
                     {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
                     <Modal
@@ -450,20 +450,20 @@ const DrawDetails = (props) => {
             {/* <div style={{ display: 'flex'  }}> */}
             <div style={{ width: '100%' }}>
                 {/* <Typography variant="h3" component="div">{firstKide} ו{secondKide}</Typography> */}
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', width: '80%', margin: 'auto' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey',  margin: 'auto' }}>
                     <div id='cync'>
                         <canvas id="Chart1"></canvas>
                     </div>
                     <Typography variant="h4">תדירות וסנכרון</Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', width: '80%', margin: 'auto' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
                     <div id='sec'>
                         <canvas id="Chart2"></canvas>
                         <canvas id="Chart3"></canvas>
                     </div>
                     <Typography variant="h4" >מספר נגיעות במסך</Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', width: '80%', margin: 'auto' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
                     <div id='lineWidth'>
                         <canvas id="Chart4"></canvas>
                         <canvas id="Chart5"></canvas>

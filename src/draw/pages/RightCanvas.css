@@ -54,4 +54,62 @@
     background-color: rgba(150, 0, 0, .45);
 }
 
+.container{
+    position: relative;
+}
+
+#myDiv{
+    position: absolute; 
+    top:10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+
+#lifebar{
+    position: absolute; 
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+}
+
+#progress{
+    -webkit-transform-origin: 0 100%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform-origin: 0 100%;
+    -moz-transform: rotate(90deg);
+    -ms-transform-origin: 0 100%;
+    -ms-transform: rotate(90deg);
+    transform-origin: 0 100%;
+    transform: rotate(-90deg);  
+    position: absolute;
+    right: -310px;
+    bottom: 22px;
+    font-size: 35px;  
+}
+
+#turtel{
+    height: 70px;
+    width: 70px;
+    right: 30px;
+    bottom: 5px;
+    position: absolute;
+}
+
+#bunny{
+    height: 70px;
+    width: 70px;
+    right: 30px;
+    bottom: 340px;
+    position: absolute;
+}
+
+#lineWidthR{
+    height: 70px;
+    width: 150px;
+    right: 250px;
+    bottom: 415px;
+    position: absolute;
+}
 

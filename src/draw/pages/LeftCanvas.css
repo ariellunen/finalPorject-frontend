@@ -1,0 +1,61 @@
+
+.containerL{
+    position: relative;
+}
+
+#myDivL{
+    position: absolute; 
+    top:10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+
+#lifebarL{
+    position: absolute; 
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+}
+
+#progressL{
+    -webkit-transform-origin: 0 100%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform-origin: 0 100%;
+    -moz-transform: rotate(90deg);
+    -ms-transform-origin: 0 100%;
+    -ms-transform: rotate(90deg);
+    transform-origin: 0 100%;
+    transform: rotate(-90deg);  
+    position: absolute;
+    left: 75px;
+    bottom: 22px;
+    font-size: 35px;  
+
+}
+
+#turtelL{
+    height: 70px;
+    width: 70px;
+    left: 30px;
+    bottom: 5px;
+    position: absolute;
+}
+
+#bunnyL{
+    height: 70px;
+    width: 70px;
+    left: 30px;
+    bottom: 340px;
+    position: absolute;
+}
+
+#lineWidthL{
+    height: 70px;
+    width: 150px;
+    left: 250px;
+    bottom: 415px;
+    position: absolute;
+}
+

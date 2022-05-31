@@ -8,6 +8,10 @@ import NavLink from '../../user/components/NavLinks';
 import Confetti from "react-confetti";
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { useHistory } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Stack from '@mui/material/Stack';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 let moment = require('moment-timezone');
 let counter = 0;
@@ -17,9 +21,9 @@ let leftCoordinates = [];
 let rightCoordinates = [];
 
 let CircularBufferL = require("circular-buffer");
-let bufL = new CircularBufferL(80);
+let bufL = new CircularBufferL(30);
 let CircularBufferR = require("circular-buffer");
-let bufR = new CircularBufferR(80);
+let bufR = new CircularBufferR(30);
 
 let pointM1 = 0;
 let pointM2 = 0;
@@ -45,6 +49,25 @@ let changeL = [];
 let changeR = [];
 
 let test = [];
+
+const breadcrumbs = [
+    <Typography key="1" color="text.primary" component={Link} to='/'>
+        תפריט ראשי
+    </Typography>,
+    <Typography key="2" color="text.primary" component={Link} to='/form'>
+        בחירת ילדים
+    </Typography>,
+    <Typography key="2" color="text.primary" component={Link} to='/drawing/color'>
+        בחירת צבע
+    </Typography>,
+    <Typography key="3" color="text.primary" component={Link} to='/drawing/shapes'>
+        בחירת צורה
+    </Typography>,
+    <Typography key="4" color="text.primary">
+        צביעה    </Typography>,
+];
+
+
 const Coloring = (props) => {
     const history = useHistory();
     const [isDone, seyIsDone] = useState(false)
@@ -60,7 +83,7 @@ const Coloring = (props) => {
     useEffect(() => {
         arr[counter] = { l: left, r: right }
         counter++;
-        if(isDone){
+        if (isDone) {
             arr = [];
             counter = 0;
         }
@@ -73,8 +96,8 @@ const Coloring = (props) => {
             startTimeL = Date.now();
             floatL = false;
         }
-        if (leftCoordinates.length % 80 === 0) {
-            if (bufL.get(79)?.x && !floatL) {
+        if (leftCoordinates.length % 30 === 0) {
+            if (bufL.get(29)?.x && !floatL) {
                 stopTimeL = (Date.now() - startTimeL) / 1000;
                 floatL = true;
                 cchange1 = 0;
@@ -91,8 +114,8 @@ const Coloring = (props) => {
             startTimeR = Date.now();
             floatR = false;
         }
-        if (rightCoordinates.length % 80 === 0) {
-            if (bufR.get(79)?.x && !floatR) {
+        if (rightCoordinates.length % 30 === 0) {
+            if (bufR.get(29)?.x && !floatR) {
                 stopTimeR = (Date.now() - startTimeR) / 1000;
                 floatR = true;
                 cchange2 = 0;
@@ -341,8 +364,6 @@ const Coloring = (props) => {
     //     //   });
     // };
 
-
-console.log(arr)
     const onSubmit = async () => {
         if (arr.length !== 1) {
             arr.shift();
@@ -387,21 +408,21 @@ console.log(arr)
             console.log(responseData);
             arr = [];
             counter = 0;
-            secondsL=0;
-            changeL=0;
-            secondsR=0;
-            secondsL=0;
+            secondsL = 0;
+            changeL = 0;
+            secondsR = 0;
+            secondsL = 0;
             seyIsDone(true)
             history.push('/')
-            
+
         } catch (err) {
             arr = [];
             counter = 0;
             counter = 0;
-            secondsL=0;
-            changeL=0;
-            secondsR=0;
-            secondsL=0;
+            secondsL = 0;
+            changeL = 0;
+            secondsR = 0;
+            secondsL = 0;
             console.log(err);
         }
     }
@@ -412,14 +433,18 @@ console.log(arr)
     return (
         <React.Fragment>
             <NavLink />
+            <Stack spacing={2} >
+                <Breadcrumbs
+                    sx={{ marginTop: 1, marginLeft: 3 }}
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                >
+                    {breadcrumbs}
+                </Breadcrumbs>
+            </Stack>
             <div className='container'>
-                <div id="canvasGrid">
-                    <p id="SeveralChanges1">{cchange1}</p>
+                <div id="canvasGrid" style={{ marginTop: "8px" }}>
                     {doneLeft && doneRight === true && <Confetti style={{ width: '100%' }} />}
-                    {/* <div id="lifebar">
-                        <progress value={cchange1} max="10"></progress>
-                    </div> */}
-                    {/* <LinearProgress variant="determinate" {...props} value={cchange1} /> */}
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
                         color={JSON.parse(localStorage.getItem('firstColor'))}
@@ -430,8 +455,8 @@ console.log(arr)
                         arr={arr}
                         cchange2={cchange2}
                         setDoneLeft={setDoneLeft}
-
                     />
+
                     <RightCanvas
                         handleCoordinate={handleRightCoordinate}
                         color={JSON.parse(localStorage.getItem('secondColor'))}
@@ -443,13 +468,16 @@ console.log(arr)
                         arr={arr}
                         setDoneRight={setDoneRight}
                     />
-                    <p id="SeveralChanges2">{cchange2}</p>
+                    {/* <p id="SeveralChanges2">{cchange2}</p> */}
+
                 </div>
-                <div id='time'>
-                    <h2>{timer}</h2>
+                <div id='footer'>
+                    <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button>
+                    <div id='time'>
+                        <h3>{timer}</h3>
+                    </div>
+                    {/* <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button> */}
                 </div>
-                {/* <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button> */}
-                <Button variant="contained" type='submit' onClick={onSubmit}>סיום</Button>
             </div>
         </React.Fragment >
     )
