@@ -85,20 +85,23 @@ const ShapesPicker = (props) => {
             </Stack>
             {isReady && first.name !== undefined && <Box component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
                 <Box sx={{ textAlignLast: 'center', width: 1240, height: 470, borderTop: 'solid', borderRight: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Avatar sx={{ width: 50, height: 50 }} alt={first.name} src={`http://localhost:3000/${first.image}`} />
                         <Typography>{first.name}</Typography>
-
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Typography>{second.name}</Typography>
                         <Avatar sx={{ width: 50, height: 50 }} alt={second.name} src={`http://localhost:3000/${second.image}`} />
+                        </div>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', marginTop: 8 }}>
                         <Shapes handleShape={handleShape} />
                     </Box>
                 </Box>
             </Box>}
-            {selectedShape === null && <Button variant="contained" disabled component={Link} to="/drawing/coloring">המשך</Button>}
-            {selectedShape !== null && <Button variant="contained" type='submit' component={Link} to="/drawing/coloring">המשך</Button>}
+            {selectedShape === null && <Button disabled component={Link} to="/drawing/coloring" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
+            {selectedShape !== null && <Button type='submit' component={Link} to="/drawing/coloring" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
 
             {!isReady && <CircularProgress />}
 

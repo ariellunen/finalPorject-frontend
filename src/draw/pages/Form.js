@@ -15,6 +15,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import './Coloring.css';
 
 let child = [];
 let name;
@@ -157,7 +158,10 @@ const Form = (props) => {
                     {secondtKide !== null && <Avatar alt={secondtKide.name} src={`http://localhost:3000/${secondtKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
             </Box>}
-            <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>
+            {(firstKide === null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled component={Link} to="/drawing/color">המשך</Button>}
+            {(firstKide !== null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled component={Link} to="/drawing/color">המשך</Button>}
+            {(firstKide === null) && (secondtKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled component={Link} to="/drawing/color">המשך</Button>}
+            {(secondtKide !== null) && (firstKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>}
         </React.Fragment>
     )
 };
