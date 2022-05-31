@@ -15,6 +15,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from "@material-ui/core/IconButton";
+import Box from '@mui/material/Box';
 
 let ctx1;
 let ctx2;
@@ -222,7 +223,7 @@ const DrawDetails = (props) => {
         for (let i = 0; i < arrayL.length; i++) {
             child1.push(arrayL[i].avg);
             child2.push(arrayR[i].avg);
-            if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((arrayL[i].avg != 0) && (arrayR[i].avg !== 0))){
+            if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((arrayL[i].avg != 0) && (arrayR[i].avg !== 0))) {
                 if (arrayL[i].avg > arrayR[i].avg) {
                     cync.push(arrayL[i].avg)
                 }
@@ -260,7 +261,7 @@ const DrawDetails = (props) => {
             options: {
                 legend: { display: true },
                 title: {
-                    display: true,
+                    display: false,
                     text: `זמן הצביעה בין ${Names[0]} לבין ${Names[1]} נמשך ${storedData.secondTotal} שניות `,
                     fontSize: 20
                 }
@@ -296,7 +297,7 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `מספר נגיעות במסך של ${Names[0]}`,
+                    text: `${Names[0]}`,
                     fontSize: 20
                 },
                 scales: {
@@ -334,7 +335,7 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `מספר נגיעות במסך של ${Names[1]}`,
+                    text: `${Names[1]}`,
                     fontSize: 20
                 },
                 scales: {
@@ -370,7 +371,7 @@ const DrawDetails = (props) => {
             },
             options: {
                 title: {
-                    display: true,
+                    display: false,
                     text: `עובי קו ${Names[0]}`,
                     fontSize: 20
                 }
@@ -405,7 +406,7 @@ const DrawDetails = (props) => {
             },
             options: {
                 title: {
-                    display: true,
+                    display: false,
                     text: `עובי קו ${Names[1]}`,
                     fontSize: 20
                 }
@@ -428,37 +429,50 @@ const DrawDetails = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <CardActions>
-                <IconButton xs={{ marginTop: 100 }}>
-                    <ReplayIcon onClick={handleOpen} fontSize={'large'} />
-                </IconButton>
-                {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Recovery storedData={storedData} />
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                <Typography variant="h4" sx={{ margin: 'auto'}}>זמן הצביעה בין {Names[0]} לבין {Names[1]} נמשך {storedData.secondTotal} שניות</Typography>
+                <CardActions>
+                    <IconButton>
+                        <ReplayIcon fill= {'black'} onClick={handleOpen} sx={{height: '160px', width: '160px'}} />
+                    </IconButton>
+                    {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Recovery storedData={storedData} />
 
-                </Modal>
-            </CardActions>
-            <div style={{ display: 'flex' }}>
-                <div id='graphs'>
+                    </Modal>
+                </CardActions>
+            </Box>
+            {/* <div style={{ display: 'flex'  }}> */}
+            <div style={{ width: '100%' }}>
+                {/* <Typography variant="h3" component="div">{firstKide} ו{secondKide}</Typography> */}
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', width: '80%', margin: 'auto' }}>
                     <div id='cync'>
                         <canvas id="Chart1"></canvas>
                     </div>
+                    <Typography variant="h4">תדירות וסנכרון</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', width: '80%', margin: 'auto' }}>
                     <div id='sec'>
                         <canvas id="Chart2"></canvas>
                         <canvas id="Chart3"></canvas>
                     </div>
+                    <Typography variant="h4" >מספר נגיעות במסך</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', width: '80%', margin: 'auto' }}>
                     <div id='lineWidth'>
                         <canvas id="Chart4"></canvas>
                         <canvas id="Chart5"></canvas>
                     </div>
-                </div>
-                {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
+                    <Typography variant="h4" >עובי קו</Typography>
+                </Box>
             </div>
+            {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
+            {/* </div> */}
         </React.Fragment>
     );
 }

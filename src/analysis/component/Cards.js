@@ -59,39 +59,41 @@ const Cards = (props) => {
 
     const card = (
         <React.Fragment>
-            <div dir="rtl">
-                <CardContent>
-                    <Typography sx={{ fontSize: 19 }} color="text.secondary" gutterBottom>
-                        {props.item.timeStarted.slice(0, 10)}
-                    </Typography>
-                    <Typography variant="h4" component="div">
-                        {firstKide}{bull}{secondKide}
-                    </Typography>
-                    <br />
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        שעת התחלה
-                        &nbsp;
-                        {props.item.timeStarted.slice(11, -6)}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        שעת סיום
-                        &nbsp;
-                        {props.item.timeDone.slice(11, -6)}
-                    </Typography>
-                </CardContent>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <CardActions style={{width: '35%' }}>
+                    <Button variant="contained" type='submit' style={{ width: 130, height: 130, fontSize: 30, borderRadius: 80, borderBottom: 'ridge', color: 'Navy' }} onClick={(() => {
+                        localStorage.setItem('Item', JSON.stringify(props.item));
+                        localStorage.setItem('Names', JSON.stringify(arr));
+                    })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
+                </CardActions>
+                <div dir="rtl">
+                    <CardContent>
+                        <Typography variant="h3" component="div">
+                            {firstKide} ו{secondKide}
+                        </Typography>
+                        <br />
+                        <Typography sx={{ margin: 0, fontSize: 25 }} color="text.secondary" gutterBottom>
+                            {props.item.timeStarted.slice(0, 10)}
+                        </Typography>
+                        <Typography sx={{ margin: 0, fontSize: 25 }} color="text.secondary">
+                            שעת התחלה:
+                            &nbsp;
+                            {props.item.timeStarted.slice(11, -6)}
+                        </Typography>
+                        <Typography sx={{ margin: 0, fontSize: 25 }} color="text.secondary">
+                            שעת סיום:
+                            &nbsp;
+                            {props.item.timeDone.slice(11, -6)}
+                        </Typography>
+                    </CardContent>
+                </div>
             </div>
-            <CardActions>
-                <Button variant="contained" type='submit' onClick={(() => {
-                    localStorage.setItem('Item', JSON.stringify(props.item));
-                    localStorage.setItem('Names', JSON.stringify(arr));
-                })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
-            </CardActions>
         </React.Fragment>
     );
 
     return (
         <React.Fragment>
-            {isReady && <Box sx={{ minWidth: 275, width: '75%' }}>
+            {isReady && <Box sx={{ minWidth: 275, width: '100%' }}>
                 <Card style={{ marginTop: 10 }} variant="outlined">{card}</Card>
             </Box>}
         </React.Fragment>

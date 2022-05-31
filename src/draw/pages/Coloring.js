@@ -108,16 +108,20 @@ const Coloring = (props) => {
     // console.log("mouse",mouseUpL)
 
     if (mouseUpL === true) {
-        cchange1 = 0;
-        change1 = 0;
+        setTimeout(() => {
+            cchange1 = 0;
+            change1 = 0;
+        }, 1000);
     }
 
     const [mouseUpR, setMouseR] = useState(false);
     // console.log("mouse",mouseUpR)
 
     if (mouseUpR === true) {
-        cchange2 = 0;
-        change2 = 0;
+        setTimeout(() => {
+            cchange2 = 0;
+            change2 = 0;
+        }, 1000);
     }
 
     const frequencyL = (stopTimeL) => {
