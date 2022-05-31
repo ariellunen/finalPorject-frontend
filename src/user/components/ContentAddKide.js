@@ -54,7 +54,6 @@ const ContentAddKide = () => {
             const formData = new FormData();
             formData.append('name', formState.inputs.name.value);
             formData.append('image', formState.inputs.image.value);
-            // formData.append('image', name);
             const responseData = await sendRequest(
                 'http://localhost:3000/api/users/signupChild/',
                 'POST',

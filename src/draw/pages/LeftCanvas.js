@@ -199,7 +199,7 @@ const LeftCanvas = (props) => {
             }
         }
         fillPercentage = ((area - fill) * 100) / area;
-        if (fillPercentage > 95) {
+        if (fillPercentage > 90) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             shapesSelected(props.color);
             viewDrawing();

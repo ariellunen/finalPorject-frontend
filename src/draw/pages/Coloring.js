@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import NavLink from '../../user/components/NavLinks';
 import Confetti from "react-confetti";
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { useHistory } from 'react-router-dom';
 
 let moment = require('moment-timezone');
 let counter = 0;
@@ -44,6 +46,8 @@ let changeR = [];
 
 let test = [];
 const Coloring = (props) => {
+    const history = useHistory();
+    const [isDone, seyIsDone] = useState(false)
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
         // setStartedTime(new Date());
@@ -56,7 +60,11 @@ const Coloring = (props) => {
     useEffect(() => {
         arr[counter] = { l: left, r: right }
         counter++;
-    }, [left, right])
+        if(isDone){
+            arr = [];
+            counter = 0;
+        }
+    }, [left, right, isDone])
 
     const handleLeftCoordinate = (x, y, color, line) => {
         leftCoordinates.push({ x, y, color, line });
@@ -281,51 +289,121 @@ const Coloring = (props) => {
         }
     }
 
-    const onSubmit = () => {
-        fetchGetAPI();
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+
+    // const onSubmit = async event => {
+    //     event.preventDefault();
+    //     // fetchGetAPI();
+    //     if (arr.length !== 1) {
+    //         arr.shift();
+    //     }
+    //     try {
+    //         const data = new FormData();
+    //         data.append('firstKide', JSON.parse(localStorage.getItem('firstKide')))
+    //         data.append('secondKide', JSON.parse(localStorage.getItem('secondtKide')))
+    //         data.append('timeStarted', startedTime)
+    //         data.append('secondTotal', secondTotal)
+    //         data.append('coordinate', arr)
+    //         data.append('colorFirst', JSON.parse(localStorage.getItem('firstColor')))
+    //         data.append('colorSecond', JSON.parse(localStorage.getItem('colorSecond')))
+    //         data.append('changesL', changeL)
+    //         data.append('changesR', changeR)
+    //         data.append('secondsL', secondsL)
+    //         data.append('secondsR', secondsR)
+    //         data.append('shape', JSON.parse(localStorage.getItem('shape')))
+
+    //         console.log(data)
+    //         const responseData = await sendRequest(
+    //             'http://localhost:3000/api/drawing/',
+    //             'POST',
+    //             data,
+    //         );
+    //         console.log(responseData);
+
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    //     // fetch('http://localhost:3000/api/drawing/', {
+    //     //     method: 'POST',
+    //     //     body: data
+    //     //   }).then(res => res.json())
+    //     //     .then(data => {
+    //     //       if (data.success) {
+    //     //         console.log('heeieieie')
+    //     //     } else {
+    //     //       alert('Upload failed');
+    //     //     }
+    //     //   });
+    // };
+
+
+console.log(arr)
+    const onSubmit = async () => {
         if (arr.length !== 1) {
             arr.shift();
         }
-        setTimeout(async () => {
-            console.log(user1.id, user2.id, startedTime, secondTotal, JSON.parse(localStorage.getItem('firstColor')),
-                JSON.parse(localStorage.getItem('secondColor')), changeL, changeR, secondsL, secondsR, JSON.parse(localStorage.getItem('shape')))
-            try {
-                const response = await fetch('http://localhost:3000/api/drawing/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        firstKide: user1.id,
-                        secondKide: user2.id,
-                        timeStarted: startedTime,
-                        // timeDone: date,
-                        secondTotal: secondTotal,
-                        coordinate: arr,
-                        colorFirst: JSON.parse(localStorage.getItem('firstColor')),
-                        colorSecond: JSON.parse(localStorage.getItem('secondColor')),
-                        changesL: changeL,
-                        changesR: changeR,
-                        secondsL: secondsL,
-                        secondsR: secondsR,
-                        shape: JSON.parse(localStorage.getItem('shape'))
-                    })
-                });
+        console.log(
+            arr,
+            JSON.parse(localStorage.getItem('firstKide')).id,
+            JSON.parse(localStorage.getItem('secondtKide')).id,
+            startedTime,
+            secondTotal,
+            JSON.parse(localStorage.getItem('firstColor')),
+            JSON.parse(localStorage.getItem('secondColor')),
+            changeL,
+            changeR,
+            secondsL,
+            secondsR,
+            JSON.parse(localStorage.getItem('shape')))
+        try {
+            const response = await fetch('http://localhost:3000/api/drawing/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstKide: JSON.parse(localStorage.getItem('firstKide')).id,
+                    secondKide: JSON.parse(localStorage.getItem('secondtKide')).id,
+                    timeStarted: startedTime,
+                    // timeDone: date,
+                    secondTotal: secondTotal,
+                    coordinate: arr,
+                    colorFirst: JSON.parse(localStorage.getItem('firstColor')),
+                    colorSecond: JSON.parse(localStorage.getItem('secondColor')),
+                    changesL: changeL,
+                    changesR: changeR,
+                    secondsL: secondsL,
+                    secondsR: secondsR,
+                    shape: JSON.parse(localStorage.getItem('shape'))
+                })
+            });
 
-                const responseData = await response.json();
-                console.log(responseData);
-            } catch (err) {
-                console.log(err);
-            }
-        }, 2000);
+            const responseData = await response.json();
+            console.log(responseData);
+            arr = [];
+            counter = 0;
+            secondsL=0;
+            changeL=0;
+            secondsR=0;
+            secondsL=0;
+            seyIsDone(true)
+            history.push('/')
+            
+        } catch (err) {
+            arr = [];
+            counter = 0;
+            counter = 0;
+            secondsL=0;
+            changeL=0;
+            secondsR=0;
+            secondsL=0;
+            console.log(err);
+        }
     }
 
     const [doneLeft, setDoneLeft] = useState(false);
     const [doneRight, setDoneRight] = useState(false);
-
-    if(doneLeft && doneRight === true) {
-        console.log('wooooo')
-    }
 
     return (
         <React.Fragment>
@@ -333,7 +411,7 @@ const Coloring = (props) => {
             <div className='container'>
                 <div id="canvasGrid">
                     <p id="SeveralChanges1">{cchange1}</p>
-                    {doneLeft && doneRight === true && <Confetti style={{width: '100%'}}/>}
+                    {doneLeft && doneRight === true && <Confetti style={{ width: '100%' }} />}
                     {/* <div id="lifebar">
                         <progress value={cchange1} max="10"></progress>
                     </div> */}
@@ -366,7 +444,8 @@ const Coloring = (props) => {
                 <div id='time'>
                     <h2>{timer}</h2>
                 </div>
-                <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button>
+                {/* <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button> */}
+                <Button variant="contained" type='submit' onClick={onSubmit}>סיום</Button>
             </div>
         </React.Fragment >
     )

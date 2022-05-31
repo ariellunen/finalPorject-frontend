@@ -152,7 +152,7 @@ const RightCanvas = (props) => {
                         canvas.lineTo(event.clientX, event.clientY);
                         canvas.stroke();
                         props.setRight({ x: event.clientX, y: event.clientY, color: color, line: line })
-                        props.handleCoordinate(event.clientX, event.clientY, color);
+                        props.handleCoordinate(event.clientX, event.clientY, color, line);
                     }
                 }
             })
@@ -234,7 +234,7 @@ const RightCanvas = (props) => {
             }
         }
         fillPercentage = ((area - fill) * 100) / area;
-        if (fillPercentage > 95) {
+        if (fillPercentage > 90) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             let color = props.color;
             shapesSelected(color);
