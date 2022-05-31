@@ -22,7 +22,7 @@ let name;
 let first = 'שם הילד\ה';
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState(null);
-    const [secondtKide, setSecondKide] = useState('');
+    const [secondtKide, setSecondKide] = useState(null);
     const [children, setChildren] = useState([])
     const history = useHistory();
     const [isReady, setIsReady] = useState(false);
@@ -158,9 +158,9 @@ const Form = (props) => {
                     {secondtKide !== null && <Avatar alt={secondtKide.name} src={`http://localhost:3000/${secondtKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
             </Box>}
-            {(firstKide === null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled component={Link} to="/drawing/color">המשך</Button>}
-            {(firstKide !== null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled component={Link} to="/drawing/color">המשך</Button>}
-            {(firstKide === null) && (secondtKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled component={Link} to="/drawing/color">המשך</Button>}
+            {(firstKide === null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled>המשך</Button>}
+            {(firstKide !== null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled>המשך</Button>}
+            {(firstKide === null) && (secondtKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled >המשך</Button>}
             {(secondtKide !== null) && (firstKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>}
         </React.Fragment>
     )

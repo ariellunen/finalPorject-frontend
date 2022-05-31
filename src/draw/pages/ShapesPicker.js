@@ -39,9 +39,11 @@ const ShapesPicker = (props) => {
     const location = useLocation();
     const history = useHistory();
     const [counter, setCounter] = useState(0);
+    const [shape, setShape] = useState(null);
 
     const handleShape = (shape, url) => {
         selectedShape = shape;
+        setShape(shape)
         sessionStorage.setItem("selectedShape", selectedShape);
         urlShape = url;
         console.log(urlShape)
@@ -100,8 +102,8 @@ const ShapesPicker = (props) => {
                     </Box>
                 </Box>
             </Box>}
-            {selectedShape === null && <Button disabled component={Link} to="/drawing/coloring" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-            {selectedShape !== null && <Button type='submit' component={Link} to="/drawing/coloring" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
+            {shape === null && <Button disabled sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
+            {shape !== null && <Button type='submit' component={Link} to="/drawing/coloring" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
 
             {!isReady && <CircularProgress />}
 
