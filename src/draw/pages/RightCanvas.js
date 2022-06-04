@@ -479,9 +479,9 @@ const RightCanvas = (props) => {
                     <img src='https://i.postimg.cc/pyMb27tD/Breadcrumbs-27.png' alt="bunny" id='bunny' />
                     {/* <input type="range" min="4" max="20" id="lineWidthR" name='lineWidthR' step="8" /> */}
                     <div className='lineWidthR'>
-                        <button type='button' id='lineWidthR4' value={4} onClick={(() => handleWidth(4))}></button>
-                        <button type='button' id='lineWidthR12' value={12} onClick={(() => handleWidth(12))}></button>
                         <button type='button' id='lineWidthR20' value={20} onClick={(() => handleWidth(20))}></button>
+                        <button type='button' id='lineWidthR12' value={12} onClick={(() => handleWidth(12))}></button>
+                        <button type='button' id='lineWidthR4' value={4} onClick={(() => handleWidth(4))}></button>
                     </div>
                 </div>
             </div>

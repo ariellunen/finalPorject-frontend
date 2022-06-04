@@ -1,25 +1,24 @@
-
-.containerL{
+.containerL {
     position: relative;
 }
 
-#myDivL{
-    position: absolute; 
-    top:10px;
+#myDivL {
+    position: absolute;
+    top: 10px;
     left: 10px;
     display: flex;
     align-items: center;
     font-size: 25px;
 }
 
-#lifebarL{
-    position: absolute; 
+#lifebarL {
+    position: absolute;
     display: flex;
     align-items: center;
     font-size: 30px;
 }
 
-#progressL{
+#progressL {
     -webkit-transform-origin: 0 100%;
     -webkit-transform: rotate(90deg);
     -moz-transform-origin: 0 100%;
@@ -27,15 +26,15 @@
     -ms-transform-origin: 0 100%;
     -ms-transform: rotate(90deg);
     transform-origin: 0 100%;
-    transform: rotate(-90deg);  
+    transform: rotate(-90deg);
     position: absolute;
     left: 75px;
     bottom: 22px;
-    font-size: 35px;  
+    font-size: 35px;
 
 }
 
-#turtelL{
+#turtelL {
     height: 70px;
     width: 70px;
     left: 30px;
@@ -43,7 +42,7 @@
     position: absolute;
 }
 
-#bunnyL{
+#bunnyL {
     height: 70px;
     width: 70px;
     left: 30px;
@@ -51,33 +50,38 @@
     position: absolute;
 }
 
-.lineWidthL{
+.lineWidthL {
     height: 70px;
     width: 150px;
     left: 180px;
     bottom: 415px;
     position: absolute;
+    display: flex;
+    align-items: center;
+    top: 1px;
 }
 
 
-#lineWidthL4{
+#lineWidthL4 {
     border-radius: 50%;
     height: 25px;
     width: 25px;
-    border-style: none;    
+    border-style: none;
+    margin-right: 10px;
 }
 
-#lineWidthL12{
+#lineWidthL12 {
     border-radius: 50%;
     height: 35px;
     width: 35px;
     border-style: none;
+    margin-right: 10px;
 }
 
-#lineWidthL20{
+#lineWidthL20 {
     border-radius: 50%;
     height: 45px;
     width: 45px;
     border-style: none;
+    margin-right: 10px;
 }
-
