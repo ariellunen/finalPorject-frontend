@@ -85,14 +85,20 @@ let selectedShape;
 const RightCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {
+        document.getElementById("lineWidthR4").style.backgroundColor = props.color;
+        document.getElementById("lineWidthR12").style.backgroundColor = props.color;
+        document.getElementById("lineWidthR20").style.backgroundColor = props.color;
+
+    }, [props.color])
+    useEffect(() => {
         ctx = document.getElementById("canvasR")
         context = ctx.getContext('2d');
-        line = document.getElementById("lineWidthR").value;
+        // line = document.getElementById("lineWidthR").value;
         // on pointer down
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange1 === 0) {
             context.beginPath();
-            context.lineWidth = document.getElementById("lineWidthR").value;
-            line = document.getElementById("lineWidthL").value;
+            context.lineWidth = line;
+            // line = document.getElementById("lineWidthL").value;
             color = 'LightGrey'
             context.strokeStyle = 'LightGrey';
             context.lineTo(x, y);
@@ -101,11 +107,12 @@ const RightCanvas = (props) => {
 
         else {
             context.beginPath();
-            context.lineWidth = document.getElementById("lineWidthR").value;
+            context.lineWidth = line;
+            // context.lineWidth = document.getElementById("lineWidthR").value;
             context.strokeStyle = props.color;
             context.lineTo(x, y);
             context.stroke();
-            line = document.getElementById("lineWidthL").value;
+            // line = document.getElementById("lineWidthL").value;
             color = props.color
         }
 
@@ -115,10 +122,12 @@ const RightCanvas = (props) => {
             event.stopPropagation();
             down = Date.now();
             canvas.beginPath();
-            canvas.lineWidth = document.getElementById("lineWidthR").value;
+            // canvas.lineWidth = document.getElementById("lineWidthR").value;
+            context.lineWidth = line;
+
             canvas.strokeStyle = 'LightGrey';
             props.setMouseR(false);
-            line = document.getElementById("lineWidthL").value;
+            // line = document.getElementById("lineWidthL").value;
             color = 'LightGrey'
         })
 
@@ -447,6 +456,11 @@ const RightCanvas = (props) => {
         })();
     }
 
+    const handleWidth = (value) => {
+        // console.log(value)
+        line = value;
+    }
+
     return (
         <React.Fragment>
             <div className='container'>
@@ -463,7 +477,12 @@ const RightCanvas = (props) => {
                     <progress id='progress' value={props.cchange2} max="10"></progress>
                     <img src='https://i.postimg.cc/qRZpdjRL/Breadcrumbs-28.png' alt="turtel" id='turtel' />
                     <img src='https://i.postimg.cc/pyMb27tD/Breadcrumbs-27.png' alt="bunny" id='bunny' />
-                    <input type="range" min="4" max="20" id="lineWidthR" name='lineWidthR' step="8" />
+                    {/* <input type="range" min="4" max="20" id="lineWidthR" name='lineWidthR' step="8" /> */}
+                    <div className='lineWidthR'>
+                        <button type='button' id='lineWidthR4' value={4} onClick={(() => handleWidth(4))}></button>
+                        <button type='button' id='lineWidthR12' value={12} onClick={(() => handleWidth(12))}></button>
+                        <button type='button' id='lineWidthR20' value={20} onClick={(() => handleWidth(20))}></button>
+                    </div>
                 </div>
             </div>
 

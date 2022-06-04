@@ -51,11 +51,33 @@
     position: absolute;
 }
 
-#lineWidthL{
+.lineWidthL{
     height: 70px;
     width: 150px;
     left: 180px;
     bottom: 415px;
     position: absolute;
+}
+
+
+#lineWidthL4{
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    border-style: none;    
+}
+
+#lineWidthL12{
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    border-style: none;
+}
+
+#lineWidthL20{
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    border-style: none;
 }
 

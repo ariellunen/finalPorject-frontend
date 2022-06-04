@@ -54,10 +54,7 @@ const ShapesPicker = (props) => {
         { name: '', color: '' },
     ]
 
-    const [users, setUsers] = useState(usersData);
     const [isReady, setIsReady] = useState(false);
-    const [firstColor, setFirstColor] = useState(null);
-    const [SecondColor, setSecondColor] = useState(null);
 
     useEffect(() => {
         setTimeout(() => {

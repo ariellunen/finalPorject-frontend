@@ -91,28 +91,28 @@ const App = () => {
               </Route>
               <Route path="/drawing/color" exact>
                 {permission ? <ColorPicker /> : <Redirect to={user.userType === 'specialist' ? '/' : '/drawing/color'} />}
-                <ColorPicker />
+                {/* <ColorPicker /> */}
               </Route>
               <Route path="/drawing/coloring" exact>
                 {permission ? <Coloring /> : <Redirect to={user.userType === 'specialist' ? '/' : '/drawing/coloring'} />}
-                <Coloring />
+                {/* <Coloring /> */}
               </Route>
               <Route path="/analysis" exact>
                 {permission ? <AllDraw /> : <Redirect to={user.userType === 'specialist' ? '/analysis' : '/'} />}
-                <AllDraw />
+                {/* <AllDraw /> */}
               </Route>
               <Route path="/analysis/details" exact>
                 {permission ? <DrawDetails /> : <Redirect to={user.userType === 'specialist' ? '/analysis/details' : '/'} />}
 
-                <DrawDetails />
+                {/* <DrawDetails /> */}
               </Route>
               <Route path="/form" exact>
                 {permission ? <Form /> : <Redirect to={user.userType === 'specialist' ? '/' : '/form'} />}
-                <Form />
+                {/* <Form /> */}
               </Route>
               <Route path="/drawing/shapes" exact>
                 {permission ? <ShapesPicker /> : <Redirect to={user.userType === 'specialist' ? '/' : '/drawing/shapes'} />}
-                <ShapesPicker />
+                {/* <ShapesPicker /> */}
               </Route>
               <Redirect to="/" />
             </Switch>
