@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal';
 // import Recovery from '../component/Recovery';
 import DrawDetails from '../pages/DrawDetails';
 import { Link } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 
 const bull = (
     <Box
@@ -59,34 +60,49 @@ const Cards = (props) => {
 
     const card = (
         <React.Fragment>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <CardActions style={{width: '35%' }}>
-                    <Button variant="contained" type='submit' style={{ width: 130, height: 130, fontSize: 30, borderRadius: 80, borderBottom: 'ridge', color: 'Navy' }} onClick={(() => {
+            <div dir="rtl">
+                <CardContent>
+                    <Typography variant="h4" component="div">
+                        <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                            <Box sx={{textAlign: 'center' }}>
+                                <Avatar
+                                    sx={{ width: 80, height: 80 }}
+                                    alt={'left'}
+                                    src={`http://localhost:3000/${JSON.parse(localStorage.getItem('firstKide')).image}`}
+                                />
+                                {firstKide}
+                            </Box>
+                            <Box sx={{textAlign: 'center' }}>
+                                <Avatar
+                                    sx={{ width: 80, height: 80}}
+                                    alt={'left'}
+                                    src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondKide')).image}`}
+                                />
+                                {secondKide}
+                            </Box>
+                        </Box>
+                    </Typography>
+                    <br />
+                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary" gutterBottom>
+                        {props.item.timeStarted.slice(0, 10)}
+                    </Typography>
+                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+                        שעת התחלה:
+                        &nbsp;
+                        {props.item.timeStarted.slice(11, -6)}
+                    </Typography>
+                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+                        שעת סיום:
+                        &nbsp;
+                        {props.item.timeDone.slice(11, -6)}
+                    </Typography>
+                </CardContent>
+                <CardActions sx={{ flexDirection: 'row-reverse' }}>
+                    <Button variant="contained" type='submit' style={{ width: 120, height: 40, fontSize: 30, borderRadius: 10, borderBottom: 'ridge', color: 'Navy' }} onClick={(() => {
                         localStorage.setItem('Item', JSON.stringify(props.item));
                         localStorage.setItem('Names', JSON.stringify(arr));
                     })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
                 </CardActions>
-                <div dir="rtl">
-                    <CardContent>
-                        <Typography variant="h3" component="div">
-                            {firstKide} ו{secondKide}
-                        </Typography>
-                        <br />
-                        <Typography sx={{ margin: 0, fontSize: 25 }} color="text.secondary" gutterBottom>
-                            {props.item.timeStarted.slice(0, 10)}
-                        </Typography>
-                        <Typography sx={{ margin: 0, fontSize: 25 }} color="text.secondary">
-                            שעת התחלה:
-                            &nbsp;
-                            {props.item.timeStarted.slice(11, -6)}
-                        </Typography>
-                        <Typography sx={{ margin: 0, fontSize: 25 }} color="text.secondary">
-                            שעת סיום:
-                            &nbsp;
-                            {props.item.timeDone.slice(11, -6)}
-                        </Typography>
-                    </CardContent>
-                </div>
             </div>
         </React.Fragment>
     );
@@ -94,7 +110,7 @@ const Cards = (props) => {
     return (
         <React.Fragment>
             {isReady && <Box sx={{ minWidth: 275, width: '100%' }}>
-                <Card style={{ marginTop: 10 }} variant="outlined">{card}</Card>
+                <Card style={{ marginTop: 10, borderRadius: 10 }} variant="outlined">{card}</Card>
             </Box>}
         </React.Fragment>
 

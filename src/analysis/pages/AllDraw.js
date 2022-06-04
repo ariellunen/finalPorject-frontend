@@ -50,7 +50,7 @@ const AllDraw = () => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap'}}>
+            <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
                 {isReady && data.map((item, key) => {
                     return (
                         <Box sx={{
@@ -59,9 +59,9 @@ const AllDraw = () => {
                             m: 1,
                             bgcolor: 'background.paper',
                             borderRadius: 1,
-                            width: '40%',
+                            width: '25%',
                         }}>
-                            <Cards item={item} key={key} index={key}/>
+                            <Cards item={item} key={key} index={key} />
                         </Box>
                     )
                 })}
