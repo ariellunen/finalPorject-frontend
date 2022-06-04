@@ -63,6 +63,7 @@ import davidCor from "../shape/DavidR"
 import homeCor from "../shape/HomeR"
 import './RightCanvas.css';
 import Avatar from '@mui/material/Avatar';
+import { ClickAwayListener } from '@mui/material';
 
 let canvas;
 let down;
@@ -85,9 +86,9 @@ let selectedShape;
 const RightCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {
-        document.getElementById("lineWidthR4").style.backgroundColor = props.color;
-        document.getElementById("lineWidthR12").style.backgroundColor = props.color;
-        document.getElementById("lineWidthR20").style.backgroundColor = props.color;
+        document.getElementById("oneR").style.backgroundColor = props.color;
+        document.getElementById("twoR").style.backgroundColor = props.color;
+        document.getElementById("threeR").style.backgroundColor = props.color;
 
     }, [props.color])
     useEffect(() => {
@@ -461,6 +462,23 @@ const RightCanvas = (props) => {
         line = value;
     }
 
+    let button = document.getElementsByClassName("width");
+    
+    let addSelectClass = function () {
+        removeSelectClass();
+        this.classList.add('selected');
+    }
+
+    let removeSelectClass = function () {
+        for (let i = 0; i < button.length; i++) {
+            button[i].classList.remove('selected')
+        }
+    }
+
+    for (let i = 0; i < button.length; i++) {
+        button[i].addEventListener("click", addSelectClass);
+    }
+ 
     return (
         <React.Fragment>
             <div className='container'>
@@ -479,9 +497,9 @@ const RightCanvas = (props) => {
                     <img src='https://i.postimg.cc/pyMb27tD/Breadcrumbs-27.png' alt="bunny" id='bunny' />
                     {/* <input type="range" min="4" max="20" id="lineWidthR" name='lineWidthR' step="8" /> */}
                     <div className='lineWidthR'>
-                        <button type='button' id='lineWidthR20' value={20} onClick={(() => handleWidth(20))}></button>
-                        <button type='button' id='lineWidthR12' value={12} onClick={(() => handleWidth(12))}></button>
-                        <button type='button' id='lineWidthR4' value={4} onClick={(() => handleWidth(4))}></button>
+                        <button type='button' className='width lineWidthR20' id='oneR' value={20} onClick={(() => handleWidth(20))}></button>
+                        <button type='button' className='width selected lineWidthR12' id='twoR' value={12} onClick={(() => handleWidth(12))}></button>
+                        <button type='button' className='width lineWidthR4' id='threeR' value={4} onClick={(() => handleWidth(4))}></button>
                     </div>
                 </div>
             </div>

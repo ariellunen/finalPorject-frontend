@@ -28,9 +28,9 @@ let line;
 const LeftCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {
-        document.getElementById("lineWidthL4").style.backgroundColor = props.color;
-        document.getElementById("lineWidthL12").style.backgroundColor = props.color;
-        document.getElementById("lineWidthL20").style.backgroundColor = props.color;
+        document.getElementById("oneL").style.backgroundColor = props.color;
+        document.getElementById("twoL").style.backgroundColor = props.color;
+        document.getElementById("threeL").style.backgroundColor = props.color;
 
     }, [props.color])
 
@@ -335,6 +335,23 @@ const LeftCanvas = (props) => {
         line = value;
     }
 
+    let button = document.getElementsByClassName("widthL");
+    
+    let addSelectClass = function () {
+        removeSelectClass();
+        this.classList.add('selectedL');
+    }
+
+    let removeSelectClass = function () {
+        for (let i = 0; i < button.length; i++) {
+            button[i].classList.remove('selectedL')
+        }
+    }
+
+    for (let i = 0; i < button.length; i++) {
+        button[i].addEventListener("click", addSelectClass);
+    }
+
     return (
         <React.Fragment>
             <div className='containerL'>
@@ -355,9 +372,9 @@ const LeftCanvas = (props) => {
                     <img src='https://i.postimg.cc/SRT236FF/Breadcrumbs-26.png' alt="bunny" id='bunnyL' />
                     {/* <input type="range" min="4" max="20" id="lineWidthL" name='lineWidthL' step="8" /> */}
                     <div className='lineWidthL'>
-                        <button type='button' id='lineWidthL4' value={4} onClick={(() => handleWidth(4))}></button>
-                        <button type='button' id='lineWidthL12' value={12} onClick={(() => handleWidth(12))}></button>
-                        <button type='button' id='lineWidthL20' value={20} onClick={(() => handleWidth(20))}></button>
+                        <button type='button' className='widthL lineWidthL4' id='oneL' value={4} onClick={(() => handleWidth(4))}></button>
+                        <button type='button' className='widthL selectedL lineWidthL12' id='twoL' value={12} onClick={(() => handleWidth(12))}></button>
+                        <button type='button' className='widthL lineWidthL20' id='threeL' value={20} onClick={(() => handleWidth(20))}></button>
                     </div>
                 </div>
             </div>

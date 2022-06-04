@@ -80,9 +80,9 @@ const Form = (props) => {
             </Stack>
             {isReady && <Box component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '80%' }}>
                         {children.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100 }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -125,9 +125,9 @@ const Form = (props) => {
                     {firstKide !== null && <Avatar alt={firstKide.name} src={`http://localhost:3000/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '80%' }}>
                         {children.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100 }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
