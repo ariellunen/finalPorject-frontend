@@ -49,7 +49,6 @@ let changeL = [];
 let changeR = [];
 
 let test = [];
-
 const breadcrumbs = [
     <Typography key="1" color="text.primary" component={Link} to='/'>
         תפריט ראשי
@@ -301,86 +300,14 @@ const Coloring = (props) => {
 
     let user1;
     let user2;
-    const fetchGetAPI = async () => {
-        try {
-            const response = await fetch('http://localhost:3000/api/users/children/', {
-            });
-            const responseData = await response.json();
-            console.log(responseData)
-            user2 = JSON.parse(localStorage.getItem('secondtKide'));
-            user1 = JSON.parse(localStorage.getItem('firstKide'));
-            console.log(user2, user1)
-
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-
-    // const onSubmit = async event => {
-    //     event.preventDefault();
-    //     // fetchGetAPI();
-    //     if (arr.length !== 1) {
-    //         arr.shift();
-    //     }
-    //     try {
-    //         const data = new FormData();
-    //         data.append('firstKide', JSON.parse(localStorage.getItem('firstKide')))
-    //         data.append('secondKide', JSON.parse(localStorage.getItem('secondtKide')))
-    //         data.append('timeStarted', startedTime)
-    //         data.append('secondTotal', secondTotal)
-    //         data.append('coordinate', arr)
-    //         data.append('colorFirst', JSON.parse(localStorage.getItem('firstColor')))
-    //         data.append('colorSecond', JSON.parse(localStorage.getItem('colorSecond')))
-    //         data.append('changesL', changeL)
-    //         data.append('changesR', changeR)
-    //         data.append('secondsL', secondsL)
-    //         data.append('secondsR', secondsR)
-    //         data.append('shape', JSON.parse(localStorage.getItem('shape')))
-
-    //         console.log(data)
-    //         const responseData = await sendRequest(
-    //             'http://localhost:3000/api/drawing/',
-    //             'POST',
-    //             data,
-    //         );
-    //         console.log(responseData);
-
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    //     // fetch('http://localhost:3000/api/drawing/', {
-    //     //     method: 'POST',
-    //     //     body: data
-    //     //   }).then(res => res.json())
-    //     //     .then(data => {
-    //     //       if (data.success) {
-    //     //         console.log('heeieieie')
-    //     //     } else {
-    //     //       alert('Upload failed');
-    //     //     }
-    //     //   });
-    // };
 
     const onSubmit = async () => {
         if (arr.length !== 1) {
             arr.shift();
         }
-        console.log(
-            arr,
-            JSON.parse(localStorage.getItem('firstKide')).id,
-            JSON.parse(localStorage.getItem('secondtKide')).id,
-            startedTime,
-            secondTotal,
-            JSON.parse(localStorage.getItem('firstColor')),
-            JSON.parse(localStorage.getItem('secondColor')),
-            changeL,
-            changeR,
-            secondsL,
-            secondsR,
-            JSON.parse(localStorage.getItem('shape')))
         try {
             const response = await fetch('http://localhost:3000/api/drawing/', {
                 method: 'POST',
@@ -389,9 +316,8 @@ const Coloring = (props) => {
                 },
                 body: JSON.stringify({
                     firstKide: JSON.parse(localStorage.getItem('firstKide')).id,
-                    secondKide: JSON.parse(localStorage.getItem('secondtKide')).id,
+                    secondKide: JSON.parse(localStorage.getItem('secondKide')).id,
                     timeStarted: startedTime,
-                    // timeDone: date,
                     secondTotal: secondTotal,
                     coordinate: arr,
                     colorFirst: JSON.parse(localStorage.getItem('firstColor')),

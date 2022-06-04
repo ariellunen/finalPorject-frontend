@@ -67,7 +67,7 @@ const ShapesPicker = (props) => {
 
     const fetchAPI = async () => {
         first = JSON.parse(localStorage.getItem('firstKide'));
-        second = JSON.parse(localStorage.getItem('secondtKide'));
+        second = JSON.parse(localStorage.getItem('secondKide'));
         console.log("first", first.name)
         console.log("Child", first, second)
         setIsReady(true);

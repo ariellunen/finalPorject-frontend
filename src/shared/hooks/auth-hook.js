@@ -7,7 +7,7 @@ export const useAuth = () => {
   const [userId, setUserId] = useState(false);
   const [emaill, setEmail] = useState(false);
   const [userTypee, setUserType] = useState(false);
-  
+
   const login = useCallback((uid, token, email, userType, expirationDate) => {
     setToken(token);
     setUserId(uid);
@@ -28,13 +28,14 @@ export const useAuth = () => {
     );
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback((callback) => {
     setToken(null);
     setTokenExpirationDate(null);
     setUserId(null);
     setEmail(null)
     setUserType(null)
     localStorage.removeItem('userData');
+    callback?.()
   }, []);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export const useAuth = () => {
       storedData.token &&
       new Date(storedData.expiration) > new Date()
     ) {
-      login(storedData.userId, storedData.token, storedData.email,storedData.userType, new Date(storedData.expiration));
+      login(storedData.userId, storedData.token, storedData.email, storedData.userType, new Date(storedData.expiration));
     }
   }, [login]);
 

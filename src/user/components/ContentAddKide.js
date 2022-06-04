@@ -71,10 +71,28 @@ const ContentAddKide = () => {
         setName(e.target.value);
     }
 
-    const uploadImage = async file => {
+    const uploadImage = async dataURL => {
+        console.log(typeof dataURL);
+        var blobBin = atob(dataURL.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i));
+        }
+        var file = new Blob([new Uint8Array(array)], { type: 'image/png' });
+
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('name', 'Arielllll');
+        formData.append('image', file);
         console.log(file)
+
+        const responseData = await fetch(
+            'http://localhost:3000/api/users/signupChild/',
+            {
+                method: 'POST',
+                body: formData,
+            }
+        );
+        console.log(responseData);
 
         // Connect to a seaweedfs instance
     };
@@ -90,7 +108,7 @@ const ContentAddKide = () => {
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <ErrorModal error={error} onClear={clearError} />
+                    {/* <ErrorModal error={error} onClear={clearError} /> */}
                     <Card className="authentication">
                         <hr />
                         <form onSubmit={authSubmitHandler}>
@@ -115,7 +133,10 @@ const ContentAddKide = () => {
                                 <ToggleButton value="takeImage">צילום תמונה</ToggleButton>
                             </ToggleButtonGroup>
 
-                            <Button type="submit" disabled={!formState.isValid}>
+                            {/* <Button type="submit" disabled={!formState.isValid}>
+                                {'SIGNUP'}
+                            </Button> */}
+                            <Button type="submit">
                                 {'SIGNUP'}
                             </Button>
                         </form>

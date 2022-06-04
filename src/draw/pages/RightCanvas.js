@@ -453,11 +453,11 @@ const RightCanvas = (props) => {
                 <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas>
                 <div id='content'>
                     <div id="myDiv">
-                        <div>{`${JSON.parse(localStorage.getItem('secondtKide')).name}`}</div>
+                        <div>{`${JSON.parse(localStorage.getItem('secondKide')).name}`}</div>
                         <Avatar
                             sx={{ width: 50, height: 50 }}
                             alt={'left'}
-                            src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondtKide')).image}`}
+                            src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondKide')).image}`}
                         />
                     </div>
                     <progress id='progress' value={props.cchange2} max="10"></progress>

@@ -19,14 +19,15 @@ import './Coloring.css';
 
 let child = [];
 let name;
-let first = 'שם הילד\ה';
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState(null);
-    const [secondtKide, setSecondKide] = useState(null);
+    const [secondKide, setSecondKide] = useState(null);
     const [children, setChildren] = useState([])
     const history = useHistory();
     const [isReady, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
+    console.log('firstKide', firstKide);
+    console.log('secondKide', secondKide);
 
     const breadcrumbs = [
         <Typography key="1" color="text.primary" component={Link} to='/'>
@@ -58,10 +59,12 @@ const Form = (props) => {
     }
 
     const onSubmit = async event => {
-        setItems([firstKide, secondtKide]);
+        setItems([firstKide, secondKide]);
         localStorage.setItem('firstKide', JSON.stringify(firstKide));
-        localStorage.setItem('secondtKide', JSON.stringify(secondtKide));
+        localStorage.setItem('secondKide', JSON.stringify(secondKide));
     }
+
+    console.log('children', children);
 
     return (
         <React.Fragment>
@@ -83,15 +86,19 @@ const Form = (props) => {
                         })}
                     </Box>
                     <Autocomplete
-                        onChange={(event, value) => { 
-                            setFirstKide(value) 
-                            first = value 
-                        }}
+                        onChange={(event, value) => setFirstKide(value)}
                         id="country-select-demo"
                         sx={{ width: '300px', marginTop: '35px' }}
                         options={children}
                         autoHighlight
-                        getOptionLabel={(option) => option.name}
+                        value={firstKide?.id || ''}
+
+                        getOptionLabel={(option) => {
+                            return children.find(c => c.id === option)?.name || ''
+                        }}
+                        isOptionEqualToValue={(opt, value) => {
+                            return opt.id === value
+                        }}
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                 <img
@@ -105,7 +112,6 @@ const Form = (props) => {
                         )}
                         renderInput={(params) => (
                             <TextField
-                                value={name}
                                 {...params}
                                 label={"שם הילד/ה"}
                                 inputProps={{
@@ -130,7 +136,14 @@ const Form = (props) => {
                         sx={{ width: '300px', marginTop: '35px' }}
                         options={children}
                         autoHighlight
-                        getOptionLabel={(option) => option.name}
+                        value={secondKide?.id || ''}
+
+                        getOptionLabel={(option) => {
+                            return children.find(c => c.id === option)?.name || ''
+                        }}
+                        isOptionEqualToValue={(opt, value) => {
+                            return opt.id === value
+                        }}
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                 <img
@@ -144,7 +157,6 @@ const Form = (props) => {
                         )}
                         renderInput={(params) => (
                             <TextField
-                                value={name}
                                 {...params}
                                 label={"שם הילד/ה"}
                                 inputProps={{
@@ -154,14 +166,14 @@ const Form = (props) => {
                             />
                         )}
                     />
-                    {secondtKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop: '12px' }}></Avatar>}
-                    {secondtKide !== null && <Avatar alt={secondtKide.name} src={`http://localhost:3000/${secondtKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {secondKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {secondKide !== null && <Avatar alt={secondKide?.name} src={`http://localhost:3000/${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
             </Box>}
-            {(firstKide === null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled>המשך</Button>}
-            {(firstKide !== null) && (secondtKide === null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled>המשך</Button>}
-            {(firstKide === null) && (secondtKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' disabled >המשך</Button>}
-            {(secondtKide !== null) && (firstKide !== null) && <Button sx ={{right: '5px', position: 'absolute'}} type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>}
+            {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' disabled>המשך</Button>}
+            {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' disabled>המשך</Button>}
+            {(firstKide === null) && (secondKide !== null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' disabled >המשך</Button>}
+            {(secondKide !== null) && (firstKide !== null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>}
         </React.Fragment>
     )
 };
