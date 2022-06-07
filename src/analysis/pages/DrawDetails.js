@@ -47,7 +47,6 @@ const breadcrumbs = [
 const DrawDetails = (props) => {
         const storedData = JSON.parse(localStorage.getItem('Item'));
     const Names = JSON.parse(localStorage.getItem('Names'));
-    console.log(storedData);
 
     useEffect(() => {
         for (let i = 0; i < storedData.secondsL.length; i++) {

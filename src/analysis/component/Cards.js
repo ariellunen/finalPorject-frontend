@@ -3,13 +3,12 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-// import Recovery from '../component/Recovery';
-import DrawDetails from '../pages/DrawDetails';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import Button from '../../shared/components/FormElements/Button'
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const bull = (
     <Box
@@ -30,7 +29,7 @@ const Cards = (props) => {
                 const response = await fetch(`http://localhost:3000/api/users/children/${props.item.firstKide}`, {
                 });
                 const responseData = await response.json();
-                setFirstKide(responseData.child.name);
+                setFirstKide(responseData.child);
             } catch (err) {
                 console.log(err);
             }
@@ -39,8 +38,7 @@ const Cards = (props) => {
                 const response = await fetch(`http://localhost:3000/api/users/children/${props.item.secondKide}`, {
                 });
                 const responseData = await response.json();
-                // console.log(responseData)
-                setSecondKide(responseData.child.name);
+                setSecondKide(responseData.child);
                 setIsReady(true);
 
             } catch (err) {
@@ -50,10 +48,8 @@ const Cards = (props) => {
 
         getKide();
     }, [isReady]);
-    const [open, setOpen] = React.useState(false);
-    // console.log(props.item);
+    const [open, setOpen] = useState(false);
     const [data, setData] = useState(props.item)
-    // console.log("data", props.item.firstKide, props.item.secondKide)
     let arr = []
     arr.push(firstKide)
     arr.push(secondKide)
@@ -68,23 +64,23 @@ const Cards = (props) => {
                                 <Avatar
                                     sx={{ width: 80, height: 80 }}
                                     alt={'left'}
-                                    src={`http://localhost:3000/${JSON.parse(localStorage.getItem('firstKide')).image}`}
+                                    src={`http://localhost:3000/${firstKide.image}`}
                                 />
-                                {firstKide}
+                                {firstKide.name}
                             </Box>
                             <Box sx={{textAlign: 'center' }}>
                                 <Avatar
                                     sx={{ width: 80, height: 80}}
                                     alt={'left'}
-                                    src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondKide')).image}`}
+                                    src={`http://localhost:3000/${secondKide.image}`}
                                 />
-                                {secondKide}
+                                {secondKide.name}
                             </Box>
                         </Box>
                     </Typography>
                     <br />
                     <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary" gutterBottom>
-                        {props.item.timeStarted.slice(0, 10)}
+                        {props.item.timeStarted.slice(0, 10).split("-").reverse().join('-')}
                     </Typography>
                     <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
                         שעת התחלה:
