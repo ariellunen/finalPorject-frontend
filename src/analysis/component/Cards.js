@@ -80,7 +80,7 @@ const Cards = (props) => {
                     </Typography>
                     <br />
                     <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary" gutterBottom>
-                        {props.item.timeStarted.slice(0, 10).split("-").reverse().join('-')}
+                        {props.item.timeStarted.slice(0, 10).split("-").reverse().join('/')}
                     </Typography>
                     <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
                         שעת התחלה:
