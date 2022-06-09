@@ -1,36 +1,3 @@
-// import React, { useState } from "react";
-// import "react-modern-calendar-datepicker/lib/DatePicker.css";
-// import DatePicker from "react-modern-calendar-datepicker";
-
-// const App = () => {
-// const [selectedDay, setSelectedDay] = useState(null);
-// const [selectedDayRange, setSelectedDayRange] = useState({
-//     from: null,
-//     to: null
-// });
-// console.log(selectedDayRange, selectedDay)
-//     return (
-//         <>
-// <DatePicker
-//     value={selectedDay}
-//     onChange={setSelectedDay}
-//     inputPlaceholder="Select a day"
-//     shouldHighlightWeekends
-// />
-// <DatePicker
-//     value={selectedDayRange}
-//     onChange={setSelectedDayRange}
-//     inputPlaceholder="Select a day range"
-//     shouldHighlightWeekends
-// />
-//         </>
-//     );
-// };
-
-// export default App;
-
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker from "react-modern-calendar-datepicker";
@@ -48,7 +15,7 @@ import Divider from '@mui/material/Divider';
 import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import Button from '../../shared/components/FormElements/Button';
+// import Button from '../../shared/components/FormElements/Button';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -59,6 +26,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '@mui/material/Drawer';
 import { Calendar } from "react-modern-calendar-datepicker";
+import Button from '@mui/material/Button';
 
 const myCustomLocale = {
     // months list by order
@@ -159,6 +127,9 @@ const myCustomLocale = {
 }
 
 let filterArr = [];
+let shapes = [];
+let filterShape = [];
+
 export default function AllDraw() {
     const [state, setState] = useState({ left: false });
     const [isReady, setIsReady] = useState(false);
@@ -195,10 +166,24 @@ export default function AllDraw() {
         setState({ ...state, [anchor]: open });
     };
 
+    const [heart, setHeart] = useState('outlined');
+    const [circle, setCircle] = useState('outlined');
+    const [home, setHome] = useState('outlined');
+    const [triangular, setTriangle] = useState('outlined');
+    const [david, setMagen] = useState('outlined');
+
     const handleFilter = () => {
         let dateStart;
         let dateEnd;
-        console.log(data[0].timeStarted.slice(0, 10))
+        filterShape = [];
+        console.log("fff", filterShape)
+        if (heart === 'contained') { shapes.push('heart') }
+        if (circle === 'contained') { shapes.push('circle') }
+        if (home === 'contained') { shapes.push('home') }
+        if (triangular === 'contained') { shapes.push('triangular') }
+        if (david === 'contained') { shapes.push('david') }
+
+        console.log(shapes)
         if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 1) {
             dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
         }
@@ -231,6 +216,7 @@ export default function AllDraw() {
             if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
                 if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
                     if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {
+
                         console.log('true', draww)
                         filterArr.push(draww)
 
@@ -239,11 +225,64 @@ export default function AllDraw() {
             }
 
         });
-        console.log(filterArr)
-        // if (d1 < d2) {
-        //     alert("Error! Date did not Match");
-        // }
+        if (filterArr.length === 0 && shapes.length !== 0) {
+            data.forEach(draw => {
+                shapes.forEach(shape => {
+                    if (draw.shape === shape) {
+                        filterArr.push(draw)
+                    }
+                })
+            })
+        } else {
+
+            console.log(filterShape)
+            filterArr.forEach(draw => {
+                shapes.forEach(shape => {
+                    console.log(draw, '****', shape)
+                    if (draw.shape === shape) {
+                        filterShape.push(draw)
+                        console.log(filterShape)
+
+                    }
+                })
+            })
+        }
+
+        var valueArr = filterArr.map(function (item) { return item.id });
+        var isDuplicate = valueArr.some(function (item, idx) {
+            console.log(item,idx)
+            return valueArr.indexOf(item) !== idx
+        });
+        console.log(isDuplicate, filterShape);
+
+       
     }
+
+    const handleHeart = (e) => {
+        if (heart === 'outlined') { setHeart('contained'); }
+        else { setHeart('outlined'); }
+    }
+
+    const handleCircle = (e) => {
+        if (circle === 'outlined') { setCircle('contained'); }
+        else { setCircle('outlined'); }
+    }
+
+    const handleHome = (e) => {
+        if (home === 'outlined') { setHome('contained'); }
+        else { setHome('outlined'); }
+    }
+
+    const handleMagen = (e) => {
+        if (david === 'outlined') { setMagen('contained'); }
+        else { setMagen('outlined'); }
+    }
+
+    const handletriangle = (e) => {
+        if (triangular === 'outlined') { setTriangle('contained'); }
+        else { setTriangle('outlined'); }
+    }
+
 
     const list = (anchor) => (
         <Box
@@ -259,6 +298,18 @@ export default function AllDraw() {
                         shouldHighlightWeekends
                         locale={myCustomLocale} // custom locale object
                     />
+                </ListItem>
+                <Divider />
+                <ListItem>
+                    <ListItemText>צורה</ListItemText>
+
+                </ListItem>
+                <ListItem>
+                    <Button variant={heart} onClick={handleHeart}>לב</Button>
+                    <Button variant={home} onClick={handleHome}>בית</Button>
+                    <Button variant={circle} onClick={handleCircle}>עיגול</Button>
+                    <Button variant={david} onClick={handleMagen}>מגן דוד</Button>
+                    <Button variant={triangular} onClick={handletriangle}>משולש</Button>
                 </ListItem>
                 {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem key={text} disablePadding>
@@ -284,7 +335,7 @@ export default function AllDraw() {
                     </ListItem>
                 ))}
             </List>
-            <Button onClick={toggleDrawer(anchor, false)}>שמירה</Button>
+            <Button variant='contained' onClick={toggleDrawer(anchor, false)}>שמירה</Button>
         </Box>
     );
 
@@ -315,8 +366,8 @@ export default function AllDraw() {
                 ))}
             </Paper>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {filterArr?.length !== 0 ?
-                    (filterArr.map((item, key) => {
+                {filterShape?.length !== 0 ?
+                    (filterShape.map((item, key) => {
                         return (
                             <Box sx={{
                                 justifyContent: 'center',
@@ -329,7 +380,7 @@ export default function AllDraw() {
                                 <Cards item={item} key={key} index={key} />
                             </Box>
                         )
-                    })) : (data.map((item, key) => {
+                    })) : (isReady && data.map((item, key) => {
                         return (
                             <Box sx={{
                                 justifyContent: 'center',

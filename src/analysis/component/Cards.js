@@ -92,6 +92,11 @@ const Cards = (props) => {
                         &nbsp;
                         {props.item.timeDone.slice(11, -6)}
                     </Typography>
+                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+צורה:
+                        &nbsp;
+                        {props.item.shape}
+                    </Typography>
                 </CardContent>
                 <CardActions sx={{ flexDirection: 'row-reverse' }}>
                     <Button variant="contained" type='submit' style={{ width: 120, height: 40, fontSize: 30, borderRadius: 10, borderBottom: 'ridge', color: 'Navy' }} onClick={(() => {
