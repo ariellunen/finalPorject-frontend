@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 // import Button from '../../shared/components/FormElements/Button'
-import Button from '@mui/material/Button';
+import Button from '@material-ui/core/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -55,6 +55,10 @@ const Cards = (props) => {
     arr.push(firstKide)
     arr.push(secondKide)
 
+    const handleClick = () => {
+        
+    }
+
     const card = (
         <React.Fragment>
             <div dir="rtl">
@@ -99,11 +103,12 @@ const Cards = (props) => {
                         {props.item.shape}
                     </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions sx={{ flexDirection: 'row-reverse' }}>
                     <Button variant="contained" type='submit' onClick={(() => {
-                        localStorage.setItem('Item', JSON.stringify(props.item));
-                        localStorage.setItem('Names', JSON.stringify(arr));
-                    })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
+                        console.log(props.item)
+                    localStorage.setItem('Item', JSON.stringify(props.item));
+                    localStorage.setItem('Names', JSON.stringify(arr));
+                })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
                 </CardActions>
             </div>
         </React.Fragment>
