@@ -145,8 +145,8 @@ const myCustomLocale = {
     defaultPlaceholder: 'Select...',
 
     // for input range value
-    from: 'from',
-    to: 'to',
+    from: 'to',
+    to: 'from',
 
     // used for input value when multi dates are selected
     digitSeparator: ',',
@@ -158,16 +158,15 @@ const myCustomLocale = {
     isRtl: true,
 }
 
+let filterArr = [];
 export default function AllDraw() {
     const [state, setState] = useState({ left: false });
     const [isReady, setIsReady] = useState(false);
     const [data, setData] = useState(false);
-    const [selectedDay, setSelectedDay] = useState(null);
     const [selectedDayRange, setSelectedDayRange] = useState({
         from: null,
         to: null
     });
-    console.log(selectedDayRange, selectedDay)
     useEffect(() => {
         const getDraw = async () => {
             try {
@@ -184,19 +183,72 @@ export default function AllDraw() {
     }, [isReady]);
 
     const toggleDrawer = (anchor, open) => (event) => {
+        if (event.target.tagName === 'BUTTON') {
+            setState({ ...state, [anchor]: open });
+            if (selectedDayRange.from !== null && selectedDayRange.to !== null) {
+                handleFilter();
+            }
+        }
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setState({ ...state, [anchor]: open });
     };
 
+    const handleFilter = () => {
+        let dateStart;
+        let dateEnd;
+        console.log(data[0].timeStarted.slice(0, 10))
+        if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 1) {
+            dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
+        }
+        else if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 2) {
+            dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+        }
+        else if (selectedDayRange.from.month.toString().length === 2 && selectedDayRange.from.day.toString().length === 1) {
+            dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
+        }
+        else {
+            dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+        }
+
+        if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 1) {
+            dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
+        }
+        else if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 2) {
+            dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
+        }
+        else if (selectedDayRange.to.month.toString().length === 2 && selectedDayRange.to.day.toString().length === 1) {
+            dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
+        }
+        else {
+            dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
+        }
+
+        data.forEach(draww => {
+            let draw1 = draww.timeStarted.slice(0, 10);
+            let draw = draw1;
+            if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
+                if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
+                    if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {
+                        console.log('true', draww)
+                        filterArr.push(draww)
+
+                    }
+                }
+            }
+
+        });
+        console.log(filterArr)
+        // if (d1 < d2) {
+        //     alert("Error! Date did not Match");
+        // }
+    }
+
     const list = (anchor) => (
         <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 350 }}
+            sx={{ width: 350 }}
             role="presentation"
-        // onClick={toggleDrawer(anchor, false)}
-        // onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
                 <ListItem>
@@ -232,6 +284,7 @@ export default function AllDraw() {
                     </ListItem>
                 ))}
             </List>
+            <Button onClick={toggleDrawer(anchor, false)}>שמירה</Button>
         </Box>
     );
 
@@ -262,20 +315,36 @@ export default function AllDraw() {
                 ))}
             </Paper>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {isReady && data.map((item, key) => {
-                    return (
-                        <Box sx={{
-                            justifyContent: 'center',
-                            p: 1,
-                            m: 1,
-                            bgcolor: 'background.paper',
-                            borderRadius: 1,
-                            width: '25%',
-                        }}>
-                            <Cards item={item} key={key} index={key} />
-                        </Box>
-                    )
-                })}
+                {filterArr?.length !== 0 ?
+                    (filterArr.map((item, key) => {
+                        return (
+                            <Box sx={{
+                                justifyContent: 'center',
+                                p: 1,
+                                m: 1,
+                                bgcolor: 'background.paper',
+                                borderRadius: 1,
+                                width: '25%',
+                            }}>
+                                <Cards item={item} key={key} index={key} />
+                            </Box>
+                        )
+                    })) : (data.map((item, key) => {
+                        return (
+                            <Box sx={{
+                                justifyContent: 'center',
+                                p: 1,
+                                m: 1,
+                                bgcolor: 'background.paper',
+                                borderRadius: 1,
+                                width: '25%',
+                            }}>
+                                <Cards item={item} key={key} index={key} />
+                            </Box>
+                        )
+                    })
+                    )}
+
             </Box>
         </div>
     );
