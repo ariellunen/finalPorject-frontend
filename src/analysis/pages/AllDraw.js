@@ -156,7 +156,7 @@ export default function AllDraw() {
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.target.tagName === 'BUTTON') {
             setState({ ...state, [anchor]: open });
-            if (selectedDayRange.from !== null && selectedDayRange.to !== null) {
+            if ((selectedDayRange.from !== null && selectedDayRange.to !== null) || (heart !== 'outline') || (circle !== 'outline') || (home !== 'outline') || (triangular !== 'outline') || (david !== 'outline')) {
                 handleFilter();
             }
         }
@@ -172,11 +172,14 @@ export default function AllDraw() {
     const [triangular, setTriangle] = useState('outlined');
     const [david, setMagen] = useState('outlined');
 
+    const empty = arr => arr.length = 0;
     const handleFilter = () => {
+        console.log('hiiiiiii')
         let dateStart;
         let dateEnd;
-        filterShape = [];
-        console.log("fff", filterShape)
+        empty(filterShape)
+        empty(filterArr)
+        empty(shapes)
         if (heart === 'contained') { shapes.push('heart') }
         if (circle === 'contained') { shapes.push('circle') }
         if (home === 'contained') { shapes.push('home') }
@@ -184,78 +187,76 @@ export default function AllDraw() {
         if (david === 'contained') { shapes.push('david') }
 
         console.log(shapes)
-        if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 1) {
-            dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
-        }
-        else if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 2) {
-            dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
-        }
-        else if (selectedDayRange.from.month.toString().length === 2 && selectedDayRange.from.day.toString().length === 1) {
-            dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
-        }
-        else {
-            dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+        if (selectedDayRange.from !== null && selectedDayRange.to !== null) {
+            if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 1) {
+                dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
+            }
+            else if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 2) {
+                dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+            }
+            else if (selectedDayRange.from.month.toString().length === 2 && selectedDayRange.from.day.toString().length === 1) {
+                dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
+            }
+            else {
+                dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+            }
+
+            if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 1) {
+                dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
+            }
+            else if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 2) {
+                dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
+            }
+            else if (selectedDayRange.to.month.toString().length === 2 && selectedDayRange.to.day.toString().length === 1) {
+                dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
+            }
+            else {
+                dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
+            }
+
+            data.forEach(draww => {
+                let draw1 = draww.timeStarted.slice(0, 10);
+                let draw = draw1;
+                if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
+                    if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
+                        if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {
+
+                            console.log('true', draww)
+                            filterArr.push(draww)
+
+                        }
+                    }
+                }
+
+            });
         }
 
-        if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 1) {
-            dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
-        }
-        else if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 2) {
-            dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
-        }
-        else if (selectedDayRange.to.month.toString().length === 2 && selectedDayRange.to.day.toString().length === 1) {
-            dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
-        }
-        else {
-            dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
-        }
-
-        data.forEach(draww => {
-            let draw1 = draww.timeStarted.slice(0, 10);
-            let draw = draw1;
-            if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
-                if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
-                    if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {
-
-                        console.log('true', draww)
-                        filterArr.push(draww)
-
+        if(shapes.length !== 0 && selectedDayRange.from !== null && selectedDayRange.to !== null){
+            for (let i = 0; i < filterArr.length; i++) {
+                for (let j = 0; j < shapes.length; j++) {
+                    if (filterArr[i].shape === shapes[j]) {
+                        filterShape.push(filterArr[i])
                     }
                 }
             }
-
-        });
-        if (filterArr.length === 0 && shapes.length !== 0) {
-            data.forEach(draw => {
-                shapes.forEach(shape => {
-                    if (draw.shape === shape) {
-                        filterArr.push(draw)
-                    }
-                })
-            })
-        } else {
-
-            console.log(filterShape)
-            filterArr.forEach(draw => {
-                shapes.forEach(shape => {
-                    console.log(draw, '****', shape)
-                    if (draw.shape === shape) {
-                        filterShape.push(draw)
-                        console.log(filterShape)
-
-                    }
-                })
-            })
         }
 
-        var valueArr = filterArr.map(function (item) { return item.id });
-        var isDuplicate = valueArr.some(function (item, idx) {
-            console.log(item, idx)
-            return valueArr.indexOf(item) !== idx
-        });
-        console.log(isDuplicate, filterShape);
+        if(shapes.length !== 0 && selectedDayRange.from === null && selectedDayRange.to === null){
+            for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < shapes.length; j++) {
+                    if (data[i].shape === shapes[j]) {
+                        console.log('im here')
+                        filterShape.push(data[i])
+                    }
+                }
+            }
+        }
 
+        if(shapes.length === 0 && selectedDayRange.from !== null && selectedDayRange.to !== null){
+           filterShape = filterArr;
+        }
 
+        console.log(filterShape);
     }
 
     const handleHeart = (e) => {
@@ -311,16 +312,6 @@ export default function AllDraw() {
                     <Button variant={david} onClick={handleMagen}>מגן דוד</Button>
                     <Button variant={triangular} onClick={handletriangle}>משולש</Button>
                 </ListItem>
-                {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))} */}
             </List>
             <Divider />
             <List>
@@ -366,7 +357,7 @@ export default function AllDraw() {
                 ))}
             </Paper>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {/* {filterShape?.length !== 0 ?
+                {filterShape?.length !== 0 || shapes?.length !== 0 ?
                     (filterShape.map((item, key) => {
                         return (
                             <Box sx={{
@@ -394,9 +385,9 @@ export default function AllDraw() {
                             </Box>
                         )
                     })
-                    )} */}
+                    )}
 
-                {isReady && data.map((item, key) => {
+                {/* {isReady && data.map((item, key) => {
                     return (
                         <Box sx={{
                             justifyContent: 'center',
@@ -408,7 +399,7 @@ export default function AllDraw() {
                         }}>
                             <Cards item={item} key={key} index={key} />
                         </Box>
-                    )})}
+                    )})} */}
             </Box>
         </div>
     );
