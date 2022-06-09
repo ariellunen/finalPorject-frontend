@@ -45,8 +45,9 @@ const breadcrumbs = [
 ];
 
 const DrawDetails = (props) => {
-        const storedData = JSON.parse(localStorage.getItem('Item'));
-    const Names = JSON.parse(localStorage.getItem('Names'));
+    console.log('jiiiii')
+    const storedData = JSON.parse(localStorage.getItem('Item'));
+    const names = JSON.parse(localStorage.getItem('Names'));
 
     useEffect(() => {
         for (let i = 0; i < storedData.secondsL.length; i++) {
@@ -246,12 +247,12 @@ const DrawDetails = (props) => {
                     data: cync,
                     fill: true
                 }, {
-                    label: Names[0],
+                    label: names[0].name,
                     data: child1,
                     borderColor: storedData.colorFirst,
                     fill: false,
                 }, {
-                    label: Names[1],
+                    label: names[1].name,
                     data: child2,
                     borderColor: storedData.colorSecond,
                     fill: false
@@ -261,7 +262,7 @@ const DrawDetails = (props) => {
                 legend: { display: true },
                 title: {
                     display: false,
-                    text: `זמן הצביעה בין ${Names[0]} לבין ${Names[1]} נמשך ${storedData.secondTotal} שניות `,
+                    text: `זמן הצביעה בין ${names[0].name} לבין ${names[1].name} נמשך ${storedData.secondTotal} שניות `,
                     fontSize: 20
                 }
             }
@@ -296,7 +297,7 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `${Names[0]}`,
+                    text: `${names[0].name}`,
                     fontSize: 20
                 },
                 scales: {
@@ -334,7 +335,7 @@ const DrawDetails = (props) => {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `${Names[1]}`,
+                    text: `${names[1].name}`,
                     fontSize: 20
                 },
                 scales: {
@@ -371,7 +372,7 @@ const DrawDetails = (props) => {
             options: {
                 title: {
                     display: false,
-                    text: `עובי קו ${Names[0]}`,
+                    text: `עובי קו ${names[0]}`,
                     fontSize: 20
                 }
             }
@@ -406,7 +407,7 @@ const DrawDetails = (props) => {
             options: {
                 title: {
                     display: false,
-                    text: `עובי קו ${Names[1]}`,
+                    text: `עובי קו ${names[1]}`,
                     fontSize: 20
                 }
             }
@@ -416,6 +417,7 @@ const DrawDetails = (props) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    console.log(names[0].name)
     return (
         <React.Fragment>
             <NavLink />
@@ -428,11 +430,11 @@ const DrawDetails = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
-                <Typography variant="h4" sx={{ margin: 'auto'}}>זמן הצביעה בין {Names[0]} לבין {Names[1]} נמשך {storedData.secondTotal} שניות</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                <Typography variant="h4" sx={{ margin: 'auto' }}>זמן הצביעה בין {names[0].name} לבין {names[1].name} נמשך {storedData.secondTotal} שניות</Typography>
                 <CardActions>
                     <IconButton>
-                        <ReplayIcon fill= {'black'} onClick={handleOpen} sx={{height: '100px', width: '100px'}} />
+                        <ReplayIcon fill={'black'} onClick={handleOpen} sx={{ height: '100px', width: '100px' }} />
                     </IconButton>
                     {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
                     <Modal
@@ -449,7 +451,7 @@ const DrawDetails = (props) => {
             {/* <div style={{ display: 'flex'  }}> */}
             <div style={{ width: '100%' }}>
                 {/* <Typography variant="h3" component="div">{firstKide} ו{secondKide}</Typography> */}
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey',  margin: 'auto' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
                     <div id='cync'>
                         <canvas id="Chart1"></canvas>
                     </div>

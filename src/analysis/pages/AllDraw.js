@@ -250,12 +250,12 @@ export default function AllDraw() {
 
         var valueArr = filterArr.map(function (item) { return item.id });
         var isDuplicate = valueArr.some(function (item, idx) {
-            console.log(item,idx)
+            console.log(item, idx)
             return valueArr.indexOf(item) !== idx
         });
         console.log(isDuplicate, filterShape);
 
-       
+
     }
 
     const handleHeart = (e) => {
@@ -366,7 +366,7 @@ export default function AllDraw() {
                 ))}
             </Paper>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {filterShape?.length !== 0 ?
+                {/* {filterShape?.length !== 0 ?
                     (filterShape.map((item, key) => {
                         return (
                             <Box sx={{
@@ -394,8 +394,21 @@ export default function AllDraw() {
                             </Box>
                         )
                     })
-                    )}
+                    )} */}
 
+                {isReady && data.map((item, key) => {
+                    return (
+                        <Box sx={{
+                            justifyContent: 'center',
+                            p: 1,
+                            m: 1,
+                            bgcolor: 'background.paper',
+                            borderRadius: 1,
+                            width: '25%',
+                        }}>
+                            <Cards item={item} key={key} index={key} />
+                        </Box>
+                    )})}
             </Box>
         </div>
     );

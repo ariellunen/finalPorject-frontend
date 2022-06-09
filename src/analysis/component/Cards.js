@@ -6,7 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import Button from '../../shared/components/FormElements/Button'
+// import Button from '../../shared/components/FormElements/Button'
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -60,7 +61,7 @@ const Cards = (props) => {
                 <CardContent>
                     <Typography variant="h4" component="div">
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                            <Box sx={{textAlign: 'center' }}>
+                            <Box sx={{ textAlign: 'center' }}>
                                 <Avatar
                                     sx={{ width: 80, height: 80 }}
                                     alt={'left'}
@@ -68,9 +69,9 @@ const Cards = (props) => {
                                 />
                                 {firstKide.name}
                             </Box>
-                            <Box sx={{textAlign: 'center' }}>
+                            <Box sx={{ textAlign: 'center' }}>
                                 <Avatar
-                                    sx={{ width: 80, height: 80}}
+                                    sx={{ width: 80, height: 80 }}
                                     alt={'left'}
                                     src={`http://localhost:3000/${secondKide.image}`}
                                 />
@@ -93,13 +94,13 @@ const Cards = (props) => {
                         {props.item.timeDone.slice(11, -6)}
                     </Typography>
                     <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
-צורה:
+                        צורה:
                         &nbsp;
                         {props.item.shape}
                     </Typography>
                 </CardContent>
-                <CardActions sx={{ flexDirection: 'row-reverse' }}>
-                    <Button variant="contained" type='submit' style={{ width: 120, height: 40, fontSize: 30, borderRadius: 10, borderBottom: 'ridge', color: 'Navy' }} onClick={(() => {
+                <CardActions>
+                    <Button variant="contained" type='submit' onClick={(() => {
                         localStorage.setItem('Item', JSON.stringify(props.item));
                         localStorage.setItem('Names', JSON.stringify(arr));
                     })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
