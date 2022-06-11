@@ -18,7 +18,16 @@ import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import { CameraFeed } from '../../shared/components/FormElements/CameraFeed';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { makeStyles } from '@mui/styles';
+let photoTaken = false;
+const useStyles = makeStyles({
+    authentication: {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      margin: '0, auto'
+    },
+  });
 const ContentAddKide = () => {
+    const classes = useStyles();
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [imageUp, setImageUp] = useState();
@@ -41,46 +50,55 @@ const ContentAddKide = () => {
     const authSubmitHandler = async event => {
         event.preventDefault();
         console.log(formState.inputs);
-        try {
-            const formData = new FormData();
-            formData.append('name', formState.inputs.name.value);
-            formData.append('image', formState.inputs.image.value);
-            const responseData = await sendRequest(
-                'http://localhost:3000/api/users/signupChild/',
-                'POST',
-                formData,
-            );
-            console.log(responseData);
-            history.replace('/admin')
+        if (alignment === 'takeImage') {
+            try {
+                const formData = new FormData();
+                formData.append('name', formState.inputs.name.value);
+                formData.append('image', file);
+                console.log(file)
 
-        } catch (err) {
-            console.log(err);
+                const responseData = await fetch(
+                    'http://localhost:3000/api/users/signupChild/',
+                    {
+                        method: 'POST',
+                        body: formData,
+                    }
+                );
+                console.log(responseData);
+                history.replace('/admin')
+
+            } catch (err) {
+                console.log(err);
+            }
         }
-    }
-    const [name, setName] = useState('');
+        else {
+            try {
+                const formData = new FormData();
+                formData.append('name', formState.inputs.name.value);
+                formData.append('image', formState.inputs.image.value);
+                const responseData = await sendRequest(
+                    'http://localhost:3000/api/users/signupChild/',
+                    'POST',
+                    formData,
+                );
+                console.log(responseData);
+                history.replace('/admin')
 
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+    }
+    const [file, setFile] = useState('');
     const uploadImage = async dataURL => {
+        photoTaken = true;
         var blobBin = atob(dataURL.split(',')[1]);
         var array = [];
         for (var i = 0; i < blobBin.length; i++) {
             array.push(blobBin.charCodeAt(i));
         }
-        var file = new Blob([new Uint8Array(array)], { type: 'image/png' });
-
-        const formData = new FormData();
-        formData.append('name', formState.inputs.name.value);
-        formData.append('image', file);
-        console.log(file)
-
-        const responseData = await fetch(
-            'http://localhost:3000/api/users/signupChild/',
-            {
-                method: 'POST',
-                body: formData,
-            }
-        );
-        console.log(responseData);
-        // Connect to a seaweedfs instance
+        setFile(new Blob([new Uint8Array(array)], { type: 'image/png' }))
     };
 
     const [alignment, setAlignment] = useState('upload');
@@ -88,6 +106,7 @@ const ContentAddKide = () => {
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
+
 
 
     return (
@@ -107,7 +126,7 @@ const ContentAddKide = () => {
                                 errorText="Please enter a name."
                                 onInput={inputHandler}
                             />
-                            {alignment === 'takeImage' && <CameraFeed sendFile={uploadImage} />}
+                            {alignment === 'takeImage' && <CameraFeed sendFile={uploadImage} photoTaken={photoTaken} />}
                             {alignment === 'upload' && <ImageUpload center id="image" onInput={inputHandler} />}
                             <ToggleButtonGroup
                                 color="primary"

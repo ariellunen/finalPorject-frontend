@@ -371,14 +371,26 @@ export default function AllDraw() {
     const handleValue = (value) => {
         setValue(value)
     }
+    function getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }
 
     const handleTextChanage = (value) => {
         setTextChange(value)
+        console.log(value.name)
+        for (let index = 0; index < data.length; index++) {
+            if (data[index].firstKide === value.id || data[index].secondKide === value.id) {
+                filterShape.push(data[index])
+                console.log(value.id, data[index].firstKide, data[index].secondKide)
+                const arr1 = getUniqueListBy(filterShape, 'id')
+                filterShape = arr1
+                console.log(filterShape)
+
+            }
+        }
     }
 
-    
     const [textChange, setTextChange] = useState(null)
-    console.log(value, textChange)
     return (
         <div>
             <NavLink />
@@ -386,7 +398,7 @@ export default function AllDraw() {
                 component="form"
                 sx={{ display: 'flex', alignItems: 'center' }}
             >
-              <AutoSearch value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage}/>
+                <AutoSearch value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
                 <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={checkDrawing}>
                     <SearchIcon />
                 </IconButton>
@@ -408,7 +420,7 @@ export default function AllDraw() {
                 ))}
             </Paper>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {/* {(filterShape?.length !== 0 || shapes?.length !== 0)  && filterShape.map((item, key) => {
+                {(filterShape?.length !== 0 || shapes?.length !== 0) && filterShape.map((item, key) => {
                     return (
                         <Box sx={{
                             justifyContent: 'center',
@@ -423,7 +435,7 @@ export default function AllDraw() {
                     )
                 })}
 
-                {(filterShape?.length === 0)  && <Box sx={{
+                {(filterShape?.length === 0) && <Box sx={{
                     justifyContent: 'center',
                     p: 1,
                     m: 1,
@@ -437,7 +449,7 @@ export default function AllDraw() {
                         <ReplayIcon fill={'black'} onClick={() => setResults(false)} sx={{ height: '30px', width: '30px' }} />
                     </IconButton>
                 </Box>
-                } */}
+                }
 
                 {isReady && data.map((item, key) => {
                     return (
