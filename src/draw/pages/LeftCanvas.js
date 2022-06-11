@@ -78,8 +78,9 @@ const LeftCanvas = (props) => {
         interact('#canvasL').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            timeTakenL = Date.now() - down;
-            props.secondsL.push(timeTakenL / 1000);
+            // timeTakenL = Date.now() - down;
+            // console.log(timeTakenL)
+            // props.secondsL.push(timeTakenL / 1000);
             props.setLeft({ x: -1, y: -1, color: color, line: line })
             props.setMouseL(true);
             canvas.stroke();
@@ -352,10 +353,15 @@ const LeftCanvas = (props) => {
         button[i].addEventListener("click", addSelectClass);
     }
 
+    const pointerUp = () => {
+        timeTakenL = Date.now() - down;
+        console.log(timeTakenL)
+        props.secondsL.push(timeTakenL / 1000);
+    }
     return (
         <React.Fragment>
             <div className='containerL'>
-                <canvas id="canvasL" width="620" height="470" penwidth='30'></canvas>
+                <canvas id="canvasL" width="620" height="470" penwidth='30' onPointerUp={pointerUp}></canvas>
                 <div id='contentL'>
                     <div id="myDivL">
                         <Avatar

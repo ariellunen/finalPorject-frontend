@@ -19,7 +19,7 @@ const bull = (
         •
     </Box>
 );
-
+let search = [];
 const Cards = (props) => {
     const [firstKide, setFirstKide] = useState(false);
     const [secondKide, setSecondKide] = useState(false);
@@ -41,6 +41,13 @@ const Cards = (props) => {
                 const responseData = await response.json();
                 setSecondKide(responseData.child);
                 setIsReady(true);
+                if(props.text === firstKide.name){
+                    props.searchText(firstKide)
+                }
+                if(props.text === secondKide.name){
+                    props.searchText(secondKide)
+                }
+                
 
             } catch (err) {
                 console.log(err);
@@ -55,7 +62,7 @@ const Cards = (props) => {
     arr.push(firstKide)
     arr.push(secondKide)
 
-    const handleClick = () => {
+    const handleSearch = () => {
         
     }
 

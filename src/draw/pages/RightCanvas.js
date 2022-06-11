@@ -1,58 +1,3 @@
-// import React, {useEffect} from 'react';
-// import interact from 'interactjs';
-// import './Canvas.css';
-
-// const RightCanvas = (props) => {
-//     let pixelSize = 5
-//     useEffect(() => {
-//         interact('#canvasR')
-//             .draggable({
-//                 max: Infinity,
-//                 origin: 'self',
-//                 modifiers: [
-//                     interact.modifiers.snap({
-//                         targets: [
-//                             interact.snappers.grid({ x: pixelSize, y: pixelSize })
-//                         ]
-//                     })
-//                 ],
-//                 listeners: {
-//                     move: function (event) {
-//                         let context = event.target.getContext('2d')
-//                         let posx = event.clientX; 
-//                         let posy = event.clientY;
-//                         context.fillStyle = props.color.color;
-//                         context.beginPath();
-//                         context.arc(posx, posy, 20, 0, 2 * Math.PI);
-//                         context.fill();
-//                         props.setRight({x:posx, y:posy});
-//                         props.handleCoordinate(posx, posy);
-//                     }
-//                 }
-//             })
-
-//         function resizeCanvases() {
-//             [].forEach.call(document.querySelectorAll('#canvasR'), function (
-//                 canvas
-//             ) {
-//                 delete canvas.width
-//                 delete canvas.height
-//                 let rect = canvas.getBoundingClientRect()
-//                 canvas.width = rect.width
-//                 canvas.height = rect.height
-//             })
-//         }
-
-//         resizeCanvases()
-//     }, [])
-
-//     return (
-//         <React.Fragment></React.Fragment>
-//     )
-// };
-
-// export default RightCanvas;
-
 import React, { useEffect, useState } from 'react';
 import interact from 'interactjs';
 import './Canvas.css';
@@ -135,8 +80,8 @@ const RightCanvas = (props) => {
         interact('#canvasR').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            timeTakenR = Date.now() - down;
-            props.secondsR.push(timeTakenR / 1000);
+            // timeTakenR = Date.now() - down;
+            // props.secondsR.push(timeTakenR / 1000);
             props.setRight({ x: -1, y: -1, color: color, line: line })
             props.setMouseR(true);
             canvas.stroke();
@@ -478,11 +423,17 @@ const RightCanvas = (props) => {
     for (let i = 0; i < button.length; i++) {
         button[i].addEventListener("click", addSelectClass);
     }
+
+    const pointerUp = () => {
+        timeTakenR = Date.now() - down;
+        console.log(timeTakenR)
+        props.secondsL.push(timeTakenR / 1000);
+    }
  
     return (
         <React.Fragment>
             <div className='container'>
-                <canvas id="canvasR" width="620" height="470" penwidth='30'></canvas>
+                <canvas id="canvasR" width="620" height="470" penwidth='30' onPointerUp={pointerUp}></canvas>
                 <div id='content'>
                     <div id="myDiv">
                         <div>{`${JSON.parse(localStorage.getItem('secondKide')).name}`}</div>

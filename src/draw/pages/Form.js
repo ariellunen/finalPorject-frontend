@@ -92,13 +92,22 @@ const Form = (props) => {
                         options={children}
                         autoHighlight
                         value={firstKide?.id || ''}
-
                         getOptionLabel={(option) => {
-                            return children.find(c => c.id === option)?.name || ''
+                            // Value selected with enter, right from the input
+                            if (typeof option === 'string') {
+                                return children.find(c => c.id === option)?.name || '';
+                            }
+                            // Add "xxx" option created dynamically
+                            if (option.inputValue) {
+                                return option.inputValue;
+                            }
+                            // Regular option
+                            return option.name;
                         }}
                         isOptionEqualToValue={(opt, value) => {
                             return opt.id === value
                         }}
+                        
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                 <img
@@ -137,12 +146,23 @@ const Form = (props) => {
                         options={children}
                         autoHighlight
                         value={secondKide?.id || ''}
-
-                        getOptionLabel={(option) => {
-                            return children.find(c => c.id === option)?.name || ''
-                        }}
+                        // getOptionLabel={(option) => {
+                        //     return children.find(c => c.id === option)?.name || ''
+                        // }}
                         isOptionEqualToValue={(opt, value) => {
                             return opt.id === value
+                        }}
+                        getOptionLabel={(option) => {
+                            // Value selected with enter, right from the input
+                            if (typeof option === 'string') {
+                                return children.find(c => c.id === option)?.name || '';
+                            }
+                            // Add "xxx" option created dynamically
+                            if (option.inputValue) {
+                                return option.inputValue;
+                            }
+                            // Regular option
+                            return option.name;
                         }}
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -179,3 +199,6 @@ const Form = (props) => {
 };
 
 export default Form;
+
+
+

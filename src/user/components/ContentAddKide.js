@@ -10,14 +10,10 @@ import {
     VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
-import { AuthContext } from '../../shared/context/auth-context';
 import Card from '../../shared/components/UIElements/Card';
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import '../pages/Auth.css';
 import { useHistory } from 'react-router-dom';
-import { TextField } from '@mui/material';
 import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import { CameraFeed } from '../../shared/components/FormElements/CameraFeed';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -41,11 +37,6 @@ const ContentAddKide = () => {
         },
         false,
     );
-    console.log(formState)
-    const handleImage = (e) => {
-        console.log(e)
-        // setImage()
-    }
 
     const authSubmitHandler = async event => {
         event.preventDefault();
@@ -67,12 +58,8 @@ const ContentAddKide = () => {
         }
     }
     const [name, setName] = useState('');
-    const onChangeName = (e) => {
-        setName(e.target.value);
-    }
 
     const uploadImage = async dataURL => {
-        console.log(typeof dataURL);
         var blobBin = atob(dataURL.split(',')[1]);
         var array = [];
         for (var i = 0; i < blobBin.length; i++) {
@@ -81,7 +68,7 @@ const ContentAddKide = () => {
         var file = new Blob([new Uint8Array(array)], { type: 'image/png' });
 
         const formData = new FormData();
-        formData.append('name', 'Arielllll');
+        formData.append('name', formState.inputs.name.value);
         formData.append('image', file);
         console.log(file)
 
@@ -93,7 +80,6 @@ const ContentAddKide = () => {
             }
         );
         console.log(responseData);
-
         // Connect to a seaweedfs instance
     };
 
@@ -103,7 +89,7 @@ const ContentAddKide = () => {
         setAlignment(newAlignment);
     };
 
-    console.log(alignment)
+
     return (
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
