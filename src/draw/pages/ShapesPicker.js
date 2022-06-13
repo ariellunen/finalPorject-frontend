@@ -14,9 +14,8 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useLocation } from 'react-router-dom';
 import Shapes from '../component/Shapes';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 let child = [];
-let temp;
-let temp_element;
 let first, second;
 let urlShape;
 const breadcrumbs = [
@@ -46,7 +45,6 @@ const ShapesPicker = (props) => {
         setShape(shape)
         sessionStorage.setItem("selectedShape", selectedShape);
         urlShape = url;
-        console.log(urlShape)
 
     }
     const usersData = [
@@ -73,7 +71,7 @@ const ShapesPicker = (props) => {
     return (
         <React.Fragment>
             <NavLink />
-            <Stack spacing={2} >
+            <Stack spacing={2} dir='ltr'>
                 <Breadcrumbs
                     sx={{ marginTop: 1, marginLeft: 3 }}
                     separator={<NavigateNextIcon fontSize="small" />}
@@ -82,27 +80,26 @@ const ShapesPicker = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            {isReady && first.name !== undefined && <Box component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
-                <Box sx={{ textAlignLast: 'center', width: 1240, height: 470, borderTop: 'solid', borderRight: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
+            {!isReady && <CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} />}
+            {isReady && first.name !== undefined && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
+                <Box sx={{bgcolor: 'white', textAlignLast: 'center', width: 1240, height: 470, borderTop: 'solid', borderRight: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar sx={{ width: 50, height: 50 }} alt={first.name} src={`http://localhost:3000/${first.image}`} />
-                        <Typography>{first.name}</Typography>
+                        <div style={{ alignItems: 'center' }}>
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`http://localhost:3000/${first.image}`} />
+                            <Typography sx={{ marginLeft: '10px' }}>{first.name}</Typography>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography>{second.name}</Typography>
-                        <Avatar sx={{ width: 50, height: 50 }} alt={second.name} src={`http://localhost:3000/${second.image}`} />
+                        <div style={{ alignItems: 'center' }}>
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={second.name} src={`http://localhost:3000/${second.image}`} />
+                            <Typography sx={{ marginLeft: '10px' }}>{second.name}</Typography>
                         </div>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', marginTop: 8 }}>
                         <Shapes handleShape={handleShape} />
                     </Box>
                 </Box>
+                {shape === null && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {shape !== null && <Button endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />} sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' component={Link} to="/drawing/coloring" >המשך</Button>}
             </Box>}
-            {shape === null && <Button disabled sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-            {shape !== null && <Button type='submit' component={Link} to="/drawing/coloring" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-
-            {!isReady && <CircularProgress />}
 
         </React.Fragment>
     )

@@ -12,9 +12,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
-let child = [];
-let temp;
-let temp_element;
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 let first, second;
 let urlFirst, urlSecond;
 const breadcrumbs = [
@@ -50,10 +48,10 @@ const ColorPicker = (props) => {
     const fetchAPI = async () => {
         first = JSON.parse(localStorage.getItem('firstKide'));
         second = JSON.parse(localStorage.getItem('secondKide'));
-        console.log("first", first.name)
-        console.log("Child", first, second)
         setIsReady(true);
     }
+
+    console.log("Child", first, second)
 
     const handleColor = (color, type, url) => {
         console.log(type)
@@ -88,7 +86,7 @@ const ColorPicker = (props) => {
     return (
         <React.Fragment>
             <NavLink />
-            <Stack spacing={2} >
+            <Stack spacing={2} dir='ltr'>
                 <Breadcrumbs
                     sx={{ marginTop: 1, marginLeft: 3 }}
                     separator={<NavigateNextIcon fontSize="small" />}
@@ -97,16 +95,19 @@ const ColorPicker = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            {isReady && first.name !== undefined && <Box component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
+            {!isReady && <CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} />}
+            {isReady && first.name !== undefined && second.name !== undefined && <Box dir='ltr' Box component="main" sx={{ bgcolor: 'white', display: 'flex', marginTop: '8px', placeContent: 'center' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50 }} alt={first.name} src={`http://localhost:3000/${first.image}`} />
-                            <Typography>{first.name}</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ alignItems: 'center' }}>
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`http://localhost:3000/${first.image}`} />
+                            <Typography sx={{ marginLeft: '10px' }}>{first.name}</Typography>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', margin: 'auto' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginRight: 1 }} alt={urlFirst} src={`${urlFirst}`} />
-                            <Typography>:הצבע הנבחר הוא</Typography>
+                        <div style={{
+                            alignItems: 'center', marginLeft: '10px', marginTop: '-20px'
+                        }}>
+                            <Avatar sx={{ width: 50, height: 50 }} alt={urlFirst} src={`${urlFirst}`} />
+                            {/* <Typography>:הצבע הנבחר הוא</Typography> */}
                         </div>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
@@ -114,27 +115,27 @@ const ColorPicker = (props) => {
                     </Box>
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', margin: 'auto'}}>
-                            <Avatar sx={{ width: 50, height: 50, marginRight: 1 }} alt={SecondColor} src={`${urlSecond}`} />
-                            <Typography>:הצבע הנבחר הוא</Typography>
+                    <Box sx={{ justifyContent: 'right', display: 'flex', alignItems: 'center' }}>
+                        <div style={{
+                            alignItems: 'center', marginRight: '10px', marginTop: '-20px'
+                        }}>
+                            <Avatar sx={{ width: 50, height: 50 }} alt={SecondColor} src={`${urlSecond}`} />
+                            {/* <Typography>:הצבע הנבחר הוא</Typography> */}
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography>{second.name}</Typography>
-                            <Avatar sx={{ width: 50, height: 50 }} alt={second.name} src={`http://localhost:3000/${second.image}`} />
+                        <div style={{ alignItems: 'center' }}>
+                            <Avatar sx={{ width: 50, height: 50, marginRight: '10px' }} alt={second.name} src={`http://localhost:3000/${second.image}`} />
+                            <Typography sx={{ marginLeft: '10px' }}>{second.name}</Typography>
                         </div>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly' }}>
                         <Colors handleColor={handleColor} type={'second'} />
                     </Box>
                 </Box>
+                {firstColor === null && SecondColor === null && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {firstColor !== null && SecondColor === null && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {firstColor === null && SecondColor !== null && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {firstColor !== null && SecondColor !== null && <Button onClick={handleClick} type='submit' component={Link} to="/drawing/shapes" sx={{ right: '5px', position: 'absolute', bottom: '4px' }} endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
             </Box>}
-            {firstColor === null && SecondColor === null && <Button disabled component={Link} to="/drawing/shapes" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-            {firstColor !== null && SecondColor === null && <Button disabled component={Link} to="/drawing/shapes" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-            {firstColor === null && SecondColor !== null && <Button disabled component={Link} to="/drawing/shapes" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-            {firstColor !== null && SecondColor !== null && <Button onClick={handleClick} type='submit' component={Link} to="/drawing/shapes" sx ={{right: '5px', position: 'absolute'}}>המשך</Button>}
-
-            {!isReady && <CircularProgress />}
 
         </React.Fragment>
     )

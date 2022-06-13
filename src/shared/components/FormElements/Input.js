@@ -53,6 +53,7 @@ const Input = props => {
   const element =
     props.element === 'input' ? (
       <input
+        dir={props.id === 'name'? ('rtl'):('ltr')}
         id={props.id}
         type={props.type}
         placeholder={props.placeholder}

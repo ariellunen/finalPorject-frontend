@@ -18,11 +18,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
+import { useHistory } from "react-router-dom";
 let children = [];
 let users = [];
 export default function Content(props) {
     const [isReady, setIsReady] = useState(false);
     const [userss, setUsers] = useState([])
+    let history = useHistory();
+    const someEventHandler = event => {
+        console.log(props.kide)
+        let kide = props.kide
+        history.push({
+            pathname: '/addKide',
+            state: kide
+        });
+    };
     useEffect(() => {
         const getData = async () => {
             try {
@@ -30,7 +40,7 @@ export default function Content(props) {
                 });
                 const responseData = await response.json();
                 children.push(responseData);
-                console.log("children",responseData)
+                console.log("children", responseData)
 
             } catch (err) {
                 console.log(err);
@@ -54,6 +64,26 @@ export default function Content(props) {
         }
         getData();
     }, [isReady]);
+
+    let b
+
+
+    useEffect(() => {
+        b = (JSON.parse(localStorage.getItem('kide')))
+        console.log(b)
+        console.log("bbbbb", b)
+    }, [JSON.parse(localStorage.getItem('kide'))])
+
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        const kide = JSON.parse(localStorage.getItem('kide'));
+        console.log("bbbbb", kide)
+
+        if (items) {
+            setItems(items);
+        }
+    }, []);
 
     return (
         <React.Fragment>
@@ -80,8 +110,8 @@ export default function Content(props) {
                                     variant="standard"
                                 />
                             </Grid>
-                            {props.kide && <Grid item>
-                                <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addKide'>
+                            {b && <Grid item>
+                                <Button variant="contained" sx={{ mr: 1 }} onClick={someEventHandler} >
                                     הוספת משתמש
                                 </Button>
                                 <Tooltip title="Reload">
@@ -90,7 +120,7 @@ export default function Content(props) {
                                     </IconButton>
                                 </Tooltip>
                             </Grid>}
-                            {!props.kide && <Grid item>
+                            {!b && <Grid item>
                                 <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addUser'>
                                     הוספת משתמש
 
@@ -110,11 +140,11 @@ export default function Content(props) {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    {!props.kide && <TableCell align="right">Email</TableCell>}
+                                    {!b && <TableCell align="right">אימייל</TableCell>}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {!props.kide && users[0].users.map((user) => (
+                                {!b && users[0].users.map((user) => (
                                     <TableRow
                                         key={user.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -125,7 +155,7 @@ export default function Content(props) {
                                         <TableCell align="right">{user.email}</TableCell>
                                     </TableRow>
                                 ))}
-                                {props.kide && children[0].children.map((child) => (
+                                {b && children[0].children.map((child) => (
                                     <TableRow
                                         key={child.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

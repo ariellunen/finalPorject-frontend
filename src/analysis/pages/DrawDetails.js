@@ -45,7 +45,6 @@ const breadcrumbs = [
 ];
 
 const DrawDetails = (props) => {
-    console.log('jiiiii')
     const storedData = JSON.parse(localStorage.getItem('Item'));
     const names = JSON.parse(localStorage.getItem('Names'));
 

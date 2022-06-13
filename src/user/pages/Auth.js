@@ -91,19 +91,6 @@ const Auth = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://i.postimg.cc/j2cmDRGQ/Breadcrumbs-8.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '450px',
-            backgroundColor: '#e4ecf4',
-            backgroundPosition: 'center',
-          }}
-        />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -126,18 +113,18 @@ const Auth = () => {
                   element="input"
                   id="email"
                   type="email"
-                  label="E-Mail"
+                  label="אימייל"
                   validators={[VALIDATOR_EMAIL()]}
-                  errorText="Please enter a valid email address."
+                  errorText="יש להזין כתובת אימייל תקינה"
                   onInput={inputHandler}
                 />
                 <Input
                   element="input"
                   id="password"
                   type="password"
-                  label="Password"
+                  label="סיסמה"
                   validators={[VALIDATOR_MINLENGTH(6)]}
-                  errorText="Please enter a valid password, at least 6 characters."
+                  errorText="יש להזין סיסמא (לפחות 6 ספרות)"
                   onInput={inputHandler}
                 />
                 <Button
@@ -155,6 +142,20 @@ const Auth = () => {
 
           </Box>
         </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: 'url(https://i.postimg.cc/j2cmDRGQ/Breadcrumbs-8.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '450px',
+            backgroundColor: '#e4ecf4',
+            backgroundPosition: 'center',
+          }}
+        />
+
       </Grid>
     </ThemeProvider>
   );

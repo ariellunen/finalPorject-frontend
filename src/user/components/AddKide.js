@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,6 +9,7 @@ import Navigator from './Navigator';
 import Content from './Content';
 import Header from './Header';
 import ContentAddKide from './ContentAddKide';
+import { useLocation } from "react-router-dom";
 
 let theme = createTheme({
     palette: {
@@ -159,7 +160,13 @@ const drawerWidth = 256;
 const AddKide = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
-
+    const location = useLocation();
+    const [kide, setKide] = useState('');
+    useEffect(() => {
+        console.log(location.pathname); // result: '/secondpage'
+        setKide(location.state); // result: 'some_value'
+     }, [location]);
+ 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -168,7 +175,7 @@ const AddKide = () => {
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                 <CssBaseline />
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <Header onDrawerToggle={handleDrawerToggle} header={'משתמש חדש'}/>
+                    <Header onDrawerToggle={handleDrawerToggle} header={'משתמש חדש'} kide={kide}/>
                     <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
                         <ContentAddKide />
                     </Box>

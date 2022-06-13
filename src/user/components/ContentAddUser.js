@@ -98,6 +98,7 @@ const ContentAddUser = () => {
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <ErrorModal error={error} onClear={clearError} />
                     <Card className="authentication">
+                        <Typography>הוספת משתמש חדש</Typography>
                         <hr />
                         <form onSubmit={authSubmitHandler}>
                             <Input
@@ -106,7 +107,7 @@ const ContentAddUser = () => {
                                 type="text"
                                 label="שם המדריך\פסיכולוג"
                                 validators={[VALIDATOR_REQUIRE()]}
-                                errorText="Please enter a name."
+                                errorText="יש להזין שם משתמש"
                                 onInput={inputHandler}
                             />
 
@@ -114,18 +115,18 @@ const ContentAddUser = () => {
                                 element="input"
                                 id="email"
                                 type="email"
-                                label="E-Mail"
+                                label="אימייל"
                                 validators={[VALIDATOR_EMAIL()]}
-                                errorText="Please enter a valid email address."
+                                errorText="יש להזין כתובת אימייל תקינה"
                                 onInput={inputHandler}
                             />
                             <Input
                                 element="input"
                                 id="password"
                                 type="password"
-                                label="Password"
+                                label="סיסמה"
                                 validators={[VALIDATOR_MINLENGTH(6)]}
-                                errorText="Please enter a valid password, at least 6 characters."
+                                errorText="יש להזין סיסמא (לפחות 6 ספרות)"
                                 onInput={inputHandler}
                             />
                             <RadioGroup name="use-radio-group" defaultValue="specialist" onChange={(event, value) => { setUserType(value) }}>
@@ -133,7 +134,7 @@ const ContentAddUser = () => {
                                 <MyFormControlLabel value="instruction" label="מדריכ\ה" control={<Radio />} />
                             </RadioGroup>
                             <Button type="submit" disabled={!formState.isValid}>
-                                SIGNUP
+                                הרשמה
                             </Button>
                         </form>
                     </Card>

@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Admin from '../components/Admin';
-
+import AdminKide from '../components/AdminKide';
 const Main = () => {
-    const [kide, setKide] = useState(false);
-    const isKide = () => {
-        setKide(true);
-    }
-    const notKide = () => {
-        setKide(false);
-    }
-    console.log(kide)
+    // useEffect(() => {
+
+    // }, [])
+    const [kide, setKide] = useState(localStorage.getItem('kide'));
+    // const isKide = () => {
+    //     console.log('hiiii')
+    // setKide(true);
+    // }
+    // const notKide = () => {
+    // setKide(false);
+    // }
+
+
     return (
         <React.Fragment>
-            <Admin isKide={isKide} notKide={notKide} kide={kide} />
+            <Admin kide={kide} />
         </React.Fragment>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -17,31 +17,25 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../shared/context/auth-context';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
-const lightColor = 'rgba(255, 255, 255, 0.7)';
 
-function LinkTab(props) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-}
-
+let child = '';
 function Header(props) {
   const { onDrawerToggle } = props;
   const auth = useContext(AuthContext);
+  const [value, setValue] = React.useState(0);
 
+  console.log("kide", props.kide)
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
-          <Grid container spacing={1} alignItems="center">
+          <Grid container spacing={1} alignItems="center" dir='ltr'>
             <Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
               <IconButton
                 color="inherit"
@@ -75,34 +69,42 @@ function Header(props) {
         elevation={0}
         sx={{ zIndex: 0 }}
       >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1">
-                {props.header}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Toolbar>
       </AppBar>
-      {props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-        <Tabs value={1} textColor="inherit">
-        <LinkTab label="Page One" href="/drafts" />
-          <Tab label="אנשי מקצוע \ מדריכים" onClick={props.notKide} />
-          <Tab label="ילדים" />
-          <Tab label="הגדרות" />
-        </Tabs>
-      </AppBar>}
-      {!props.kide && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-        <Tabs value={0} textColor="inherit">
-          <Tab label="אנשי מקצוע \ מדריכים" />
-          <Tab label="ילדים" onClick={props.isKide} />
-          <Tab label="הגדרות" />
-          {/* <Tab label="Usage" /> */}
-        </Tabs>
-      </AppBar>}
 
-    </React.Fragment>
+      <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
+        {/* {<Tabs value={1} onChange={handleChange} textColor="white" indicatorColor="white">
+          <Tab
+            label='אנשי מקצוע \ מדריכים'
+            onClick={props.notKide}
+            component={Link}
+            to={'/admin'}
+          />
+          <Tab
+            label='ילדים'
+            onClick={props.isKide}
+            component={Link}
+            to={'/admin'}
+          />
+        </Tabs>} */}
+        {/* {        <Tabs value={value} onChange={handleChange} textColor="white" indicatorColor="white">
+          <Tab
+            label='אנשי מקצוע \ מדריכים'
+            onClick={props.notKide}
+            component={Link}
+            to={'/admin'}
+          />
+          <Tab
+            label='ילדים'
+            onClick={props.isKide}
+            component={Link}
+            to={'/admin'}
+          />
+        </Tabs>} */}
+        <Button component={Link} to={'/admin'} type='button' onClick={() => localStorage.setItem('kide', JSON.stringify(false))} color="secondary">אנשי מקצוע \ מדריכים</Button>
+        <Button component={Link} to={'/admin'} type='button' onClick={() => localStorage.setItem('kide', JSON.stringify(true))} color="secondary">ילדים</Button>
+
+      </AppBar>
+    </React.Fragment >
   );
 }
 

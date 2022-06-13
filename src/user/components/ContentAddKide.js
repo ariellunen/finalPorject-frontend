@@ -18,16 +18,10 @@ import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import { CameraFeed } from '../../shared/components/FormElements/CameraFeed';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { makeStyles } from '@mui/styles';
+import './Content.css';
 let photoTaken = false;
-const useStyles = makeStyles({
-    authentication: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      margin: '0, auto'
-    },
-  });
+
 const ContentAddKide = () => {
-    const classes = useStyles();
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [imageUp, setImageUp] = useState();
@@ -115,7 +109,7 @@ const ContentAddKide = () => {
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     {/* <ErrorModal error={error} onClear={clearError} /> */}
                     <Card className="authentication">
-                        <hr />
+                        {/* <hr /> */}
                         <form onSubmit={authSubmitHandler}>
                             <Input
                                 element="input"

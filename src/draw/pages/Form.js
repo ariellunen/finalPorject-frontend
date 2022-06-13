@@ -6,9 +6,6 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete'
 import NavLink from '../../user/components/NavLinks';
-import { green } from '@mui/material/colors';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -16,6 +13,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import './Coloring.css';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import CircularProgress from '@mui/material/CircularProgress';
 
 let child = [];
 let name;
@@ -69,7 +68,7 @@ const Form = (props) => {
     return (
         <React.Fragment>
             <NavLink />
-            <Stack spacing={2} >
+            <Stack spacing={2} dir='ltr'>
                 <Breadcrumbs
                     sx={{ marginTop: 1, marginLeft: 3 }}
                     separator={<NavigateNextIcon fontSize="small" />}
@@ -78,9 +77,11 @@ const Form = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            {isReady && <Box component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center' }}>
-                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '80%' }}>
+            {!isReady && <CircularProgress sx={{position: 'fixed', top: '50%', left: '50%',height: '100px', width: '100px'}}/>}
+
+            {isReady && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
+                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {children.slice(0, 8).map((child) => {
                             return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
@@ -107,7 +108,7 @@ const Form = (props) => {
                         isOptionEqualToValue={(opt, value) => {
                             return opt.id === value
                         }}
-                        
+
                         renderOption={(props, option) => (
                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                 <img
@@ -130,11 +131,11 @@ const Form = (props) => {
                             />
                         )}
                     />
-                    {firstKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {firstKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
                     {firstKide !== null && <Avatar alt={firstKide.name} src={`http://localhost:3000/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
-                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '80%' }}>
+                <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {children.slice(0, 8).map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
@@ -186,14 +187,14 @@ const Form = (props) => {
                             />
                         )}
                     />
-                    {secondKide === null && <Avatar sx={{ bgcolor: '#4454a3', width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {secondKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
                     {secondKide !== null && <Avatar alt={secondKide?.name} src={`http://localhost:3000/${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
+            {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+            {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute' , bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+            {(firstKide === null) && (secondKide !== null) && <Button sx={{ right: '5px', position: 'absolute' , bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+            {(secondKide !== null) && (firstKide !== null) && <Button sx={{ right: '5px', position: 'absolute' , bottom: '4px' }} type='submit' onClick={onSubmit} component={Link} to="/drawing/color" endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
             </Box>}
-            {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' disabled>המשך</Button>}
-            {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' disabled>המשך</Button>}
-            {(firstKide === null) && (secondKide !== null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' disabled >המשך</Button>}
-            {(secondKide !== null) && (firstKide !== null) && <Button sx={{ right: '5px', position: 'absolute' }} type='submit' onClick={onSubmit} component={Link} to="/drawing/color">המשך</Button>}
         </React.Fragment>
     )
 };

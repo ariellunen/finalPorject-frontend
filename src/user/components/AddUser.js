@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,7 +9,7 @@ import Navigator from './Navigator';
 import Content from './Content';
 import Header from './Header';
 import ContentAddUser from './ContentAddUser';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 let theme = createTheme({
     palette: {
@@ -158,6 +158,13 @@ theme = {
 const drawerWidth = 256;
 
 const AddUser = () => {
+    // const location = useLocation();
+    // useEffect(() => {
+    //     console.log(location.pathname); // result: '/secondpage'
+    //     console.log(location.state.detail); // result: 'some_value'
+    //  }, [location]);
+ 
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -169,7 +176,7 @@ const AddUser = () => {
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                 <CssBaseline />
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <Header onDrawerToggle={handleDrawerToggle} header={'משתמש חדש'}/>
+                    <Header onDrawerToggle={handleDrawerToggle} />
                     <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
                         <ContentAddUser />
                     </Box>

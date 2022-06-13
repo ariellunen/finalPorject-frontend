@@ -164,22 +164,16 @@ theme = {
     },
 };
 
-const drawerWidth = 256;
 
 const Admin = (props) => {
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                 <CssBaseline />
                 
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <Header onDrawerToggle={handleDrawerToggle} kide={props.kide} isKide={props.isKide} notKide={props.notKide}/>
+                    <Header kide={props.kide} isKide={props.isKide} notKide={props.notKide}/>
                     <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
                         <Content kide={props.kide}/>
                     </Box>

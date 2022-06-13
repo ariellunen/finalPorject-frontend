@@ -359,7 +359,7 @@ const Coloring = (props) => {
     return (
         <React.Fragment>
             <NavLink />
-            <Stack spacing={2} >
+            <Stack spacing={2} dir='ltr'>
                 <Breadcrumbs
                     sx={{ marginTop: 1, marginLeft: 3 }}
                     separator={<NavigateNextIcon fontSize="small" />}
@@ -368,7 +368,7 @@ const Coloring = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <div className='container'>
+            <div className='container' dir='ltr'>
                 <div id="canvasGrid" style={{ marginTop: "8px" }}>
                     {doneLeft && doneRight === true && <Confetti style={{ width: '100%' }} />}
                     <LeftCanvas
@@ -397,12 +397,12 @@ const Coloring = (props) => {
                     {/* <p id="SeveralChanges2">{cchange2}</p> */}
 
                 </div>
-                <div id='footer'>
-                    <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button>
+                <div id='footer' dir='ltr'>
                     <div id='time'>
                         <h3>{timer}</h3>
                     </div>
-                    {/* <Button variant="contained" type='submit' onClick={onSubmit} component={Link} to="/">סיום</Button> */}
+                    <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button>
+
                 </div>
             </div>
         </React.Fragment >
