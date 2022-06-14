@@ -4,7 +4,10 @@ import TextField from '@mui/material/TextField';
 
 const AutoSearch = (props) => {
     return (
+        // <div style={{display: 'flex'}}
         <Autocomplete
+            dir='rtl'
+            fullWidth
             value={props.value}
             onChange={(event, value) => props.handleValue(value)}
             // onInputChange={(event, value) => props.handleTextChanage(value)}
@@ -24,12 +27,15 @@ const AutoSearch = (props) => {
                 return option.name;
             }}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
-            sx={{ width: 300 }}
             freeSolo
+            InputProps={{
+                color: 'red'
+             }}
             renderInput={(params) => (
                 <TextField {...params} label="שם הילד\ה" />
             )}
         />
+        // </div>
     )
 }
 

@@ -275,8 +275,7 @@ const Recovery = (props) => {
     }
 
     return (
-        <Box sx={style}>
-            <div style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>
+            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', position: 'relative' }}>
                 <canvas
                     id='leftCanvas'
                     width={`620px`}
@@ -287,14 +286,17 @@ const Recovery = (props) => {
                     width={`620px`}
                     height={`470px`}
                 />
+                        <div style={{ position: 'absolute', bottom:'0px', top:'12px', left:'3px'}}>
+
+                <Button variant="outlined" onClick={speedChange05}>X0.5</Button>
+                <Button variant="outlined" onClick={speedChange1}>X1</Button>
+                <Button variant="outlined" onClick={speedChange125}>X1.25</Button>
+                <Button variant="outlined" onClick={speedChange15}>X1.5</Button>
             </div>
             {/* <Button variant="outlined" onClick={handleClick}>התחל</Button> */}
-            <Button variant="outlined" onClick={speedChange05}>X0.5</Button>
-            <Button variant="outlined" onClick={speedChange1}>X0.1</Button>
-            <Button variant="outlined" onClick={speedChange125}>X1.25</Button>
-            <Button variant="outlined" onClick={speedChange15}>X1.5</Button>
 
-        </Box>
+
+        </div>
     )
 }
 

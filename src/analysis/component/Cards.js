@@ -7,9 +7,10 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 // import Button from '../../shared/components/FormElements/Button'
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Divider from '@mui/material/Divider';
 
 const bull = (
     <Box
@@ -41,13 +42,13 @@ const Cards = (props) => {
                 const responseData = await response.json();
                 setSecondKide(responseData.child);
                 setIsReady(true);
-                if(props.text === firstKide.name){
+                if (props.text === firstKide.name) {
                     props.searchText(firstKide)
                 }
-                if(props.text === secondKide.name){
+                if (props.text === secondKide.name) {
                     props.searchText(secondKide)
                 }
-                
+
 
             } catch (err) {
                 console.log(err);
@@ -63,18 +64,18 @@ const Cards = (props) => {
     arr.push(secondKide)
 
     const handleSearch = () => {
-        
+
     }
 
     const card = (
         <React.Fragment>
             <div dir="rtl">
                 <CardContent>
-                    <Typography variant="h4" component="div">
+                    <Typography sx={{ margin: 0, fontSize: 27}} component="div">
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                             <Box sx={{ textAlign: 'center' }}>
                                 <Avatar
-                                    sx={{ width: 80, height: 80 }}
+                                    sx={{ width: 70, height: 70 }}
                                     alt={'left'}
                                     src={`http://localhost:3000/${firstKide.image}`}
                                 />
@@ -82,40 +83,43 @@ const Cards = (props) => {
                             </Box>
                             <Box sx={{ textAlign: 'center' }}>
                                 <Avatar
-                                    sx={{ width: 80, height: 80 }}
+                                    sx={{ width: 70, height: 70 }}
                                     alt={'left'}
                                     src={`http://localhost:3000/${secondKide.image}`}
                                 />
                                 {secondKide.name}
                             </Box>
+                            
                         </Box>
                     </Typography>
+                    <Divider />
+
                     <br />
-                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary" gutterBottom>
+                    <Typography sx={{ margin: 0, fontSize: 18 }} color="text.secondary" gutterBottom>
                         {props.item.timeStarted.slice(0, 10).split("-").reverse().join('/')}
                     </Typography>
-                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+                    <Typography sx={{ margin: 0, fontSize: 18 }} color="text.secondary">
                         שעת התחלה:
                         &nbsp;
                         {props.item.timeStarted.slice(11, -6)}
                     </Typography>
-                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+                    <Typography sx={{ margin: 0, fontSize: 18 }} color="text.secondary">
                         שעת סיום:
                         &nbsp;
                         {props.item.timeDone.slice(11, -6)}
                     </Typography>
-                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+                    {/* <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
                         צורה:
                         &nbsp;
                         {props.item.shape}
-                    </Typography>
+                    </Typography> */}
                 </CardContent>
-                <CardActions sx={{ flexDirection: 'row-reverse' }}>
-                    <Button variant="contained" type='submit' onClick={(() => {
-                        console.log(props.item)
-                    localStorage.setItem('Item', JSON.stringify(props.item));
-                    localStorage.setItem('Names', JSON.stringify(arr));
-                })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
+                <CardActions sx={{ flexDirection: 'row-reverse', justifyContent: 'center' }}>
+                    <Button type='submit' sx={{ bgcolor: '#4454a3', width: '94%', color:'white' }} onClick={(() => {
+                        localStorage.setItem('Item', JSON.stringify(props.item));
+                        localStorage.setItem('Names', JSON.stringify(arr));
+                    })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
+
                 </CardActions>
             </div>
         </React.Fragment>

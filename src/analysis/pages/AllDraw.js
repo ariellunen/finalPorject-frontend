@@ -296,8 +296,9 @@ export default function AllDraw() {
         <Box
             sx={{ width: 350 }}
             role="presentation"
+            dir='ltr'
         >
-            <List>
+            <List dir='ltr'>
                 <ListItem>
                     <DatePicker
                         value={selectedDayRange}
@@ -395,10 +396,10 @@ export default function AllDraw() {
         <div>
             <NavLink />
             <Paper
+                dir='ltr'
                 component="form"
                 sx={{ display: 'flex', alignItems: 'center' }}
             >
-                <AutoSearch value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
                 <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={checkDrawing}>
                     <SearchIcon />
                 </IconButton>
@@ -414,8 +415,7 @@ export default function AllDraw() {
                         >
                             {list(anchor)}
                         </Drawer>
-                        <InputBase id="outlined-basic" onChange={handleText} />
-
+                            <AutoSearch dir='rtl' value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
                     </React.Fragment>
                 ))}
             </Paper>
@@ -426,7 +426,7 @@ export default function AllDraw() {
                             justifyContent: 'center',
                             p: 1,
                             m: 1,
-                            bgcolor: 'background.paper',
+                            bgcolor: 'transparent',
                             borderRadius: 1,
                             width: '25%',
                         }}>
@@ -457,7 +457,7 @@ export default function AllDraw() {
                             justifyContent: 'center',
                             p: 1,
                             m: 1,
-                            bgcolor: 'background.paper',
+                            bgcolor: 'transparent',
                             borderRadius: 1,
                             width: '25%',
                         }}>

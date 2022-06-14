@@ -16,7 +16,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from "@material-ui/core/IconButton";
 import Box from '@mui/material/Box';
-
+import Chart1 from '../component/Chart1';
+import Chart2 from '../component/Chart2';
 let ctx1;
 let ctx2;
 let ctx3;
@@ -45,6 +46,7 @@ const breadcrumbs = [
 ];
 
 const DrawDetails = (props) => {
+    let screen;
     const storedData = JSON.parse(localStorage.getItem('Item'));
     const names = JSON.parse(localStorage.getItem('Names'));
 
@@ -60,16 +62,16 @@ const DrawDetails = (props) => {
         PaintBrushL();
         PaintBrushR();
 
-        ctx1 = document.getElementById('Chart1').getContext('2d');
-        Chart1();
-        ctx2 = document.getElementById('Chart2').getContext('2d');
-        Chart2();
-        ctx3 = document.getElementById('Chart3').getContext('2d');
-        Chart3();
-        ctx4 = document.getElementById('Chart4').getContext('2d');
-        Chart4();
-        ctx5 = document.getElementById('Chart5').getContext('2d');
-        Chart5();
+        // ctx1 = document.getElementById('Chart1').getContext('2d');
+        // Chart1();
+        // ctx2 = document.getElementById('Chart2').getContext('2d');
+        // Chart2();
+        // ctx3 = document.getElementById('Chart3').getContext('2d');
+        // Chart3();
+        // ctx4 = document.getElementById('Chart4').getContext('2d');
+        // Chart4();
+        // ctx5 = document.getElementById('Chart5').getContext('2d');
+        // Chart5();
     }, []);
 
     const PaintBrushL = () => {
@@ -171,179 +173,189 @@ const DrawDetails = (props) => {
         }
     }
 
-    const Chart1 = () => {
-        let xValues = [];
-        let child1 = [];
-        let child2 = [];
-        let arrLx = [];
-        let arrRx = [];
+    // const Chart1 = () => {
+    //     let canvas = document.createElement('canvas');
+    //     canvas.setAttribute("id", "chart1");
+    //     let charts = document.getElementById('charts');
+    //     charts.appendChild(canvas);
+    //     ctx1 = document.getElementById('chart1').getContext('2d');
+    //     let xValues = [];
+    //     let child1 = [];
+    //     let child2 = [];
+    //     let arrLx = [];
+    //     let arrRx = [];
 
-        //מפריד את המערך של התדירות לציר של תדירויות וציר של שניות
-        for (let i = 0; i < storedData.changesL.length; i++) { arrLx.push(storedData.changesL[i].x); }
-        for (let i = 0; i < storedData.changesR.length; i++) { arrRx.push(storedData.changesR[i].x); }
+    //     //מפריד את המערך של התדירות לציר של תדירויות וציר של שניות
+    //     for (let i = 0; i < storedData.changesL.length; i++) { arrLx.push(storedData.changesL[i].x); }
+    //     for (let i = 0; i < storedData.changesR.length; i++) { arrRx.push(storedData.changesR[i].x); }
 
-        let avgL, avgR;
-        let arrayL = [], arrayR = [];
-        let totalL, totalR;
+    //     let avgL, avgR;
+    //     let arrayL = [], arrayR = [];
+    //     let totalL, totalR;
 
-        for (let i = 0; i < storedData.secondTotal; i++) {
-            let x = arrLx.filter((v) => (v === i)).length;
-            avgL = 0;
-            if (x != 0) {
-                totalL = 0;
-                for (let j = 0; j < storedData.changesL.length; j++) {
-                    if (storedData.changesL[j].x === i) {
-                        let number = Number(storedData.changesL[j].y)
-                        totalL += number;
-                    }
-                }
-                avgL = (totalL / x).toFixed(2);
-            }
-            arrayL.push({ ces: i, change: x, avg: avgL });
-        }
+    //     for (let i = 0; i < storedData.secondTotal; i++) {
+    //         let x = arrLx.filter((v) => (v === i)).length;
+    //         avgL = 0;
+    //         if (x != 0) {
+    //             totalL = 0;
+    //             for (let j = 0; j < storedData.changesL.length; j++) {
+    //                 if (storedData.changesL[j].x === i) {
+    //                     let number = Number(storedData.changesL[j].y)
+    //                     totalL += number;
+    //                 }
+    //             }
+    //             avgL = (totalL / x).toFixed(2);
+    //         }
+    //         arrayL.push({ ces: i, change: x, avg: avgL });
+    //     }
 
-        for (let i = 0; i < storedData.secondTotal; i++) {
-            let x = arrRx.filter((v) => (v === i)).length;
-            avgR = 0;
-            if (x != 0) {
-                totalR = 0;
-                for (let j = 0; j < storedData.changesR.length; j++) {
-                    if (storedData.changesR[j].x === i) {
-                        let number = Number(storedData.changesR[j].y)
-                        totalR += number;
-                    }
-                }
-                avgR = (totalR / x).toFixed(2);
-            }
-            arrayR.push({ ces: i, change: x, avg: avgR });
-        }
+    //     for (let i = 0; i < storedData.secondTotal; i++) {
+    //         let x = arrRx.filter((v) => (v === i)).length;
+    //         avgR = 0;
+    //         if (x != 0) {
+    //             totalR = 0;
+    //             for (let j = 0; j < storedData.changesR.length; j++) {
+    //                 if (storedData.changesR[j].x === i) {
+    //                     let number = Number(storedData.changesR[j].y)
+    //                     totalR += number;
+    //                 }
+    //             }
+    //             avgR = (totalR / x).toFixed(2);
+    //         }
+    //         arrayR.push({ ces: i, change: x, avg: avgR });
+    //     }
 
-        let cync = [];
-        for (let i = 0; i < arrayL.length; i++) {
-            child1.push(arrayL[i].avg);
-            child2.push(arrayR[i].avg);
-            if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((arrayL[i].avg != 0) && (arrayR[i].avg !== 0))) {
-                if (arrayL[i].avg > arrayR[i].avg) {
-                    cync.push(arrayL[i].avg)
-                }
-                else { cync.push(arrayR[i].avg) }
-            }
-            else { cync.push(0) }
-        }
+    //     let cync = [];
+    //     for (let i = 0; i < arrayL.length; i++) {
+    //         child1.push(arrayL[i].avg);
+    //         child2.push(arrayR[i].avg);
+    //         if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((arrayL[i].avg != 0) && (arrayR[i].avg !== 0))) {
+    //             if (arrayL[i].avg > arrayR[i].avg) {
+    //                 cync.push(arrayL[i].avg)
+    //             }
+    //             else { cync.push(arrayR[i].avg) }
+    //         }
+    //         else { cync.push(0) }
+    //     }
 
-        //ציר האיקס עבור זמן השניות הכולל
-        for (let i = 0; i < storedData.secondTotal; i++) {
-            xValues.push(i)
-        }
+    //     //ציר האיקס עבור זמן השניות הכולל
+    //     for (let i = 0; i < storedData.secondTotal; i++) {
+    //         xValues.push(i)
+    //     }
 
-        //מילוי נקודות הסנכרון
-        new Chart(ctx1, {
-            type: "line",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    label: 'ראה מקומות סנכרון',
-                    data: cync,
-                    fill: true
-                }, {
-                    label: names[0].name,
-                    data: child1,
-                    borderColor: storedData.colorFirst,
-                    fill: false,
-                }, {
-                    label: names[1].name,
-                    data: child2,
-                    borderColor: storedData.colorSecond,
-                    fill: false
-                }]
-            },
-            options: {
-                legend: { display: true },
-                title: {
-                    display: false,
-                    text: `זמן הצביעה בין ${names[0].name} לבין ${names[1].name} נמשך ${storedData.secondTotal} שניות `,
-                    fontSize: 20
-                }
-            }
-        });
-    }
-    const Chart2 = () => {
-        let xValues = [];
-        let namber = 1;
-        if (sec2 < sec3) {
-            for (let i = 0; i < sec3; i++) {
-                xValues.push(namber);
-                namber++
-            }
-        }
-        else {
-            for (let i = 0; i < yValuesSec2.length; i++) {
-                xValues.push(namber);
-                namber++
-            }
-        }
-        let barColors = storedData.colorFirst;
-        new Chart(ctx2, {
-            type: "horizontalBar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValuesSec2
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: `${names[0].name}`,
-                    fontSize: 20
-                },
-                scales: {
-                    xAxes: [{ ticks: { min: 0 } }]
-                }
-            }
-        });
-    }
-    const Chart3 = () => {
-        let xValues = [];
-        let namber = 1;
-        if (sec2 < sec3) {
-            for (let i = 0; i < yValuesSec3.length; i++) {
-                xValues.push(namber);
-                namber++
-            }
-        }
-        else {
-            for (let i = 0; i < sec2; i++) {
-                xValues.push(namber);
-                namber++
-            }
-        }
-        let barColors = storedData.colorSecond;
-        new Chart(ctx3, {
-            type: "horizontalBar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValuesSec3
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: `${names[1].name}`,
-                    fontSize: 20
-                },
-                scales: {
-                    xAxes: [{ ticks: { min: 0 } }]
-                }
-            }
-        });
-    }
+    //     //מילוי נקודות הסנכרון
+    //     new Chart(ctx1, {
+    //         type: "line",
+    //         data: {
+    //             labels: xValues,
+    //             datasets: [{
+    //                 label: 'ראה מקומות סנכרון',
+    //                 data: cync,
+    //                 fill: true
+    //             }, {
+    //                 label: names[0].name,
+    //                 data: child1,
+    //                 borderColor: storedData.colorFirst,
+    //                 fill: false,
+    //             }, {
+    //                 label: names[1].name,
+    //                 data: child2,
+    //                 borderColor: storedData.colorSecond,
+    //                 fill: false
+    //             }]
+    //         },
+    //         options: {
+    //             legend: { display: true },
+    //             title: {
+    //                 display: false,
+    //                 text: `זמן הצביעה בין ${names[0].name} לבין ${names[1].name} נמשך ${storedData.secondTotal} שניות `,
+    //                 fontSize: 20
+    //             }
+    //         }
+    //     });
+    // }
+    // const Chart2 = () => {
+    //     let xValues = [];
+    //     let namber = 1;
+    //     if (sec2 < sec3) {
+    //         for (let i = 0; i < sec3; i++) {
+    //             xValues.push(namber);
+    //             namber++
+    //         }
+    //     }
+    //     else {
+    //         for (let i = 0; i < yValuesSec2.length; i++) {
+    //             xValues.push(namber);
+    //             namber++
+    //         }
+    //     }
+    //     let barColors = storedData.colorFirst;
+    //     new Chart(ctx2, {
+    //         type: "horizontalBar",
+    //         data: {
+    //             labels: xValues,
+    //             datasets: [{
+    //                 backgroundColor: barColors,
+    //                 data: yValuesSec2
+    //             }]
+    //         },
+    //         options: {
+    //             legend: { display: false },
+    //             title: {
+    //                 display: true,
+    //                 text: `${names[0].name}`,
+    //                 fontSize: 20
+    //             },
+    //             scales: {
+    //                 xAxes: [{ ticks: { min: 0 } }]
+    //             }
+    //         }
+    //     });
+    // }
+    // const Chart3 = () => {
+    //     let xValues = [];
+    //     let namber = 1;
+    //     if (sec2 < sec3) {
+    //         for (let i = 0; i < yValuesSec3.length; i++) {
+    //             xValues.push(namber);
+    //             namber++
+    //         }
+    //     }
+    //     else {
+    //         for (let i = 0; i < sec2; i++) {
+    //             xValues.push(namber);
+    //             namber++
+    //         }
+    //     }
+    //     let barColors = storedData.colorSecond;
+    //     new Chart(ctx3, {
+    //         type: "horizontalBar",
+    //         data: {
+    //             labels: xValues,
+    //             datasets: [{
+    //                 backgroundColor: barColors,
+    //                 data: yValuesSec3
+    //             }]
+    //         },
+    //         options: {
+    //             legend: { display: false },
+    //             title: {
+    //                 display: true,
+    //                 text: `${names[1].name}`,
+    //                 fontSize: 20
+    //             },
+    //             scales: {
+    //                 xAxes: [{ ticks: { min: 0 } }]
+    //             }
+    //         }
+    //     });
+    // }
     const Chart4 = () => {
+        let canvas = document.createElement('canvas');
+        canvas.setAttribute("id", "ctx4");
+        let charts = document.getElementById('lineWidth');
+        charts.appendChild(canvas);
+        ctx4 = document.getElementById('ctx4').getContext('2d');
         let x = 0, y = 0, z = 0;
         let counX = 0, counY = 0, counZ = 0;
         for (let i = 0; i < storedData.coordinate.length; i++) {
@@ -416,11 +428,60 @@ const DrawDetails = (props) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    console.log(names[0].name)
+    const [line, setLine] = useState('outlined')
+    const [touch, setTouch] = useState('outlined')
+    const [replay, setReplay] = useState('outlined')
+    const [sync, setSync] = useState('contained')
+
+    const handleClick = (e) => {
+        console.log(e.target.id)
+        if (e.target.id === 'sync') {
+            setLine('outlined')
+            setTouch('outlined')
+            setReplay('outlined')
+            setSync('contained')
+            // ctx1 = document.getElementById('Chart1').getContext('2d');
+            // Chart1();
+        } else if (e.target.id === 'line') {
+            setLine('contained')
+            setTouch('outlined')
+            setReplay('outlined')
+            setSync('outlined')
+            // let a = document.getElementById('charts')
+            // let b = document.getElementById('chart1')
+            // a?.remove()
+            // b?.remove()
+            // // ctx4 = document.getElementById('Chart1').getContext('2d');
+            // Chart4();
+            // // ctx5 = document.getElementById('Chart2').getContext('2d');
+            // Chart5();
+        }
+        else if (e.target.id === 'replay') {
+            // let a = document.getElementById('charts')
+            // let b = document.getElementById('chart1')
+            // a?.remove()
+            // b?.remove()
+            setLine('outlined')
+            setTouch('outlined')
+            setReplay('contained')
+            setSync('outlined')
+        } else {
+            setLine('outlined')
+            setTouch('contained')
+            setReplay('outlined')
+            setSync('outlined')
+            // ctx2 = document.getElementById('Chart1').getContext('2d');
+            // Chart2();
+            // ctx3 = document.getElementById('Chart2').getContext('2d');
+            // Chart3();
+        }
+
+    }
+
     return (
-        <React.Fragment>
+        <React.Fragment >
             <NavLink />
-            <Stack spacing={2} >
+            <Stack spacing={2} dir='ltr'>
                 <Breadcrumbs
                     sx={{ marginTop: 1, marginLeft: 3 }}
                     separator={<NavigateNextIcon fontSize="small" />}
@@ -429,50 +490,61 @@ const DrawDetails = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
+            <div style={{ width: 1240, margin: '0 auto' }}>
+                <Stack sx={{ marginLeft: '10px' }} direction="row">
+                    <Button id='sync' onClick={handleClick} sx={{ borderTopLeftRadius: '15px', marginLeft: '10px', borderTopRightRadius: '15px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }} variant={sync}>תדירות \ סנכרון</Button>
+                    <Button id='touch' onClick={handleClick} sx={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', marginLeft: '10px', }} variant={touch}>נגיעות במסך</Button>
+                    <Button id='line' onClick={handleClick} sx={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', marginLeft: '10px', }} variant={line}>עובי קו</Button>
+                    <Button id='replay' onClick={handleClick} sx={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', marginLeft: '10px', }} variant={replay}>שחזור</Button>
+                </Stack>
+                <Box dir='ltr' component="main" sx={{ display: 'flex', placeContent: 'center' }}>
+                    <Box sx={{ bgcolor: 'white', textAlignLast: 'center', width: 1240, height: 470, borderRight: '1px solid lightgrey', borderTop: '1px solid #1976d2', borderLeft: '1px solid lightgrey', borderBottom: '1px solid lightgrey', textAlign: '-webkit-center' }}>
+                        <div id='charts'></div>
+                         {/* <div id='cync'>
+                            <canvas id="Chart1"></canvas>
+                            <canvas id="Chart2"></canvas>
+                        </div> */}
+                        {replay === 'contained' && <Recovery storedData={storedData} />}
+                        {sync === 'contained' && <Chart1 names={names} storedData={storedData}/>}
+                        {touch === 'contained' && <Chart2 names={names} storedData={storedData} yValuesSec3={yValuesSec3} yValuesSec2={yValuesSec2} sec2={sec2} sec3={sec3}/> }
+                        {line === 'contained' && <div id='lineWidth'>
+                            <canvas id="Chart4"></canvas>
+                            <canvas id="Chart5"></canvas>
+                        </div>} 
+                        {screen}
+                    </Box>
+                </Box>
+            </div>
+            <Box dir='ltr' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
                 <Typography variant="h4" sx={{ margin: 'auto' }}>זמן הצביעה בין {names[0].name} לבין {names[1].name} נמשך {storedData.secondTotal} שניות</Typography>
                 <CardActions>
-                    <IconButton>
-                        <ReplayIcon fill={'black'} onClick={handleOpen} sx={{ height: '100px', width: '100px' }} />
-                    </IconButton>
-                    {/* <Button variant="outlined" onClick={handleOpen}>שחזור</Button> */}
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Recovery storedData={storedData} />
-
-                    </Modal>
+                   
                 </CardActions>
             </Box>
-            {/* <div style={{ display: 'flex'  }}> */}
-            <div style={{ width: '100%' }}>
-                {/* <Typography variant="h3" component="div">{firstKide} ו{secondKide}</Typography> */}
+            {/* <div style={{ width: '100%' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
+                    <Typography variant="h4">תדירות וסנכרון</Typography>
+
                     <div id='cync'>
                         <canvas id="Chart1"></canvas>
                     </div>
-                    <Typography variant="h4">תדירות וסנכרון</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
+                    <Typography variant="h4" >מספר נגיעות במסך</Typography>
+
                     <div id='sec'>
                         <canvas id="Chart2"></canvas>
                         <canvas id="Chart3"></canvas>
                     </div>
-                    <Typography variant="h4" >מספר נגיעות במסך</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
+                    <Typography variant="h4" >עובי קו</Typography>
                     <div id='lineWidth'>
                         <canvas id="Chart4"></canvas>
                         <canvas id="Chart5"></canvas>
                     </div>
-                    <Typography variant="h4" >עובי קו</Typography>
                 </Box>
-            </div>
-            {/* <div style={{backgroundColor: 'red', width: '100px', height: 100}}></div> */}
-            {/* </div> */}
+            </div> */}
         </React.Fragment>
     );
 }
