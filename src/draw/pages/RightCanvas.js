@@ -25,7 +25,7 @@ let fill;
 let fillPercentage;
 let flagCnc = true;
 let color;
-let line;
+let line = 12;
 let selectedShape;
 
 const RightCanvas = (props) => {

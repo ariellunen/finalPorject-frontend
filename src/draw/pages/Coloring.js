@@ -80,7 +80,8 @@ const Coloring = (props) => {
     const [right, setRight] = useState({ y: -1, x: -1, color: 'LightGrey', line: '20' })
 
     useEffect(() => {
-        arr[counter] = { l: left, r: right }
+        arr[counter] = { l: left, r: right}
+        console.log('left', left)
         counter++;
         if (isDone) {
             arr = [];

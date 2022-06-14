@@ -24,7 +24,7 @@ let fill;
 let fillPercentage;
 let selectedShape;
 let color;
-let line;
+let line = 12;
 const LeftCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {
@@ -81,6 +81,7 @@ const LeftCanvas = (props) => {
             // timeTakenL = Date.now() - down;
             // console.log(timeTakenL)
             // props.secondsL.push(timeTakenL / 1000);
+            console.log("lineee",line)
             props.setLeft({ x: -1, y: -1, color: color, line: line })
             props.setMouseL(true);
             canvas.stroke();

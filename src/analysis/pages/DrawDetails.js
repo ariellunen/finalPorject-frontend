@@ -18,6 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Box from '@mui/material/Box';
 import Chart1 from '../component/Chart1';
 import Chart2 from '../component/Chart2';
+import Chart3 from '../component/Chart3';
 let ctx1;
 let ctx2;
 let ctx3;
@@ -50,6 +51,7 @@ const DrawDetails = (props) => {
     const storedData = JSON.parse(localStorage.getItem('Item'));
     const names = JSON.parse(localStorage.getItem('Names'));
 
+    console.log(storedData)
     useEffect(() => {
         for (let i = 0; i < storedData.secondsL.length; i++) {
             yValuesSec2.push(storedData.secondsL[i]);
@@ -507,11 +509,7 @@ const DrawDetails = (props) => {
                         {replay === 'contained' && <Recovery storedData={storedData} />}
                         {sync === 'contained' && <Chart1 names={names} storedData={storedData}/>}
                         {touch === 'contained' && <Chart2 names={names} storedData={storedData} yValuesSec3={yValuesSec3} yValuesSec2={yValuesSec2} sec2={sec2} sec3={sec3}/> }
-                        {line === 'contained' && <div id='lineWidth'>
-                            <canvas id="Chart4"></canvas>
-                            <canvas id="Chart5"></canvas>
-                        </div>} 
-                        {screen}
+                        {line === 'contained' && <Chart3 names={names} storedData={storedData} a={a} b={b} c={c} e={e} d={d} f={f}/> }
                     </Box>
                 </Box>
             </div>
