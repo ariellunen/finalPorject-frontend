@@ -8,7 +8,6 @@ const TabsAdmin = () => {
     const isAdminPage = location.pathname === '/admin' || location.pathname === '/addUser'
     const [userScreen, setUsersScreen] = useState(isAdminPage? ('contained'):('outlined'))
     const [childrenScreen, setChildrenScreen] = useState(!isAdminPage? ('contained'):('outlined'))
-    console.log(isAdminPage)
     let history = useHistory();
     const handleClick = (e) => {
         if (e.target.id === 'user') {

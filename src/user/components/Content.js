@@ -44,14 +44,7 @@ export default function Content(props) {
     let history = useHistory();
     const location = useLocation();
     const isAdminPage = location.pathname === '/admin'
-    const someEventHandler = event => {
-        console.log(props.kide)
-        let kide = props.kide
-        history.push({
-            pathname: '/addKide',
-            state: kide
-        });
-    };
+    
     useEffect(() => {
         const getData = async () => {
             try {
@@ -59,7 +52,6 @@ export default function Content(props) {
                 });
                 const responseData = await response.json();
                 children.push(responseData);
-                console.log("children", children)
             } catch (err) {
                 console.log(err);
             }
@@ -108,7 +100,7 @@ export default function Content(props) {
                                 />
                             </Grid>
                             {!isAdminPage && <Grid item>
-                                <Button variant="contained" sx={{ mr: 1 }} onClick={someEventHandler} >
+                                <Button variant="contained" sx={{ mr: 1 }} >
                                     הוספת משתמש
                                 </Button>
                             </Grid>}

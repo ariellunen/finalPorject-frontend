@@ -2,17 +2,11 @@ import React, { useState, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -85,7 +79,7 @@ const Auth = () => {
   };
 
   return (
-    <ThemeProvider>
+    <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <Grid container component="main" sx={{height:'100vh', overflow: 'hidden'}}>
         <CssBaseline />
@@ -155,7 +149,7 @@ const Auth = () => {
         />
 
       </Grid>
-    </ThemeProvider>
+    </React.Fragment>
   );
 }
 

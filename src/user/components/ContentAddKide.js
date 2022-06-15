@@ -59,7 +59,7 @@ const ContentAddKide = () => {
                     }
                 );
                 console.log(responseData);
-                history.replace('/admin')
+                // history.replace('/kids')
 
             } catch (err) {
                 console.log(err);
@@ -76,8 +76,7 @@ const ContentAddKide = () => {
                     formData,
                 );
                 console.log(responseData);
-                history.replace('/admin')
-
+                // history.replace('/kids')
             } catch (err) {
                 console.log(err);
             }
@@ -122,6 +121,7 @@ const ContentAddKide = () => {
                             {alignment === 'takeImage' && <CameraFeed sendFile={uploadImage} photoTaken={photoTaken} />}
                             {alignment === 'upload' && <ImageUpload center id="image" onInput={inputHandler} />}
                             <ToggleButtonGroup
+                            
                                 color="primary"
                                 value={alignment}
                                 exclusive

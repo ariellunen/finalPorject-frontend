@@ -42,6 +42,8 @@ let secondsL = [];
 let secondsR = [];
 let changeL = [];
 let changeR = [];
+let boolVal = false;
+
 const breadcrumbs = [
     <Typography key="1" color="text.primary" component={Link} to='/'>
         תפריט ראשי
@@ -100,6 +102,10 @@ const Coloring = (props) => {
 
     const handleSecondsL = (timeTakenL) => {
         secondsL.push(timeTakenL / 1000);
+    }
+
+    const handleSecondsR = (timeTakenR) => {
+        secondsL.push(timeTakenR / 1000);
     }
 
     const handleRightCoordinate = (x, y, color, line) => {
@@ -187,6 +193,7 @@ const Coloring = (props) => {
                 if (m1[pointM1] !== m1[pointM1 + 1]) {
                     change1++;
                     cchange1 = (change1 / stopTimeL).toFixed(2);
+                    console.log('hereee')
                     changeL.push({ x: secondTotal, y: cchange1 });
                 }
             }
@@ -339,6 +346,17 @@ const Coloring = (props) => {
     const [doneLeft, setDoneLeft] = useState(false);
     const [doneRight, setDoneRight] = useState(false);
 
+    const handleIsUp = (val) => {
+        boolVal = val;
+        console.log("val",val)
+    }
+
+    useEffect(() => {
+        console.log('hiiii', boolVal)
+        if(boolVal === false){
+            changeR.push({ x: secondTotal, y: 0 });
+        }
+    },[boolVal])
     return (
         <React.Fragment>
             <NavLink />
@@ -369,6 +387,7 @@ const Coloring = (props) => {
                     />
 
                     <RightCanvas
+                    handleIsUp={handleIsUp}
                         handleCoordinate={handleRightCoordinate}
                         color={JSON.parse(localStorage.getItem('secondColor'))}
                         setRight={setRight}
@@ -378,6 +397,7 @@ const Coloring = (props) => {
                         setMouseR={setMouseR}
                         arr={arr}
                         setDoneRight={setDoneRight}
+                        handleSecondsR={handleSecondsR}
                     />
                     {/* <p id="SeveralChanges2">{cchange2}</p> */}
 

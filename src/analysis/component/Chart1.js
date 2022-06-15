@@ -20,6 +20,7 @@ const Chart1 = (props) => {
         for (let i = 0; i < props.storedData.changesL.length; i++) { arrLx.push(props.storedData.changesL[i].x); }
         for (let i = 0; i < props.storedData.changesR.length; i++) { arrRx.push(props.storedData.changesR[i].x); }
 
+        console.log(props.storedData.changesR)
         let avgL, avgR;
         let arrayL = [], arrayR = [];
         let totalL, totalR;
@@ -103,7 +104,6 @@ const Chart1 = (props) => {
             }
         });
     }
-
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'transparent',  }}>

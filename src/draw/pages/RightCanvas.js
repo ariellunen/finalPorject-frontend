@@ -27,7 +27,7 @@ let flagCnc = true;
 let color;
 let line = 12;
 let selectedShape;
-
+let boolVal = true;
 const RightCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {
@@ -403,7 +403,6 @@ const RightCanvas = (props) => {
     }
 
     const handleWidth = (value) => {
-        // console.log(value)
         line = value;
     }
 
@@ -426,13 +425,19 @@ const RightCanvas = (props) => {
 
     const pointerUpR = () => {
         timeTakenR = Date.now() - down;
-        props.secondsR.push(timeTakenR / 1000);
+        props.handleSecondsR(timeTakenR)
+        boolVal = false
+        props.handleIsUp(false)
+    }
+
+    const onPointerDown = () => {
+        props.handleIsUp(true)
     }
  
     return (
         <React.Fragment>
             <div className='container'>
-                <canvas id="canvasR" width="620" height="470" penwidth='30' onPointerUp={pointerUpR}></canvas>
+                <canvas id="canvasR" width="620" height="470" penwidth='30' onPointerDown={onPointerDown} onPointerUp={pointerUpR}></canvas>
                 <div id='content'>
                     <div id="myDiv">
                         <div>{`${JSON.parse(localStorage.getItem('secondKide')).name}`}</div>
