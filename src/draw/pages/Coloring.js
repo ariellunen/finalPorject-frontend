@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 let moment = require('moment-timezone');
 let counter = 0;
@@ -381,7 +382,8 @@ const Coloring = (props) => {
                     <div id='time'>
                         <h3>{timer}</h3>
                     </div>
-                    <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button>
+                    {/* <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button> */}
+                    <Button sx={{ marginTop: "-15px"}} type='submit' onClick={onSubmit}endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>סיום</Button>
 
                 </div>
             </div>
