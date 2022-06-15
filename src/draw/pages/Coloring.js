@@ -65,7 +65,6 @@ const Coloring = (props) => {
     const [isDone, seyIsDone] = useState(false)
     const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
     useEffect(() => {
-        // setStartedTime(new Date());
         clearTimer(getDeadTime());
     }, []);
 
@@ -74,7 +73,6 @@ const Coloring = (props) => {
 
     useEffect(() => {
         arr[counter] = { l: left, r: right}
-        console.log('left', left)
         counter++;
         if (isDone) {
             arr = [];
@@ -98,6 +96,10 @@ const Coloring = (props) => {
                 frequencyL(stopTimeL);
             }
         };
+    }
+
+    const handleSecondsL = (timeTakenL) => {
+        secondsL.push(timeTakenL / 1000);
     }
 
     const handleRightCoordinate = (x, y, color, line) => {
@@ -352,6 +354,7 @@ const Coloring = (props) => {
             <div className='container' dir='ltr'>
                 <div id="canvasGrid" style={{ marginTop: "8px" }}>
                     {doneLeft && doneRight === true && <Confetti style={{ width: '100%' }} />}
+                    
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
                         color={JSON.parse(localStorage.getItem('firstColor'))}
@@ -362,6 +365,7 @@ const Coloring = (props) => {
                         arr={arr}
                         cchange2={cchange2}
                         setDoneLeft={setDoneLeft}
+                        handleSecondsL={handleSecondsL}
                     />
 
                     <RightCanvas

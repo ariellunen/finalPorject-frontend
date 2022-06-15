@@ -39,8 +39,6 @@ import './Auth.css';
 //   );
 // }
 
-const theme = createTheme();
-
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -87,11 +85,11 @@ const Auth = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <ErrorModal error={error} onClear={clearError} />
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{height:'100vh', overflow: 'hidden'}}>
         <CssBaseline />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{height: '100%'}}>
           <Box
             sx={{
               my: 8,

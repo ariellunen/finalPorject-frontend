@@ -8,9 +8,9 @@ const AutoSearch = (props) => {
     return (
         <Autocomplete
             dir='ltr'
-            
             value={props.value}
             onChange={(event, value) => props.handleValue(value)}
+            onInputChange={(event, value) => props.onInputChange(value)}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
@@ -29,7 +29,7 @@ const AutoSearch = (props) => {
                 if (option.inputValue) {
                     return option.inputValue;
                 }
-                props.handleTextChanage(option)
+                //props.handleTextChanage(option)
                 return option.name;
             }}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}

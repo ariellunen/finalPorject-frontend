@@ -81,7 +81,6 @@ const LeftCanvas = (props) => {
             // timeTakenL = Date.now() - down;
             // console.log(timeTakenL)
             // props.secondsL.push(timeTakenL / 1000);
-            console.log("lineee",line)
             props.setLeft({ x: -1, y: -1, color: color, line: line })
             props.setMouseL(true);
             canvas.stroke();
@@ -356,8 +355,8 @@ const LeftCanvas = (props) => {
 
     const pointerUp = () => {
         timeTakenL = Date.now() - down;
-        console.log(timeTakenL)
-        props.secondsL.push(timeTakenL / 1000);
+        props.handleSecondsL(timeTakenL)
+        // props.secondsL.push(timeTakenL / 1000);
     }
     return (
         <React.Fragment>

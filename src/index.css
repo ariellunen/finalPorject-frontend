@@ -1,25 +1,16 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 * {
   box-sizing: border-box;
 }
-
-/* #app{
-  font-family: 'Ubuntu', sans-serif;
-} */
 body, html {
   font-family: 'Ubuntu', sans-serif;
-  background-color: #f0f0f2;
+    background-color: #f0f0f2;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow-x: clip;
 }
-
-html {
-  
-  /* font-family: 'Open Sans', sans-serif; */
-  /* font-family: 'Ubuntu', sans-serif; */
-}
-
 body {
   margin: 0;
-  /* font-family: 'Ubuntu', sans-serif; */
 }
 
 .slide-in-left-enter {

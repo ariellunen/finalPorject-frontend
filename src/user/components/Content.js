@@ -18,13 +18,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 let children = [];
 let users = [];
 export default function Content(props) {
     const [isReady, setIsReady] = useState(false);
     const [userss, setUsers] = useState([])
     let history = useHistory();
+    const location = useLocation();
+    const isAdminPage = location.pathname === '/admin'
     const someEventHandler = event => {
         console.log(props.kide)
         let kide = props.kide
@@ -40,8 +42,6 @@ export default function Content(props) {
                 });
                 const responseData = await response.json();
                 children.push(responseData);
-                console.log("children", responseData)
-
             } catch (err) {
                 console.log(err);
             }
@@ -52,9 +52,6 @@ export default function Content(props) {
                 const responseData = await response.json();
                 users.push(responseData);
                 setUsers(responseData)
-                console.log(users)
-                console.log(users[0].users)
-                console.log(userss)
                 setIsReady(true);
 
 
@@ -65,29 +62,9 @@ export default function Content(props) {
         getData();
     }, [isReady]);
 
-    let b
-
-
-    useEffect(() => {
-        b = (JSON.parse(localStorage.getItem('kide')))
-        console.log(b)
-        console.log("bbbbb", b)
-    }, [JSON.parse(localStorage.getItem('kide'))])
-
-    const [items, setItems] = useState([]);
-
-    useEffect(() => {
-        const kide = JSON.parse(localStorage.getItem('kide'));
-        console.log("bbbbb", kide)
-
-        if (items) {
-            setItems(items);
-        }
-    }, []);
-
     return (
         <React.Fragment>
-            {isReady && <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
+            {isReady && <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }} dir='rtl'>
                 <AppBar
                     position="static"
                     color="default"
@@ -110,26 +87,25 @@ export default function Content(props) {
                                     variant="standard"
                                 />
                             </Grid>
-                            {b && <Grid item>
+                            {!isAdminPage && <Grid item>
                                 <Button variant="contained" sx={{ mr: 1 }} onClick={someEventHandler} >
                                     הוספת משתמש
                                 </Button>
-                                <Tooltip title="Reload">
+                                {/* <Tooltip title="Reload">
                                     <IconButton>
                                         <RefreshIcon color="inherit" sx={{ display: 'block' }} />
                                     </IconButton>
-                                </Tooltip>
+                                </Tooltip> */}
                             </Grid>}
-                            {!b && <Grid item>
+                            {isAdminPage && <Grid item>
                                 <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addUser'>
                                     הוספת משתמש
-
                                 </Button>
-                                <Tooltip title="Reload">
+                                {/* <Tooltip title="Reload">
                                     <IconButton>
                                         <RefreshIcon color="inherit" sx={{ display: 'block' }} />
                                     </IconButton>
-                                </Tooltip>
+                                </Tooltip> */}
                             </Grid>}
                         </Grid>
                     </Toolbar>
@@ -137,33 +113,36 @@ export default function Content(props) {
                 <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
+                            {/* <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    {!b && <TableCell align="right">אימייל</TableCell>}
+                                    {isAdminPage && <TableCell align="right">אימייל</TableCell>}
                                 </TableRow>
-                            </TableHead>
+                            </TableHead> */}
                             <TableBody>
-                                {!b && users[0].users.map((user) => (
+                                {isAdminPage && users[0].users.map((user) => (
                                     <TableRow
                                         key={user.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row">
+                                        <TableCell component="th" scope="row" align="center">
                                             {user.name}
                                         </TableCell>
-                                        <TableCell align="right">{user.email}</TableCell>
+                                        <TableCell align="center">{user.email}</TableCell>
                                     </TableRow>
                                 ))}
-                                {b && children[0].children.map((child) => (
+                                {!isAdminPage && children[0].children.map((child) => (
                                     <TableRow
                                         key={child.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row">
+                                        <TableCell component="th" scope="row" align="center">
                                             {child.name}
+                                        </TableCell>
+                                        <TableCell align="center">
                                             <Avatar alt="Remy Sharp" src={`http://localhost:3000/${child.image}`} />
                                         </TableCell>
+
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -392,6 +392,11 @@ export default function AllDraw() {
     }
 
     const [textChange, setTextChange] = useState(null)
+
+    const onInputChange = (value) => {
+        setTextChange(value)
+        console.log("val", value)
+    }
     return (
         <div>
             <NavLink />
@@ -419,12 +424,12 @@ export default function AllDraw() {
                         >
                             {list(anchor)}
                         </Drawer>
-                        <AutoSearch dir='rtl' value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
+                        <AutoSearch dir='rtl' onInputChange={onInputChange} value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
                     </React.Fragment>
                 ))}
             </Box>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {(filterShape?.length !== 0 || shapes?.length !== 0) && filterShape.map((item, key) => {
+                {/* {(filterShape?.length !== 0 || shapes?.length !== 0) && filterShape.map((item, key) => {
                     return (
                         <Box sx={{
                             justifyContent: 'center',
@@ -437,7 +442,7 @@ export default function AllDraw() {
                             <Cards item={item} key={key} index={key} searchText={searchText} text={text} />
                         </Box>
                     )
-                })}
+                })} */}
 
                 {/* {(filterShape?.length === 0) && <Box sx={{
                     justifyContent: 'center',
@@ -455,7 +460,16 @@ export default function AllDraw() {
                 </Box>
                 } */}
 
-                {isReady && data.map((item, key) => {
+                {isReady && data.filter(item => {
+                    console.log(item);
+                    console.log(textChange);
+                    console.log( allKide);
+                    if(!textChange){return true}
+                    const kid1 = allKide.find(k => k.id === item.firstKide)
+                    const kid2 = allKide.find(k => k.id === item.secondKide)
+                    return kid1.name.includes(textChange)|| kid2.name.includes(textChange)
+                    return true
+                }).map((item, key) => {
                     return (
                         <Box sx={{
                             justifyContent: 'center',

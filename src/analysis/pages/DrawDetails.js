@@ -51,29 +51,23 @@ const DrawDetails = (props) => {
     const storedData = JSON.parse(localStorage.getItem('Item'));
     const names = JSON.parse(localStorage.getItem('Names'));
 
-    console.log(storedData)
     useEffect(() => {
+        yValuesSec2 = [];
+        yValuesSec3 = [];
         for (let i = 0; i < storedData.secondsL.length; i++) {
             yValuesSec2.push(storedData.secondsL[i]);
+            console.log(storedData.secondsL[i], yValuesSec2)
+
         }
         sec2 = yValuesSec2.length;
-        for (let i = 0; i < storedData.secondsL.length; i++) {
+        for (let i = 0; i < storedData.secondsR.length; i++) {
             yValuesSec3.push(storedData.secondsR[i]);
         }
         sec3 = yValuesSec3.length;
+        console.log( storedData)
+
         PaintBrushL();
         PaintBrushR();
-
-        // ctx1 = document.getElementById('Chart1').getContext('2d');
-        // Chart1();
-        // ctx2 = document.getElementById('Chart2').getContext('2d');
-        // Chart2();
-        // ctx3 = document.getElementById('Chart3').getContext('2d');
-        // Chart3();
-        // ctx4 = document.getElementById('Chart4').getContext('2d');
-        // Chart4();
-        // ctx5 = document.getElementById('Chart5').getContext('2d');
-        // Chart5();
     }, []);
 
     const PaintBrushL = () => {
@@ -352,80 +346,80 @@ const DrawDetails = (props) => {
     //         }
     //     });
     // }
-    const Chart4 = () => {
-        let canvas = document.createElement('canvas');
-        canvas.setAttribute("id", "ctx4");
-        let charts = document.getElementById('lineWidth');
-        charts.appendChild(canvas);
-        ctx4 = document.getElementById('ctx4').getContext('2d');
-        let x = 0, y = 0, z = 0;
-        let counX = 0, counY = 0, counZ = 0;
-        for (let i = 0; i < storedData.coordinate.length; i++) {
-            if (storedData.coordinate[i].l.line === '20') { counX++ }
-            else if (storedData.coordinate[i].l.line === '12') { counY++ }
-            else if (storedData.coordinate[i].l.line === '4') { counZ++ }
-        }
-        x = ((100 * counX) / storedData.coordinate.length).toFixed(3);
-        y = ((100 * counY) / storedData.coordinate.length).toFixed(3);
-        z = ((100 * counZ) / storedData.coordinate.length).toFixed(3);
+    // const Chart4 = () => {
+    //     let canvas = document.createElement('canvas');
+    //     canvas.setAttribute("id", "ctx4");
+    //     let charts = document.getElementById('lineWidth');
+    //     charts.appendChild(canvas);
+    //     ctx4 = document.getElementById('ctx4').getContext('2d');
+    //     let x = 0, y = 0, z = 0;
+    //     let counX = 0, counY = 0, counZ = 0;
+    //     for (let i = 0; i < storedData.coordinate.length; i++) {
+    //         if (storedData.coordinate[i].l.line === '20') { counX++ }
+    //         else if (storedData.coordinate[i].l.line === '12') { counY++ }
+    //         else if (storedData.coordinate[i].l.line === '4') { counZ++ }
+    //     }
+    //     x = ((100 * counX) / storedData.coordinate.length).toFixed(3);
+    //     y = ((100 * counY) / storedData.coordinate.length).toFixed(3);
+    //     z = ((100 * counZ) / storedData.coordinate.length).toFixed(3);
 
-        let xValues = ["עבה", "רגיל", "דק"];
-        let yValues = [x, y, z];
-        let barColors = [a, b, c];
+    //     let xValues = ["עבה", "רגיל", "דק"];
+    //     let yValues = [x, y, z];
+    //     let barColors = [a, b, c];
 
-        new Chart(ctx4, {
-            type: "doughnut",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                title: {
-                    display: false,
-                    text: `עובי קו ${names[0]}`,
-                    fontSize: 20
-                }
-            }
+    //     new Chart(ctx4, {
+    //         type: "doughnut",
+    //         data: {
+    //             labels: xValues,
+    //             datasets: [{
+    //                 backgroundColor: barColors,
+    //                 data: yValues
+    //             }]
+    //         },
+    //         options: {
+    //             title: {
+    //                 display: false,
+    //                 text: `עובי קו ${names[0]}`,
+    //                 fontSize: 20
+    //             }
+    //         }
 
-        });
-    }
-    const Chart5 = () => {
-        let x = 0, y = 0, z = 0;
-        let counX = 0, counY = 0, counZ = 0;
-        for (let i = 0; i < storedData.coordinate.length; i++) {
-            if (storedData.coordinate[i].r.line === '20') { counX++ }
-            else if (storedData.coordinate[i].r.line === '12') { counY++ }
-            else if (storedData.coordinate[i].r.line === '4') { counZ++ }
-        }
-        x = ((100 * counX) / storedData.coordinate.length).toFixed(3);
-        y = ((100 * counY) / storedData.coordinate.length).toFixed(3);
-        z = ((100 * counZ) / storedData.coordinate.length).toFixed(3);
+    //     });
+    // }
+    // const Chart5 = () => {
+    //     let x = 0, y = 0, z = 0;
+    //     let counX = 0, counY = 0, counZ = 0;
+    //     for (let i = 0; i < storedData.coordinate.length; i++) {
+    //         if (storedData.coordinate[i].r.line === '20') { counX++ }
+    //         else if (storedData.coordinate[i].r.line === '12') { counY++ }
+    //         else if (storedData.coordinate[i].r.line === '4') { counZ++ }
+    //     }
+    //     x = ((100 * counX) / storedData.coordinate.length).toFixed(3);
+    //     y = ((100 * counY) / storedData.coordinate.length).toFixed(3);
+    //     z = ((100 * counZ) / storedData.coordinate.length).toFixed(3);
 
-        let xValues = ["עבה", "רגיל", "דק"];
-        let yValues = [x, y, z];
-        let barColors = [d, e, f];
+    //     let xValues = ["עבה", "רגיל", "דק"];
+    //     let yValues = [x, y, z];
+    //     let barColors = [d, e, f];
 
-        new Chart(ctx5, {
-            type: "doughnut",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                title: {
-                    display: false,
-                    text: `עובי קו ${names[1]}`,
-                    fontSize: 20
-                }
-            }
-        });
-    }
+    //     new Chart(ctx5, {
+    //         type: "doughnut",
+    //         data: {
+    //             labels: xValues,
+    //             datasets: [{
+    //                 backgroundColor: barColors,
+    //                 data: yValues
+    //             }]
+    //         },
+    //         options: {
+    //             title: {
+    //                 display: false,
+    //                 text: `עובי קו ${names[1]}`,
+    //                 fontSize: 20
+    //             }
+    //         }
+    //     });
+    // }
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -501,11 +495,6 @@ const DrawDetails = (props) => {
                 </Stack>
                 <Box dir='ltr' component="main" sx={{ display: 'flex', placeContent: 'center' }}>
                     <Box sx={{ bgcolor: 'white', textAlignLast: 'center', width: 1240, height: 470, borderRight: '1px solid lightgrey', borderTop: '1px solid #1976d2', borderLeft: '1px solid lightgrey', borderBottom: '1px solid lightgrey', textAlign: '-webkit-center' }}>
-                        <div id='charts'></div>
-                         {/* <div id='cync'>
-                            <canvas id="Chart1"></canvas>
-                            <canvas id="Chart2"></canvas>
-                        </div> */}
                         {replay === 'contained' && <Recovery storedData={storedData} />}
                         {sync === 'contained' && <Chart1 names={names} storedData={storedData}/>}
                         {touch === 'contained' && <Chart2 names={names} storedData={storedData} yValuesSec3={yValuesSec3} yValuesSec2={yValuesSec2} sec2={sec2} sec3={sec3}/> }
@@ -514,32 +503,7 @@ const DrawDetails = (props) => {
                 </Box>
             </div>
             <Box dir='ltr' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                {/* <Typography variant="h4" sx={{ margin: 'auto' }}>זמן הצביעה בין {names[0].name} לבין {names[1].name} נמשך {storedData.secondTotal} שניות</Typography> */}
             </Box>
-            {/* <div style={{ width: '100%' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
-                    <Typography variant="h4">תדירות וסנכרון</Typography>
-
-                    <div id='cync'>
-                        <canvas id="Chart1"></canvas>
-                    </div>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
-                    <Typography variant="h4" >מספר נגיעות במסך</Typography>
-
-                    <div id='sec'>
-                        <canvas id="Chart2"></canvas>
-                        <canvas id="Chart3"></canvas>
-                    </div>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
-                    <Typography variant="h4" >עובי קו</Typography>
-                    <div id='lineWidth'>
-                        <canvas id="Chart4"></canvas>
-                        <canvas id="Chart5"></canvas>
-                    </div>
-                </Box>
-            </div> */}
         </React.Fragment>
     );
 }

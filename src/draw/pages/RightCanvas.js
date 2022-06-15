@@ -424,16 +424,15 @@ const RightCanvas = (props) => {
         button[i].addEventListener("click", addSelectClass);
     }
 
-    const pointerUp = () => {
+    const pointerUpR = () => {
         timeTakenR = Date.now() - down;
-        console.log(timeTakenR)
-        props.secondsL.push(timeTakenR / 1000);
+        props.secondsR.push(timeTakenR / 1000);
     }
  
     return (
         <React.Fragment>
             <div className='container'>
-                <canvas id="canvasR" width="620" height="470" penwidth='30' onPointerUp={pointerUp}></canvas>
+                <canvas id="canvasR" width="620" height="470" penwidth='30' onPointerUp={pointerUpR}></canvas>
                 <div id='content'>
                     <div id="myDiv">
                         <div>{`${JSON.parse(localStorage.getItem('secondKide')).name}`}</div>

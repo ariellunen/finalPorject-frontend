@@ -4,7 +4,7 @@
 }
 #sec{
     display: flex;
-    width: 500px;
+    margin: 0 auto;
 }
 #lineWidth{
     display: flex;    

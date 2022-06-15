@@ -67,6 +67,9 @@ const App = () => {
           <Route path="/admin">
             <Main />
           </Route>
+          <Route path="/kids">
+            <Main />
+          </Route>
           <Route path="/addKide">
             <AddKide />
           </Route>

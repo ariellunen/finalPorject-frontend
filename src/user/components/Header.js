@@ -100,8 +100,8 @@ function Header(props) {
             to={'/admin'}
           />
         </Tabs>} */}
-        <Button component={Link} to={'/admin'} type='button' onClick={() => localStorage.setItem('kide', JSON.stringify(false))} color="secondary">אנשי מקצוע \ מדריכים</Button>
-        <Button component={Link} to={'/admin'} type='button' onClick={() => localStorage.setItem('kide', JSON.stringify(true))} color="secondary">ילדים</Button>
+        <Button component={Link} to={'/admin'} type='button' color="secondary">אנשי מקצוע \ מדריכים</Button>
+        <Button component={Link} to={'/kids'} type='button' color="secondary">ילדים</Button>
 
       </AppBar>
     </React.Fragment >

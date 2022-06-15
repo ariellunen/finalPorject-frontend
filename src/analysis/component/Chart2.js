@@ -5,9 +5,8 @@ let ctx2;
 let ctx3;
 const Chart2 = (props) => {
     useEffect(() => {
-                ctx3 = document.getElementById('Chart3').getContext('2d');
+        ctx3 = document.getElementById('Chart3').getContext('2d');
         ctx2 = document.getElementById('Chart2').getContext('2d');
-
         chart2()
         chart3();
     }, [])
@@ -15,6 +14,7 @@ const Chart2 = (props) => {
     const chart2 = () => {
         let xValues = [];
         let namber = 1;
+        console.log(props.sec2)
         if (props.sec2 < props.sec3) {
             for (let i = 0; i < props.sec3; i++) {
                 xValues.push(namber);
@@ -72,7 +72,7 @@ const Chart2 = (props) => {
                 labels: xValues,
                 datasets: [{
                     backgroundColor: barColors,
-                    data:props.yValuesSec3
+                    data: props.yValuesSec3
                 }]
             },
             options: {
@@ -91,10 +91,15 @@ const Chart2 = (props) => {
 
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto', width: 1240, height: 470 }}>
             <div id='sec'>
-                <canvas id="Chart2"></canvas>
-                <canvas id="Chart3"></canvas>
+                <div class="chart-container" style={{ position: 'relative', width: '100vh' }}>
+                    <canvas id="Chart2" style={{ marginRight: '111px', marginLeft: 0 }}></canvas>
+                </div>
+                <div class="chart-container" style={{ position: 'relative', width: '100vh' }}>
+                    <canvas id="Chart3" style={{ marginRight: '111px', marginLeft: 0 }}></canvas>
+                </div>
+
             </div>
         </Box>
     )
