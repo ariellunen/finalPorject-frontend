@@ -514,10 +514,7 @@ const DrawDetails = (props) => {
                 </Box>
             </div>
             <Box dir='ltr' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                <Typography variant="h4" sx={{ margin: 'auto' }}>זמן הצביעה בין {names[0].name} לבין {names[1].name} נמשך {storedData.secondTotal} שניות</Typography>
-                <CardActions>
-                   
-                </CardActions>
+                {/* <Typography variant="h4" sx={{ margin: 'auto' }}>זמן הצביעה בין {names[0].name} לבין {names[1].name} נמשך {storedData.secondTotal} שניות</Typography> */}
             </Box>
             {/* <div style={{ width: '100%' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>

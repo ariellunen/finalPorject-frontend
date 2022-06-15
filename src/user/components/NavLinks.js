@@ -17,17 +17,17 @@ const NavLinks = (props) => {
   const history = useHistory()
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{height:47, bgcolor: '#4454a3'}}>
+      <AppBar position="static" sx={{ height: 47, bgcolor: '#4454a3' }}>
         <Toolbar>
-        <Button component={Link} to={'/'} sx={{ backgroundImage: 'url(https://i.postimg.cc/j2cmDRGQ/Breadcrumbs-8.png)', marginTop: '-12px', height: '45px', width: '45px', backgroundSize: '40px', backgroundRepeat: 'no-repeat' }}></Button>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginRight:'15px' }}>
+          <Button component={Link} to={'/'} sx={{ backgroundImage: 'url(https://i.postimg.cc/j2cmDRGQ/Breadcrumbs-8.png)', marginTop: '-12px', height: '45px', width: '45px', backgroundSize: '40px', backgroundRepeat: 'no-repeat' }}></Button>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginRight: '15px', marginTop: '-20px' }}>
             ציורים בסנכרון
           </Typography>
-          <IconButton color="inherit" sx={{ p: 0.5 }} >
+          <IconButton color="inherit" sx={{ p: 0.5, marginTop: '-20px' }} >
             <LogoutIcon onClick={() => {
               auth.logout();
               history.push('/')
-              
+
             }} />
           </IconButton>
 

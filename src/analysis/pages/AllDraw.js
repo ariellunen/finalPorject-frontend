@@ -323,7 +323,7 @@ export default function AllDraw() {
                 </ListItem>
             </List>
             <Divider />
-            <List>
+            {/* <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
@@ -334,7 +334,7 @@ export default function AllDraw() {
                         </ListItemButton>
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
             <Button variant='contained' onClick={toggleDrawer(anchor, false)}>שמירה</Button>
         </Box>
     );
@@ -395,17 +395,21 @@ export default function AllDraw() {
     return (
         <div>
             <NavLink />
-            <Paper
+            <Box
                 dir='ltr'
                 component="form"
-                sx={{ display: 'flex', alignItems: 'center' }}
+                sx={{ display: 'flex', alignItems: 'center', placeContent: 'center', bgcolor: '#f0f0f2' }}
             >
-                <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={checkDrawing}>
+                <IconButton fullHeigh type="submit" sx={{
+                    p: '10px', bgcolor: 'white', borderRadius: 0, height: '55px'
+                }} aria-label="search" onClick={checkDrawing}>
                     <SearchIcon />
                 </IconButton>
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>
-                        <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={toggleDrawer(anchor, true)}>
+                        <IconButton color="primary" sx={{
+                            p: '10px', bgcolor: 'white', borderRadius: 0, height: '55px'
+                        }} aria-label="directions" onClick={toggleDrawer(anchor, true)}>
                             <MoreVertIcon />
                         </IconButton>
                         <Drawer
@@ -415,10 +419,10 @@ export default function AllDraw() {
                         >
                             {list(anchor)}
                         </Drawer>
-                            <AutoSearch dir='rtl' value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
+                        <AutoSearch dir='rtl' value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
                     </React.Fragment>
                 ))}
-            </Paper>
+            </Box>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
                 {(filterShape?.length !== 0 || shapes?.length !== 0) && filterShape.map((item, key) => {
                     return (
@@ -435,7 +439,7 @@ export default function AllDraw() {
                     )
                 })}
 
-                {(filterShape?.length === 0) && <Box sx={{
+                {/* {(filterShape?.length === 0) && <Box sx={{
                     justifyContent: 'center',
                     p: 1,
                     m: 1,
@@ -449,7 +453,7 @@ export default function AllDraw() {
                         <ReplayIcon fill={'black'} onClick={() => setResults(false)} sx={{ height: '30px', width: '30px' }} />
                     </IconButton>
                 </Box>
-                }
+                } */}
 
                 {isReady && data.map((item, key) => {
                     return (

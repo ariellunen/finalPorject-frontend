@@ -72,7 +72,7 @@ const Chart2 = (props) => {
                 labels: xValues,
                 datasets: [{
                     backgroundColor: barColors,
-                    data:props. yValuesSec3
+                    data:props.yValuesSec3
                 }]
             },
             options: {

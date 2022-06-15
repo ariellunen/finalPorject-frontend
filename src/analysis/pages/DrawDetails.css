@@ -7,6 +7,7 @@
     width: 500px;
 }
 #lineWidth{
-    display: flex;
-    width: 500px;
+    display: flex;    
+     margin: 0 auto;
 }
+

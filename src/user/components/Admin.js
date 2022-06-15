@@ -41,17 +41,17 @@ let theme = createTheme({
     },
 });
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}.
-        </Typography>
-    );
-}
+// function Copyright() {
+//     return (
+//         <Typography variant="body2" color="text.secondary" align="center">
+//             {'Copyright © '}
+//             <Link color="inherit" href="https://mui.com/">
+//                 Your Website
+//             </Link>{' '}
+//             {new Date().getFullYear()}.
+//         </Typography>
+//     );
+// }
 
 theme = {
     ...theme,
@@ -177,9 +177,9 @@ const Admin = (props) => {
                     <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
                         <Content kide={props.kide}/>
                     </Box>
-                    <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
+                    {/* <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
                         <Copyright />
-                    </Box>
+                    </Box> */}
                 </Box>
 
             </Box>

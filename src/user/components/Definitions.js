@@ -185,7 +185,7 @@ const Definitions = (props) => {
                         <ContentDefin kide={props.kide} handlePermissionOn={props.handlePermissionOn} handlePermissionOff={props.handlePermissionOff} />
                     </Box>
                     <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
-                        <Copyright />
+                        {/* <Copyright /> */}
                     </Box>
                 </Box>
 

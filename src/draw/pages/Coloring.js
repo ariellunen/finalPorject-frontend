@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import NavLink from '../../user/components/NavLinks';
 import Confetti from "react-confetti";
-import { useHttpClient } from '../../shared/hooks/http-hook';
 import { useHistory } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -19,12 +18,10 @@ let arr = [];
 let secondTotal;
 let leftCoordinates = [];
 let rightCoordinates = [];
-
 let CircularBufferL = require("circular-buffer");
 let bufL = new CircularBufferL(30);
 let CircularBufferR = require("circular-buffer");
 let bufR = new CircularBufferR(30);
-
 let pointM1 = 0;
 let pointM2 = 0;
 let tempL = 0;
@@ -34,21 +31,16 @@ let change2 = 0;
 let cchange1 = 0;
 let cchange2 = 0;
 let m1 = [], m2 = [];
-
 let startTimeL;
 let stopTimeL;
 let floatL = true;
-
 let startTimeR;
 let stopTimeR;
 let floatR = true;
-
 let secondsL = [];
 let secondsR = [];
 let changeL = [];
 let changeR = [];
-
-let test = [];
 const breadcrumbs = [
     <Typography key="1" color="text.primary" component={Link} to='/'>
         תפריט ראשי
@@ -268,18 +260,12 @@ const Coloring = (props) => {
     const startTimer = (e) => {
         let { total, hours, minutes, seconds } = getTimeRemaining(e);
         if (total >= 0) {
-            // update the timer
             setTimer(
                 (hours > 9 ? hours : '0' + hours) + ':' +
                 (minutes > 9 ? minutes : '0' + minutes) + ':'
                 + (seconds > 9 ? seconds : '0' + seconds)
             )
             secondTotal = 1200 - (total / 1000);
-            // timer2 = (
-            //     (hours > 9 ? hours : '0' + hours) + ':' +
-            //     (minutes > 9 ? minutes : '0' + minutes) + ':'
-            //     + (seconds > 9 ? seconds : '0' + seconds)
-            // )
         }
         secondTotal = 1200 - (total / 1000);
     }
@@ -298,13 +284,6 @@ const Coloring = (props) => {
         deadline.setSeconds(deadline.getSeconds() + 1200);
         return deadline;
     }
-
-    let user1;
-    let user2;
-
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-
     const onSubmit = async () => {
         if (arr.length !== 1) {
             arr.shift();

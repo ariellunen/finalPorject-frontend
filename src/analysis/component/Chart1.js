@@ -106,8 +106,8 @@ const Chart1 = (props) => {
 
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
-            <div id='cync'>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'transparent',  }}>
+            <div id='cync' style={{margin: '0 auto'}}>
                 <canvas id="Chart1"></canvas>
             </div>
         </Box>

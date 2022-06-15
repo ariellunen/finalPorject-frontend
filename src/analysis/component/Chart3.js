@@ -16,17 +16,19 @@ const Chart3 = (props) => {
         let x = 0, y = 0, z = 0;
         let counX = 0, counY = 0, counZ = 0;
         for (let i = 0; i < props.storedData.coordinate.length; i++) {
-            if (props.storedData.coordinate[i].l.line === 20 && props.storedData.coordinate[i].l.x !== -1 && props.storedData.coordinate[i].l.y !== -1) { 
+            if (props.storedData.coordinate[i].l.line === 20 && props.storedData.coordinate[i].l.x !== -1 && props.storedData.coordinate[i].l.y !== -1) {
                 console.log(props.storedData.coordinate[i].l.line)
-                counX++ 
+                counX++
             }
-            else if (props.storedData.coordinate[i].l.line === 12) { 
+            else if (props.storedData.coordinate[i].l.line === 12) {
                 console.log(props.storedData.coordinate[i].l.line)
 
-                counY++ }
-            else if (props.storedData.coordinate[i].l.line === 4) { 
+                counY++
+            }
+            else if (props.storedData.coordinate[i].l.line === 4) {
                 console.log(props.storedData.coordinate[i].l.line)
-                counZ++ }
+                counZ++
+            }
         }
 
         console.log('20 - 45 times', counY)
@@ -97,10 +99,14 @@ const Chart3 = (props) => {
 
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: 'auto', width: 1240, height: 470 }}>
             <div id='lineWidth'>
-                <canvas id="Chart4"></canvas>
-                <canvas id="Chart5"></canvas>
+                <div class="chart-container" style={{ position: 'relative',  width: '120vh' }}>
+                    <canvas id="Chart4"  style={{ marginRight: '111px',  marginLeft: '-171px' }}></canvas>
+                </div>
+                <div class="chart-container" style={{ position: 'relative', width: '120vh' }}>
+                    <canvas id="Chart5" style={{ marginRight: '111px',  marginLeft: '-171px' }}></canvas>
+                </div>
             </div>
         </Box>
     )

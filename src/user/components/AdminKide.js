@@ -204,7 +204,7 @@ const AdminKide = () => {
                         <Content />
                     </Box>
                     <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
-                        <Copyright />
+                        {/* <Copyright /> */}
                     </Box>
                 </Box>
 
