@@ -6,21 +6,38 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
 import { useHistory, useLocation } from "react-router-dom";
+import TabsAdmin from './TabsAdmin';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+    typography: {
+        fontFamily: [
+            'Ubuntu',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+    },
+});
 let children = [];
 let users = [];
+
 export default function Content(props) {
     const [isReady, setIsReady] = useState(false);
     const [userss, setUsers] = useState([])
@@ -42,6 +59,7 @@ export default function Content(props) {
                 });
                 const responseData = await response.json();
                 children.push(responseData);
+                console.log("children", children)
             } catch (err) {
                 console.log(err);
             }
@@ -62,8 +80,10 @@ export default function Content(props) {
         getData();
     }, [isReady]);
 
+
     return (
-        <React.Fragment>
+        <ThemeProvider theme={theme}>
+            <TabsAdmin />
             {isReady && <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }} dir='rtl'>
                 <AppBar
                     position="static"
@@ -91,21 +111,11 @@ export default function Content(props) {
                                 <Button variant="contained" sx={{ mr: 1 }} onClick={someEventHandler} >
                                     הוספת משתמש
                                 </Button>
-                                {/* <Tooltip title="Reload">
-                                    <IconButton>
-                                        <RefreshIcon color="inherit" sx={{ display: 'block' }} />
-                                    </IconButton>
-                                </Tooltip> */}
                             </Grid>}
                             {isAdminPage && <Grid item>
                                 <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addUser'>
                                     הוספת משתמש
                                 </Button>
-                                {/* <Tooltip title="Reload">
-                                    <IconButton>
-                                        <RefreshIcon color="inherit" sx={{ display: 'block' }} />
-                                    </IconButton>
-                                </Tooltip> */}
                             </Grid>}
                         </Grid>
                     </Toolbar>
@@ -113,14 +123,8 @@ export default function Content(props) {
                 <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            {/* <TableHead>
-                                <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    {isAdminPage && <TableCell align="right">אימייל</TableCell>}
-                                </TableRow>
-                            </TableHead> */}
                             <TableBody>
-                                {isAdminPage && users[0].users.map((user) => (
+                                {isAdminPage && users[0]?.users?.map((user) => (
                                     <TableRow
                                         key={user.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -131,7 +135,7 @@ export default function Content(props) {
                                         <TableCell align="center">{user.email}</TableCell>
                                     </TableRow>
                                 ))}
-                                {!isAdminPage && children[0].children.map((child) => (
+                                {!isAdminPage && children[0]?.children?.map((child) => (
                                     <TableRow
                                         key={child.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -150,6 +154,6 @@ export default function Content(props) {
                     </TableContainer>
                 </Typography>
             </Paper>}
-        </React.Fragment>
+        </ThemeProvider>
     );
 }
