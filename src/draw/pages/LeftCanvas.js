@@ -25,6 +25,7 @@ let fillPercentage;
 let selectedShape;
 let color;
 let line = 12;
+
 const LeftCanvas = (props) => {
     selectedShape = sessionStorage.getItem("selectedShape");
     useEffect(() => {

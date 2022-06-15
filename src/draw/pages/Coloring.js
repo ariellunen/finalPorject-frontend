@@ -135,6 +135,7 @@ const Coloring = (props) => {
         setTimeout(() => {
             cchange1 = 0;
             change1 = 0;
+            changeL.push({ x: secondTotal, y: 0 });
         }, 1000);
     }
 
@@ -145,6 +146,7 @@ const Coloring = (props) => {
         setTimeout(() => {
             cchange2 = 0;
             change2 = 0;
+            changeR.push({ x: secondTotal, y: 0 });
         }, 1000);
     }
 
@@ -346,17 +348,6 @@ const Coloring = (props) => {
     const [doneLeft, setDoneLeft] = useState(false);
     const [doneRight, setDoneRight] = useState(false);
 
-    const handleIsUp = (val) => {
-        boolVal = val;
-        console.log("val",val)
-    }
-
-    useEffect(() => {
-        console.log('hiiii', boolVal)
-        if(boolVal === false){
-            changeR.push({ x: secondTotal, y: 0 });
-        }
-    },[boolVal])
     return (
         <React.Fragment>
             <NavLink />
@@ -387,7 +378,6 @@ const Coloring = (props) => {
                     />
 
                     <RightCanvas
-                    handleIsUp={handleIsUp}
                         handleCoordinate={handleRightCoordinate}
                         color={JSON.parse(localStorage.getItem('secondColor'))}
                         setRight={setRight}

@@ -15,6 +15,8 @@ const Chart1 = (props) => {
         let child2 = [];
         let arrLx = [];
         let arrRx = [];
+        let tempL = 0;
+        let tempR = 0;
 
         //מפריד את המערך של התדירות לציר של תדירויות וציר של שניות
         for (let i = 0; i < props.storedData.changesL.length; i++) { arrLx.push(props.storedData.changesL[i].x); }
@@ -37,8 +39,13 @@ const Chart1 = (props) => {
                     }
                 }
                 avgL = (totalL / x).toFixed(2);
+                tempL = avgL;
+                arrayL.push({ ces: i, change: x, avg: avgL });
+
             }
-            arrayL.push({ ces: i, change: x, avg: avgL });
+            else {
+                arrayL.push({ ces: i, change: 1, avg: tempL/2 });
+            }
         }
 
         for (let i = 0; i < props.storedData.secondTotal; i++) {
@@ -53,15 +60,19 @@ const Chart1 = (props) => {
                     }
                 }
                 avgR = (totalR / x).toFixed(2);
+                tempR = avgR;
+                arrayR.push({ ces: i, change: x, avg: avgR });
             }
-            arrayR.push({ ces: i, change: x, avg: avgR });
+            else {
+                arrayR.push({ ces: i, change: 1, avg: tempR/2 });
+            }
         }
 
         let cync = [];
         for (let i = 0; i < arrayL.length; i++) {
-            child1.push(arrayL[i].avg);
-            child2.push(arrayR[i].avg);
-            if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((arrayL[i].avg !== 0) && (arrayR[i].avg !== 0))) {
+            child1.push(Number(arrayL[i].avg));
+            child2.push(Number(arrayR[i].avg));
+            if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((child1[i] !== 0) && (child2[i] !== 0))) {
                 if (arrayL[i].avg > arrayR[i].avg) {
                     cync.push(arrayL[i].avg)
                 }
@@ -97,7 +108,7 @@ const Chart1 = (props) => {
             options: {
                 legend: { display: true },
                 title: {
-                    display: false,
+                    display: true,
                     text: `זמן הצביעה בין ${props.names[0].name} לבין ${props.names[1].name} נמשך ${props.storedData.secondTotal} שניות `,
                     fontSize: 20
                 }
@@ -106,8 +117,8 @@ const Chart1 = (props) => {
     }
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'transparent',  }}>
-            <div id='cync' style={{margin: '0 auto'}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'transparent', }}>
+            <div id='cync' style={{ margin: '0 auto' }}>
                 <canvas id="Chart1"></canvas>
             </div>
         </Box>
