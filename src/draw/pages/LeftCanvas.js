@@ -42,7 +42,7 @@ const LeftCanvas = (props) => {
         context.lineWidth = line;
 
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange2 === 0) {
-            console.log("L - 3 - noSync", props.cchange1, props.cchange2);
+            console.log("L - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = 'LightGrey'
@@ -53,8 +53,8 @@ const LeftCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
-            if (flagCncL){
-                console.log("L - 3 - Syncccc", props.cchange1, props.cchange2);
+            if (flagCncL) {
+                console.log("L - 3 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = props.color;
@@ -63,7 +63,7 @@ const LeftCanvas = (props) => {
                 context.stroke();
             }
             else {
-                console.log("L - 3 - noSync", props.cchange1, props.cchange2);
+                console.log("L - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = 'LightGrey';
@@ -74,7 +74,7 @@ const LeftCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange2 !== 0) {
-            console.log("L - 3 - Syncccc", props.cchange1, props.cchange2);
+            console.log("L - 3 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = props.color;
@@ -369,7 +369,7 @@ const LeftCanvas = (props) => {
     }
 
     let button = document.getElementsByClassName("widthL");
-    
+
     let addSelectClass = function () {
         removeSelectClass();
         this.classList.add('selectedL');
@@ -393,7 +393,6 @@ const LeftCanvas = (props) => {
     return (
         <React.Fragment>
             <div className='containerL'>
-                <div>{props.cchange1}</div>
                 <canvas id="canvasL" width="620" height="470" penwidth='30' onPointerUp={pointerUp}></canvas>
                 <div id='contentL'>
                     <div id="myDivL">
@@ -405,7 +404,7 @@ const LeftCanvas = (props) => {
                         <div>{`${JSON.parse(localStorage.getItem('firstKide')).name}`}</div>
 
                     </div>
-                    
+
                     <progress id='progressL' value={props.cchange1} max="10"></progress>
                     <img src='https://i.postimg.cc/0jLXYJWx/Breadcrumbs-25.png' alt="turtel" id='turtelL' />
                     <img src='https://i.postimg.cc/SRT236FF/Breadcrumbs-26.png' alt="bunny" id='bunnyL' />

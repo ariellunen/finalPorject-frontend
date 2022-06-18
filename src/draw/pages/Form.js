@@ -118,12 +118,14 @@ const Form = (props) => {
                 </Breadcrumbs>
             </Stack>
             {!isReady && <CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} />}
-
             {isReady && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {children.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        {unique.length <= 8 && unique.map((child) => {
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        })}
+                        {unique.length > 8 && unique.slice(0, 8).map((child) => {
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -176,7 +178,11 @@ const Form = (props) => {
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {children.slice(0, 8).map((child) => {
+                        {/* {children.slice(0, 8).map((child) => { */}
+                        {unique.length <= 8 && unique.map((child) => {
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        })}
+                        {unique.length > 8 && unique.slice(0, 8).map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
                     </Box>

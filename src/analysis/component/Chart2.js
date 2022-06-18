@@ -93,7 +93,7 @@ const Chart2 = (props) => {
     }
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto', width: 1240, height: 470 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: 'auto', width: 1240, height: 470 }}>
             <div id='sec'>
                 <div class="chart-container" style={{ position: 'relative', width: '100vh' }}>
                     <canvas id="Chart2" style={{ marginRight: '111px', marginLeft: 0 }}></canvas>
