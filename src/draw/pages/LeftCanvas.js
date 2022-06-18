@@ -69,10 +69,8 @@ const LeftCanvas = (props) => {
             down = Date.now();
             canvas.beginPath();
             context.lineWidth = line;
-            // canvas.lineWidth = document.getElementById("lineWidthL").value;
             canvas.strokeStyle = 'LightGrey';
             props.setMouseL(false);
-            // line = document.getElementById("lineWidthL").value;
             color = 'LightGrey'
         })
 
@@ -212,7 +210,7 @@ const LeftCanvas = (props) => {
             }
         }
         fillPercentage = ((area - fill) * 100) / area;
-        if (fillPercentage > 80) {
+        if (fillPercentage > 90) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             shapesSelected(props.color);
             viewDrawing();

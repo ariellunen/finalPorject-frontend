@@ -42,7 +42,6 @@ let secondsL = [];
 let secondsR = [];
 let changeL = [];
 let changeR = [];
-let boolVal = false;
 
 const breadcrumbs = [
     <Typography key="1" color="text.primary" component={Link} to='/'>
@@ -105,7 +104,7 @@ const Coloring = (props) => {
     }
 
     const handleSecondsR = (timeTakenR) => {
-        secondsL.push(timeTakenR / 1000);
+        secondsR.push(timeTakenR / 1000);
     }
 
     const handleRightCoordinate = (x, y, color, line) => {
@@ -195,7 +194,6 @@ const Coloring = (props) => {
                 if (m1[pointM1] !== m1[pointM1 + 1]) {
                     change1++;
                     cchange1 = (change1 / stopTimeL).toFixed(2);
-                    console.log('hereee')
                     changeL.push({ x: secondTotal, y: cchange1 });
                 }
             }
@@ -327,7 +325,7 @@ const Coloring = (props) => {
             arr = [];
             counter = 0;
             secondsL = 0;
-            changeL = 0;
+            changeL = [];
             secondsR = 0;
             secondsL = 0;
             seyIsDone(true)
@@ -338,7 +336,7 @@ const Coloring = (props) => {
             counter = 0;
             counter = 0;
             secondsL = 0;
-            changeL = 0;
+            changeL = [];
             secondsR = 0;
             secondsL = 0;
             console.log(err);
