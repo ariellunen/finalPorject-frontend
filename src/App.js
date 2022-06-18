@@ -20,20 +20,22 @@ import Main from './user/pages/Main';
 import AddKide from './user/components/AddKide';
 import Definitions from './user/components/Definitions';
 const App = () => {
-
   const { token, login, logout, userId, emaill, userTypee } = useAuth();
   let routes;
   const [permission, setPermission] = useState(true);
   const [user, setUser] = useState();
   const handlePermissionOn = () => {
+    localStorage.setItem('permission', JSON.stringify(true));
     setPermission(true)
   }
   const handlePermissionOff = () => {
+    localStorage.setItem('permission', JSON.stringify(false));
     setPermission(false)
   }
 
   useEffect(() => {
-    console.log(userTypee);
+    console.log("aaaa", userTypee, permission);
+    console.log(JSON.parse(localStorage.getItem('permission')))
   }, [permission])
 
   useEffect(() => {

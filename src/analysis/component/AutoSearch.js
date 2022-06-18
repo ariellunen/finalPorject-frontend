@@ -1,9 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import Box from '@mui/material/Box';
-
 const AutoSearch = (props) => {
     return (
         <Autocomplete
@@ -16,9 +13,9 @@ const AutoSearch = (props) => {
             handleHomeEndKeys
             sx={{
                 textAlignLast: 'right',
-                width: '80%', 
+                width: '70%',
                 bgcolor: 'white',
-                height:'55px'
+                height: '55px'
             }}
             id="free-solo-with-text-demo"
             options={props.allKide}
@@ -40,9 +37,11 @@ const AutoSearch = (props) => {
 
             }}
             renderInput={(params) => (
-                <TextField {...params} placeholder="שם הילד\ה" color='primary' sx={{ textAlignLast: 'right', color: 'primary'}} />
+                <TextField {...params} placeholder="שם הילד\ה" color='primary' sx={{ textAlignLast: 'right', color: 'primary' }} />
             )}
+
         />
+
     )
 }
 

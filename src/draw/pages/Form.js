@@ -18,7 +18,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 let child = [];
 let name;
 let uniqueIds = [];
-let unique = [];
+let uniquee = [];
+let lastKides = [];
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState(null);
     const [secondKide, setSecondKide] = useState(null);
@@ -39,14 +40,26 @@ const Form = (props) => {
 
     useEffect(() => {
         getAllChildren();
-        if (isReady) {
+        if(children.length !== 0){
             handleKide();
         }
-    }, [isReady])
+        // if (children.length !== 0) {
+        //     console.log(children.length !== 0)
+        //     unique = lastKides.filter(element => {
+        //         const isDuplicate = uniqueIds.includes(element.id);
+        //         if (!isDuplicate) {
+        //             console.log(element.id)
+        //             uniqueIds.push(element.id);
+        //             return true;
+        //         }
+        //         return false;
+        //     });
+        //     console.log('uniqe', unique)
+        //     setLoading(true)
+        // }
+    }, [isReady, children.length ])
 
     const handleKide = () => {
-        let lastKides = [];
-        console.log(children, data)
         for (let j = 0; j < data.length; j++) {
             for (let i = 0; i < children.length; i++) {
                 if (children[i].id === data[j].firstKide || children[i].id === data[j].secondKide) {
@@ -54,15 +67,23 @@ const Form = (props) => {
                 }
             }
         }
-        unique = lastKides.filter(element => {
-            const isDuplicate = uniqueIds.includes(element.id);
-            if (!isDuplicate) {
-                uniqueIds.push(element.id);
-                return true;
-            }
-            return false;
+        const uniqueIds = new Set();
+
+        uniquee = lastKides.filter(element => {
+          const isDuplicate = uniqueIds.has(element.id);
+        
+          uniqueIds.add(element.id);
+        
+          if (!isDuplicate) {
+            return true;
+          }
+        
+          return false;
         });
+        console.log('uniqe', uniquee)
         setLoading(true)
+        // uniqeChildren(lastKides)
+
     }
 
     const getAllChildren = async () => {
@@ -115,11 +136,11 @@ const Form = (props) => {
             {loading && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {unique.length <= 8 && unique.map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        {uniquee.length <= 8 && uniquee.map((child) => {
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
-                        {unique.length > 8 && unique.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -172,11 +193,10 @@ const Form = (props) => {
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {/* {children.slice(0, 8).map((child) => { */}
-                        {unique.length <= 8 && unique.map((child) => {
+                        {uniquee.length <= 8 && uniquee.map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
-                        {unique.length > 8 && unique.slice(0, 8).map((child) => {
+                        {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
                         })}
                     </Box>

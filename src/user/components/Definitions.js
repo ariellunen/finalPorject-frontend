@@ -9,8 +9,6 @@ import Content from './Content';
 import Header from './Header';
 import ContentDefin from './ContentDefin';
 
-
-
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center">
@@ -24,7 +22,6 @@ function Copyright() {
 }
 // handlePermissionOn handlePermissionOff
 const Definitions = (props) => {
-
     return (
         <ThemeProvider>
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>

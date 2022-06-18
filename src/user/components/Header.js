@@ -35,13 +35,13 @@ function Header(props) {
                 <LogoutIcon onClick={auth.logout} />
               </IconButton>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Tooltip title="definitions">
                 <IconButton color="inherit" component={Link} to='/definitions'>
                   <SettingsIcon />
                 </IconButton>
               </Tooltip>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Toolbar>
       </AppBar>

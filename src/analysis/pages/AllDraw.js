@@ -15,10 +15,6 @@ import Button from '@mui/material/Button';
 import AutoSearch from '../component/AutoSearch'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SortIcon from '@mui/icons-material/Sort';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Typography from '@mui/material/Typography';
@@ -285,17 +281,17 @@ export default function AllDraw() {
                     component="form"
                     sx={{ display: 'flex', alignItems: 'center', placeContent: 'center', bgcolor: '#f0f0f2' }}
                 >
-                    <IconButton fullHeigh color="primary" type="submit" sx={{
+                    {/* <IconButton fullHeigh color="primary" type="submit" sx={{
                         p: '10px', bgcolor: 'white', borderRadius: 0, height: '55px'
                     }} aria-label="search">
                         <SortIcon />
-                    </IconButton>
+                    </IconButton> */}
                     {['left'].map((anchor) => (
                         <React.Fragment key={anchor}>
                             <IconButton color="primary" sx={{
-                                p: '10px', bgcolor: 'white', borderRadius: 0, height: '55px'
+                                p: '10px', bgcolor: 'white', borderRadius: 1, height: '55px', borderColor: 'primary.main',
                             }} aria-label="directions" onClick={toggleDrawer(anchor, true)}>
-                                <FilterAltIcon />
+                                <FilterAltIcon sx={{borderColor: 'primary.main'}}/>
                             </IconButton>
                             <Drawer
                                 anchor={anchor}

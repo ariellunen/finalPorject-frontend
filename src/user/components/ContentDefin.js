@@ -7,15 +7,20 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+import { useHistory } from 'react-router-dom';
 
 const ContentDefin = (props) => {
+    const history = useHistory();
     const [on, setOn] = useState(false)
-
     const handleSwitch = () => {
-        if(on === true){
+        if (on === true) {
             props.handlePermissionOn()
-        } else{
+            history.push('/')
+
+        } else {
             props.handlePermissionOff()
+            history.push('/')
+
         }
     }
     return (
@@ -24,7 +29,7 @@ const ContentDefin = (props) => {
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Card className="authentication">
                         <FormGroup>
-                            <FormControlLabel control={<Switch defaultChecked onChange={(e) => {setOn(e.target.checked)}}/>} label="הרשאת גישה לכל המשתמשים" />
+                            <FormControlLabel control={<Switch defaultChecked onChange={(e) => { setOn(e.target.checked) }} />} label="הרשאת גישה לכל המשתמשים" />
                         </FormGroup>
                     </Card>
                 </Grid>
