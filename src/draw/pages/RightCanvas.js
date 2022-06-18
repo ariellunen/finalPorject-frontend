@@ -36,6 +36,19 @@ const RightCanvas = (props) => {
         document.getElementById("threeR").style.backgroundColor = props.color;
 
     }, [props.color])
+
+    const frequencyMove = () => {
+        if (Math.abs(props.cchange2 - props.cchange1) < 1.9 || props.cchange1 === 0) {
+            console.log("checkR");
+            // context.beginPath();
+            // context.lineWidth = line;
+            color = 'LightGrey'
+            context.strokeStyle = 'LightGrey';
+            // context.lineTo(x, y);
+            // context.stroke();
+        }
+    }
+
     useEffect(() => {
         ctx = document.getElementById("canvasR")
         context = ctx.getContext('2d');
@@ -109,6 +122,7 @@ const RightCanvas = (props) => {
                         canvas.stroke();
                         props.setRight({ x: event.clientX, y: event.clientY, color: color, line: line })
                         props.handleCoordinate(event.clientX, event.clientY, color);
+                        frequencyMove();
                         quantityPixels();
                     }
                 }

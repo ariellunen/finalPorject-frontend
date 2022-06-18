@@ -35,6 +35,18 @@ const LeftCanvas = (props) => {
 
     }, [props.color])
 
+    const frequencyMoveL = () => {
+        if (Math.abs(props.cchange2 - props.cchange1) < 1.9 || props.cchange2 === 0) {
+            console.log("checkL");
+            // context.beginPath();
+            // context.lineWidth = line;
+            color = 'LightGrey'
+            context.strokeStyle = 'LightGrey';
+            // context.lineTo(x, y);
+            // context.stroke();
+        }
+    }
+
     useEffect(() => {
         ctx = document.getElementById("canvasL")
         context = ctx.getContext('2d');
@@ -110,6 +122,7 @@ const LeftCanvas = (props) => {
                         canvas.stroke();
                         props.setLeft({ x: event.clientX, y: event.clientY, color: color, line: line })
                         props.handleCoordinate(event.clientX, event.clientY, color, line);
+                        frequencyMoveL();
                         quantityPixels();
                     }
                 }
