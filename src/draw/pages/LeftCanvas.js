@@ -9,7 +9,8 @@ import homeCor from "../shape/HomeL"
 import Confetti from "react-confetti";
 import Avatar from '@mui/material/Avatar';
 import './LeftCanvas.css'
-let flagCnc = true;
+
+let flagCncL = true;
 let canvas;
 let down;
 let timeTakenL = 0;
@@ -35,44 +36,64 @@ const LeftCanvas = (props) => {
 
     }, [props.color])
 
-    const frequencyMoveL = () => {
-        if (Math.abs(props.cchange2 - props.cchange1) < 1.9 || props.cchange2 === 0) {
-            console.log("checkL");
-            // context.beginPath();
-            // context.lineWidth = line;
-            color = 'LightGrey'
-            context.strokeStyle = 'LightGrey';
-            // context.lineTo(x, y);
-            // context.stroke();
-        }
-    }
-
     useEffect(() => {
         ctx = document.getElementById("canvasL")
         context = ctx.getContext('2d');
-        // line = document.getElementById("lineWidthL").value;
         context.lineWidth = line;
+
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange2 === 0) {
+            console.log("L - 3 - noSync", props.cchange1, props.cchange2);
             context.beginPath();
             context.lineWidth = line;
-            // context.lineWidth = document.getElementById("lineWidthL").value;
-            // line = document.getElementById("lineWidthL").value;
             color = 'LightGrey'
             context.strokeStyle = 'LightGrey';
             context.lineTo(x, y);
             context.stroke();
+            flagCncL = false;
         }
 
-        else {
+        else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
+            if (flagCncL){
+                console.log("L - 3 - Sync", props.cchange1, props.cchange2);
+                context.beginPath();
+                context.lineWidth = line;
+                color = props.color;
+                context.strokeStyle = props.color;
+                context.lineTo(x, y);
+                context.stroke();
+            }
+            else {
+                console.log("L - 3 - noSync", props.cchange1, props.cchange2);
+                context.beginPath();
+                context.lineWidth = line;
+                color = 'LightGrey';
+                context.strokeStyle = 'LightGrey';
+                context.lineTo(x, y);
+                context.stroke();
+            }
+        }
+
+        else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange2 !== 0) {
+            console.log("L - 3 - Sync", props.cchange1, props.cchange2);
             context.beginPath();
             context.lineWidth = line;
-            // context.lineWidth = document.getElementById("lineWidthL").value;
+            color = props.color;
             context.strokeStyle = props.color;
             context.lineTo(x, y);
             context.stroke();
-            // line = document.getElementById("lineWidthL").value;
-            color = props.color
+            flagCncL = true;
         }
+
+        // else {
+        //     context.beginPath();
+        //     context.lineWidth = line;
+        //     // context.lineWidth = document.getElementById("lineWidthL").value;
+        //     context.strokeStyle = props.color;
+        //     context.lineTo(x, y);
+        //     context.stroke();
+        //     // line = document.getElementById("lineWidthL").value;
+        //     color = props.color
+        // }
         // on pointer down
         interact('#canvasL').on('down', function (event) {
             canvas = event.target.getContext('2d')
@@ -120,7 +141,6 @@ const LeftCanvas = (props) => {
                         canvas.stroke();
                         props.setLeft({ x: event.clientX, y: event.clientY, color: color, line: line })
                         props.handleCoordinate(event.clientX, event.clientY, color, line);
-                        frequencyMoveL();
                         quantityPixels();
                     }
                 }
