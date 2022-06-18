@@ -12,26 +12,28 @@ const Chart2 = (props) => {
     }, [])
 
     const chart2 = () => {
-        let xValues = [];
+        let yValues = [];
         let namber = 1;
         console.log(props.sec2)
         if (props.sec2 < props.sec3) {
             for (let i = 0; i < props.sec3; i++) {
-                xValues.push(namber);
+                yValues.push(namber);
                 namber++
             }
         }
         else {
             for (let i = 0; i < props.yValuesSec2.length; i++) {
-                xValues.push(namber);
+                yValues.push(namber);
                 namber++
             }
         }
         let barColors = props.storedData.colorFirst;
+        console.log(props.sec3)
+
         new Chart(ctx2, {
             type: "horizontalBar",
             data: {
-                labels: xValues,
+                labels: yValues,
                 datasets: [{
                     backgroundColor: barColors,
                     data: props.yValuesSec2
@@ -65,6 +67,7 @@ const Chart2 = (props) => {
                 namber++
             }
         }
+        console.log(xValues)
         let barColors = props.storedData.colorSecond;
         new Chart(ctx3, {
             type: "horizontalBar",
@@ -88,7 +91,6 @@ const Chart2 = (props) => {
             }
         });
     }
-
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'darkgrey', margin: 'auto', width: 1240, height: 470 }}>

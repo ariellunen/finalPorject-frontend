@@ -70,7 +70,7 @@ export default function Content(props) {
             }
         }
         getData();
-    }, [isReady]);
+    }, [isReady, props]);
 
 
     return (
@@ -100,7 +100,7 @@ export default function Content(props) {
                                 />
                             </Grid>
                             {!isAdminPage && <Grid item>
-                                <Button variant="contained" sx={{ mr: 1 }} >
+                                <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addKide'>
                                     הוספת משתמש
                                 </Button>
                             </Grid>}

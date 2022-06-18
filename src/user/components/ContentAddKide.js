@@ -59,7 +59,7 @@ const ContentAddKide = () => {
                     }
                 );
                 console.log(responseData);
-                // history.replace('/kids')
+                history.replace('/kids')
 
             } catch (err) {
                 console.log(err);
@@ -76,7 +76,7 @@ const ContentAddKide = () => {
                     formData,
                 );
                 console.log(responseData);
-                // history.replace('/kids')
+                history.replace('/kids')
             } catch (err) {
                 console.log(err);
             }

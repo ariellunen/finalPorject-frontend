@@ -54,6 +54,7 @@ const RightCanvas = (props) => {
         context = ctx.getContext('2d');
         // line = document.getElementById("lineWidthR").value;
         // on pointer down
+        context.lineWidth = line;
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange1 === 0) {
             context.beginPath();
             context.lineWidth = line;
@@ -81,12 +82,9 @@ const RightCanvas = (props) => {
             event.stopPropagation();
             down = Date.now();
             canvas.beginPath();
-            // canvas.lineWidth = document.getElementById("lineWidthR").value;
             context.lineWidth = line;
-
             canvas.strokeStyle = 'LightGrey';
             props.setMouseR(false);
-            // line = document.getElementById("lineWidthL").value;
             color = 'LightGrey'
         })
 
@@ -203,7 +201,7 @@ const RightCanvas = (props) => {
             }
         }
         fillPercentage = ((area - fill) * 100) / area;
-        if (fillPercentage > 80) {
+        if (fillPercentage > 90) {
             context.clearRect(0, 0, ctx.width, ctx.height);
             let color = props.color;
             shapesSelected(color);

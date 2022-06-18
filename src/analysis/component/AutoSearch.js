@@ -40,7 +40,7 @@ const AutoSearch = (props) => {
 
             }}
             renderInput={(params) => (
-                <TextField {...params} label="שם הילד\ה" sx={{ textAlignLast: 'right', }} />
+                <TextField {...params} placeholder="שם הילד\ה" color='primary' sx={{ textAlignLast: 'right', color: 'primary'}} />
             )}
         />
     )

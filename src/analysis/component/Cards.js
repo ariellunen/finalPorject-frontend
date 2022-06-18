@@ -42,30 +42,16 @@ const Cards = (props) => {
                 const responseData = await response.json();
                 setSecondKide(responseData.child);
                 setIsReady(true);
-                if (props.text === firstKide.name) {
-                    props.searchText(firstKide)
-                }
-                if (props.text === secondKide.name) {
-                    props.searchText(secondKide)
-                }
-
-
             } catch (err) {
                 console.log(err);
             }
         }
 
         getKide();
-    }, [isReady]);
-    const [open, setOpen] = useState(false);
-    const [data, setData] = useState(props.item)
+    }, [isReady, props]);
     let arr = []
     arr.push(firstKide)
     arr.push(secondKide)
-
-    const handleSearch = () => {
-
-    }
 
     const card = (
         <React.Fragment>
@@ -108,17 +94,17 @@ const Cards = (props) => {
                         &nbsp;
                         {props.item.timeDone.slice(11, -6)}
                     </Typography>
-                    {/* <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
+                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
                         צורה:
                         &nbsp;
                         {props.item.shape}
-                    </Typography> */}
+                    </Typography>
                 </CardContent>
                 <CardActions sx={{ flexDirection: 'row-reverse', justifyContent: 'center' }}>
                     <Button type='submit' sx={{ bgcolor: '#4454a3', width: '94%', color:'white' }} onClick={(() => {
                         localStorage.setItem('Item', JSON.stringify(props.item));
                         localStorage.setItem('Names', JSON.stringify(arr));
-                    })} component={Link} to="/analysis/details" state={data} index={props.index}>ניתוח</Button>
+                    })} component={Link} to="/analysis/details" index={props.index}>ניתוח</Button>
 
                 </CardActions>
             </div>

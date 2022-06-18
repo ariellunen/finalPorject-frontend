@@ -4,26 +4,26 @@ import DatePicker from "react-modern-calendar-datepicker";
 import Cards from '../component/Cards';
 import Box from '@mui/material/Box';
 import NavLink from '../../user/components/NavLinks';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import ReplayIcon from '@mui/icons-material/Replay';
-import { InputBase } from '@mui/material';
 import AutoSearch from '../component/AutoSearch'
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SortIcon from '@mui/icons-material/Sort';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+let kid1;
+let kid2;
+
 const myCustomLocale = {
-    // months list by order
     months: [
         'ינואר',
         'פברואר',
@@ -38,8 +38,6 @@ const myCustomLocale = {
         'נובמבר',
         'דצמבר',
     ],
-
-    // week days by order
     weekDays: [
         {
             name: 'Sunday', // used for accessibility 
@@ -120,11 +118,6 @@ const myCustomLocale = {
     isRtl: true,
 }
 
-
-let filterArr = [];
-let shapes = [];
-let filterShape = [];
-let search = [];
 export default function AllDraw() {
     const [state, setState] = useState({ left: false });
     const [isReady, setIsReady] = useState(false);
@@ -163,12 +156,11 @@ export default function AllDraw() {
         getDraw();
     }, [isReady]);
 
-    const [results, setResults] = useState(false);
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.target.tagName === 'BUTTON') {
             setState({ ...state, [anchor]: open });
             if ((selectedDayRange.from !== null && selectedDayRange.to !== null) || (heart !== 'outline') || (circle !== 'outline') || (home !== 'outline') || (triangular !== 'outline') || (david !== 'outline')) {
-                handleFilter();
+                // handleFilter();
             }
         }
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -182,89 +174,6 @@ export default function AllDraw() {
     const [home, setHome] = useState('outlined');
     const [triangular, setTriangle] = useState('outlined');
     const [david, setMagen] = useState('outlined');
-
-    const empty = arr => arr.length = 0;
-    const handleFilter = () => {
-        let dateStart;
-        let dateEnd;
-        empty(filterShape)
-        empty(filterArr)
-        empty(shapes)
-        setResults(true)
-        if (heart === 'contained') { shapes.push('heart') }
-        if (circle === 'contained') { shapes.push('circle') }
-        if (home === 'contained') { shapes.push('home') }
-        if (triangular === 'contained') { shapes.push('triangular') }
-        if (david === 'contained') { shapes.push('david') }
-
-        if (selectedDayRange.from !== null && selectedDayRange.to !== null) {
-            if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 1) {
-                dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
-            }
-            else if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 2) {
-                dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
-            }
-            else if (selectedDayRange.from.month.toString().length === 2 && selectedDayRange.from.day.toString().length === 1) {
-                dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
-            }
-            else {
-                dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
-            }
-
-            if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 1) {
-                dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
-            }
-            else if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 2) {
-                dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
-            }
-            else if (selectedDayRange.to.month.toString().length === 2 && selectedDayRange.to.day.toString().length === 1) {
-                dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
-            }
-            else {
-                dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
-            }
-
-            data.forEach(draww => {
-                let draw1 = draww.timeStarted.slice(0, 10);
-                let draw = draw1;
-                if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
-                    if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
-                        if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {
-                            filterArr.push(draww)
-                        }
-                    }
-                }
-
-            });
-        }
-
-        if (shapes.length !== 0 && selectedDayRange.from !== null && selectedDayRange.to !== null) {
-            for (let i = 0; i < filterArr.length; i++) {
-                for (let j = 0; j < shapes.length; j++) {
-                    if (filterArr[i].shape === shapes[j]) {
-                        filterShape.push(filterArr[i])
-                    }
-                }
-            }
-        }
-
-        if (shapes.length !== 0 && selectedDayRange.from === null && selectedDayRange.to === null) {
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < shapes.length; j++) {
-                    if (data[i].shape === shapes[j]) {
-                        console.log('im here')
-                        filterShape.push(data[i])
-                    }
-                }
-            }
-        }
-
-        if (shapes.length === 0 && selectedDayRange.from !== null && selectedDayRange.to !== null) {
-            filterShape = filterArr;
-        }
-
-        console.log(filterShape);
-    }
 
     const handleHeart = (e) => {
         if (heart === 'outlined') { setHeart('contained'); }
@@ -291,7 +200,11 @@ export default function AllDraw() {
         else { setTriangle('outlined'); }
     }
 
+    const [age, setAge] = React.useState('');
 
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
     const list = (anchor) => (
         <Box
             sx={{ width: 350 }}
@@ -323,6 +236,19 @@ export default function AllDraw() {
                 </ListItem>
             </List>
             <Divider />
+            <FormControl fullWidth dir='rtl'>
+                <InputLabel id="demo-simple-select-label">מיין לפי</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    label="מיין לפי"
+                    onChange={handleChange}
+                >
+                    <MenuItem value={10} onClick={() => {setRevers(true)}}>מהחדש לישן</MenuItem>
+                    <MenuItem value={20} onClick={() => {setRevers(false)}}>מהישן לחדש</MenuItem>
+                </Select>
+            </FormControl>
             {/* <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem key={text} disablePadding>
@@ -339,64 +265,17 @@ export default function AllDraw() {
         </Box>
     );
 
-    const [text, setText] = useState('אברהם');
-    const handleText = (e) => {
-        // setText(e.target.value)
-        console.log(text)
-    }
-
-    let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
-
-    const searchText = (firstKide) => {
-        search.push(firstKide.id)
-        console.log(search)
-    }
-
-    const checkDrawing = (e) => {
-        e.preventdefault()
-        setResults(true)
-        console.log([...new Set(findDuplicates(search))])
-        console.log(search)
-        for (let index = 0; index < data.length; index++) {
-            for (let j = 0; j < search.length; j++) {
-                if (data[index].id === search[j]) {
-                    filterArr.push(data[index])
-                }
-            }
-            console.log(filterArr)
-        }
-    }
-
     const [value, setValue] = useState(null)
-
     const handleValue = (value) => {
         setValue(value)
     }
-    function getUniqueListBy(arr, key) {
-        return [...new Map(arr.map(item => [item[key], item])).values()]
-    }
-
-    const handleTextChanage = (value) => {
-        setTextChange(value)
-        console.log(value.name)
-        for (let index = 0; index < data.length; index++) {
-            if (data[index].firstKide === value.id || data[index].secondKide === value.id) {
-                filterShape.push(data[index])
-                console.log(value.id, data[index].firstKide, data[index].secondKide)
-                const arr1 = getUniqueListBy(filterShape, 'id')
-                filterShape = arr1
-                console.log(filterShape)
-
-            }
-        }
-    }
-
     const [textChange, setTextChange] = useState(null)
-
     const onInputChange = (value) => {
         setTextChange(value)
-        console.log("val", value)
     }
+
+    const [reverse, setRevers] = useState(false)
+
     return (
         <div>
             <NavLink />
@@ -405,17 +284,17 @@ export default function AllDraw() {
                 component="form"
                 sx={{ display: 'flex', alignItems: 'center', placeContent: 'center', bgcolor: '#f0f0f2' }}
             >
-                <IconButton fullHeigh type="submit" sx={{
+                <IconButton fullHeigh color="primary" type="submit" sx={{
                     p: '10px', bgcolor: 'white', borderRadius: 0, height: '55px'
-                }} aria-label="search" onClick={checkDrawing}>
-                    <SearchIcon />
+                }} aria-label="search">
+                    <SortIcon />
                 </IconButton>
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         <IconButton color="primary" sx={{
                             p: '10px', bgcolor: 'white', borderRadius: 0, height: '55px'
                         }} aria-label="directions" onClick={toggleDrawer(anchor, true)}>
-                            <MoreVertIcon />
+                            <FilterAltIcon />
                         </IconButton>
                         <Drawer
                             anchor={anchor}
@@ -424,51 +303,75 @@ export default function AllDraw() {
                         >
                             {list(anchor)}
                         </Drawer>
-                        <AutoSearch dir='rtl' onInputChange={onInputChange} value={value} handleValue={handleValue} allKide={allKide} handleTextChanage={handleTextChanage} />
+                        <AutoSearch dir='rtl' onInputChange={onInputChange} value={value} handleValue={handleValue} allKide={allKide} />
                     </React.Fragment>
                 ))}
             </Box>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {/* {(filterShape?.length !== 0 || shapes?.length !== 0) && filterShape.map((item, key) => {
-                    return (
-                        <Box sx={{
-                            justifyContent: 'center',
-                            p: 1,
-                            m: 1,
-                            bgcolor: 'transparent',
-                            borderRadius: 1,
-                            width: '25%',
-                        }}>
-                            <Cards item={item} key={key} index={key} searchText={searchText} text={text} />
-                        </Box>
-                    )
-                })} */}
+                {isReady && data.reverse().filter(item => {
+                    if (selectedDayRange.from === null && selectedDayRange.to === null) { return true }
+                    let dateStart;
+                    let dateEnd;
+                    if (selectedDayRange.from !== null && selectedDayRange.to !== null) {
+                        if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 1) {
+                            dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
+                        }
+                        else if (selectedDayRange.from.month.toString().length === 1 && selectedDayRange.from.day.toString().length === 2) {
+                            dateStart = selectedDayRange.from.year + '-0' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+                        }
+                        else if (selectedDayRange.from.month.toString().length === 2 && selectedDayRange.from.day.toString().length === 1) {
+                            dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-0' + selectedDayRange.from.day
+                        }
+                        else {
+                            dateStart = selectedDayRange.from.year + '-' + selectedDayRange.from.month + '-' + selectedDayRange.from.day
+                        }
 
-                {/* {(filterShape?.length === 0) && <Box sx={{
-                    justifyContent: 'center',
-                    p: 1,
-                    m: 1,
-                    bgcolor: 'background.paper',
-                    borderRadius: 1,
-                    width: '25%',
-                }}>
-                    No results were found
-                    <IconButton>
-                        טעינה מחדש
-                        <ReplayIcon fill={'black'} onClick={() => setResults(false)} sx={{ height: '30px', width: '30px' }} />
-                    </IconButton>
-                </Box>
-                } */}
+                        if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 1) {
+                            dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
+                        }
+                        else if (selectedDayRange.to.month.toString().length === 1 && selectedDayRange.to.day.toString().length === 2) {
+                            dateEnd = selectedDayRange.to.year + '-0' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
+                        }
+                        else if (selectedDayRange.to.month.toString().length === 2 && selectedDayRange.to.day.toString().length === 1) {
+                            dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-0' + selectedDayRange.to.day
+                        }
+                        else {
+                            dateEnd = selectedDayRange.to.year + '-' + selectedDayRange.to.month + '-' + selectedDayRange.to.day
+                        }
+                        let draw1 = item.timeStarted.slice(0, 10);
+                        let draw = draw1;
+                        console.log(draw1, dateEnd, dateStart, draw)
+                        if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
+                            if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
+                                if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {
+                                    return item;
+                                }
 
-                {isReady && data.filter(item => {
-                    console.log(item);
-                    console.log(textChange);
-                    console.log( allKide);
-                    if(!textChange){return true}
-                    const kid1 = allKide.find(k => k.id === item.firstKide)
-                    const kid2 = allKide.find(k => k.id === item.secondKide)
-                    return kid1.name.includes(textChange)|| kid2.name.includes(textChange)
-                    return true
+                            }
+                        }
+                    }
+                }).filter(item => {
+                    if (circle === 'outlined') { return true }
+                    return (heart === 'contained' && item.shape.includes('heart')) || (david === 'contained' && item.shape.includes('david')) || (circle === 'contained' && item.shape.includes('circle')) || (triangular === 'contained' && item.shape.includes('triangular')) || (home === 'contained' && item.shape.includes('home'))
+                }).filter(item => {
+                    if (triangular === 'outlined') { return true }
+                    return (heart === 'contained' && item.shape.includes('heart')) || (david === 'contained' && item.shape.includes('david')) || (circle === 'contained' && item.shape.includes('circle')) || (triangular === 'contained' && item.shape.includes('triangular')) || (home === 'contained' && item.shape.includes('home'))
+                }).filter(item => {
+                    if (home === 'outlined') { return true }
+                    return (heart === 'contained' && item.shape.includes('heart')) || (david === 'contained' && item.shape.includes('david')) || (circle === 'contained' && item.shape.includes('circle')) || (triangular === 'contained' && item.shape.includes('triangular')) || (home === 'contained' && item.shape.includes('home'))
+                }).filter(item => {
+                    if (heart === 'outlined') { return true }
+                    return (heart === 'contained' && item.shape.includes('heart')) || (david === 'contained' && item.shape.includes('david')) || (circle === 'contained' && item.shape.includes('circle')) || (triangular === 'contained' && item.shape.includes('triangular')) || (home === 'contained' && item.shape.includes('home'))
+                }).filter(item => {
+                    if (david === 'outlined') { return true }
+                    return (heart === 'contained' && item.shape.includes('heart')) || (david === 'contained' && item.shape.includes('david')) || (circle === 'contained' && item.shape.includes('circle')) || (triangular === 'contained' && item.shape.includes('triangular')) || (home === 'contained' && item.shape.includes('home'))
+                }).filter(item => {
+                    if (!textChange) { return true }
+                    kid1 = allKide.find(k => k.id === item.firstKide)
+                    kid2 = allKide.find(k => k.id === item.secondKide)
+                    console.log("item circle", kid1.name.includes(textChange), kid2.name.includes(textChange))
+                    return kid1.name.includes(textChange) || kid2.name.includes(textChange)
+                
                 }).map((item, key) => {
                     return (
                         <Box sx={{
@@ -479,7 +382,7 @@ export default function AllDraw() {
                             borderRadius: 1,
                             width: '25%',
                         }}>
-                            <Cards item={item} key={key} index={key} searchText={searchText} text={text} />
+                            <Cards item={item} key={key} index={key} kid1={kid1} kid2={kid2} />
                         </Box>
                     )
                 })}
