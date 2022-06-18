@@ -73,7 +73,7 @@ const Coloring = (props) => {
     const [right, setRight] = useState({ y: -1, x: -1, color: 'LightGrey', line: '20' })
 
     useEffect(() => {
-        arr[counter] = { l: left, r: right}
+        arr[counter] = { l: left, r: right }
         counter++;
         if (isDone) {
             arr = [];
@@ -346,6 +346,10 @@ const Coloring = (props) => {
     const [doneLeft, setDoneLeft] = useState(false);
     const [doneRight, setDoneRight] = useState(false);
 
+    const printOnPage = () => {
+        window.print();
+    }
+
     return (
         <React.Fragment>
             <NavLink />
@@ -361,7 +365,7 @@ const Coloring = (props) => {
             <div className='container' dir='ltr'>
                 <div id="canvasGrid" style={{ marginTop: "8px" }}>
                     {doneLeft && doneRight === true && <Confetti style={{ width: '100%' }} />}
-                    
+
                     <LeftCanvas
                         handleCoordinate={handleLeftCoordinate}
                         color={JSON.parse(localStorage.getItem('firstColor'))}
@@ -387,16 +391,15 @@ const Coloring = (props) => {
                         setDoneRight={setDoneRight}
                         handleSecondsR={handleSecondsR}
                     />
-                    {/* <p id="SeveralChanges2">{cchange2}</p> */}
-
                 </div>
+                
+                <Button sx={{ marginTop: "-15px" }} onClick={printOnPage}>הדפסה</Button>
                 <div id='footer' dir='ltr'>
                     <div id='time'>
                         <h3>{timer}</h3>
                     </div>
                     {/* <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button> */}
-                    <Button sx={{ marginTop: "-15px"}} type='submit' onClick={onSubmit}endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>סיום</Button>
-
+                    <Button sx={{ marginTop: "-15px" }} type='submit' onClick={onSubmit} endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>סיום</Button>
                 </div>
             </div>
         </React.Fragment >
