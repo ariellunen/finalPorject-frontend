@@ -393,6 +393,7 @@ const LeftCanvas = (props) => {
     return (
         <React.Fragment>
             <div className='containerL'>
+                <div>{props.cchange1}</div>
                 <canvas id="canvasL" width="620" height="470" penwidth='30' onPointerUp={pointerUp}></canvas>
                 <div id='contentL'>
                     <div id="myDivL">
