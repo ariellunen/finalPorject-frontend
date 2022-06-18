@@ -22,7 +22,7 @@ let flag = true;
 let area;
 let fill;
 let fillPercentage;
-let flagCncR = false;
+let flagCncR = true;
 let color;
 let line = 12;
 let selectedShape;
@@ -42,7 +42,7 @@ const RightCanvas = (props) => {
         context.lineWidth = line;
 
         if (Math.abs(props.cchange2 - props.cchange1) > 2.2 || props.cchange1 === 0) {
-            console.log("R - 1 - noSync", props.cchange1, props.cchange2);
+            console.log("R - 1 - noSync", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = 'LightGrey';
@@ -54,7 +54,7 @@ const RightCanvas = (props) => {
 
         else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
             if (flagCncR) {
-                console.log("R - 2 - Sync", props.cchange1, props.cchange2);
+                console.log("R - 2 - Sync", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = props.color;
@@ -63,7 +63,7 @@ const RightCanvas = (props) => {
                 context.stroke();
             }
             else {
-                console.log("R - 3 - noSync", props.cchange1, props.cchange2);
+                console.log("R - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = 'LightGrey';
@@ -74,7 +74,7 @@ const RightCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange1 !== 0) {
-            console.log("R - 4 - Sync", props.cchange1, props.cchange2);
+            console.log("R - 4 - Sync", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = props.color;
