@@ -8,7 +8,6 @@ import Autocomplete from '@mui/material/Autocomplete'
 import NavLink from '../../user/components/NavLinks';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -28,7 +27,7 @@ const Form = (props) => {
     const [isReady, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
     const [data, setData] = useState(false);
-
+    const [loading, setLoading] = useState(false)
     const breadcrumbs = [
         <Typography key="1" color="text.primary" component={Link} to='/'>
             תפריט ראשי
@@ -43,9 +42,6 @@ const Form = (props) => {
         if (isReady) {
             handleKide();
         }
-
-        // let aa = children.filter(child => data.some(draw => child.id === draw.firstKide || child.id === draw.secondKide))
-        // console.log(aa)
     }, [isReady])
 
     const handleKide = () => {
@@ -57,7 +53,6 @@ const Form = (props) => {
                     lastKides.push(children[i])
                 }
             }
-
         }
         unique = lastKides.filter(element => {
             const isDuplicate = uniqueIds.includes(element.id);
@@ -67,8 +62,7 @@ const Form = (props) => {
             }
             return false;
         });
-
-        console.log(unique);
+        setLoading(true)
     }
 
     const getAllChildren = async () => {
@@ -117,8 +111,8 @@ const Form = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            {!isReady && <CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} />}
-            {isReady && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
+            {!loading && <CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} />}
+            {loading && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {unique.length <= 8 && unique.map((child) => {
