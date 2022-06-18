@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Chart from 'chart.js';
 let ctx1;
 
@@ -44,7 +45,7 @@ const Chart1 = (props) => {
 
             }
             else {
-                arrayL.push({ ces: i, change: 1, avg: tempL/2 });
+                arrayL.push({ ces: i, change: 1, avg: tempL / 2 });
             }
         }
 
@@ -64,7 +65,7 @@ const Chart1 = (props) => {
                 arrayR.push({ ces: i, change: x, avg: avgR });
             }
             else {
-                arrayR.push({ ces: i, change: 1, avg: tempR/2 });
+                arrayR.push({ ces: i, change: 1, avg: tempR / 2 });
             }
         }
 
@@ -116,8 +117,13 @@ const Chart1 = (props) => {
         });
     }
 
+    const printOnPage = () => {
+        window.print();
+    }
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 'solid', borderBottomColor: 'transparent', }}>
+            <Button sx={{ marginTop: "auto" }} onClick={printOnPage}>הדפסה</Button>
             <div id='cync' style={{ margin: '0 auto' }}>
                 <canvas id="Chart1"></canvas>
             </div>

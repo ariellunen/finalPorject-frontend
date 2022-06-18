@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Chart from 'chart.js';
 let ctx2;
 let ctx3;
@@ -92,8 +93,13 @@ const Chart2 = (props) => {
         });
     }
 
+    const printOnPage = () => {
+        window.print();
+    }
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: 'auto', width: 1240, height: 470 }}>
+            <Button sx={{ marginTop: "auto" }} onClick={printOnPage}>הדפסה</Button>
             <div id='sec'>
                 <div class="chart-container" style={{ position: 'relative', width: '100vh' }}>
                     <canvas id="Chart2" style={{ marginRight: '111px', marginLeft: 0 }}></canvas>
