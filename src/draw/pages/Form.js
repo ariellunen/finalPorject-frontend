@@ -18,6 +18,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 let child = [];
 let name;
+let uniqueIds = [];
+let unique = [];
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState(null);
     const [secondKide, setSecondKide] = useState(null);
@@ -51,14 +53,22 @@ const Form = (props) => {
         console.log(children, data)
         for (let j = 0; j < data.length; j++) {
             for (let i = 0; i < children.length; i++) {
-                console.log(data[i])
                 if (children[i].id === data[j].firstKide || children[i].id === data[j].secondKide) {
                     lastKides.push(children[i])
                 }
             }
 
         }
-        console.log(lastKides)
+        unique = lastKides.filter(element => {
+            const isDuplicate = uniqueIds.includes(element.id);
+            if (!isDuplicate) {
+                uniqueIds.push(element.id);
+                return true;
+            }
+            return false;
+        });
+
+        console.log(unique);
     }
 
     const getAllChildren = async () => {

@@ -54,7 +54,7 @@ const LeftCanvas = (props) => {
 
         else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
             if (flagCncL){
-                console.log("L - 3 - Sync", props.cchange1, props.cchange2);
+                console.log("L - 3 - Syncccc", props.cchange1, props.cchange2);
                 context.beginPath();
                 context.lineWidth = line;
                 color = props.color;
@@ -74,7 +74,7 @@ const LeftCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange2 !== 0) {
-            console.log("L - 3 - Sync", props.cchange1, props.cchange2);
+            console.log("L - 3 - Syncccc", props.cchange1, props.cchange2);
             context.beginPath();
             context.lineWidth = line;
             color = props.color;
