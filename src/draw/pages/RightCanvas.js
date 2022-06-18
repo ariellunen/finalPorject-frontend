@@ -419,7 +419,7 @@ const RightCanvas = (props) => {
     }
 
     let button = document.getElementsByClassName("width");
-    
+
     let addSelectClass = function () {
         removeSelectClass();
         this.classList.add('selected');
@@ -443,6 +443,7 @@ const RightCanvas = (props) => {
     return (
         <React.Fragment>
             <div className='container'>
+            <div>{props.cchange2}</div>
                 <canvas id="canvasR" width="620" height="470" penwidth='30' onPointerUp={pointerUpR}></canvas>
                 <div id='content'>
                     <div id="myDiv">

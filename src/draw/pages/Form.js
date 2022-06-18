@@ -25,8 +25,7 @@ const Form = (props) => {
     const history = useHistory();
     const [isReady, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
-    console.log('firstKide', firstKide);
-    console.log('secondKide', secondKide);
+    const [data, setData] = useState(false);
 
     const breadcrumbs = [
         <Typography key="1" color="text.primary" component={Link} to='/'>
@@ -39,9 +38,39 @@ const Form = (props) => {
 
     useEffect(() => {
         getAllChildren();
-    }, [])
+        if (isReady) {
+            handleKide();
+        }
+
+        // let aa = children.filter(child => data.some(draw => child.id === draw.firstKide || child.id === draw.secondKide))
+        // console.log(aa)
+    }, [isReady])
+
+    const handleKide = () => {
+        let lastKides = [];
+        console.log(children, data)
+        for (let j = 0; j < data.length; j++) {
+            for (let i = 0; i < children.length; i++) {
+                console.log(data[i])
+                if (children[i].id === data[j].firstKide || children[i].id === data[j].secondKide) {
+                    lastKides.push(children[i])
+                }
+            }
+
+        }
+        console.log(lastKides)
+    }
 
     const getAllChildren = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/drawing/', {
+            });
+            const responseData = await response.json();
+            setData(responseData.drawing.reverse());
+
+        } catch (err) {
+            console.log(err);
+        }
         try {
             const response = await fetch('http://localhost:3000/api/users/children/', {
                 headers: {
@@ -55,6 +84,7 @@ const Form = (props) => {
         } catch (err) {
             console.log(err);
         }
+
     }
 
     const onSubmit = async event => {
@@ -77,7 +107,7 @@ const Form = (props) => {
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            {!isReady && <CircularProgress sx={{position: 'fixed', top: '50%', left: '50%',height: '100px', width: '100px'}}/>}
+            {!isReady && <CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} />}
 
             {isReady && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
@@ -190,10 +220,10 @@ const Form = (props) => {
                     {secondKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
                     {secondKide !== null && <Avatar alt={secondKide?.name} src={`http://localhost:3000/${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
-            {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
-            {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute' , bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
-            {(firstKide === null) && (secondKide !== null) && <Button sx={{ right: '5px', position: 'absolute' , bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
-            {(secondKide !== null) && (firstKide !== null) && <Button sx={{ right: '5px', position: 'absolute' , bottom: '4px' }} type='submit' onClick={onSubmit} component={Link} to="/drawing/color" endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {(firstKide === null) && (secondKide !== null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
+                {(secondKide !== null) && (firstKide !== null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' onClick={onSubmit} component={Link} to="/drawing/color" endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
             </Box>}
         </React.Fragment>
     )

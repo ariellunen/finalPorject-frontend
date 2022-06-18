@@ -134,8 +134,7 @@ export default function AllDraw() {
                 const response = await fetch('http://localhost:3000/api/drawing/', {
                 });
                 const responseData = await response.json();
-                console.log(responseData)
-                setData(responseData.drawing);
+                setData(responseData.drawing.reverse());
             } catch (err) {
                 console.log(err);
             }
@@ -207,11 +206,14 @@ export default function AllDraw() {
     };
     const list = (anchor) => (
         <Box
-            sx={{ width: 350 }}
+            sx={{ width: 350 , textAlignLast: 'center'}}
             role="presentation"
-            dir='ltr'
+            dir='rtl'
         >
-            <List dir='ltr'>
+            <List dir='rtl'>
+                <ListItem>
+                    <ListItemText>תאריכים</ListItemText>
+                </ListItem>
                 <ListItem>
                     <DatePicker
                         value={selectedDayRange}
@@ -227,7 +229,7 @@ export default function AllDraw() {
                     <ListItemText>צורה</ListItemText>
 
                 </ListItem>
-                <ListItem>
+                <ListItem sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
                     <Button variant={heart} onClick={handleHeart}>לב</Button>
                     <Button variant={home} onClick={handleHome}>בית</Button>
                     <Button variant={circle} onClick={handleCircle}>עיגול</Button>
@@ -236,32 +238,9 @@ export default function AllDraw() {
                 </ListItem>
             </List>
             <Divider />
-            <FormControl fullWidth dir='rtl'>
-                <InputLabel id="demo-simple-select-label">מיין לפי</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="מיין לפי"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={10} onClick={() => {setRevers(true)}}>מהחדש לישן</MenuItem>
-                    <MenuItem value={20} onClick={() => {setRevers(false)}}>מהישן לחדש</MenuItem>
-                </Select>
-            </FormControl>
-            {/* <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List> */}
+            <div>
             <Button variant='contained' onClick={toggleDrawer(anchor, false)}>שמירה</Button>
+            </div>
         </Box>
     );
 
@@ -308,7 +287,7 @@ export default function AllDraw() {
                 ))}
             </Box>
             <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
-                {isReady && data.reverse().filter(item => {
+                {isReady && data.filter(item => {
                     if (selectedDayRange.from === null && selectedDayRange.to === null) { return true }
                     let dateStart;
                     let dateEnd;
@@ -369,9 +348,8 @@ export default function AllDraw() {
                     if (!textChange) { return true }
                     kid1 = allKide.find(k => k.id === item.firstKide)
                     kid2 = allKide.find(k => k.id === item.secondKide)
-                    console.log("item circle", kid1.name.includes(textChange), kid2.name.includes(textChange))
                     return kid1.name.includes(textChange) || kid2.name.includes(textChange)
-                
+
                 }).map((item, key) => {
                     return (
                         <Box sx={{
