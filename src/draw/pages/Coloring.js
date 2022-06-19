@@ -64,9 +64,10 @@ const breadcrumbs = [
 const Coloring = (props) => {
     const history = useHistory();
     const [isDone, seyIsDone] = useState(false)
-    const [startedTime, setStartedTime] = useState(moment().tz("Asia/Jerusalem").format());
+    const startedTime = moment().tz("Asia/Jerusalem").format();
     useEffect(() => {
         clearTimer(getDeadTime());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [left, setLeft] = useState({ x: -1, y: -1, color: 'LightGrey', line: '20' })

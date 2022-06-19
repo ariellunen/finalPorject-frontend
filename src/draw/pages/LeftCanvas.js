@@ -18,7 +18,6 @@ let context;
 let uploadCoor;
 let p;
 let x, y;
-let flag = true;
 let area;
 let fill;
 let fillPercentage;
