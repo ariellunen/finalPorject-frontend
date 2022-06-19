@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ColorsLeft from '../component/Colors';
 import Colors from '../component/Colors';
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -32,7 +31,6 @@ const ColorPicker = (props) => {
         { name: '', color: '' },
     ]
 
-    const [counter, setCounter] = useState(0);
     const [users, setUsers] = useState(usersData);
     const [isReady, setIsReady] = useState(false);
     const history = useHistory();

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import interact from 'interactjs';
 import './Canvas.css';
 import circleCor from "../shape/CircleL";
@@ -6,7 +6,6 @@ import triangularCor from "../shape/TriangularL"
 import heartCor from "../shape/HeartL"
 import davidCor from "../shape/DavidL"
 import homeCor from "../shape/HomeL"
-import Confetti from "react-confetti";
 import Avatar from '@mui/material/Avatar';
 import './LeftCanvas.css'
 
@@ -154,6 +153,7 @@ const LeftCanvas = (props) => {
             })
         }
         resizeCanvases()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.cchange2, props.cchange1])
 
     useEffect(() => {
@@ -164,6 +164,7 @@ const LeftCanvas = (props) => {
         shapesSelected('Ivory');
         fileUpload();
         quantityPixelsArea();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const quantityPixelsArea = () => {
@@ -251,16 +252,16 @@ const LeftCanvas = (props) => {
         }
     }
 
-    const indexCheck = (x, y) => {
-        const { data } = context.getImageData(x, y, 1, 1);
-        // console.log(data[2])
-        if (data[2] === 240) {
-            flag = true;
-        }
-        else {
-            flag = false;
-        }
-    }
+    // const indexCheck = (x, y) => {
+    //     const { data } = context.getImageData(x, y, 1, 1);
+    //     // console.log(data[2])
+    //     if (data[2] === 240) {
+    //         flag = true;
+    //     }
+    //     else {
+    //         flag = false;
+    //     }
+    // }
 
     //Upload the drawing
     let coordinates = [];
