@@ -51,7 +51,7 @@ const Cards = (props) => {
                                 <Avatar
                                     sx={{ width: 70, height: 70 }}
                                     alt={'left'}
-                                    src={`${process.env.REACT_APP_ASSET_URL}/${firstKide.image}`}
+                                    src={`${firstKide.image}`}
                                 />
                                 {firstKide.name}
                             </Box>
@@ -59,7 +59,7 @@ const Cards = (props) => {
                                 <Avatar
                                     sx={{ width: 70, height: 70 }}
                                     alt={'left'}
-                                    src={`${process.env.REACT_APP_ASSET_URL}/${secondKide.image}`}
+                                    src={`${secondKide.image}`}
                                 />
                                 {secondKide.name}
                             </Box>
