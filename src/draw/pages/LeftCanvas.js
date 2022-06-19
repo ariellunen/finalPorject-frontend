@@ -261,7 +261,6 @@ const LeftCanvas = (props) => {
     //         flag = false;
     //     }
     // }
-
     //Upload the drawing
     let coordinates = [];
     const dda = (x0, y0, x1, y1) => {
