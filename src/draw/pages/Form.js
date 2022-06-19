@@ -61,6 +61,7 @@ const Form = (props) => {
         setLoading(true)
     }
 
+    console.log(uniquee)
     const getAllChildren = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
