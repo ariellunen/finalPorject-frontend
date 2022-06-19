@@ -109,12 +109,12 @@ const Form = (props) => {
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {uniquee.length <= 8 && children.map((child) => {
                             console.log(`C:/${child.image}`)
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`C:/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
                             console.log(`C:/${child.image}`)
                   
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`C:/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -145,7 +145,7 @@ const Form = (props) => {
                                 <img
                                     loading="lazy"
                                     width="20"
-                                    src={`C:/${option.image}`}
+                                    src={`${option.image}`}
                                     alt=""
                                 />
                                 {option.name}
@@ -163,7 +163,7 @@ const Form = (props) => {
                         )}
                     />
                     {firstKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
-                    {firstKide !== null && <Avatar alt={firstKide.name} src={`C:/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {firstKide !== null && <Avatar alt={firstKide.name} src={`${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
@@ -204,7 +204,7 @@ const Form = (props) => {
                                 <img
                                     loading="lazy"
                                     width="20"
-                                    src={`C:/${option.image}`}
+                                    src={`${option.image}`}
                                     alt=""
                                 />
                                 {option.name}
@@ -222,7 +222,7 @@ const Form = (props) => {
                         )}
                     />
                     {secondKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
-                    {secondKide !== null && <Avatar alt={secondKide?.name} src={`C:/${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {secondKide !== null && <Avatar alt={secondKide?.name} src={`${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
                 {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
                 {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
