@@ -112,9 +112,12 @@ const Form = (props) => {
                             console.log(`${child.image}`)
                             return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
-                        {children.length > 8 && uniquee.slice(0, 8).map((child) => {
+                        {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
                             console.log(`${child.image}`)
-                  
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
+                        })}
+                        {uniquee.length < 8 && children.length > 8 && children.slice(0, 8).map((child) => {
+                            console.log(`${child.image}`)
                             return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                     </Box>
@@ -171,7 +174,7 @@ const Form = (props) => {
                         {uniquee.length <= 8 && children.map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
-                        {children.length > 8 && uniquee.slice(0, 8).map((child) => {
+                        {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                     </Box>
