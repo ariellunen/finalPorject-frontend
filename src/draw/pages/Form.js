@@ -108,7 +108,7 @@ const Form = (props) => {
             {loading && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {uniquee.length <= 8 && children.map((child) => {
+                        {uniquee.length <= 8 && uniquee.map((child) => {
                             console.log(`${child.image}`)
                             return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
@@ -167,7 +167,7 @@ const Form = (props) => {
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {uniquee.length <= 8 && children.map((child) => {
+                        {uniquee.length <= 8 && uniquee.map((child) => {
                             return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
