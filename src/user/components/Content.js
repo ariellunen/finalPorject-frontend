@@ -131,7 +131,7 @@ export default function Content(props) {
                                             {child.name}
                                         </TableCell>
                                         <TableCell align="center">
-                                            <Avatar alt="Remy Sharp" src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
+                                            <Avatar alt="Remy Sharp" src={`${child.image}`} />
                                         </TableCell>
 
                                     </TableRow>
