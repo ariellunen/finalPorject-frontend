@@ -37,6 +37,7 @@
     "start": "^5.1.0"
   },
   "scripts": {
+    "deploy":"firebase deploy --only hosting",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
