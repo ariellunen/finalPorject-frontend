@@ -447,7 +447,7 @@ const RightCanvas = (props) => {
                         <Avatar
                             sx={{ width: 50, height: 50 }}
                             alt={'left'}
-                            src={`${process.env.REACT_APP_ASSET_URL}/${JSON.parse(localStorage.getItem('secondKide')).image}`}
+                            src={`${JSON.parse(localStorage.getItem('secondKide')).image}`}
                         />
                     </div>
                     <progress id='progress' value={props.cchange2} max="10"></progress>
