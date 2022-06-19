@@ -82,12 +82,6 @@ const Coloring = (props) => {
         }
     }, [left, right, isDone])
     
-    
-document.div.onkeyup = function(e) {
-  if (e.code == "Space"){
-       console.log('hiiiiiiiiii')
-}
-}
     const handleLeftCoordinate = (x, y, color, line) => {
         leftCoordinates.push({ x, y, color, line });
         bufL.push({ x, y });
