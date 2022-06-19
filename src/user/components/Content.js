@@ -80,20 +80,20 @@ export default function Content(props) {
                 >
                     <Toolbar>
                         <Grid container spacing={2} alignItems="center">
-                            <Grid item>
-                                <SearchIcon color="inherit" sx={{ display: 'block' }} />
-                            </Grid>
-                            <Grid item xs>
-                                <TextField
-                                    fullWidth
-                                    placeholder="Search by email address, phone number, or user UID"
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        sx: { fontSize: 'default' },
-                                    }}
-                                    variant="standard"
-                                />
-                            </Grid>
+//                             <Grid item>
+//                                 <SearchIcon color="inherit" sx={{ display: 'block' }} />
+//                             </Grid>
+//                             <Grid item xs>
+//                                 <TextField
+//                                     fullWidth
+//                                     placeholder="Search by email address, phone number, or user UID"
+//                                     InputProps={{
+//                                         disableUnderline: true,
+//                                         sx: { fontSize: 'default' },
+//                                     }}
+//                                     variant="standard"
+//                                 />
+//                             </Grid>
                             {!isAdminPage && <Grid item>
                                 <Button variant="contained" sx={{ mr: 1 }} component={Link} to='/addKide'>
                                     הוספת משתמש
