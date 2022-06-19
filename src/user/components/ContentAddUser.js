@@ -90,7 +90,7 @@ const ContentAddUser = () => {
     return (
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
             <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{placeContent: 'center'}}>
                     <ErrorModal error={error} onClear={clearError} />
                     <Card className="authentication">
                         <Typography>הוספת משתמש חדש</Typography>
