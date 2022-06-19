@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import interact from 'interactjs';
 import './Canvas.css';
 import circleCor from "../shape/CircleR"
@@ -8,7 +8,7 @@ import davidCor from "../shape/DavidR"
 import homeCor from "../shape/HomeR"
 import './RightCanvas.css';
 import Avatar from '@mui/material/Avatar';
-import { ClickAwayListener } from '@mui/material';
+// import { ClickAwayListener } from '@mui/material';
 
 let canvas;
 let down;
@@ -18,7 +18,6 @@ let context;
 let uploadCoor;
 let p;
 let x, y;
-let flag = true;
 let area;
 let fill;
 let fillPercentage;
@@ -42,7 +41,6 @@ const RightCanvas = (props) => {
         context.lineWidth = line;
 
         if (Math.abs(props.cchange2 - props.cchange1) > 2.2 || props.cchange1 === 0) {
-            console.log("R - 1 - noSync", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = 'LightGrey';
@@ -54,7 +52,6 @@ const RightCanvas = (props) => {
 
         else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
             if (flagCncR) {
-                console.log("R - 2 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = props.color;
@@ -63,7 +60,6 @@ const RightCanvas = (props) => {
                 context.stroke();
             }
             else {
-                console.log("R - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = 'LightGrey';
@@ -74,7 +70,6 @@ const RightCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange1 !== 0) {
-            console.log("R - 4 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = props.color;
@@ -83,17 +78,6 @@ const RightCanvas = (props) => {
             context.stroke();
             flagCncR = true;
         }
-
-        // else {
-        //     context.beginPath();
-        //     context.lineWidth = line;
-        //     // context.lineWidth = document.getElementById("lineWidthR").value;
-        //     context.strokeStyle = props.color;
-        //     context.lineTo(x, y);
-        //     context.stroke();
-        //     // line = document.getElementById("lineWidthL").value;
-        //     color = props.color
-        // }
 
         interact('#canvasR').on('down', function (event) {
             canvas = event.target.getContext('2d')
@@ -110,8 +94,6 @@ const RightCanvas = (props) => {
         interact('#canvasR').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            // timeTakenR = Date.now() - down;
-            // props.secondsR.push(timeTakenR / 1000);
             props.setRight({ x: -1, y: -1, color: color, line: line })
             props.setMouseR(true);
             canvas.stroke();
@@ -130,9 +112,6 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        // if (x > 0 && x < 800 && y > 0 && y < 800) {
-                        //     indexCheck(x, y);
-                        // }
                         x = event.clientX;
                         y = event.clientY;
                         canvas.lineTo(event.clientX, event.clientY);
@@ -152,6 +131,7 @@ const RightCanvas = (props) => {
             })
         }
         resizeCanvases()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.cchange2, props.cchange1])
 
     const shapesSelected = (color) => {
@@ -195,6 +175,7 @@ const RightCanvas = (props) => {
         shapesSelected('Ivory')
         fileUpload()
         quantityPixelsArea();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //check how much left to coloring
@@ -206,7 +187,6 @@ const RightCanvas = (props) => {
                 area++
             }
         }
-        // console.log(area);
     }
 
     //check drawing pixels area - for 95% coloring 
@@ -228,15 +208,15 @@ const RightCanvas = (props) => {
         }
     }
     //check limits - flag
-    const indexCheck = (x, y) => {
-        const { data } = context.getImageData(x, y, 1, 1);
-        if (data[2] === 240) {
-            flag = true;
-        }
-        else {
-            flag = false;
-        }
-    }
+    // const indexCheck = (x, y) => {
+    //     const { data } = context.getImageData(x, y, 1, 1);
+    //     if (data[2] === 240) {
+    //         flag = true;
+    //     }
+    //     else {
+    //         flag = false;
+    //     }
+    // }
 
     //Upload the drawing
     let coordinates = [];
@@ -338,99 +318,98 @@ const RightCanvas = (props) => {
         }
     }
 
-    const ballons = () => {
-        // BALOONSSSS Animation
-        const bdayBallons = (function () {
-            const density = 1; // concurrent balloon count
-            const balloons = [];
-            const colors = ['yellow', 'green', 'blue', 'red'];
+    // const ballons = () => {
+    //     // BALOONSSSS Animation
+    //     const bdayBallons = (function () {
+    //         const density = 1; // concurrent balloon count
+    //         const colors = ['yellow', 'green', 'blue', 'red'];
 
-            const stringElement = document.createElement("div");
-            stringElement.classList.add("string");
+    //         const stringElement = document.createElement("div");
+    //         stringElement.classList.add("string");
 
-            for (let i = 0; i < density; i++) {
-                const element = document.createElement("div");
-                element.classList.add("balloon");
-                element.classList.add(randomColor());
+    //         for (let i = 0; i < density; i++) {
+    //             const element = document.createElement("div");
+    //             element.classList.add("balloon");
+    //             element.classList.add(randomColor());
 
-                element.append(stringElement.cloneNode());
-                document.body.append(element);
+    //             element.append(stringElement.cloneNode());
+    //             document.body.append(element);
 
-                setTimeout(() => {
-                    releaseBalloon(element);
-                }, (i * 2000) + random(500, 1000));
-            }
+    //             setTimeout(() => {
+    //                 releaseBalloon(element);
+    //             }, (i * 2000) + random(500, 1000));
+    //         }
 
-            function randomColor() {
-                return colors[random(0, colors.length)];
-            }
+    //         function randomColor() {
+    //             return colors[random(0, colors.length)];
+    //         }
 
-            function random(min, max) {
-                return Math.floor(Math.random() * (max - min)) + min;
-            }
+    //         function random(min, max) {
+    //             return Math.floor(Math.random() * (max - min)) + min;
+    //         }
 
-            function releaseBalloon(balloon) {
-                const delay = random(100, 1000);
-                const x = random(-99, -30); // random x value to fly
-                const y = random(-99, -30); // random y value to fly
+    //         function releaseBalloon(balloon) {
+    //             const delay = random(100, 1000);
+    //             const x = random(-99, -30); // random x value to fly
+    //             const y = random(-99, -30); // random y value to fly
 
-                const sequence = [{
-                    offset: 0,
-                    transform: `rotateZ(45deg) translate(0, 0)`
-                }];
+    //             const sequence = [{
+    //                 offset: 0,
+    //                 transform: `rotateZ(45deg) translate(0, 0)`
+    //             }];
 
-                // random fly direction
-                if (random(0, 2) === 0) {
-                    // first fly up to top left
+    //             // random fly direction
+    //             if (random(0, 2) === 0) {
+    //                 // first fly up to top left
 
-                    // left distance to keep balloon in view
-                    balloon.style.left = `${-1 * x}vw`;
+    //                 // left distance to keep balloon in view
+    //                 balloon.style.left = `${-1 * x}vw`;
 
-                    sequence.push({
-                        offset: x / -200,
-                        transform: `rotateZ(45deg) translate(${x}vw, 0)`
-                    });
-                    sequence.push({
-                        offset: (x + y) / -200,
-                        transform: `rotateZ(45deg) translate(${x}vw, ${y}vh)`
-                    });
-                    sequence.push({
-                        offset: (-100 + y) / -200,
-                        transform: `rotateZ(45deg) translate(-100vw, ${y}vh)`
-                    });
-                } else {
-                    // fist fly up to right top
+    //                 sequence.push({
+    //                     offset: x / -200,
+    //                     transform: `rotateZ(45deg) translate(${x}vw, 0)`
+    //                 });
+    //                 sequence.push({
+    //                     offset: (x + y) / -200,
+    //                     transform: `rotateZ(45deg) translate(${x}vw, ${y}vh)`
+    //                 });
+    //                 sequence.push({
+    //                     offset: (-100 + y) / -200,
+    //                     transform: `rotateZ(45deg) translate(-100vw, ${y}vh)`
+    //                 });
+    //             } else {
+    //                 // fist fly up to right top
 
-                    sequence.push({
-                        offset: y / -200,
-                        transform: `rotateZ(45deg) translate(0, ${y}vh)`
-                    });
-                    sequence.push({
-                        offset: (x + y) / -200,
-                        transform: `rotateZ(45deg) translate(${x}vw, ${y}vh)`
-                    });
-                    sequence.push({
-                        offset: (-100 + x) / -200,
-                        transform: `rotateZ(45deg) translate(${x}vw, -100vh)`
-                    });
-                }
+    //                 sequence.push({
+    //                     offset: y / -200,
+    //                     transform: `rotateZ(45deg) translate(0, ${y}vh)`
+    //                 });
+    //                 sequence.push({
+    //                     offset: (x + y) / -200,
+    //                     transform: `rotateZ(45deg) translate(${x}vw, ${y}vh)`
+    //                 });
+    //                 sequence.push({
+    //                     offset: (-100 + x) / -200,
+    //                     transform: `rotateZ(45deg) translate(${x}vw, -100vh)`
+    //                 });
+    //             }
 
-                // last move is common
-                sequence.push({
-                    offset: 1,
-                    transform: `rotateZ(45deg) translate(-100vw, -100vh)`
-                });
+    //             // last move is common
+    //             sequence.push({
+    //                 offset: 1,
+    //                 transform: `rotateZ(45deg) translate(-100vw, -100vh)`
+    //             });
 
-                const balloonAnimation = balloon.animate(sequence, {
-                    duration: 15000,
-                    delay: delay
-                });
+    //             const balloonAnimation = balloon.animate(sequence, {
+    //                 duration: 15000,
+    //                 delay: delay
+    //             });
 
 
-                balloonAnimation.onfinish = () => { releaseBalloon(balloon) }
-            }
-        })();
-    }
+    //             balloonAnimation.onfinish = () => { releaseBalloon(balloon) }
+    //         }
+    //     })();
+    // }
 
     const handleWidth = (value) => {
         line = value;
@@ -468,7 +447,7 @@ const RightCanvas = (props) => {
                         <Avatar
                             sx={{ width: 50, height: 50 }}
                             alt={'left'}
-                            src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondKide')).image}`}
+                            src={`${process.env.REACT_APP_ASSET_URL}/${JSON.parse(localStorage.getItem('secondKide')).image}`}
                         />
                     </div>
                     <progress id='progress' value={props.cchange2} max="10"></progress>

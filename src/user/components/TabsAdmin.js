@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useHistory, useLocation } from "react-router-dom";
@@ -10,7 +10,6 @@ const TabsAdmin = () => {
     const [childrenScreen, setChildrenScreen] = useState(!isAdminPage? ('contained'):('outlined'))
     let history = useHistory();
     const handleClick = (e) => {
-        console.log(e)
         if (e.target.id === 'user') {
             setChildrenScreen('outlined')
             setUsersScreen('contained')
@@ -18,7 +17,6 @@ const TabsAdmin = () => {
         } else {
             setChildrenScreen('contained')
             setUsersScreen('outlined')
-            console.log('hi')
             history.push('/kids')
         }
     }

@@ -8,7 +8,6 @@ export class CameraFeed extends Component {
      */
     processDevices(devices) {
         devices.forEach(device => {
-            console.log(device.label);
             this.setDevice(device);
         });
     }

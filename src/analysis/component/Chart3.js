@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chart from 'chart.js';
@@ -11,6 +11,7 @@ const Chart3 = (props) => {
         ctx5 = document.getElementById('Chart5').getContext('2d');
         chart5()
         chart4()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const chart4 = () => {
