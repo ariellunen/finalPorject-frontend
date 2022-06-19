@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ColorsLeft from '../component/Colors';
-import Colors from '../component/Colors';
-import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
@@ -12,12 +9,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useLocation } from 'react-router-dom';
 import Shapes from '../component/Shapes';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-let child = [];
 let first, second;
-let urlShape;
 const breadcrumbs = [
     <Typography key="1" color="text.primary" component={Link} to='/'>
         תפריט ראשי
@@ -35,23 +29,13 @@ const breadcrumbs = [
 
 let selectedShape;
 const ShapesPicker = (props) => {
-    const location = useLocation();
-    const history = useHistory();
-    const [counter, setCounter] = useState(0);
     const [shape, setShape] = useState(null);
 
     const handleShape = (shape, url) => {
         selectedShape = shape;
         setShape(shape)
         sessionStorage.setItem("selectedShape", selectedShape);
-        urlShape = url;
-
     }
-    const usersData = [
-        { name: '', color: '' },
-        { name: '', color: '' },
-    ]
-
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
@@ -63,8 +47,6 @@ const ShapesPicker = (props) => {
     const fetchAPI = async () => {
         first = JSON.parse(localStorage.getItem('firstKide'));
         second = JSON.parse(localStorage.getItem('secondKide'));
-        console.log("first", first.name)
-        console.log("Child", first, second)
         setIsReady(true);
     }
 
@@ -85,11 +67,11 @@ const ShapesPicker = (props) => {
                 <Box sx={{bgcolor: 'white', textAlignLast: 'center', width: 1240, height: 470, borderTop: 'solid', borderRight: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`http://localhost:3000/${first.image}`} />
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`${process.env.REACT_APP_ASSET_URL}/${first.image}`} />
                             <Typography sx={{ marginLeft: '10px' }}>{first.name}</Typography>
                         </div>
                         <div style={{ alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={second.name} src={`http://localhost:3000/${second.image}`} />
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={second.name} src={`${process.env.REACT_APP_ASSET_URL}/${second.image}`} />
                             <Typography sx={{ marginLeft: '10px' }}>{second.name}</Typography>
                         </div>
                     </Box>

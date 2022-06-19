@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chart from 'chart.js';
@@ -10,6 +10,7 @@ const Chart2 = (props) => {
         ctx2 = document.getElementById('Chart2').getContext('2d');
         chart2()
         chart3();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const chart2 = () => {
@@ -29,8 +30,6 @@ const Chart2 = (props) => {
             }
         }
         let barColors = props.storedData.colorFirst;
-        console.log(props.sec3)
-
         new Chart(ctx2, {
             type: "horizontalBar",
             data: {

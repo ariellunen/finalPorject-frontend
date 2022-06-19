@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -6,19 +6,21 @@ import {
   Switch
 } from 'react-router-dom';
 import MainNavigation from './user/pages/MainNavigation';
-import ColorPicker from './draw/pages/ColorPicker';
-import Coloring from './draw/pages/Coloring';
-import Form from './draw/pages/Form';
-import AllDraw from './analysis/pages/AllDraw';
+import CircularProgress from '@mui/material/CircularProgress';
 import Auth from './user/pages/Auth';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
-import AddUser from './user/components/AddUser';
-import ShapesPicker from './draw/pages/ShapesPicker';
-import DrawDetails from './analysis/pages/DrawDetails';
 import Main from './user/pages/Main';
-import AddKide from './user/components/AddKide';
-import Definitions from './user/components/Definitions';
+const AllDraw = React.lazy(() => import('./analysis/pages/AllDraw'))
+const AddUser = React.lazy(() => import('./user/components/AddUser'))
+const DrawDetails = React.lazy(() => import('./analysis/pages/DrawDetails'))
+// const Main = React.lazy(() => import('./user/pages/Main'))
+const Coloring = React.lazy(() => import('./draw/pages/Coloring'))
+const ColorPicker = React.lazy(() => import('./draw/pages/ColorPicker'))
+const Form = React.lazy(() => import('./draw/pages/Form'))
+const ShapesPicker = React.lazy(() => import('./draw/pages/ShapesPicker'))
+const Definitions = React.lazy(() => import('./user/components/Definitions'))
+const AddKide = React.lazy(() => import('./user/components/AddKide'))
 const App = () => {
   const { token, login, logout, userId, emaill, userTypee } = useAuth();
   let routes;
@@ -34,8 +36,6 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log("aaaa", userTypee, permission);
-    console.log(JSON.parse(localStorage.getItem('permission')))
   }, [permission])
 
   useEffect(() => {
@@ -44,26 +44,25 @@ const App = () => {
     }
     const getUser = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/${userId}`, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
         const responseData = await response.json();
-        console.log(responseData, userId);
         setUser(responseData.user)
-        console.log(responseData)
       } catch (err) {
         console.log(err);
       }
     }
     getUser()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
   console.log('USER', user);
 
   if (token && user) {
     //ADMIN
-    if (userId === '6277c1484517cb29c0cd1d11') {
+    if (userId === '62ae40d65696f026d8f64877') {
       routes = (
         <Switch>
           <Route path="/admin">
@@ -108,7 +107,6 @@ const App = () => {
               </Route>
               <Route path="/analysis/details" exact>
                 {permission ? <DrawDetails /> : <Redirect to={user.userType === 'specialist' ? '/analysis/details' : '/'} />}
-
                 {/* <DrawDetails /> */}
               </Route>
               <Route path="/form" exact>
@@ -149,8 +147,7 @@ const App = () => {
       }}
     >
       <Router>
-        {/* <MainNavigation /> */}
-        <main>{routes}</main>
+        <main><Suspense fallback={<div className='center'><CircularProgress sx={{ position: 'fixed', top: '50%', left: '50%', height: '100px', width: '100px' }} /></div>}>{routes}</Suspense></main>
       </Router>
     </AuthContext.Provider>
   );

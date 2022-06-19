@@ -5,11 +5,8 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../shared/context/auth-context';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { Link } from 'react-router-dom';
 
 function Header(props) {
   const { onDrawerToggle } = props;

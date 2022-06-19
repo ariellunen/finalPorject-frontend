@@ -48,10 +48,11 @@ const DrawDetails = (props) => {
             yValuesSec3.push(storedData.secondsR[i]);
         }
         sec3 = yValuesSec3.length;
-        console.log( storedData)
+        console.log(storedData)
 
         PaintBrushL();
         PaintBrushR();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const PaintBrushL = () => {
@@ -101,6 +102,11 @@ const DrawDetails = (props) => {
                 b = "rgba(255, 234, 0, 0.57)";
                 c = "rgba(255, 234, 0, 0.35)";
                 break;
+            default:
+                a = "rgba(169, 72, 255, 1)";
+                b = "rgba(195, 127, 255, 0.85)";
+                c = "rgba(206, 176, 244, 0.46)";
+                break;
         }
     }
     const PaintBrushR = () => {
@@ -149,6 +155,11 @@ const DrawDetails = (props) => {
                 d = "rgba(255, 234, 0, 1)";
                 e = "rgba(255, 234, 0, 0.57)";
                 f = "rgba(255, 234, 0, 0.35)";
+                break;
+            default:
+                a = "rgba(169, 72, 255, 1)";
+                b = "rgba(195, 127, 255, 0.85)";
+                c = "rgba(206, 176, 244, 0.46)";
                 break;
         }
     }
@@ -205,9 +216,9 @@ const DrawDetails = (props) => {
                 <Box dir='ltr' component="main" sx={{ display: 'flex', placeContent: 'center' }}>
                     <Box sx={{ bgcolor: 'white', textAlignLast: 'center', width: 1240, height: 470, borderRight: '1px solid lightgrey', borderTop: '1px solid #1976d2', borderLeft: '1px solid lightgrey', borderBottom: '1px solid lightgrey', textAlign: '-webkit-center' }}>
                         {replay === 'contained' && <Recovery storedData={storedData} />}
-                        {sync === 'contained' && <Chart1 names={names} storedData={storedData}/>}
-                        {touch === 'contained' && <Chart2 names={names} storedData={storedData} yValuesSec3={yValuesSec3} yValuesSec2={yValuesSec2} sec2={sec2} sec3={sec3}/> }
-                        {line === 'contained' && <Chart3 names={names} storedData={storedData} a={a} b={b} c={c} e={e} d={d} f={f}/> }
+                        {sync === 'contained' && <Chart1 names={names} storedData={storedData} />}
+                        {touch === 'contained' && <Chart2 names={names} storedData={storedData} yValuesSec3={yValuesSec3} yValuesSec2={yValuesSec2} sec2={sec2} sec3={sec3} />}
+                        {line === 'contained' && <Chart3 names={names} storedData={storedData} a={a} b={b} c={c} e={e} d={d} f={f} />}
                     </Box>
                 </Box>
             </div>

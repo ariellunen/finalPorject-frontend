@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react';
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker from "react-modern-calendar-datepicker";
@@ -14,7 +15,6 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import AutoSearch from '../component/AutoSearch'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import SortIcon from '@mui/icons-material/Sort';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Typography from '@mui/material/Typography';
@@ -140,7 +140,7 @@ export default function AllDraw() {
     useEffect(() => {
         const getDraw = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/drawing/', {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
                 });
                 const responseData = await response.json();
                 setData(responseData.drawing.reverse());
@@ -148,7 +148,7 @@ export default function AllDraw() {
                 console.log(err);
             }
             try {
-                const response = await fetch('http://localhost:3000/api/users/children/', {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/children/`, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -208,11 +208,6 @@ export default function AllDraw() {
         else { setTriangle('outlined'); }
     }
 
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
     const list = (anchor) => (
         <Box
             sx={{ width: 350, textAlignLast: 'center' }}
@@ -304,7 +299,7 @@ export default function AllDraw() {
                         </React.Fragment>
                     ))}
                 </Box>
-                <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex', flexWrap: 'wrap' }}>
+                <Box sx={{ flexWrap: 'wrap', justifyContent: 'center', display: 'flex'}}>
                     {isReady && data.filter(item => {
                         if (selectedDayRange.from === null && selectedDayRange.to === null) { return true }
                         let dateStart;

@@ -14,7 +14,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import TabsAdmin from './TabsAdmin';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -40,15 +40,12 @@ let users = [];
 
 export default function Content(props) {
     const [isReady, setIsReady] = useState(false);
-    const [userss, setUsers] = useState([])
-    let history = useHistory();
     const location = useLocation();
     const isAdminPage = location.pathname === '/admin'
-    
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/users/children/`, {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/children/`, {
                 });
                 const responseData = await response.json();
                 children.push(responseData);
@@ -57,13 +54,11 @@ export default function Content(props) {
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/api/users/`, {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/`, {
                 });
                 const responseData = await response.json();
                 users.push(responseData);
-                setUsers(responseData)
                 setIsReady(true);
-
 
             } catch (err) {
                 console.log(err);
@@ -136,7 +131,7 @@ export default function Content(props) {
                                             {child.name}
                                         </TableCell>
                                         <TableCell align="center">
-                                            <Avatar alt="Remy Sharp" src={`http://localhost:3000/${child.image}`} />
+                                            <Avatar alt="Remy Sharp" src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
                                         </TableCell>
 
                                     </TableRow>

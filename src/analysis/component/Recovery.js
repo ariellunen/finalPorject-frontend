@@ -1,30 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Box from '@mui/material/Box';
+import React, { useEffect, useRef } from 'react';
 import Button from '@mui/material/Button';
-
 import circleCorL from "../../draw/shape/CircleL";
 import triangularCorL from "../../draw/shape/TriangularL"
 import heartCorL from "../../draw/shape/HeartL"
 import davidCorL from "../../draw/shape/DavidL"
 import homeCorL from "../../draw/shape/HomeL"
-
 import circleCorR from "../../draw/shape/CircleR";
 import triangularCorR from "../../draw/shape/TriangularR"
 import heartCorR from "../../draw/shape/HeartR"
 import davidCorR from "../../draw/shape/DavidR"
 import homeCorR from "../../draw/shape/HomeR"
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '90%',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 
 let drawData;
 let uploadCoorL;
@@ -74,9 +59,14 @@ const Recovery = (props) => {
                 uploadCoorL = homeCorL;
                 uploadCoorR = homeCorR;
                 break;
+            default:
+                uploadCoorL = circleCorL;
+                uploadCoorR = circleCorR;
+                break;
         }
         fileUpload();
         handleClick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const speedChange05 = () => { speed = 300; }
@@ -195,7 +185,6 @@ const Recovery = (props) => {
     }
 
     const viewDrawing = () => {
-        // console.log(coordinatesL);
         for (let i = 0; i < coordinatesL.length; i++) {
             if (coordinatesL[i].length === 3) {
                 circleL(coordinatesL[i][0], coordinatesL[i][1], coordinatesL[i][2])
@@ -275,18 +264,18 @@ const Recovery = (props) => {
     }
 
     return (
-            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                <canvas
-                    id='leftCanvas'
-                    width={`620px`}
-                    height={`470px`}
-                />
-                <canvas
-                    id='rightCanvas'
-                    width={`620px`}
-                    height={`470px`}
-                />
-                        <div style={{ position: 'absolute', bottom:'0px', top:'12px', left:'3px'}}>
+        <div style={{ margin: 0, display: 'flex', justifyContent: 'center', position: 'relative' }}>
+            <canvas
+                id='leftCanvas'
+                width={`620px`}
+                height={`470px`}
+            />
+            <canvas
+                id='rightCanvas'
+                width={`620px`}
+                height={`470px`}
+            />
+            <div style={{ position: 'absolute', bottom: '0px', top: '12px', left: '3px' }}>
 
                 <Button variant="outlined" onClick={speedChange05}>X0.5</Button>
                 <Button variant="outlined" onClick={speedChange1}>X1</Button>

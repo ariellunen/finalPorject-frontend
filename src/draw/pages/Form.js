@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete'
 import NavLink from '../../user/components/NavLinks';
 import Avatar from '@mui/material/Avatar';
@@ -15,18 +14,13 @@ import './Coloring.css';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import CircularProgress from '@mui/material/CircularProgress';
 
-let child = [];
-let name;
-let uniqueIds = [];
 let uniquee = [];
 let lastKides = [];
 const Form = (props) => {
     const [firstKide, setFirstKide] = useState(null);
     const [secondKide, setSecondKide] = useState(null);
     const [children, setChildren] = useState([])
-    const history = useHistory();
     const [isReady, setIsReady] = useState(false);
-    const [items, setItems] = useState([]);
     const [data, setData] = useState(false);
     const [loading, setLoading] = useState(false)
     const breadcrumbs = [
@@ -40,24 +34,11 @@ const Form = (props) => {
 
     useEffect(() => {
         getAllChildren();
-        if(children.length !== 0){
+        if (children.length !== 0) {
             handleKide();
         }
-        // if (children.length !== 0) {
-        //     console.log(children.length !== 0)
-        //     unique = lastKides.filter(element => {
-        //         const isDuplicate = uniqueIds.includes(element.id);
-        //         if (!isDuplicate) {
-        //             console.log(element.id)
-        //             uniqueIds.push(element.id);
-        //             return true;
-        //         }
-        //         return false;
-        //     });
-        //     console.log('uniqe', unique)
-        //     setLoading(true)
-        // }
-    }, [isReady, children.length ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isReady, children.length])
 
     const handleKide = () => {
         for (let j = 0; j < data.length; j++) {
@@ -70,25 +51,19 @@ const Form = (props) => {
         const uniqueIds = new Set();
 
         uniquee = lastKides.filter(element => {
-          const isDuplicate = uniqueIds.has(element.id);
-        
-          uniqueIds.add(element.id);
-        
-          if (!isDuplicate) {
-            return true;
-          }
-        
-          return false;
+            const isDuplicate = uniqueIds.has(element.id);
+            uniqueIds.add(element.id);
+            if (!isDuplicate) {
+                return true;
+            }
+            return false;
         });
-        console.log('uniqe', uniquee)
         setLoading(true)
-        // uniqeChildren(lastKides)
-
     }
 
     const getAllChildren = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/drawing/', {
+            const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
             });
             const responseData = await response.json();
             setData(responseData.drawing.reverse());
@@ -97,14 +72,13 @@ const Form = (props) => {
             console.log(err);
         }
         try {
-            const response = await fetch('http://localhost:3000/api/users/children/', {
+            const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/children/`, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             const responseData = await response.json();
             setChildren(responseData.children)
-            child = children.children;
             setIsReady(true);
         } catch (err) {
             console.log(err);
@@ -113,12 +87,9 @@ const Form = (props) => {
     }
 
     const onSubmit = async event => {
-        setItems([firstKide, secondKide]);
         localStorage.setItem('firstKide', JSON.stringify(firstKide));
         localStorage.setItem('secondKide', JSON.stringify(secondKide));
     }
-
-    console.log('children', children);
 
     return (
         <React.Fragment>
@@ -136,11 +107,11 @@ const Form = (props) => {
             {loading && <Box dir='ltr' component="main" sx={{ display: 'flex', marginTop: '8px', placeContent: 'center', height: '100%', overflow: 'hidden' }}>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {uniquee.length <= 8 && uniquee.map((child) => {
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        {uniquee.length <= 8 && children.map((child) => {
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -171,7 +142,7 @@ const Form = (props) => {
                                 <img
                                     loading="lazy"
                                     width="20"
-                                    src={`http://localhost:3000/${option.image}`}
+                                    src={`${process.env.REACT_APP_ASSET_URL}/${option.image}`}
                                     alt=""
                                 />
                                 {option.name}
@@ -189,15 +160,15 @@ const Form = (props) => {
                         )}
                     />
                     {firstKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
-                    {firstKide !== null && <Avatar alt={firstKide.name} src={`http://localhost:3000/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {firstKide !== null && <Avatar alt={firstKide.name} src={`${process.env.REACT_APP_ASSET_URL}/${firstKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
-                        {uniquee.length <= 8 && uniquee.map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                        {uniquee.length <= 8 && children.map((child) => {
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`http://localhost:3000/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -230,7 +201,7 @@ const Form = (props) => {
                                 <img
                                     loading="lazy"
                                     width="20"
-                                    src={`http://localhost:3000/${option.image}`}
+                                    src={`${process.env.REACT_APP_ASSET_URL}/${option.image}`}
                                     alt=""
                                 />
                                 {option.name}
@@ -248,7 +219,7 @@ const Form = (props) => {
                         )}
                     />
                     {secondKide === null && <Avatar sx={{ bgcolor: '#ccccd4', width: 120, height: 120, marginTop: '22px' }}></Avatar>}
-                    {secondKide !== null && <Avatar alt={secondKide?.name} src={`http://localhost:3000/${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
+                    {secondKide !== null && <Avatar alt={secondKide?.name} src={`${process.env.REACT_APP_ASSET_URL}/${secondKide.image}`} sx={{ width: 150, height: 150, marginTop: '12px' }}></Avatar>}
                 </Box>
                 {(firstKide === null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
                 {(firstKide !== null) && (secondKide === null) && <Button sx={{ right: '5px', position: 'absolute', bottom: '4px' }} type='submit' disabled endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>המשך</Button>}
