@@ -42,7 +42,6 @@ const RightCanvas = (props) => {
         context.lineWidth = line;
 
         if (Math.abs(props.cchange2 - props.cchange1) > 2.2 || props.cchange1 === 0) {
-            console.log("R - 1 - noSync", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = 'LightGrey';
@@ -54,7 +53,6 @@ const RightCanvas = (props) => {
 
         else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
             if (flagCncR) {
-                console.log("R - 2 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = props.color;
@@ -63,7 +61,6 @@ const RightCanvas = (props) => {
                 context.stroke();
             }
             else {
-                console.log("R - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = 'LightGrey';
@@ -74,7 +71,6 @@ const RightCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange1 !== 0) {
-            console.log("R - 4 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = props.color;
@@ -83,17 +79,6 @@ const RightCanvas = (props) => {
             context.stroke();
             flagCncR = true;
         }
-
-        // else {
-        //     context.beginPath();
-        //     context.lineWidth = line;
-        //     // context.lineWidth = document.getElementById("lineWidthR").value;
-        //     context.strokeStyle = props.color;
-        //     context.lineTo(x, y);
-        //     context.stroke();
-        //     // line = document.getElementById("lineWidthL").value;
-        //     color = props.color
-        // }
 
         interact('#canvasR').on('down', function (event) {
             canvas = event.target.getContext('2d')
@@ -110,8 +95,6 @@ const RightCanvas = (props) => {
         interact('#canvasR').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            // timeTakenR = Date.now() - down;
-            // props.secondsR.push(timeTakenR / 1000);
             props.setRight({ x: -1, y: -1, color: color, line: line })
             props.setMouseR(true);
             canvas.stroke();
@@ -130,9 +113,6 @@ const RightCanvas = (props) => {
                 ],
                 listeners: {
                     move: function (event) {
-                        // if (x > 0 && x < 800 && y > 0 && y < 800) {
-                        //     indexCheck(x, y);
-                        // }
                         x = event.clientX;
                         y = event.clientY;
                         canvas.lineTo(event.clientX, event.clientY);
@@ -206,7 +186,6 @@ const RightCanvas = (props) => {
                 area++
             }
         }
-        // console.log(area);
     }
 
     //check drawing pixels area - for 95% coloring 
@@ -468,7 +447,7 @@ const RightCanvas = (props) => {
                         <Avatar
                             sx={{ width: 50, height: 50 }}
                             alt={'left'}
-                            src={`http://localhost:3000/${JSON.parse(localStorage.getItem('secondKide')).image}`}
+                            src={`${process.env.REACT_APP_ASSET_URL}/${JSON.parse(localStorage.getItem('secondKide')).image}`}
                         />
                     </div>
                     <progress id='progress' value={props.cchange2} max="10"></progress>

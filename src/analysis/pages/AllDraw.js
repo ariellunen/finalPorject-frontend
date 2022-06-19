@@ -140,7 +140,7 @@ export default function AllDraw() {
     useEffect(() => {
         const getDraw = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/drawing/', {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
                 });
                 const responseData = await response.json();
                 setData(responseData.drawing.reverse());
@@ -148,7 +148,7 @@ export default function AllDraw() {
                 console.log(err);
             }
             try {
-                const response = await fetch('http://localhost:3000/api/users/children/', {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/children/`, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

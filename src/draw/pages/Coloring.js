@@ -128,7 +128,6 @@ const Coloring = (props) => {
     ////////////////////ALGORITEM SYNC/////////////////////
 
     const [mouseUpL, setMouseL] = useState(false);
-    // console.log("mouse",mouseUpL)
 
     if (mouseUpL === true) {
         setTimeout(() => {
@@ -139,8 +138,6 @@ const Coloring = (props) => {
     }
 
     const [mouseUpR, setMouseR] = useState(false);
-    // console.log("mouse",mouseUpR)
-
     if (mouseUpR === true) {
         setTimeout(() => {
             cchange2 = 0;
@@ -150,45 +147,35 @@ const Coloring = (props) => {
     }
 
     const frequencyL = (stopTimeL) => {
-        // console.log(bufL.toarray());
         for (let i = 0; i < bufL.size() - 1; i++) {
             if ((Math.abs(bufL.get(i).x - bufL.get(i + 1).x)) < 5) {
                 if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)) {
-                    // console.log("1");
                     m1.push(1);
                 }
                 else if ((bufL.get(i).y < bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)) {
-                    // console.log("1");
                     m1.push(0);
                 }
                 else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x < bufL.get(i + 1).x)) {
-                    // console.log("1");
                     m1.push(1);
                 }
                 else if ((bufL.get(i).y > bufL.get(i + 1).y) && (bufL.get(i).x > bufL.get(i + 1).x)) {
-                    // console.log("1");
                     m1.push(0);
                 }
-                else { //=
+                else {
                     tempL = m1[m1.length - 1];
-                    // console.log("3");
                     m1.push(tempL);
                 }
             }
             else if (bufL.get(i).x < bufL.get(i + 1).x) {
-                // console.log("1");
                 m1.push(1);
             } else if (bufL.get(i).x > bufL.get(i + 1).x) {
-                // console.log("2");
                 m1.push(0);
             } else {
                 tempL = m1[m1.length - 1];
-                // console.log("3");
                 m1.push(tempL);
             }
         }
         if (m1.length >= 2) {
-            // console.log(m1);
             for (pointM1; pointM1 < m1.length - 1; pointM1++) {
                 //View changes on the left screen
                 if (m1[pointM1] !== m1[pointM1 + 1]) {
@@ -201,45 +188,35 @@ const Coloring = (props) => {
     }
 
     const frequencyR = (stopTimeR) => {
-        // console.log(bufR.toarray());
         for (let i = 0; i < bufR.size() - 1; i++) {
             if ((Math.abs(bufR.get(i).x - bufR.get(i + 1).x)) < 5) {
                 if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
-                    // console.log("1");
                     m2.push(1);
                 }
                 else if ((bufR.get(i).y < bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)) {
-                    // console.log("1");
                     m2.push(0);
                 }
                 else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x < bufR.get(i + 1).x)) {
-                    // console.log("1");
                     m2.push(1);
                 }
                 else if ((bufR.get(i).y > bufR.get(i + 1).y) && (bufR.get(i).x > bufR.get(i + 1).x)) {
-                    // console.log("1");
                     m2.push(0);
                 }
                 else { //=
                     tempR = m2[m2.length - 1];
-                    // console.log("3");
                     m2.push(tempR);
                 }
             }
             else if (bufR.get(i).x < bufR.get(i + 1).x) {
-                // console.log("1");
                 m2.push(1);
             } else if (bufR.get(i).x > bufR.get(i + 1).x) {
-                // console.log("2");
                 m2.push(0);
             } else {
                 tempR = m2[m2.length - 1];
-                // console.log("3");
                 m2.push(tempR);
             }
         }
         if (m2.length >= 2) {
-            // console.log(m2);
             for (pointM2; pointM2 < m2.length - 1; pointM2++) {
                 //View changes on the left screen
                 if (m2[pointM2] !== m2[pointM2 + 1]) {
@@ -299,7 +276,7 @@ const Coloring = (props) => {
             arr.shift();
         }
         try {
-            const response = await fetch('http://localhost:3000/api/drawing/', {
+            const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -398,7 +375,6 @@ const Coloring = (props) => {
                     <div id='time'>
                         <h3>{timer}</h3>
                     </div>
-                    {/* <Button sx={{marginTop: "-25px"}} className='button' type='submit' onClick={onSubmit}>סיום</Button> */}
                     <Button sx={{ marginTop: "-15px" }} type='submit' onClick={onSubmit} endIcon={<ArrowRightAltIcon sx={{ marginLeft: '-30px', height: '30px', width: '80px' }} />}>סיום</Button>
                 </div>
             </div>

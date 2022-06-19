@@ -251,19 +251,15 @@ const Coloring = (props) => {
                 }
                 else { //=
                     tempR = m2[m2.length - 1];
-                    // console.log("3");
                     m2.push(tempR);
                 }
             }
             else if (bufR.get(i).x < bufR.get(i + 1).x) {
-                // console.log("1");
                 m2.push(1);
             } else if (bufR.get(i).x > bufR.get(i + 1).x) {
-                // console.log("2");
                 m2.push(0);
             } else {
                 tempR = m2[m2.length - 1];
-                // console.log("3");
                 m2.push(tempR);
             }
         }
@@ -329,19 +325,12 @@ const Coloring = (props) => {
         deadline.setSeconds(deadline.getSeconds() + 1200);
         return deadline;
     }
-
-    let user1;
-    let user2;
-
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-
     const onSubmit = async () => {
         if (arr.length !== 1) {
             arr.shift();
         }
         try {
-            const response = await fetch('http://localhost:3000/api/drawing/', {
+            const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

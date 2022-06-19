@@ -1,12 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Input from '../../shared/components/FormElements/Input';
 import {
-    VALIDATOR_EMAIL,
-    VALIDATOR_MINLENGTH,
     VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
@@ -22,9 +20,7 @@ import './Content.css';
 let photoTaken = false;
 
 const ContentAddKide = () => {
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
-    const [isLoginMode, setIsLoginMode] = useState(true);
-    const [imageUp, setImageUp] = useState();
+    const { sendRequest } = useHttpClient();
     const history = useHistory();
 
     const [formState, inputHandler, setFormData] = useForm(
@@ -43,16 +39,13 @@ const ContentAddKide = () => {
 
     const authSubmitHandler = async event => {
         event.preventDefault();
-        console.log(formState.inputs);
         if (alignment === 'takeImage') {
             try {
                 const formData = new FormData();
                 formData.append('name', formState.inputs.name.value);
                 formData.append('image', file);
-                console.log(file)
-
                 const responseData = await fetch(
-                    'http://localhost:3000/api/users/signupChild/',
+                    `${process.env.REACT_APP_BECKEND_URL}/users/signupChild/`,
                     {
                         method: 'POST',
                         body: formData,
@@ -71,7 +64,7 @@ const ContentAddKide = () => {
                 formData.append('name', formState.inputs.name.value);
                 formData.append('image', formState.inputs.image.value);
                 const responseData = await sendRequest(
-                    'http://localhost:3000/api/users/signupChild/',
+                    `${process.env.REACT_APP_BECKEND_URL}/users/signupChild/`,
                     'POST',
                     formData,
                 );

@@ -56,7 +56,7 @@ const Auth = () => {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        'http://localhost:3000/api/users/login',
+        `${process.env.REACT_APP_BECKEND_URL}/users/login`,
         'POST',
         JSON.stringify({
           email: formState.inputs.email.value,

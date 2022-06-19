@@ -6,21 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-// import Button from '../../shared/components/FormElements/Button'
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import Divider from '@mui/material/Divider';
 
-const bull = (
-    <Box
-        component="span"
-        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-        •
-    </Box>
-);
-let search = [];
 const Cards = (props) => {
     const [firstKide, setFirstKide] = useState(false);
     const [secondKide, setSecondKide] = useState(false);
@@ -28,7 +16,7 @@ const Cards = (props) => {
     useEffect(() => {
         const getKide = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/users/children/${props.item.firstKide}`, {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/children/${props.item.firstKide}`, {
                 });
                 const responseData = await response.json();
                 setFirstKide(responseData.child);
@@ -37,7 +25,7 @@ const Cards = (props) => {
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/api/users/children/${props.item.secondKide}`, {
+                const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/users/children/${props.item.secondKide}`, {
                 });
                 const responseData = await response.json();
                 setSecondKide(responseData.child);
@@ -63,7 +51,7 @@ const Cards = (props) => {
                                 <Avatar
                                     sx={{ width: 70, height: 70 }}
                                     alt={'left'}
-                                    src={`http://localhost:3000/${firstKide.image}`}
+                                    src={`${process.env.REACT_APP_ASSET_URL}/${firstKide.image}`}
                                 />
                                 {firstKide.name}
                             </Box>
@@ -71,7 +59,7 @@ const Cards = (props) => {
                                 <Avatar
                                     sx={{ width: 70, height: 70 }}
                                     alt={'left'}
-                                    src={`http://localhost:3000/${secondKide.image}`}
+                                    src={`${process.env.REACT_APP_ASSET_URL}/${secondKide.image}`}
                                 />
                                 {secondKide.name}
                             </Box>
@@ -93,11 +81,6 @@ const Cards = (props) => {
                         שעת סיום:
                         &nbsp;
                         {props.item.timeDone.slice(11, -6)}
-                    </Typography>
-                    <Typography sx={{ margin: 0, fontSize: 20 }} color="text.secondary">
-                        צורה:
-                        &nbsp;
-                        {props.item.shape}
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ flexDirection: 'row-reverse', justifyContent: 'center' }}>

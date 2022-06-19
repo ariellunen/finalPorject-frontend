@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-
 import circleCorL from "../../draw/shape/CircleL";
 import triangularCorL from "../../draw/shape/TriangularL"
 import heartCorL from "../../draw/shape/HeartL"
 import davidCorL from "../../draw/shape/DavidL"
 import homeCorL from "../../draw/shape/HomeL"
-
 import circleCorR from "../../draw/shape/CircleR";
 import triangularCorR from "../../draw/shape/TriangularR"
 import heartCorR from "../../draw/shape/HeartR"
@@ -195,7 +192,6 @@ const Recovery = (props) => {
     }
 
     const viewDrawing = () => {
-        // console.log(coordinatesL);
         for (let i = 0; i < coordinatesL.length; i++) {
             if (coordinatesL[i].length === 3) {
                 circleL(coordinatesL[i][0], coordinatesL[i][1], coordinatesL[i][2])
