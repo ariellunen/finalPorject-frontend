@@ -321,7 +321,6 @@ const RightCanvas = (props) => {
         // BALOONSSSS Animation
         const bdayBallons = (function () {
             const density = 1; // concurrent balloon count
-            const balloons = [];
             const colors = ['yellow', 'green', 'blue', 'red'];
 
             const stringElement = document.createElement("div");
