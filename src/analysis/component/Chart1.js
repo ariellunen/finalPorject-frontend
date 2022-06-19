@@ -75,7 +75,7 @@ const Chart1 = (props) => {
             child1.push(Number(arrayL[i].avg));
             child2.push(Number(arrayR[i].avg));
             // if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((child1[i] !== 0) && (child2[i] !== 0))) {
-            //     if (arrayL[i].avg > arrayR[i].avg) {
+            //     if (arrayL[i].avg > arrayR[i].avg) { 
             //         cync.push(arrayL[i].avg)
             //     }
             //     else { cync.push(arrayR[i].avg) }
@@ -83,7 +83,7 @@ const Chart1 = (props) => {
             // else { cync.push(0) }
 
             if (((Math.abs(child1[i] - child2[i])) < 2) && ((child1[i] !== 0) && (child2[i] !== 0))) {
-                if (child1[i] > child2[i]) {
+                if (child1[i] >= child2[i]) {
                     cync.push(child1[i])
                 }
                 else { cync.push(child2[i]) }
