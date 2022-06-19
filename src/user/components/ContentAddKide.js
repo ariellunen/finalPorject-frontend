@@ -128,7 +128,7 @@ const ContentAddKide = () => {
                                 {'SIGNUP'}
                             </Button> */}
                             <Button type="submit">
-                                {'SIGNUP'}
+                                הרשמה
                             </Button>
                         </form>
                     </Card>
