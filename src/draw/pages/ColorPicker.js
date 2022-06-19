@@ -98,7 +98,7 @@ const ColorPicker = (props) => {
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <div style={{ alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`${process.env.REACT_APP_ASSET_URL}/${first.image}`} />
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`${first.image}`} />
                             <Typography sx={{ marginLeft: '10px' }}>{first.name}</Typography>
                         </div>
                         <div style={{
@@ -121,7 +121,7 @@ const ColorPicker = (props) => {
                             {/* <Typography>:הצבע הנבחר הוא</Typography> */}
                         </div>
                         <div style={{ alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginRight: '10px' }} alt={second.name} src={`${process.env.REACT_APP_ASSET_URL}/${second.image}`} />
+                            <Avatar sx={{ width: 50, height: 50, marginRight: '10px' }} alt={second.name} src={`${second.image}`} />
                             <Typography sx={{ marginLeft: '10px' }}>{second.name}</Typography>
                         </div>
                     </Box>
