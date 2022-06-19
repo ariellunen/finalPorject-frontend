@@ -23,7 +23,7 @@ const ContentAddKide = () => {
     const { sendRequest } = useHttpClient();
     const history = useHistory();
 
-    const [formState, inputHandler, setFormData] = useForm(
+    const [formState, inputHandler] = useForm(
         {
             name: {
                 value: '',

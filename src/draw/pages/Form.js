@@ -37,6 +37,7 @@ const Form = (props) => {
         if (children.length !== 0) {
             handleKide();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isReady, children.length])
 
     const handleKide = () => {

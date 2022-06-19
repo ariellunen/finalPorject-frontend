@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -10,13 +10,10 @@ import {
     VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
-import { AuthContext } from '../../shared/context/auth-context';
 import Card from '../../shared/components/UIElements/Card';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import '../pages/Auth.css';
-import { useHistory } from 'react-router-dom';
 import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -49,12 +46,10 @@ MyFormControlLabel.propTypes = {
 
 
 const ContentAddUser = () => {
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
-    const [isLoginMode, setIsLoginMode] = useState(true);
+    const { error, clearError } = useHttpClient();
     const [userType, setUserType] = useState();
-    const history = useHistory();
 
-    const [formState, inputHandler, setFormData] = useForm(
+    const [formState, inputHandler] = useForm(
         {
             email: {
                 value: '',
