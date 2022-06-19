@@ -108,11 +108,11 @@ const Form = (props) => {
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {uniquee.length <= 8 && children.map((child) => {
-                            console.log(`C:/${child.image}`)
+                            console.log(`${child.image}`)
                             return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
-                            console.log(`C:/${child.image}`)
+                            console.log(`${child.image}`)
                   
                             return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
@@ -168,10 +168,10 @@ const Form = (props) => {
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {uniquee.length <= 8 && children.map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${process.env.REACT_APP_ASSET_URL}/${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
