@@ -21,7 +21,7 @@ const TabsAdmin = () => {
         }
     }
     return (
-        <Stack sx={{ marginLeft: '10px' }} direction="row">
+        <Stack sx={{ marginRight: '130px' }} direction="row">
             <Button id='user' type='button' onClick={handleClick} sx={{ borderTopLeftRadius: '15px', marginLeft: '10px', borderTopRightRadius: '15px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }} variant={userScreen}>מדריכים \ אנשי מקצוע</Button>
             <Button id='children' type='button' onClick={handleClick} sx={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', marginLeft: '10px', }} variant={childrenScreen}>ילדים</Button>
         </Stack>
