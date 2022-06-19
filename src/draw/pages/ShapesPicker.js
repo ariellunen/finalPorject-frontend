@@ -67,11 +67,11 @@ const ShapesPicker = (props) => {
                 <Box sx={{bgcolor: 'white', textAlignLast: 'center', width: 1240, height: 470, borderTop: 'solid', borderRight: 'solid', borderLeft: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`${process.env.REACT_APP_ASSET_URL}/${first.image}`} />
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={first.name} src={`${first.image}`} />
                             <Typography sx={{ marginLeft: '10px' }}>{first.name}</Typography>
                         </div>
                         <div style={{ alignItems: 'center' }}>
-                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={second.name} src={`${process.env.REACT_APP_ASSET_URL}/${second.image}`} />
+                            <Avatar sx={{ width: 50, height: 50, marginLeft: '10px' }} alt={second.name} src={`${second.image}`} />
                             <Typography sx={{ marginLeft: '10px' }}>{second.name}</Typography>
                         </div>
                     </Box>
