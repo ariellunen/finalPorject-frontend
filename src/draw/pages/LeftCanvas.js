@@ -399,7 +399,7 @@ const LeftCanvas = (props) => {
                         <Avatar
                             sx={{ width: 50, height: 50 }}
                             alt={'left'}
-                            src={`${process.env.REACT_APP_ASSET_URL}/${JSON.parse(localStorage.getItem('firstKide')).image}`}
+                            src={`${JSON.parse(localStorage.getItem('firstKide')).image}`}
                         />
                         <div>{`${JSON.parse(localStorage.getItem('firstKide')).name}`}</div>
 
