@@ -20,11 +20,9 @@ const Chart1 = (props) => {
         let tempL = 0;
         let tempR = 0;
 
-        //מפריד את המערך של התדירות לציר של תדירויות וציר של שניות
         for (let i = 0; i < props.storedData.changesL.length; i++) { arrLx.push(props.storedData.changesL[i].x); }
         for (let i = 0; i < props.storedData.changesR.length; i++) { arrRx.push(props.storedData.changesR[i].x); }
 
-        console.log(props.storedData.changesR)
         let avgL, avgR;
         let arrayL = [], arrayR = [];
         let totalL, totalR;
@@ -74,14 +72,6 @@ const Chart1 = (props) => {
         for (let i = 0; i < arrayL.length; i++) {
             child1.push(Number(arrayL[i].avg));
             child2.push(Number(arrayR[i].avg));
-            // if (((Math.abs(arrayL[i].avg - arrayR[i].avg)) < 2) && ((child1[i] !== 0) && (child2[i] !== 0))) {
-            //     if (arrayL[i].avg > arrayR[i].avg) { 
-            //         cync.push(arrayL[i].avg)
-            //     }
-            //     else { cync.push(arrayR[i].avg) }
-            // }
-            // else { cync.push(0) }
-
             if (((Math.abs(child1[i] - child2[i])) < 2) && ((child1[i] !== 0) && (child2[i] !== 0))) {
                 if (child1[i] >= child2[i]) {
                     cync.push(child1[i])
@@ -91,11 +81,9 @@ const Chart1 = (props) => {
             else { cync.push(0) }
 
         }
-        //ציר האיקס עבור זמן השניות הכולל
         for (let i = 0; i < props.storedData.secondTotal; i++) {
             xValues.push(i)
         }
-        //מילוי נקודות הסנכרון
         new Chart(ctx1, {
             type: "line",
             data: {

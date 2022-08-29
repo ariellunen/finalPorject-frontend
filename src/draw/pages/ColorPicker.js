@@ -48,31 +48,30 @@ const ColorPicker = (props) => {
         second = JSON.parse(localStorage.getItem('secondKide'));
         setIsReady(true);
     }
-
-    console.log("Child", first, second)
-
     const handleColor = (color, type, url) => {
-        console.log(type)
         if (type === 'first') {
-            setFirstColor(color)
-            urlFirst = url;
-            let temp = [...users];
-            let temp_element = { ...temp[0] };
-            temp_element.color = color;
-            temp[0] = temp_element;
-            setUsers(temp);
-
+            if (SecondColor !== null && SecondColor === color) { }
+            else {
+                setFirstColor(color)
+                urlFirst = url;
+                let temp = [...users];
+                let temp_element = { ...temp[0] };
+                temp_element.color = color;
+                temp[0] = temp_element;
+                setUsers(temp);
+            }
         } else {
-            setSecondColor(color)
-            urlSecond = url
-            console.log(url)
-            let temp = [...users];
-            let temp_element = { ...temp[1] };
-            temp_element.color = color;
-            temp[1] = temp_element;
-            setUsers(temp);
+            if (firstColor !== null && firstColor === color) { }
+            else {
+                setSecondColor(color)
+                urlSecond = url
+                let temp = [...users];
+                let temp_element = { ...temp[1] };
+                temp_element.color = color;
+                temp[1] = temp_element;
+                setUsers(temp);
+            }
         }
-        console.log(users)
     }
 
     const handleClick = () => {
@@ -80,7 +79,6 @@ const ColorPicker = (props) => {
         localStorage.setItem('secondColor', JSON.stringify(SecondColor));
         history.push({ state: { users: users } });
     }
-
     return (
         <React.Fragment>
             <NavLink />

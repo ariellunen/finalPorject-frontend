@@ -51,7 +51,6 @@ const ContentAddKide = () => {
                         body: formData,
                     }
                 );
-                console.log(responseData);
                 history.replace('/kids')
 
             } catch (err) {

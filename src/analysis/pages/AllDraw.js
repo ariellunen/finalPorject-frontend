@@ -218,7 +218,7 @@ export default function AllDraw() {
                 <ListItem>
                     <ListItemText>תאריכים</ListItemText>
                 </ListItem>
-                <ListItem>
+                <ListItem sx={{marginRight: 8}}>
                     <DatePicker
                         value={selectedDayRange}
                         onChange={setSelectedDayRange}
@@ -332,7 +332,6 @@ export default function AllDraw() {
                             }
                             let draw1 = item.timeStarted.slice(0, 10);
                             let draw = draw1;
-                            console.log(draw1, dateEnd, dateStart, draw)
                             if (dateStart.slice(0, 4) <= draw.slice(0, 4) && draw1.slice(0, 4) <= dateEnd.slice(0, 4)) {
                                 if (dateStart.slice(5, -3) <= draw.slice(5, -3) && draw1.slice(5, -3) <= dateEnd.slice(5, -3)) {
                                     if (dateStart.slice(8) <= draw.slice(8) && draw1.slice(8) <= dateEnd.slice(8)) {

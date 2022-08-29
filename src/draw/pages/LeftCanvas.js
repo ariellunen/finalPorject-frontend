@@ -40,7 +40,6 @@ const LeftCanvas = (props) => {
         context.lineWidth = line;
 
         if (Math.abs(props.cchange2 - props.cchange1) > 2 || props.cchange2 === 0) {
-            console.log("L - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = 'LightGrey'
@@ -52,7 +51,6 @@ const LeftCanvas = (props) => {
 
         else if (Math.abs(props.cchange2 - props.cchange1) > 1.8 && Math.abs(props.cchange2 - props.cchange1) < 2.2) {
             if (flagCncL) {
-                console.log("L - 3 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = props.color;
@@ -61,7 +59,6 @@ const LeftCanvas = (props) => {
                 context.stroke();
             }
             else {
-                console.log("L - 3 - noSync", Math.abs(props.cchange2 - props.cchange1));
                 context.beginPath();
                 context.lineWidth = line;
                 color = 'LightGrey';
@@ -72,7 +69,6 @@ const LeftCanvas = (props) => {
         }
 
         else if (Math.abs(props.cchange2 - props.cchange1) < 1.8 && props.cchange2 !== 0) {
-            console.log("L - 3 - Syncccc", Math.abs(props.cchange2 - props.cchange1));
             context.beginPath();
             context.lineWidth = line;
             color = props.color;
@@ -81,18 +77,6 @@ const LeftCanvas = (props) => {
             context.stroke();
             flagCncL = true;
         }
-
-        // else {
-        //     context.beginPath();
-        //     context.lineWidth = line;
-        //     // context.lineWidth = document.getElementById("lineWidthL").value;
-        //     context.strokeStyle = props.color;
-        //     context.lineTo(x, y);
-        //     context.stroke();
-        //     // line = document.getElementById("lineWidthL").value;
-        //     color = props.color
-        // }
-        // on pointer down
         interact('#canvasL').on('down', function (event) {
             canvas = event.target.getContext('2d')
             event.preventDefault();
@@ -108,9 +92,6 @@ const LeftCanvas = (props) => {
         interact('#canvasL').on('up', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            // timeTakenL = Date.now() - down;
-            // console.log(timeTakenL)
-            // props.secondsL.push(timeTakenL / 1000);
             props.setLeft({ x: -1, y: -1, color: color, line: line })
             props.setMouseL(true);
             canvas.stroke();
@@ -123,7 +104,6 @@ const LeftCanvas = (props) => {
                 modifiers: [
                     interact.modifiers.snap({
                         targets: [
-                            // interact.snappers.grid({ x: pixelSize, y: pixelSize })
                         ]
                     })
                 ],
@@ -131,10 +111,6 @@ const LeftCanvas = (props) => {
                     move: function (event) {
                         x = event.clientX;
                         y = event.clientY;
-                        // if (x > 0 && x < 800 && y > 0 && y < 800) {
-                        //     indexCheck(x, y);
-                        // }
-                        // if (flag) {
                         canvas.lineTo(event.clientX, event.clientY);
                         canvas.stroke();
                         props.setLeft({ x: event.clientX, y: event.clientY, color: color, line: line })
@@ -174,31 +150,7 @@ const LeftCanvas = (props) => {
                 area++
             }
         }
-        // console.log(area);
     }
-
-    // const quantityPixels = () => {
-    //     p = context.getImageData(0, 0, ctx.width, ctx.height).data;
-    //     console.log(p);
-    //     console.log(p.length / 16);
-    //     fill = 0;
-    //     background = 0;
-    //     white = 0;
-    //     for (let i = 0; i < p.length / 4; i += 4) {
-    //         if (p[i] === 255 && p[i + 1] === 255 && p[i + 2] === 240 && p[i + 3] === 255){
-    //             background ++
-    //         }
-    //         else if (p[i] !== 255 || p[i + 1] !== 255 || p[i + 2] !== 255 || p[i + 3] !== 255) {
-    //             fill++;
-    //         }
-    //         else {
-    //             white ++;
-    //         }
-    //     }
-    //     console.log(background);
-    //     console.log(fill);
-    //     console.log(white);
-    // }
 
     const shapesSelected = (color) => {
         switch (selectedShape) {
@@ -250,19 +202,6 @@ const LeftCanvas = (props) => {
             props.setDoneLeft(true);
         }
     }
-
-    // const indexCheck = (x, y) => {
-    //     const { data } = context.getImageData(x, y, 1, 1);
-    //     // console.log(data[2])
-    //     if (data[2] === 240) {
-    //         flag = true;
-    //     }
-    //     else {
-    //         flag = false;
-    //     }
-    // }
-
-    //Upload the drawing
     let coordinates = [];
     const dda = (x0, y0, x1, y1) => {
         context.beginPath();
@@ -364,7 +303,6 @@ const LeftCanvas = (props) => {
     }
 
     const handleWidth = (value) => {
-        // console.log(value)
         line = value;
     }
 
@@ -388,7 +326,6 @@ const LeftCanvas = (props) => {
     const pointerUp = () => {
         timeTakenL = Date.now() - down;
         props.handleSecondsL(timeTakenL)
-        // props.secondsL.push(timeTakenL / 1000);
     }
     return (
         <React.Fragment>
@@ -408,7 +345,6 @@ const LeftCanvas = (props) => {
                     <progress id='progressL' value={props.cchange1} max="10"></progress>
                     <img src='https://i.postimg.cc/0jLXYJWx/Breadcrumbs-25.png' alt="turtel" id='turtelL' />
                     <img src='https://i.postimg.cc/SRT236FF/Breadcrumbs-26.png' alt="bunny" id='bunnyL' />
-                    {/* <input type="range" min="4" max="20" id="lineWidthL" name='lineWidthL' step="8" /> */}
                     <div className='lineWidthL'>
                         <button type='button' className='widthL lineWidthL4' id='oneL' value={4} onClick={(() => handleWidth(4))}></button>
                         <button type='button' className='widthL selectedL lineWidthL12' id='twoL' value={12} onClick={(() => handleWidth(12))}></button>

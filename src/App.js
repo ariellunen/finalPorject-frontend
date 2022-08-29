@@ -14,7 +14,6 @@ import Main from './user/pages/Main';
 const AllDraw = React.lazy(() => import('./analysis/pages/AllDraw'))
 const AddUser = React.lazy(() => import('./user/components/AddUser'))
 const DrawDetails = React.lazy(() => import('./analysis/pages/DrawDetails'))
-// const Main = React.lazy(() => import('./user/pages/Main'))
 const Coloring = React.lazy(() => import('./draw/pages/Coloring'))
 const ColorPicker = React.lazy(() => import('./draw/pages/ColorPicker'))
 const Form = React.lazy(() => import('./draw/pages/Form'))

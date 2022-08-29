@@ -82,7 +82,6 @@ const ContentAddUser = () => {
 
             const responseData = await response.json();
             console.log(responseData);
-            // history.replace('/admin')
         } catch (err) {
             console.log(err);
         }

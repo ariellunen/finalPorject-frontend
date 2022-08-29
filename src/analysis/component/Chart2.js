@@ -16,7 +16,6 @@ const Chart2 = (props) => {
     const chart2 = () => {
         let yValues = [];
         let namber = 1;
-        console.log(props.sec2)
         if (props.sec2 < props.sec3) {
             for (let i = 0; i < props.sec3; i++) {
                 yValues.push(namber);
@@ -67,7 +66,6 @@ const Chart2 = (props) => {
                 namber++
             }
         }
-        console.log(xValues)
         let barColors = props.storedData.colorSecond;
         new Chart(ctx3, {
             type: "horizontalBar",

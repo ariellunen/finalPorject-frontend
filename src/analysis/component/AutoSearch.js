@@ -26,7 +26,6 @@ const AutoSearch = (props) => {
                 if (option.inputValue) {
                     return option.inputValue;
                 }
-                //props.handleTextChanage(option)
                 return option.name;
             }}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}

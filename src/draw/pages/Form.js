@@ -37,7 +37,7 @@ const Form = (props) => {
         if (children.length !== 0) {
             handleKide();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isReady, children.length])
 
     const handleKide = () => {
@@ -60,8 +60,6 @@ const Form = (props) => {
         });
         setLoading(true)
     }
-
-    console.log(uniquee)
     const getAllChildren = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BECKEND_URL}/drawing/`, {
@@ -91,7 +89,6 @@ const Form = (props) => {
         localStorage.setItem('firstKide', JSON.stringify(firstKide));
         localStorage.setItem('secondKide', JSON.stringify(secondKide));
     }
-
     return (
         <React.Fragment>
             <NavLink />
@@ -109,16 +106,32 @@ const Form = (props) => {
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'dotted', borderTop: 'solid', borderLeft: 'solid', bgcolor: 'white', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {uniquee.length <= 8 && uniquee.map((child) => {
-                            console.log(`${child.image}`)
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => {
+                                if (secondKide === null) { setFirstKide(child) }
+                                else if (child.id === secondKide.id) { }
+                                else {
+                                    setFirstKide(child)
+                                }
+                            }}
+                                sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
-                            console.log(`${child.image}`)
-                            return <Avatar key={child.id} onClick={() => setFirstKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => {
+                                if (secondKide === null) { setFirstKide(child) }
+                                else if (child.id === secondKide.id) { }
+                                else {
+                                    setFirstKide(child)
+                                }
+                            }} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
-                        onChange={(event, value) => setFirstKide(value)}
+                        onChange={(event, value) => {
+                            if (value._id === secondKide._id) { }
+                            else {
+                                setFirstKide(value)
+                            }
+                        }}
                         id="country-select-demo"
                         sx={{ width: '300px', marginTop: '35px' }}
                         options={children}
@@ -168,10 +181,22 @@ const Form = (props) => {
                 <Box sx={{ textAlignLast: 'center', width: 620, height: 470, borderRight: 'solid', bgcolor: 'white', borderTop: 'solid', borderBottom: 'solid', textAlign: '-webkit-center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', placeContent: 'center', justifyContent: 'space-evenly', width: '75%' }}>
                         {uniquee.length <= 8 && uniquee.map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => {
+                                if (firstKide === null) { setSecondKide(child) }
+                                else if (child.id === firstKide.id) { }
+                                else {
+                                    setSecondKide(child)
+                                }
+                            }} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                         {uniquee.length > 8 && uniquee.slice(0, 8).map((child) => {
-                            return <Avatar key={child.id} onClick={() => setSecondKide(child)} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
+                            return <Avatar key={child.id} onClick={() => {
+                                if (firstKide === null) { setSecondKide(child) }
+                                else if (child.id === firstKide.id) { }
+                                else {
+                                    setSecondKide(child)
+                                }
+                            }} sx={{ width: 100, height: 100, marginTop: '5px' }} alt={child.name} src={`${child.image}`} />
                         })}
                     </Box>
                     <Autocomplete
@@ -181,9 +206,6 @@ const Form = (props) => {
                         options={children}
                         autoHighlight
                         value={secondKide?.id || ''}
-                        // getOptionLabel={(option) => {
-                        //     return children.find(c => c.id === option)?.name || ''
-                        // }}
                         isOptionEqualToValue={(opt, value) => {
                             return opt.id === value
                         }}
@@ -192,7 +214,6 @@ const Form = (props) => {
                             if (typeof option === 'string') {
                                 return children.find(c => c.id === option)?.name || '';
                             }
-                            // Add "xxx" option created dynamically
                             if (option.inputValue) {
                                 return option.inputValue;
                             }

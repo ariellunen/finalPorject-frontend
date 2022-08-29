@@ -40,16 +40,12 @@ const DrawDetails = (props) => {
         yValuesSec3 = [];
         for (let i = 0; i < storedData.secondsL.length; i++) {
             yValuesSec2.push(storedData.secondsL[i]);
-            console.log(storedData.secondsL[i], yValuesSec2)
-
         }
         sec2 = yValuesSec2.length;
         for (let i = 0; i < storedData.secondsR.length; i++) {
             yValuesSec3.push(storedData.secondsR[i]);
         }
         sec3 = yValuesSec3.length;
-        console.log(storedData)
-
         PaintBrushL();
         PaintBrushR();
         // eslint-disable-next-line react-hooks/exhaustive-deps

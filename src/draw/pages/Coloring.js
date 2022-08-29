@@ -42,6 +42,7 @@ let secondsL = [];
 let secondsR = [];
 let changeL = [];
 let changeR = [];
+const startedTime = moment().tz("Asia/Jerusalem").format();
 
 const breadcrumbs = [
     <Typography key="1" color="text.primary" component={Link} to='/'>
@@ -64,10 +65,9 @@ const breadcrumbs = [
 const Coloring = (props) => {
     const history = useHistory();
     const [isDone, seyIsDone] = useState(false)
-    const startedTime = moment().tz("Asia/Jerusalem").format();
     useEffect(() => {
         clearTimer(getDeadTime());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [left, setLeft] = useState({ x: -1, y: -1, color: 'LightGrey', line: '20' })
@@ -81,7 +81,7 @@ const Coloring = (props) => {
             counter = 0;
         }
     }, [left, right, isDone])
-    
+
     const handleLeftCoordinate = (x, y, color, line) => {
         leftCoordinates.push({ x, y, color, line });
         bufL.push({ x, y });
@@ -232,7 +232,6 @@ const Coloring = (props) => {
     /////////////////////-20 MINUTES TIMER-//////////////////////////////
 
     const Ref = useRef(null);
-    // The state for our timer
     const [timer, setTimer] = useState('00:00:00');
 
     const getTimeRemaining = (e) => {
@@ -247,6 +246,9 @@ const Coloring = (props) => {
 
     const startTimer = (e) => {
         let { total, hours, minutes, seconds } = getTimeRemaining(e);
+        if (total === 0) {
+            history.push('/')
+        }
         if (total >= 0) {
             setTimer(
                 (hours > 9 ? hours : '0' + hours) + ':' +
@@ -267,6 +269,8 @@ const Coloring = (props) => {
         Ref.current = id;
     }
 
+    console.log(startedTime, moment().tz("Asia/Jerusalem").format())
+
     const getDeadTime = () => {
         let deadline = new Date();
         deadline.setSeconds(deadline.getSeconds() + 1200);
@@ -286,6 +290,7 @@ const Coloring = (props) => {
                     firstKide: JSON.parse(localStorage.getItem('firstKide')).id,
                     secondKide: JSON.parse(localStorage.getItem('secondKide')).id,
                     timeStarted: startedTime,
+                    timeDone: moment().tz("Asia/Jerusalem").format(),
                     secondTotal: secondTotal,
                     coordinate: arr,
                     colorFirst: JSON.parse(localStorage.getItem('firstColor')),
@@ -297,7 +302,6 @@ const Coloring = (props) => {
                     shape: JSON.parse(localStorage.getItem('shape'))
                 })
             });
-
             const responseData = await response.json();
             console.log(responseData);
             arr = [];
@@ -370,7 +374,7 @@ const Coloring = (props) => {
                         handleSecondsR={handleSecondsR}
                     />
                 </div>
-                
+
                 <Button sx={{ marginTop: "-15px" }} onClick={printOnPage}>הדפסה</Button>
                 <div id='footer' dir='ltr'>
                     <div id='time'>

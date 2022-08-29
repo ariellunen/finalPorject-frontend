@@ -44,7 +44,6 @@ export class CameraFeed extends Component {
         const { sendFile } = this.props;
         const context = this.canvas.getContext('2d');
         context.drawImage(this.videoPlayer, 0, 0, 300, 200);
-        //this.canvas.toBlob(sendFile);
         sendFile(this.canvas.toDataURL())
     };
 

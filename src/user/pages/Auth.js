@@ -38,8 +38,6 @@ const Auth = () => {
 
   const authSubmitHandler = async event => {
     event.preventDefault();
-    console.log(formState.inputs.email.value)
-    console.log(formState.inputs.password.value)
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BECKEND_URL}/users/login`,
@@ -57,12 +55,7 @@ const Auth = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target.value)
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (
@@ -110,12 +103,10 @@ const Auth = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  // disabled={!formState.isValid}
                   sx={{ mt: 3, mb: 2, bgcolor: '#4454a3' }}
                 >
                   כניסה
                 </Button>
-                {/* <Copyright sx={{ mt: 5 }} /> */}
               </form>
             </Box>
 
